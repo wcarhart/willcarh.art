@@ -1,0 +1,9 @@
+{
+  "name": "generator",
+  "version": "2.0.0",
+  "description": "Will Carhart's personal portfolio website",
+  "main": "generator/generator.js",
+  "repository": "git@github.com:wcarhart/willcarh.art.git",
+  "author": "Will Carhart <carhartwill@gmail.com>",
+  "license": "MIT"
+}

@@ -1,0 +1,14 @@
+@font-face {
+	font-family: 'EskellDisplayMedium';
+	font-style: normal;
+	font-weight: normal;
+	src: url(font/eksell_display_medium.otf) format("opentype");
+}
+
+body {
+	font-family: 'EskellDisplayMedium' !important;
+}
+
+h1 {
+	font-size: 5rem !important;
+}

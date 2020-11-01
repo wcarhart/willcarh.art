@@ -1,34 +1,5 @@
 const fs = require('fs')
-
-// TODO
-// generate home page
-const generateHome = async () => {
-
-}
-
-// TODO
-// generate about page
-const generateAbout = async () => {
-
-}
-
-// TODO
-// generate blog and blog posts pages
-const generateBlog = async () => {
-
-}
-
-// TODO
-// generate project index and individual project pages
-const generateProjects = async () => {
-
-}
-
-// TODO
-// generate app index and individual app pages
-const generateApps = async () => {
-	return
-}
+const core = require('./core.js')
 
 // TODO
 // verify content markdown files are as expected
@@ -48,16 +19,17 @@ const validateBuild = async () => {
 	await fs.promises.access('../src/blog_index.html')
 	await fs.promises.access('../src/project_index.html')
 	// TODO: uncomment when apps are implemented
-	// await fs.promises.access('../src/apps_index.html')
+	// await fs.promises.access('../src/app_index.html')
 }
 
 const main = async () => {
 	try {
-		await generateHome()
-		await generateAbout()
-		await generateBlog()
-		await generateProjects()
-		await generateApps()
+		await verifyContentFileStructure()
+		await core.generate('home')
+		await core.generate('about')
+		await core.generate('blog')
+		await core.generate('projects')
+		await core.generate('apps')
 		// await validateBuild()
 	} catch (e) {
 		console.error(e)

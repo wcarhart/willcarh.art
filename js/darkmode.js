@@ -1,4 +1,7 @@
-$(document).ready(async () => {
+// set up dark mode
+
+// init dark mode
+(async () => {
 	let update = false
 	if (localStorage.getItem('darkMode') === 'true') {
 		if (!$('html').hasClass('dark-mode')) {
@@ -14,8 +17,9 @@ $(document).ready(async () => {
 	if (update === true) {
 		$('html').toggleClass('dark-mode')
 	}
-})
+})();
 
+// toggle dark mode
 $(document).ready(async () => {
 	$('#dark-mode-toggle').click(async () => {
 		if (localStorage.getItem('darkMode') === 'true') {

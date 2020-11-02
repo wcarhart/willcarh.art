@@ -61,6 +61,7 @@ const generate = async (page) => {
 			await buildHome()
 			break
 		case 'about':
+			await buildAbout()
 			break
 		case 'blog':
 			await buildBlogIndex()
@@ -81,6 +82,10 @@ const buildHome = async () => {
 	console.log('Building home page...')
 	let data = await buildGenerationHeader('templates/home.html')
 	await writeFilePromise('index.html', data)
+}
+
+const buildAbout = async () => {
+
 }
 
 const buildBlogIndex = async () => {
@@ -114,7 +119,5 @@ const findFiles = async (kind) => {
 }
 
 module.exports = {
-	Blog: Blog,
-	Project: Project,
 	generate: generate
 }

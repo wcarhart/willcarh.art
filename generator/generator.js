@@ -14,7 +14,6 @@ const verifyContentFileStructure = async () => {
 	await fs.promises.access('content/apps/index.md')
 }
 
-// TODO
 // validate if generation was successful
 const validateBuild = async () => {
 	console.log('Validating built pages...')
@@ -27,25 +26,26 @@ const validateBuild = async () => {
 	// await fs.promises.access('../src/app_index.html')
 }
 
-// TODO
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
 	let tree = '.\n├── index.html\n├── style.css'
-	tree += await buildTreeString('font')
-	tree += await buildTreeString('ico')
-	tree += await buildTreeString('src')
+	tree += await buildTreeString('font', false)
+	tree += await buildTreeString('ico', false)
+	tree += await buildTreeString('src', true)
 	console.log(tree)
 }
 
-const buildTreeString = async (dir) => {
-	let tree = `\n├── ${dir}/`
+// build a visual file tree based on a directory
+const buildTreeString = async (dir, final) => {
+	const parentChar = final ? '   ' : '|  '
+	let tree = final ? `\n└── ${dir}` : `\n├── ${dir}/`
 	let files = await readdirPromise(dir)
 	while (files.length > 0) {
 		if (files.length === 1) {
-			tree += `│   └── ${files[0]}`
+			tree += `\n${parentChar} └── ${files[0]}`
 			files.shift()
 		} else {
-			tree += `│   ├── ${files[0]}`
+			tree += `\n${parentChar} ├── ${files[0]}`
 			files.shift()
 		}
 	}
@@ -60,8 +60,8 @@ const main = async () => {
 		await core.generate('blog')
 		await core.generate('projects')
 		await core.generate('apps')
-		// await validateBuild()
-		// await generateFileTree()
+		await validateBuild()
+		await generateFileTree()
 	} catch (e) {
 		console.log(e)
 		console.log(e.stack)

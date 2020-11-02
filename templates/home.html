@@ -74,6 +74,11 @@
 			<img id="logo" alt="willcarh.art logo" src="ico/android-chrome-512x512.png">
 		</a>
 
+		<!-- email contact -->
+		<button id="email-contact">
+			hello@willcarh.art
+		</button>
+
 		<!-- dark mode toggle -->
 		<div id="dark-mode-toggle-container">
 			<button id="dark-mode-toggle"></button>
@@ -91,6 +96,39 @@
 			$(document).ready(async () => {
 				$('#dark-mode-toggle').click(async () => {
 					$('html').toggleClass('dark-mode')
+				})
+			})
+		</script>
+
+		<!-- email contact button -->
+		<script>
+			$(document).ready(async () => {
+				let copyStatus = false
+				$('#email-contact').hover(async () => {
+					if (!copyStatus) {
+						// TODO: animate this
+						$('#email-contact').text('copy email 🖨')
+					}
+				}, async () => {
+					if (!copyStatus) {
+						$('#email-contact').text('hello@willcarh.art')
+					}
+				})
+				$('#email-contact').click(async () => {
+					copyStatus = true
+					const el = document.createElement('textarea')
+					el.value = 'hello@willcarh.art'
+					el.setAttribute('readonly', '')
+					el.style.position = 'absolute'
+					el.style.left = '-9999px'
+					document.body.appendChild(el)
+					el.select()
+					document.execCommand('copy')
+					document.body.removeChild(el)
+					$('#email-contact').text('copied ✓')
+					await new Promise(res => setTimeout(res, 2000))
+					$('#email-contact').text('hello@willcarh.art')
+					copyStatus = false
 				})
 			})
 		</script>

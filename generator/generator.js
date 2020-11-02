@@ -29,14 +29,30 @@ const validateBuild = async () => {
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
 	let tree = '.\n├── index.html\n├── style.css'
-	tree += await buildTreeString('font', false)
-	tree += await buildTreeString('ico', false)
-	tree += await buildTreeString('src', true)
+	tree += await buildTrees(['font', 'ico', 'src'])
 	console.log(tree)
+}
+
+// build a set of file trees based on a list of source directories
+const buildTrees = async (dirs) => {
+	let tree = ''
+	for (let [index, dir] of dirs.entries()) {
+		if (index === dirs.length - 1) {
+			tree += await buildTreeString(dir, true)
+		} else {
+			tree += await buildTreeString(dir, false)
+		}
+	}
+	return tree
 }
 
 // build a visual file tree based on a directory
 const buildTreeString = async (dir, final) => {
+	try {
+		await fs.promises.access(dir)
+	} catch (e) {
+		return ''
+	}
 	const parentChar = final ? '   ' : '|  '
 	let tree = final ? `\n└── ${dir}` : `\n├── ${dir}/`
 	let files = await readdirPromise(dir)
@@ -52,15 +68,43 @@ const buildTreeString = async (dir, final) => {
 	return tree
 }
 
+const usage = async () => {
+	console.log('forge - build pages for willcarh.art')
+	console.log('')
+	console.log('Usage:')
+	console.log('forge [-h] [-d]')
+	console.log('  -h, --help      Show this menu and exit')
+	console.log('  -d, --develop   Do not exit on validation errors')
+}
+
+const parseArgs = async (args) => {
+	let parsedArgs = {}
+	if (args.includes('-h') || args.includes('--help')) {
+		await usage()
+		process.exit(0)
+	}
+	if (args.includes('-d') || args.includes('--develop')) {
+		parsedArgs.develop = true
+	} else {
+		parsedArgs.develop = false
+	}
+	return parsedArgs
+}
+
 const main = async () => {
 	try {
-		await verifyContentFileStructure()
+		const args = await parseArgs(process.argv.slice(2))
+		if (args.develop !== true) {
+			await verifyContentFileStructure()
+		}
 		await core.generate('home')
 		await core.generate('about')
 		await core.generate('blog')
 		await core.generate('projects')
 		await core.generate('apps')
-		await validateBuild()
+		if (args.develop !== true) {
+			await validateBuild()
+		}
 		await generateFileTree()
 	} catch (e) {
 		console.log(e)

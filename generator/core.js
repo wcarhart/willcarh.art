@@ -2,6 +2,8 @@ const fs = require('fs')
 const html = require('html')
 const util = require('util')
 
+const config = require('../config.json')
+
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
 const copyFilePromise = util.promisify(fs.copyFile)

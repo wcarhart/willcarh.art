@@ -46,6 +46,18 @@
 	font-weight: normal;
 	src: url(font/eksell_display_stencil.otf) format('opentype');
 }
+@font-face {
+	font-family: 'GeomanistRegular';
+	font-style: normal;
+	font-weight: normal;
+	src: url(font/geomanist_regular.otf) format('opentype');
+}
+@font-face {
+	font-family: 'GeomanistRegular';
+	font-style: italic;
+	font-weight: normal;
+	src: url(font/geomanist_regular_italic.otf) format('opentype');
+}
 
 html {
 	height: 100%;
@@ -123,6 +135,24 @@ body {
 	outline: 0;
 }
 
+#email-contact {
+	position: absolute;
+	right: 5rem;
+	top: 1.05rem;
+	background-color: var(--color);
+	border: none;
+	border-radius: 1.6rem;
+	padding: 1rem;
+	font-family: 'EksellDisplaySmall';
+	font-size: 0.9rem;
+	width: 10rem;
+	transition: all ease 0.3s;
+}
+
+#email-contact:focus {
+	outline: 0;
+}
+
 #tagline {
 	color: var(--color);
 }
@@ -141,7 +171,6 @@ body {
 .home-block:hover {
 	border-radius: 1rem;
 	transform: scale(1.1);
-	/*font-style: italic;*/
 }
 
 a.home-block {

@@ -87,7 +87,8 @@ const buildHome = async () => {
 }
 
 const buildAbout = async () => {
-
+	console.log('Building about page...')
+	return
 }
 
 const buildBlogIndex = async () => {

@@ -145,6 +145,7 @@ body {
 	padding: 1rem;
 	font-family: 'EksellDisplaySmall';
 	font-size: 0.9rem;
+	font-weight: lighter;
 	width: 10rem;
 	transition: all ease 0.3s;
 }

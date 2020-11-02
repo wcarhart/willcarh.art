@@ -61,6 +61,11 @@ const buildGenerationHeader = async (template) => {
 	return data
 }
 
+// TODO: add options to replace the following:
+// {{css:...}}
+// {{ico:...}}
+// {{font:...}}
+
 // resolve {{cdn:...}} tags to images
 const resolveImages = async (data) => {
 	const cdn = config.cdn

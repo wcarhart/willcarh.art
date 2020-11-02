@@ -8,6 +8,7 @@
 :root {
 	--background: #ecf0f1;
 	--detail: #bdc3c7;
+	--subtitle: #6A6C6E;
 	--color: #e67e22;
 	--text: #252323;
 	--toggle: url(../ico/dark-mode-toggle-light.png);
@@ -17,6 +18,7 @@
 	/*--background: #252323;*/
 	--background: #292929;
 	--detail: #34495e;
+	--subtitle: #8895A1;
 	/*--color: #442c73;*/
 	--color: #6642ac;
 	/*--color: #662113;*/
@@ -114,20 +116,57 @@ body {
 
 #content-main h1 {
 	font-size: 5rem !important;
-	text-align: center;
+}
+
+#intro-lead {
+	margin-left: 3rem;
+	color: var(--color);
+	font-size: 1.2rem;
+}
+
+#intro-subtitle {
+	font-size: 4rem !important;
+}
+
+.subtitle-text {
+	color: var(--subtitle);
 }
 
 #content-body {
 	position: relative;
-	background-color: var(--detail);
+	/*background-color: var(--detail);*/
 	display: table;
 	margin: 0 auto;
 	width: 100%;
-	height: 15rem;
+	top: 2rem;
+	/*height: 15rem;*/
 }
 
 #profile-container {
 	width: 75%;
-	display: table;
-	margin: 0 auto;
+}
+
+#profile-img-container {
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+}
+
+#profile-img-container img {
+	margin: auto;
+	display: block;
+	width: 10rem;
+	max-width: 10rem;
+	height: 10rem;
+	max-height: 10rem;
+	border-radius: 10rem;
+}
+
+#profile-about-container {
+	padding: 1rem;
+	width: 25rem;
+}
+
+#tagline {
+	color: var(--color);
 }

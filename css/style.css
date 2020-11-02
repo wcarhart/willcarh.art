@@ -10,7 +10,7 @@
 	--detail: #bdc3c7;
 	--color: #e67e22;
 	--text: #252323;
-	--toggle: url(ico/dark-mode-toggle-light.png);
+	--toggle: url(../ico/dark-mode-toggle-light.png);
 }
 
 :root.dark-mode {
@@ -21,32 +21,32 @@
 	--color: #6642ac;
 	/*--color: #662113;*/
 	--text: #ecf0f1;
-	--toggle: url(ico/dark-mode-toggle-dark.png);
+	--toggle: url(../ico/dark-mode-toggle-dark.png);
 }
 
 @font-face {
 	font-family: 'EksellDisplayLarge';
 	font-style: normal;
 	font-weight: normal;
-	src: url(font/eksell_display_large.otf) format('opentype');
+	src: url(../font/eksell_display_large.otf) format('opentype');
 }
 @font-face {
 	font-family: 'EksellDisplayMedium';
 	font-style: normal;
 	font-weight: normal;
-	src: url(font/eksell_display_medium.otf) format('opentype');
+	src: url(../font/eksell_display_medium.otf) format('opentype');
 }
 @font-face {
 	font-family: 'EksellDisplaySmall';
 	font-style: normal;
 	font-weight: normal;
-	src: url(font/eksell_display_small.otf) format('opentype');
+	src: url(../font/eksell_display_small.otf) format('opentype');
 }
 @font-face {
 	font-family: 'EksellDisplayStencil';
 	font-style: normal;
 	font-weight: normal;
-	src: url(font/eksell_display_stencil.otf) format('opentype');
+	src: url(../font/eksell_display_stencil.otf) format('opentype');
 }
 
 html {
@@ -176,7 +176,6 @@ a.home-block {
 	position: absolute;
 	top: 50%;
 	width: 100%;
-	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
 

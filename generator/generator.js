@@ -18,7 +18,6 @@ const verifyContentFileStructure = async () => {
 const validateBuild = async () => {
 	console.log('Validating built pages...')
 	await fs.promises.access('index.html')
-	await fs.promises.access('style.css')
 	await fs.promises.access('src/about.html')
 	await fs.promises.access('src/blog_index.html')
 	await fs.promises.access('src/project_index.html')
@@ -28,8 +27,8 @@ const validateBuild = async () => {
 
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
-	let tree = '.\n├── index.html\n├── style.css'
-	tree += await buildTrees(['font', 'ico', 'src'])
+	let tree = '.\n├── index.html'
+	tree += await buildTrees(['font', 'ico', 'css', 'src'])
 	console.log(tree)
 }
 
@@ -107,7 +106,6 @@ const main = async () => {
 		}
 		await generateFileTree()
 	} catch (e) {
-		console.log(e)
 		console.log(e.stack)
 		process.exit(1)
 	}

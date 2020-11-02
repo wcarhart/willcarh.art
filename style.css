@@ -1,14 +1,122 @@
+/*uncomment this line for debugging*/
+/** {
+	outline: solid 0.25rem;
+}*/
+
+:root {
+	--background: #ecf0f1;
+	--detail: #bdc3c7;
+	--color: #e67e22;
+	--text: #252323;
+	--toggle: url(ico/dark-mode-toggle-light.png);
+}
+
+:root.dark-mode {
+	--background: #252323;
+	--detail: #34495e;
+	--color: #442c73;
+	--text: #ecf0f1;
+	--toggle: url(ico/dark-mode-toggle-dark.png);
+}
+
 @font-face {
-	font-family: 'EskellDisplayMedium';
+	font-family: 'EksellDisplayLarge';
 	font-style: normal;
 	font-weight: normal;
-	src: url(font/eksell_display_medium.otf) format("opentype");
+	src: url(font/eksell_display_large.otf) format('opentype');
+}
+@font-face {
+	font-family: 'EksellDisplayMedium';
+	font-style: normal;
+	font-weight: normal;
+	src: url(font/eksell_display_medium.otf) format('opentype');
+}
+@font-face {
+	font-family: 'EksellDisplaySmall';
+	font-style: normal;
+	font-weight: normal;
+	src: url(font/eksell_display_small.otf) format('opentype');
+}
+@font-face {
+	font-family: 'EksellDisplayStencil';
+	font-style: normal;
+	font-weight: normal;
+	src: url(font/eksell_display_stencil.otf) format('opentype');
+}
+
+html {
+	height: 100%;
 }
 
 body {
-	font-family: 'EskellDisplayMedium' !important;
+	font-family: 'EksellDisplayMedium' !important;
+	overflow-x: hidden;
+	height: 100%;
+	color: var(--text) !important;
+	background: linear-gradient(45deg, var(--background) 50%, var(--color) 50%);
 }
 
-h1 {
+#content-main {
+	position: absolute;
+	z-index: 20;
+	top: 10%;
+	left: 10%;
+	bottom: 10%;
+	right: 10%;
+	/*background-color: var(--detail) !important;*/
+}
+
+#content-main h1 {
 	font-size: 5rem !important;
 }
+
+#logo {
+	position: absolute;
+	top: 0rem;
+	left: 0rem;
+	width: 3rem;
+	height: 3rem;
+	margin-top: 1rem;
+	margin-left: 1rem;
+}
+
+#logo-container {
+	position: absolute;
+	top: 0rem;
+	left: 0rem;
+	width: 5rem;
+	height: 5rem;
+	padding: 0rem;
+	margin-top: 2rem;
+	margin-left: 2rem;
+	background-color: var(--text);
+	border-radius: 2.5rem;
+}
+
+#dark-mode-toggle-container {
+	position: absolute;
+	top: 0rem;
+	right: 0rem;
+	z-index: 25;
+	background-color: transparent;
+	margin-top: 1rem;
+	margin-right: 1rem;
+}
+
+#dark-mode-toggle {
+	background-image: var(--toggle);
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	height: 3rem;
+	width: 3rem;
+	border: none;
+}
+
+#dark-mode-toggle:focus {
+	outline: 0;
+}
+
+/*h1 {
+	font-size: 5rem !important;
+}*/

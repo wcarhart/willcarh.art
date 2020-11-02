@@ -1,5 +1,6 @@
 // Update tagline text in HTML
 
+// type out new text
 const typeText = async (id, text) => {
 	let typedText = ''
 	while (text.length !== typedText.length) {
@@ -9,6 +10,7 @@ const typeText = async (id, text) => {
 	}
 }
 
+// backspace old text
 const untypeText = async (id, text) => {
 	let typedText = text
 	while (typedText.length > 0) {
@@ -18,17 +20,21 @@ const untypeText = async (id, text) => {
 	}
 }
 
+// taglines for 'about' page
 const aboutTaglines = [
 	'cool ',
 	'exciting ',
 	'impactful ',
 	'well-tested ',
+	'dynamic ',
 	'robust ',
 	'powerful ',
+	'quirky ',
 	'easy-to-use ',
-	'fun '
+	'fun ',
 ]
 
+// taglines for 'home' page
 const homeTaglines = [
 	'a software engineer. ',
 	'a tinkerer. ',
@@ -53,6 +59,7 @@ const homeTaglines = [
 	'a budding woodworker and DIY\'er. '
 ]
 
+// update taglines
 $(document).ready(async () => {
 	let taglines = null
 	if (window.location.pathname.split('/').pop().includes('about')) {

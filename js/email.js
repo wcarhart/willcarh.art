@@ -1,6 +1,4 @@
 // update copy email button based on hover and click
-
-
 $(document).ready(async () => {
 	let copyStatus = false
 	let animated = false

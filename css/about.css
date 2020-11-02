@@ -164,9 +164,29 @@ body {
 
 #profile-about-container {
 	padding: 1rem;
-	width: 25rem;
+	width: 30rem;
+}
+
+#profile-about-container p {
+	font-size: 1.2rem;
 }
 
 #tagline {
 	color: var(--color);
+}
+
+#email-contact {
+	background-color: var(--color);
+	color: var(--text);
+	border: none;
+	border-radius: 1.6rem;
+	padding: 1rem;
+	font-size: 0.9rem;
+	font-weight: lighter;
+	width: 10rem;
+	transition: all ease 0.3s;
+}
+
+#email-contact:focus {
+	outline: 0;
 }

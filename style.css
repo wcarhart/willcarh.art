@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,400;1,100;1,200;1,400&display=swap');
+
 /*uncomment this line for debugging*/
 /** {
 	outline: solid 0.25rem;
@@ -45,18 +47,6 @@
 	font-style: normal;
 	font-weight: normal;
 	src: url(font/eksell_display_stencil.otf) format('opentype');
-}
-@font-face {
-	font-family: 'GeomanistRegular';
-	font-style: normal;
-	font-weight: normal;
-	src: url(font/geomanist_regular.otf) format('opentype');
-}
-@font-face {
-	font-family: 'GeomanistRegular';
-	font-style: italic;
-	font-weight: normal;
-	src: url(font/geomanist_regular_italic.otf) format('opentype');
 }
 
 html {
@@ -143,7 +133,8 @@ body {
 	border: none;
 	border-radius: 1.6rem;
 	padding: 1rem;
-	font-family: 'EksellDisplaySmall';
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold !important;
 	font-size: 0.9rem;
 	font-weight: lighter;
 	width: 10rem;

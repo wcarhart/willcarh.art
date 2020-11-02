@@ -5,5 +5,8 @@
   "main": "generator/generator.js",
   "repository": "git@github.com:wcarhart/willcarh.art.git",
   "author": "Will Carhart <carhartwill@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "html": "^1.0.0"
+  }
 }

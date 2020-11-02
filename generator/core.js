@@ -3,6 +3,7 @@ const html = require('html')
 const util = require('util')
 
 const readdirPromise = util.promisify(fs.readdir)
+const copyFilePromise = util.promisify(fs.copyFile)
 
 class Blog {
 	constuctor({
@@ -29,7 +30,7 @@ class Project {
 		blurb='',
 		description='',
 		technologies=[],
-		source=''
+		source='',
 		install='',
 		documentation='',
 		cover='',
@@ -61,6 +62,10 @@ const generate = async (page) => {
 	}
 }
 
+const buildHome = async () => {
+	await fs.copyFile('templates/home.html', 'index.html')
+}
+
 const buildBlogIndex = async () => {
 	return
 }
@@ -80,7 +85,7 @@ const buildProjectPages = async () => {
 }
 
 const findFiles = async (kind) => {
-	let files = await readdirPromise(`../content/${kind}`)
+	let files = await readdirPromise(`content/${kind}`)
 	files = files.flatMap(file => file !== 'index.md' ? file : [])
 	return files
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,400;1,100;1,200;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
 
 /*uncomment this line for debugging*/
 /** {
@@ -133,8 +133,7 @@ body {
 	border: none;
 	border-radius: 1.6rem;
 	padding: 1rem;
-	font-family: 'Raleway', sans-serif;
-	font-weight: bold !important;
+	font-family: 'Playfair Display', sans-serif;
 	font-size: 0.9rem;
 	font-weight: lighter;
 	width: 10rem;

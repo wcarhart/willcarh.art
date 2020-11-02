@@ -130,6 +130,7 @@ body {
 	right: 5rem;
 	top: 1.05rem;
 	background-color: var(--color);
+	color: var(--text);
 	border: none;
 	border-radius: 1.6rem;
 	padding: 1rem;

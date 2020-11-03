@@ -1,6 +1,9 @@
 // toggle experience modals on about page
 
 // init tabs
+$(document).ready(async () => {
+	$('#exp-content-container').css('height', $('.exp-active').height())
+})
 
 // handle new click on experience
 $(document).ready(async () => {

@@ -65,6 +65,10 @@ const buildGenerationHeader = async (template) => {
 // {{css:...}}
 // {{ico:...}}
 // {{font:...}}
+// {{content:...}}
+//   can be one of exp_all, proj_all, proj_feat, blog_all, blog_latest, blog_feat
+// {{sys:...}} --> e.g. {{sys:header}}
+// {{cdn:...}}
 
 // resolve {{cdn:...}} tags to images
 const resolveImages = async (data) => {
@@ -93,6 +97,7 @@ const generate = async (page) => {
 	}
 	switch (page) {
 		case 'home':
+			await buildPageFromTemplate('templates/home.html', 'index.html')
 			await buildHome()
 			break
 		case 'about':
@@ -111,6 +116,12 @@ const generate = async (page) => {
 		default:
 			throw new Exception(`Unknown page '${page}'`)
 	}
+}
+
+const buildPageFromTemplate = async (template, page) {
+	let data = readFilePromise(template)
+	data = data.toString()
+
 }
 
 // TODO: this will get repetitive very fast
@@ -147,7 +158,9 @@ const buildBlogPosts = async () => {
 
 const buildProjectIndex = async () => {
 	console.log('Building projects...')
-	return
+	let data = await buildGenerationHeader('templates/project_index.html')
+	data = await resolveImages(data)
+	await writeFilePromise('src/project_index.html', data)
 }
 
 const buildProjectPages = async () => {

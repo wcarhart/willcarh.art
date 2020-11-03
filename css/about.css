@@ -211,6 +211,10 @@ li {
 	height: 6rem;
 }
 
+.spacer-small {
+	height: 2rem;
+}
+
 #about-me-container a {
 	color: var(--color) !important;
 }
@@ -222,6 +226,10 @@ li {
 
 .highlight-text {
 	color: var(--color) !important;
+}
+
+#section-3 h2 {
+	padding-bottom: 0.8rem;
 }
 
 .exp-selector {
@@ -244,8 +252,12 @@ li {
 	font-style: normal !important;
 }
 
+.exp-selector-active h4 {
+	border-bottom: solid 0.1rem var(--text) !important;
+}
+
 #exp-selector-container {
-	border-right: solid 0.1rem;
+	border-right: solid 0.1rem var(--text);
 	padding-right: 1rem;
 }
 
@@ -281,4 +293,48 @@ li {
 
 .exp-tidbit {
 	color: var(--subtitle) !important;
+}
+
+.button-container {
+	display: table;
+	margin: 0 auto;
+}
+
+.button-content {
+	padding: 1rem;
+	border-radius: 1.6rem;
+	background-color: var(--color);
+	color: var(--text);
+}
+
+.button-container a:hover {
+	text-decoration: none !important;
+	font-style: italic;
+}
+
+#credits {
+	text-align: center;
+	width: 100%;
+	display: table;
+	margin: 0 auto;
+}
+
+#credits div {
+	display: inline-block;
+}
+
+.svg-inline--fa.fa-w-14 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+.svg-inline--fa.fa-w-12 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+#credits a {
+	color: var(--text);
+	padding: 0;
+	margin: 0;
 }

@@ -10,7 +10,7 @@
 		<meta name="twitter:card" value="summary" />
 		<meta property="og:name" content="willcarh.art" />
 		<meta property="og:url" content="https://willcarh.art/about" />
-		<meta property="og:image" content="ico/android-chrome-512x512.png" />
+		<meta property="og:image" content="../ico/android-chrome-512x512.png" />
 		<meta property="og:type" content="website" />
 		<meta property="og:description" content="About Will Carhart" />
 		<meta property="og:locale" content="en_US" />
@@ -53,7 +53,6 @@
 			<p id="intro-lead">hi there, my name is</p>
 			<h1>Will Carhart.</h1>
 			<h1 id="intro-subtitle" class="subtitle-text">I build <span id="tagline">cool</span> software.</h1>
-			<!-- <h1>About</h1> -->
 			<div id="content-body">
 				<div class="section" id="section-0">
 					<div class="row">
@@ -131,10 +130,11 @@
 
 				<div class="spacer"></div>
 
-				<!-- TODO: read from content/about/index.md -->
 				<div class="section" id="section-3">
 					<h2>A Brief History.</h2>
 					<div id="exp-container" class="row">
+						<!-- TODO: read from content/about/index.md -->
+						<!-- {{content:exp}} -->
 						<div id="exp-selector-container" class="col-md-2">
 							<a id="exp-selector-wisk" class="exp-selector exp-selector-active">
 								<h4>Wisk</h4>
@@ -171,6 +171,7 @@
 							</div>
 							<div id="exp-details-illumina" class="exp-content exp-hidden">
 								<h4>Software Engineer, Automation</h4>
+								<h4>Software Engineer Intern, Automation</h4>
 								<h6>May 2018 - Oct 2019</h6>
 								<ul>
 									<li class="content-text">Designed and implemented a new data-structure in Python to optimize and manage terabytes of genomic data in AWS S3, <span class="highlight-text">reducing cloud storage costs by over 50%</span>, utilizing AWS Lambda, SNS, and CloudWatch</li>
@@ -237,17 +238,42 @@
 						<div class="col-md-6">
 							<h2>Stuff I've Built.</h2>
 							<p class="content-text">For me, coding is as much a hobby as it is a career. Here's a few things I've built.</p>
+							<div class="row">
+								<div class="button-container">
+									<a href="project_index.html">
+										<div class="button-content">projects &nbsp;🏗</div>
+									</a>
+								</div>
+
+								<div class="button-container">
+									<a href="blog_index.html">
+										<div class="button-content">blog &nbsp;📖</div>
+									</a>
+								</div>
+							</div>
 							<!-- TODO: figure out better look for buttons -->
-							<!-- TODO: add link to projects index -->
 						</div>
 						<div class="col-md-3"></div>
 					</div>
 				</div>
+
+				<div class="spacer"></div>
+
+				<div class="section" id="section-5">
+					<div id="credits" class="row">
+						<a id="github-icon" href="https://github.com/wcarhart" target="_blank"><i class="fab fa-github" data-fa-transform="left-6"></i></a>
+						<a id="stackoverflow-icon" href="https://stackoverflow.com/users/6246128/wcarhart" target="_blank"><i class="fab fa-stack-overflow"></i></a>
+						<a id="linkedin-icon" href="https://linkedin.com/in/willcarhart" target="_blank"><i class="fab fa-linkedin" data-fa-transform="left-2"></i></a>
+						<div style="text-align:center">&copy;&nbsp; Will Carhart <span id="year"></span></div>
+					</div>
+				</div>
+
+				<div class="spacer-small"></div>
 			</div>
 		</div>
 
 		<!-- logo -->
-		<a id="logo-container" href="https://willcarh.art">
+		<a id="logo-container" href="../index.html">
 			<img id="logo" alt="willcarh.art logo" src="../ico/android-chrome-512x512.png">
 		</a>
 

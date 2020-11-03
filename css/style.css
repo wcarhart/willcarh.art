@@ -198,6 +198,11 @@ a.home-block {
 	margin-right: 0.5rem;
 }
 
+.svg-inline--fa.fa-w-12 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
 #credits a {
 	color: var(--text);
 	padding: 0;

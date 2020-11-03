@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab&display=swap');
 
 /*uncomment this line for debugging*/
 /** {
@@ -15,13 +16,10 @@
 }
 
 :root.dark-mode {
-	/*--background: #252323;*/
 	--background: #292929;
 	--detail: #34495e;
 	--subtitle: #8895A1;
-	/*--color: #442c73;*/
 	--color: #6642ac;
-	/*--color: #662113;*/
 	--text: #ecf0f1;
 	--toggle: url(../ico/dark-mode-toggle-dark.png);
 }
@@ -58,6 +56,23 @@ body {
 	background-color: var(--background) !important;
 }
 
+ul {
+	list-style: none;
+}
+
+ul li::before {
+	content: "\2022";
+	color: var(--color);
+	font-weight: bold;
+	display: inline-block;
+	width: 1em;
+	margin-left: -1em;
+}
+
+li {
+	color: var(--subtitle);
+}
+
 #logo {
 	position: absolute;
 	top: 0rem;
@@ -69,7 +84,8 @@ body {
 }
 
 #logo-container {
-	position: absolute;
+	position: fixed;
+	z-index: 50;
 	top: 0rem;
 	left: 0rem;
 	width: 5rem;
@@ -82,7 +98,7 @@ body {
 }
 
 #dark-mode-toggle-container {
-	position: absolute;
+	position: fixed;
 	top: 0rem;
 	right: 0rem;
 	z-index: 25;
@@ -132,6 +148,11 @@ body {
 	color: var(--subtitle);
 }
 
+.content-text {
+	color: var(--subtitle);
+	font-size: 1.2rem;
+}
+
 #content-body {
 	position: relative;
 	/*background-color: var(--detail);*/
@@ -166,10 +187,6 @@ body {
 	width: 30rem;
 }
 
-#profile-about-container p {
-	font-size: 1.2rem;
-}
-
 #tagline {
 	color: var(--color);
 }
@@ -188,4 +205,35 @@ body {
 
 #email-contact:focus {
 	outline: 0;
+}
+
+.spacer {
+	height: 6rem;
+}
+
+#about-me-container a {
+	color: var(--color) !important;
+}
+
+#about-me-container a:hover {
+	text-decoration: none;
+	font-style: italic;
+}
+
+.highlight-text {
+	color: var(--color) !important;
+}
+
+.exp-container {
+	background-color: var(--color);
+	border-radius: 1rem;
+	padding-top: 1rem;
+	padding-bottom: 0.5rem;
+	margin-bottom: 1rem;
+	text-align: center;
+}
+
+.exp-container:hover .exp-container h4 {
+	/*outline: 0.2rem solid var(--text);*/
+	color: var(--text) !important;
 }

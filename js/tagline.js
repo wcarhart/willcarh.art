@@ -34,7 +34,8 @@ const aboutTaglines = [
 	'fun ',
 	'mission critical ',
 	'secure ',
-	'customer oriented '
+	'customer oriented ',
+	'revolutionary '
 ]
 
 // taglines for 'home' page

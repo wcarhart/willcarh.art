@@ -224,16 +224,61 @@ li {
 	color: var(--color) !important;
 }
 
-.exp-container {
-	background-color: var(--color);
-	border-radius: 1rem;
-	padding-top: 1rem;
-	padding-bottom: 0.5rem;
-	margin-bottom: 1rem;
-	text-align: center;
+.exp-selector {
+	color: var(--text);
 }
 
-.exp-container:hover .exp-container h4 {
-	/*outline: 0.2rem solid var(--text);*/
-	color: var(--text) !important;
+.exp-selector h4 {
+	margin-bottom: 0.8rem;
+}
+
+.exp-selector:hover {
+	text-decoration: none;
+	font-style: italic;
+	color: var(--color) !important;
+	cursor: pointer;
+}
+
+.exp-selector-active {
+	color: var(--color) !important;
+	font-style: normal !important;
+}
+
+#exp-selector-container {
+	border-right: solid 0.1rem;
+	padding-right: 1rem;
+}
+
+#exp-content-container {
+	padding-left: 1rem;
+}
+
+.exp-content {
+	position: absolute;
+	width: 40rem;
+}
+
+.exp-active {
+	visibility: visible;
+}
+
+.exp-hidden {
+	visibility: hidden;
+}
+
+.exp-tidbit-handle {
+	margin: 0;
+}
+
+.exp-link {
+	color: var(--color) !important;
+}
+
+.exp-link:hover {
+	text-decoration: none;
+	font-style: italic;
+}
+
+.exp-tidbit {
+	color: var(--subtitle) !important;
 }

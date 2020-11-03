@@ -44,6 +44,7 @@
 		<script src="../js/year.js"></script>
 		<script src="../js/email.js"></script>
 		<script src="../js/profilephoto.js"></script>
+		<script src="../js/expselector.js"></script>
 	</head>
 	<body>
 
@@ -77,7 +78,7 @@
 						<div class="col-md-3"></div>
 						<div id="about-me-container" class="col-md-6">
 							<h2>About Me.</h2>
-							<p class="content-text">Originally from the Silicon Valley, I migrated down to San Diego for college at the <a href="https://sandiego.edu" target="_blank">University of San Diego</a>. I've worked on a variety of software teams doing a variety of software things, from <a href="https://qolsys.com/" target="_blank">home security</a> to <a href="https://wisk.aero/" target="_blank">autonomous aircraft</a>. I'm passionate about using software to find creative solutions to complex problems.</p>
+							<p class="content-text">Originally from the Silicon Valley, I migrated down to San Diego for college at the <a href="https://sandiego.edu" target="_blank">University of San Diego</a>. I've worked on a variety of software teams doing a variety of software things, from <a href="https://qolsys.com/" target="_blank">home security</a> to <a href="https://www.illumina.com" target="_blank">DNA sequencing</a> to <a href="https://wisk.aero/" target="_blank">autonomous aircraft</a>. I'm passionate about using software to find creative solutions to complex problems.</p>
 							<p class="content-text">Outside of work, I still like to code. When I'm not coding, you can find me playing my ukulele and keyboard, planning new woodworking projects, or tending to my house plants.</p>
 						</p>
 						</div>
@@ -91,7 +92,7 @@
 					<div class="row">
 						<div class="col-md-3">
 							<h2>&nbsp;</h2>
-							<h4>Tools I work with on the daily.</h4>
+							<h4>Things I work with on the daily.</h4>
 							<div class="row">
 								<ul>
 									<li>Node, Express</li>
@@ -133,66 +134,79 @@
 				<!-- TODO: read from content/about/index.md -->
 				<div class="section" id="section-3">
 					<h2>A Brief History.</h2>
-					<div class="row">
-						<div class="col-md-2">
-							<div class="exp-selector">
+					<div id="exp-container" class="row">
+						<div id="exp-selector-container" class="col-md-2">
+							<a id="exp-selector-wisk" class="exp-selector exp-selector-active">
 								<h4>Wisk</h4>
-							</div>
-							<div class="exp-selector">
+							</a>
+							<a id="exp-selector-illumina" class="exp-selector">
 								<h4>Illumina</h4>
-							</div>
-							<div class="exp-selector">
+							</a>
+							<a id="exp-selector-starlit" class="exp-selector">
 								<h4>Starlit Software</h4>
-							</div>
-							<div class="exp-selector">
+							</a>
+							<a id="exp-selector-qolsys" class="exp-selector">
 								<h4>Qolsys</h4>
-							</div>
-							<div class="exp-selector">
+							</a>
+							<a id="exp-selector-usd" class="exp-selector">
 								<h4>University of San Diego</h4>
+							</a>
+						</div>
+						<div id="exp-content-container" class="col-md-10">
+							<div id="exp-details-wisk" class="exp-content exp-active">
+								<h4>Software Engineer, Infrastructure</h4>
+								<h6>Since Nov 2019</h6>
+								<ul>
+									<li class="content-text">Design, implement, and maintain in-house workflow management platform, which exposes and <span class="highlight-text">easy-to-use API</span>, <span class="highlight-text">scalable, scheduleable cloud compute</span> resources in GCP, and <span class="highlight-text">indexed artifacts</span>, all in Node.js</li>
+									<li class="content-text">Designed and implemented <span class="highlight-text">cloud architecture in GCP</span> for compiling and executing computation-heavy MATLAB scripts, managing MATLAB licenses, and uploading artifacts</li>
+									<li class="content-text">Modernized and rearchitected Python-based complex abort verification system for Wisk's flight simulator, moving from on-prem solution to Kubernetes-based solution in GKE, <span class="highlight-text">reducing job time from 72 hours to 30 minutes</span></li>
+									<li class="content-text">Drive consistent documentation, verbose logging, and ... for every project</li>
+								</ul>
+								<p class="exp-tidbit-handle">Languages and libraries: <span class="exp-tidbit">Node.js, Express.js, Bash, Python</span></p>
+								<p class="exp-tidbit-handle">Tools: <span class="exp-tidbit">git, GitHub, Jira, Confluence, Google Drive</span></p>
+								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Docker, Linux (Ubuntu), macOS</span></p>
+								<p class="exp-tidbit-handle">Infrastructure: <span class="exp-tidbit">GCP (Cloud Storage, Cloud Functions, Compute), Bamboo, Puppet, Kubernetes (GKE)</span></p>
+								<br>
+								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://wisk.aero" target="_blank">wisk.aero</a></p>
+							</div>
+							<div id="exp-details-illumina" class="exp-content exp-hidden">
+								<h4>Software Engineer, Automation</h4>
+								<h6>May 2018 - Oct 2019</h6>
+								<ul>
+									<li class="content-text">Designed and implemented a new data-structure in Python to optimize and manage terabytes of genomic data in AWS S3, <span class="highlight-text">reducing cloud storage costs by over 50%</span>, utilizing AWS Lambda, SNS, and CloudWatch</li>
+									<li class="content-text">Designed and implemented custom compression algorithm, in Python, to more efficiently compress specific genomic data types, utilizing multiple threads and <span class="highlight-text">reducing filesize by over 90%</span></li>
+									<li class="content-text">Automated the testing framework for the Clinical Oncology team, writing Bash and Python scripts to mimic standard interfaces in the team's <span class="highlight-text">20+ step Docker-in-Docker genomic workflow</span></li>
+								</ul>
+								<p class="exp-tidbit-handle">Languages and libraries: <span class="exp-tidbit">Python, Bash, PostgreSQL</span></p>
+								<p class="exp-tidbit-handle">Tools: <span class="exp-tidbit">git, GitHub, Jira, Confluence, Jama</span></p>
+								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Docker, Linux (centOS), Windows 10</span></p>
+								<p class="exp-tidbit-handle">Infrastructure: <span class="exp-tidbit">AWS (S3, EC2, SNS, Lambda), Jenkins, GNU Make</span></p>
+								<br>
+								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://www.illumina.com" target="_blank">illumina.com</a></p>
+							</div>
+							<div id="exp-details-starlit" class="exp-content exp-hidden">
+								<h4>Web Developer Intern</h4>
+								<h6>Summer 2017</h6>
+								<ul>
+									<li class="content-text">Built <span class="highlight-text">responsive webpages</span> for various clients using HTML5, CSS3, and React</li>
+									<li class="content-text">Maintained and updated documentation for production web apps.</li>
+									<li class="content-text">Troubleshot Elixir backend, <span class="highlight-text">managed Docker delopyments</span></li>
+								</ul>
+								<p class="exp-tidbit-handle">Languages and libraries: <span class="exp-tidbit">React, HTML5, CSS3, Elixir</span></p>
+								<p class="exp-tidbit-handle">Tools: <span class="exp-tidbit">git, GitHub, Trello</span></p>
+								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Docker</span></p>
+								<br>
+								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://www.starlitsoftware.com" target="_blank">starlitsoftware.com</a></p>
+							</div>
+							<div id="exp-details-qolsys" class="exp-content exp-hidden">
+								<h4>Software Engineer Intern</h4>
+								<h6>Summer 2016</h6>
+							</div>
+							<div id="exp-details-usd" class="exp-content exp-hidden">
+								<h4>B.S. Computer Science</h4>
+								<h6>2014 - 2018</h6>
 							</div>
 						</div>
-						<div class="col-md-10">
-							<div id="exp-details-wisk" id="exp-content">
-								<h4>Wisk</h4>
-								<h6>Nov 2019 - present</h6>
-							</div>
-						</div>
-						<!-- <div class="col">
-							<h2>A Brief History.</h2>
-							<div class="row">
-								<div class="col-md-10"></div>
-								<div class="col-md-2 exp-container">
-									<h4>Wisk</h4>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-7"></div>
-								<div class="col-md-3 exp-container">
-									<h4>Illumina</h4>
-								</div>
-								<div class="col-md-2"></div>
-							</div>
-							<div class="row">
-								<div class="col-md-5"></div>
-								<div class="col-md-1 exp-container">
-									<h4>Starlit</h4>
-								</div>
-								<div class="col-md-6"></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"></div>
-								<div class="col-md-1 exp-container">
-									<h4>Qolsys</h4>
-								</div>
-								<div class="col-md-8"></div>
-							</div>
-							<div class="row">
-								<div class="col-md-7 exp-container">
-									<h4>University of San Diego</h4>
-								</div>
-								<div class="col-md-5"></div>
-							</div>
-						</div> -->
 					</div>
 				</div>
 

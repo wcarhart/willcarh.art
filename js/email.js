@@ -5,7 +5,7 @@ $(document).ready(async () => {
 	$('#email-contact').hover(async () => {
 		if (!copyStatus && !animated) {
 			$('#email-contact span').fadeOut( "fast", async () => {
-				$('#email-contact span').html('<span>copy email 🖨</span>')
+				$('#email-contact span').html('<span>copy email &nbsp;🖨</span>')
 				$('#email-contact span').fadeIn( "fast", async () => {
 					animated = true
 				})
@@ -14,7 +14,7 @@ $(document).ready(async () => {
 	}, async () => {
 		if (!copyStatus) {
 			$('#email-contact span').fadeOut( "fast", async () => {
-				$('#email-contact span').html('<span>say hello 👋</span>')
+				$('#email-contact span').html('<span>say hello &nbsp;👋</span>')
 				$('#email-contact span').fadeIn( "fast", async () => {
 					animated = false
 				})
@@ -32,10 +32,10 @@ $(document).ready(async () => {
 		el.select()
 		document.execCommand('copy')
 		document.body.removeChild(el)
-		$('#email-contact span').html('<span>copied ✓</span>')
+		$('#email-contact span').html('<span>copied &nbsp;✓</span>')
 		await new Promise(res => setTimeout(res, 2000))
 		$('#email-contact span').fadeOut( "fast", async () => {
-			$('#email-contact span').html('<span>say hello 👋</span>')
+			$('#email-contact span').html('<span>say hello &nbsp;👋</span>')
 			$('#email-contact span').fadeIn( "fast", async () => {
 				copyStatus = false
 				animated = false

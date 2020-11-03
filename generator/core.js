@@ -126,6 +126,11 @@ const buildAbout = async () => {
 	let data = await buildGenerationHeader('templates/about.html')
 	data = await resolveImages(data)
 	await writeFilePromise('src/about.html', data)
+
+	// let jsData = await readFilePromise('js/profilephoto.js')
+	// jsData = jsData.toString()
+	// jsData = await resolveImages(jsData)
+	// await writeFilePromise('src/about.html', jsData)
 }
 
 const buildBlogIndex = async () => {

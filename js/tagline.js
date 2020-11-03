@@ -32,6 +32,9 @@ const aboutTaglines = [
 	'quirky ',
 	'easy-to-use ',
 	'fun ',
+	'mission critical ',
+	'secure ',
+	'customer oriented '
 ]
 
 // taglines for 'home' page

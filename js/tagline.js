@@ -30,6 +30,7 @@ const aboutTaglines = [
 	'dynamic ',
 	'robust ',
 	'simple, clean ',
+	'well-documented ',
 	'powerful ',
 	'quirky ',
 	'modern ',
@@ -40,7 +41,8 @@ const aboutTaglines = [
 	'mission critical ',
 	'secure ',
 	'customer oriented ',
-	'revolutionary '
+	'revolutionary ',
+	'modular '
 ]
 
 // taglines for 'home' page

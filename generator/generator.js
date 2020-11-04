@@ -40,10 +40,8 @@ const buildTrees = async (dirs) => {
 	for (let [index, dir] of dirs.entries()) {
 		if (index === dirs.length - 1) {
 			tree += await buildTreeString(dir, true)
-			// tree += await buildTreeString(dir, '', false, '')
 		} else {
 			tree += await buildTreeString(dir, false)
-			// tree += await buildTreeString(dir, '', true, '')
 		}
 	}
 	return tree
@@ -98,6 +96,7 @@ const parseArgs = async (args) => {
 
 const main = async () => {
 	try {
+		const startTime = new Date().getTime()
 		const args = await parseArgs(process.argv.slice(2))
 		if (args.develop !== true) {
 			await verifyContentFileStructure()
@@ -112,6 +111,8 @@ const main = async () => {
 			await validateBuild()
 		}
 		await generateFileTree()
+		const endTime = new Date().getTime()
+		console.log(`✨  Done in ${(endTime - startTime) / 1000} seconds`)
 	} catch (e) {
 		console.log(e.stack)
 		process.exit(1)

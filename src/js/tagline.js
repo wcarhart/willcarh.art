@@ -25,16 +25,16 @@ const aboutTaglines = [
 	'cool ',
 	'exciting ',
 	'impactful ',
-	'well-tested ',
+	'well tested ',
 	'maintainable ',
 	'dynamic ',
 	'robust ',
 	'simple, clean ',
-	'well-documented ',
+	'well documented ',
 	'powerful ',
 	'quirky ',
 	'modern ',
-	'easy-to-use ',
+	'user friendly ',
 	'reliable ',
 	'fun ',
 	'performant ',
@@ -42,7 +42,8 @@ const aboutTaglines = [
 	'secure ',
 	'customer oriented ',
 	'revolutionary ',
-	'modular '
+	'modular ',
+	'dependable'
 ]
 
 // taglines for 'home' page

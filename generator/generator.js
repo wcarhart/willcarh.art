@@ -9,10 +9,10 @@ const statPromise = util.promisify(fs.stat)
 // verify content markdown files are as expected
 const verifyContentFileStructure = async () => {
 	console.log('Verifying build content...')
-	await fs.promises.access('content/about.md')
-	await fs.promises.access('content/blog_index.md')
-	await fs.promises.access('content/project_index.md')
-	await fs.promises.access('content/app_index.md')
+	await fs.promises.access('content/experience.md')
+	await fs.promises.access('content/blogs.md')
+	await fs.promises.access('content/projects.md')
+	await fs.promises.access('content/apps.md')
 }
 
 // validate if generation was successful
@@ -101,12 +101,10 @@ const main = async () => {
 		if (args.develop !== true) {
 			await verifyContentFileStructure()
 		}
-		await core.generate('home')
-		await core.generate('about')
-		await core.generate('blog')
-		await core.generate('projects')
-		await core.generate('apps')
-		await core.generate('scripts')
+		assets = ['home', 'about', 'blog', 'projects', 'apps', 'scripts', 'vault']
+		for (let asset of assets) {
+			await core.generate(asset)
+		}
 		if (args.develop !== true) {
 			await validateBuild()
 		}

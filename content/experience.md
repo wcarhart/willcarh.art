@@ -10,7 +10,6 @@ language_and_libraries: Node.js, Express.js, Bash, Python
 tools: git, GitHub, Jira, Confluence, Google Drive
 platforms: Docker, Linux (Ubuntu), macOS
 infrastructure: GCP (Cloud Storage, Cloud Functions, Compute), Bamboo, Puppet, Kubernetes (GKE)
-learn_more: wisk.aero
 url: https://wisk.aero
 
 company: Illumina
@@ -24,7 +23,6 @@ languages_and_libraries: Node.js, Express.js, Bash, Python
 tools: git, GitHub, Jira, Confluence, Google Drive
 platforms: Docker, Linux (Ubuntu), macOS
 infrastructure: GCP (Cloud Storage, Cloud Functions, Compute), Bamboo, Puppet, Kubernetes (GKE)
-learn_more: illumina.com
 url: https://www.illumina.com
 
 company: Starlit Software
@@ -36,7 +34,6 @@ Troubleshot Elixir backend, **managed Docker delopyments**
 languages_and_libraries: React, HTML5, CSS3, Elixir
 tools: git, GitHub, Trello
 platforms: Docker, Linux
-learn_more: starlitsoftware.com
 url: https://www.starlitsoftware.com
 
 company: Qolsys
@@ -46,18 +43,16 @@ Architected suite of Bash scripts to **emulate poor networking conditions** usin
 Automated QA networking testing and **accelerated response time** to customer networking complaints
 languages_and_libraries: Bash
 platforms: Linux, Busybox, Android
-learn_more: qolsys.com
 url: https://www.qolsys.com
 
 company: University of San Diego
 title: B.S. Computer Science
 date: 2014 - 2018
 Graduated **magna cum laude** with a B.S. in Computer Science and a minor in Mathematics
-Led a four person team to develop an iOS application to find nearby happy hours at bars and restaurants in San Diego - contributed the majority of the code, moving the team through **user story generation**, **design proposals**, and **software development** - utilizing Swift 4, Objective-C, iOS 11, Firebase database, CoreLocation, and Yelp, Uber, and Lyft APIs
+Led a four person team to develop an iOS application to find nearby happy hours at bars and restaurants in San Diego - contributed the majority of the code, moving the team through **user story generation**, **design proposals**, and **software development** - utilizing Swift 4, Objective-C, iOS 11, Firebase, CoreLocation, and Yelp, Uber, and Lyft APIs
 Wrote a plethora of other software tools, including **lightweight servers**, **DNS resolvers**, audio streaming applications, a VPN powered by **Dijkstra's Algorithm**, and much more
 languages_and_libraries: Java, Python, Swift, C, Ruby/Rails
 tools: git, GitHub
 platforms: Linux (Red Hat), iOS, Windows 8, macOS
 infrastructure: Firebase, GNU Make
-learn_more: sandiego.edu
 url: https://sandiego.edu

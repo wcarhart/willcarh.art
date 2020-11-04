@@ -2,6 +2,8 @@ const fs = require('fs')
 const html = require('html')
 const util = require('util')
 
+const minify = require('minify');
+
 const config = require('../config.json')
 const package = require('../package.json')
 
@@ -36,14 +38,18 @@ class Project {
 	constuctor({
 		name='',
 		blurb='',
-		description='',
+		about=[],
+		languages=[],
 		technologies=[],
-		source='',
+		img='',
+		repo='',
+		latestVersion='',
+		status='',
 		install='',
 		documentation='',
-		cover='',
-		links={},
-		content=[]
+		related=[],
+		featured=false,
+		tags=[]
 	}) {
 
 	}
@@ -51,12 +57,21 @@ class Project {
 
 // TODO
 class Experience {
-	constructor() {}
+	constructor({
+		company='',
+		title=[],
+		date='',
+		detail=[],
+		languagesAndLibraries=[],
+		tools=[],
+		platforms=[],
+		infrastructure=[],
+		url=''
+	}) {}
 }
 
-// TODO: add {{content:...}}
 /*
-Supported tags:
+Supported asset tags:
   {{css:...}}    --> static CSS file
   {{ico:...}}    --> static icon file
   {{font:...}}   --> static font file
@@ -65,6 +80,21 @@ Supported tags:
   {{cdn:...}}    --> file stored in CDN
   {{sys:header}} --> generated header
   {{sys:home}}   --> path to homepage
+*/
+
+
+// TODO
+/*
+Supported content tags:
+  {{content:exp:all}}       --> build interactive HTML for all experiences
+  {{content:exp:...}}       --> build interactive HTML for specific experience
+  {{content:proj:featured}} --> build interactive HTML for featured projects
+  {{content:proj:all}}      --> build interactive HTML for all projects
+  {{content:proj:...}}      --> build interactive HTML for specific project
+  {{content:blog:latest}}   --> build interactive HTML for latest blog post
+  {{content:blog:featured}} --> build interactive HTML for featured blog posts
+  {{content:blog:all}}      --> build interactive HTML for all blog posts
+  {{content:blog:...}}      --> build interactive HTML for specific blog post
 */
 
 // generate HTML files based on page type
@@ -100,11 +130,16 @@ const generate = async (page) => {
 			console.log('🖋  Building scripts...')
 			await buildScripts()
 			break
+		case 'vault':
+			console.log('🗄  Building vault...')
+			await buildVault()
+			break
 		default:
 			throw new Error(`Unknown page '${page}'`)
 	}
 }
 
+// build HTML page from template
 const buildPageFromTemplate = async ({template='', page='', isIndex=false}) => {
 	let data = await readFilePromise(template)
 	data = data.toString()
@@ -113,6 +148,7 @@ const buildPageFromTemplate = async ({template='', page='', isIndex=false}) => {
 	await writeFilePromise(page, data)
 }
 
+// build multiple pages in a repo
 const buildMultiplePages = async (kind) => {
 	let files = await findFiles({kind: kind})
 	for (let file of files) {
@@ -122,6 +158,8 @@ const buildMultiplePages = async (kind) => {
 	}
 }
 
+// TODO: minify scripts - should we minify HTML and CSS as well?
+// build JS scripts
 const buildScripts = async () => {
 	try {
 		await fs.promises.access('src/js')
@@ -134,8 +172,14 @@ const buildScripts = async () => {
 	}
 }
 
-const updateRedirects = async (from, to) => {
+// TODO
+const buildVault = async () => {
+	return
+}
 
+// TODO
+const updateRedirects = async (from, to) => {
+	return
 }
 
 // replace static asset tags in template

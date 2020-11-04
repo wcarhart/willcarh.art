@@ -19,6 +19,7 @@
 	margin-left: 2rem;
 	background-color: var(--text);
 	border-radius: 2.5rem;
+	z-index: 50;
 }
 
 /* TODO: this is still a little janky */

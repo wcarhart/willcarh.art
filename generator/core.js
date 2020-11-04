@@ -49,6 +49,12 @@ class Project {
 	}
 }
 
+// TODO
+class Experience {
+	constructor() {}
+}
+
+// TODO: add {{content:...}}
 /*
 Supported tags:
   {{css:...}}    --> static CSS file
@@ -61,15 +67,6 @@ Supported tags:
   {{sys:home}}   --> path to homepage
 */
 
-// TODO: add options to replace the following:
-// {{css:...}}
-// {{ico:...}}
-// {{font:...}}
-// {{content:...}}
-//   can be one of exp_all, proj_all, proj_feat, blog_all, blog_latest, blog_feat
-// {{sys:...}} --> e.g. {{sys:header}}
-// {{cdn:...}}
-
 // generate HTML files based on page type
 const generate = async (page) => {
 	try {
@@ -79,22 +76,28 @@ const generate = async (page) => {
 	}
 	switch (page) {
 		case 'home':
+			console.log('🏠  Building home...')
 			await buildPageFromTemplate({template: 'templates/home.html', page: 'index.html', isIndex: true})
 			break
 		case 'about':
+			console.log('💁‍♂️  Building about...')
 			await buildPageFromTemplate({template: 'templates/about.html', page: 'src/about.html', isIndex: false})
 			break
 		case 'blog':
+			console.log('📖  Building blog...')
 			await buildPageFromTemplate({template: 'templates/blog_index.html', page: 'src/blog_index.html', isIndex: false})
 			await buildMultiplePages('blog')
 			break
 		case 'projects':
+			console.log('🏗  Building projects...')
 			await buildPageFromTemplate({template: 'templates/project_index.html', page: 'src/project_index.html', isIndex: false})
 			await buildMultiplePages('project')
 			break
 		case 'apps':
+			console.log('🖥  Building apps...')
 			break
 		case 'scripts':
+			console.log('🖋  Building scripts...')
 			await buildScripts()
 			break
 		default:

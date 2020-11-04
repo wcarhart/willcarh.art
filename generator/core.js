@@ -174,7 +174,7 @@ const buildScripts = async () => {
 
 // TODO
 const buildVault = async () => {
-	return
+	await buildPageFromTemplate({template: 'templates/vault.html', page: 'src/vault.html', isIndex: false})
 }
 
 // TODO

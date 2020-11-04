@@ -101,7 +101,7 @@ const main = async () => {
 		if (args.develop !== true) {
 			await verifyContentFileStructure()
 		}
-		assets = ['home', 'about', 'blog', 'projects', 'apps', 'scripts', 'vault']
+		assets = ['home', 'vault', 'about', 'blog', 'projects', 'apps', 'scripts']
 		for (let asset of assets) {
 			await core.generate(asset)
 		}

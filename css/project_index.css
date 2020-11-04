@@ -3,6 +3,8 @@
 	outline: solid 0.25rem;
 }*/
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 :root {
 	--background: #ecf0f1;
 	--detail: #bdc3c7;
@@ -30,6 +32,14 @@
 	width: 75%;
 }
 
+h2 {
+	font-size: 3rem !important;
+}
+
+h5 {
+	color: var(--subtitle) !important;
+}
+
 #content-main h1 {
 	font-size: 5rem !important;
 }
@@ -40,4 +50,39 @@
 
 .spacer-small {
 	height: 2rem;
+}
+
+.featured-project-container {
+	padding: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+}
+
+.featured-project-indicator {
+	color: var(--color) !important;
+	margin: 0;
+}
+
+.featured-subtitle-text {
+	color: var(--subtitle) !important;
+	font-size: 1.5rem !important;
+}
+
+.technologies-list {
+	font-size: 0.75rem;
+	font-family: 'Roboto Mono', monospace;
+}
+
+.icons {
+	padding-left: 1rem;
+}
+
+.github-icon, .link-icon {
+	color: var(--text);
+	padding: 0;
+	margin: 0;
+}
+
+.github-icon:hover, .link-icon:hover {
+	color: var(--color);
 }

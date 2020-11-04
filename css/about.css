@@ -160,22 +160,6 @@ h2 {
 	height: 2rem;
 }
 
-.fancy-link {
-	color: var(--text) !important;
-	text-decoration: none;
-	background-image: linear-gradient(var(--color), var(--color));
-	background-position: 0% 100%;
-	background-repeat: no-repeat;
-	background-size: 0% 0.125rem;
-	transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
-}
-
-.fancy-link:hover,
-.fancy-link:focus {
-	text-decoration: none;
-	background-size: 100% 0.125rem;
-}
-
 .highlight-text {
 	color: var(--color) !important;
 }

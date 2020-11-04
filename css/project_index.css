@@ -86,3 +86,13 @@ h5 {
 .github-icon:hover, .link-icon:hover {
 	color: var(--color);
 }
+
+[id^=title-] {
+	color: var(--text) !important;
+	text-decoration: none;
+	background-image: linear-gradient(var(--color), var(--color));
+	background-position: 0% 100%;
+	background-repeat: no-repeat;
+	background-size: 0% 0.125rem;
+	transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+}

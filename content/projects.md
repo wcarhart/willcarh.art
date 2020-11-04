@@ -33,7 +33,7 @@ name: smoosh
 blurb: A simple algorithm for summarizing text
 about:
 languages: Python
-technologies:
+technologies: BeautifulSoup
 img: {{cdn:img/logos/smoosh.png}}
 repo: https://github.com/wcarhart/smoosh
 latest_version: 2.2.0

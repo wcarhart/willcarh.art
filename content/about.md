@@ -4,6 +4,7 @@ date: Since Nov 2019
 detail: Design, implement, and maintain in-house workflow management platform, which exposes and **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts**, all in Node.js
 detail: Designed and implemented **cloud architecture in GCP** for compiling and executing computation-heavy MATLAB scripts, managing MATLAB licenses, and uploading artifacts
 detail: Modernized and rearchitected Python-based complex abort verification system for Wisk's flight simulator, moving from on-prem solution to Kubernetes-based solution in GKE, **reducing job time from 72 hours to 30 minutes**
+detail: Manage production Bamboo build agents, including configuration management, software upgrades, and job scheduling
 detail: Drive detailed **documentation**, verbose **logging**, and consistent **traceability** for every project
 language_and_libraries: Node.js, Express.js, Bash, Python
 tools: git, GitHub, Jira, Confluence, Google Drive
@@ -41,7 +42,7 @@ url: https://www.starlitsoftware.com
 company: Qolsys
 title: Software Engineer Intern
 date: Summer 2016
-Architected suite of Bash scripts to **emulate poor networking conditions** using a Linux-based network emulator, which was used to diagnose networking issues between Qolsys's proprietary home security panels and various routing hardware
+Architected suite of Bash scripts to **emulate poor networking conditions** using a Linux-based network emulator, which was used to diagnose networking issues between Qolsys' proprietary home security panels and various routing hardware
 Automated QA networking testing and **accelerated response time** to customer networking complaints
 languages_and_libraries: Bash
 platforms: Linux, Busybox, Android

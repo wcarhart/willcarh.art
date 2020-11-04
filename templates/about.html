@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{generationHeader}}
+{{sys:header}}
 <html lang="en">
 	<head>
 		<!-- metadata -->
@@ -10,14 +10,14 @@
 		<meta name="twitter:card" value="summary" />
 		<meta property="og:name" content="willcarh.art" />
 		<meta property="og:url" content="https://willcarh.art/about" />
-		<meta property="og:image" content="../ico/android-chrome-512x512.png" />
+		<meta property="og:image" content="{{ico:android-chrome-512x512.png}}" />
 		<meta property="og:type" content="website" />
 		<meta property="og:description" content="About Will Carhart" />
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:site_name" content="willcarh.art" />
 
 		<!-- CSS -->
-		<link rel="stylesheet" href="../css/about.css">
+		<link rel="stylesheet" href="{{css:about.css}}">
 
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -27,24 +27,24 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 		<!-- icons -->
-		<link rel="apple-touch-icon" sizes="180x180" href="../ico/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="../ico/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="../ico/favicon-16x16.png">
-        <link rel="manifest" href="../ico/site.webmanifest">
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ico:apple-touch-icon.png}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ico:favicon-32x32.png}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ico:favicon-16x16.png}}">
+        <link rel="manifest" href="{{ico:site.webmanifest}}">
 
         <!-- FontAwesome -->
-        <script src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"></script>
+		<script src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"></script>
 
 		<!-- animate.css -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 		<!-- willcarh.art scripts -->
-		<script src="../js/darkmode.js"></script>
-		<script src="../js/tagline.js"></script>
-		<script src="../js/year.js"></script>
-		<script src="../js/email.js"></script>
-		<script src="../js/profilephoto.js"></script>
-		<script src="../js/expselector.js"></script>
+		<script src="{{js:darkmode.js}}"></script>
+		<script src="{{js:tagline.js}}"></script>
+		<script src="{{js:year.js}}"></script>
+		<script src="{{js:email.js}}"></script>
+		<script src="{{js:profilephoto.js}}"></script>
+		<script src="{{js:expselector.js}}"></script>
 	</head>
 	<body>
 
@@ -77,7 +77,7 @@
 						<div class="col-md-3"></div>
 						<div id="about-me-container" class="col-md-6">
 							<h2>About Me.</h2>
-							<p class="content-text">Originally from the Silicon Valley, I migrated down to San Diego for college at the <a href="https://sandiego.edu" target="_blank">University of San Diego</a>. I've worked on a variety of software teams doing a variety of software things, from <a href="https://qolsys.com/" target="_blank">home security</a> to <a href="https://www.illumina.com" target="_blank">DNA sequencing</a> to <a href="https://wisk.aero/" target="_blank">autonomous aircraft</a>. I'm passionate about using software to find creative solutions to complex problems.</p>
+							<p class="content-text">Originally from the Silicon Valley, I migrated down to San Diego for college at the <a class="fancy-link" href="https://sandiego.edu" target="_blank">University of San Diego</a>. I've worked on a variety of software teams doing a variety of software things, from <a class="fancy-link" href="https://qolsys.com/" target="_blank">home security</a> to <a class="fancy-link" href="https://www.illumina.com" target="_blank">DNA sequencing</a> to <a class="fancy-link" href="https://wisk.aero/" target="_blank">autonomous aircraft</a>. I'm passionate about using software to find creative solutions to complex problems.</p>
 							<p class="content-text">Outside of work, I still like to code. When I'm not coding, you can find me playing my ukulele and keyboard, planning new woodworking projects, or tending to my house plants.</p>
 						</p>
 						</div>
@@ -167,7 +167,7 @@
 								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Docker, Linux (Ubuntu), macOS</span></p>
 								<p class="exp-tidbit-handle">Infrastructure: <span class="exp-tidbit">GCP (Cloud Storage, Cloud Functions, Compute), Bamboo, Puppet, Kubernetes (GKE)</span></p>
 								<br>
-								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://wisk.aero" target="_blank">wisk.aero</a></p>
+								<a class="fancy-link" href="https://wisk.aero" target="_blank">learn more</a>
 							</div>
 							<div id="exp-details-illumina" class="exp-content exp-hidden">
 								<h4>Software Engineer, Automation</h4>
@@ -183,7 +183,7 @@
 								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Docker, Linux (centOS), Windows 10</span></p>
 								<p class="exp-tidbit-handle">Infrastructure: <span class="exp-tidbit">AWS (S3, EC2, SNS, Lambda), Jenkins, GNU Make</span></p>
 								<br>
-								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://www.illumina.com" target="_blank">illumina.com</a></p>
+								<a class="fancy-link" href="https://www.illumina.com" target="_blank">learn more</a>
 							</div>
 							<div id="exp-details-starlit" class="exp-content exp-hidden">
 								<h4>Web Developer Intern</h4>
@@ -197,7 +197,7 @@
 								<p class="exp-tidbit-handle">Tools: <span class="exp-tidbit">git, GitHub, Trello</span></p>
 								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Docker, Linux</span></p>
 								<br>
-								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://www.starlitsoftware.com" target="_blank">starlitsoftware.com</a></p>
+								<a class="fancy-link" href="https://www.starlitsoftware.com" target="_blank">learn more</a>
 							</div>
 							<div id="exp-details-qolsys" class="exp-content exp-hidden">
 								<h4>Software Engineer Intern</h4>
@@ -209,7 +209,7 @@
 								<p class="exp-tidbit-handle">Languages and libraries: <span class="exp-tidbit">Bash</span></p>
 								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Linux, Busybox, Android</span></p>
 								<br>
-								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://www.qolsys.com" target="_blank">qolsys.com</a></p>
+								<a class="fancy-link" href="https://www.qolsys.com" target="_blank">learn more</a>
 							</div>
 							<div id="exp-details-usd" class="exp-content exp-hidden">
 								<h4>B.S. Computer Science</h4>
@@ -224,7 +224,7 @@
 								<p class="exp-tidbit-handle">Platforms: <span class="exp-tidbit">Linux (Red Hat), iOS, Windows 8, macOS</span></p>
 								<p class="exp-tidbit-handle">Infrastructure: <span class="exp-tidbit">Firebase, GNU Make</span></p>
 								<br>
-								<p class="exp-tidbit-handle">Learn more: <a class="exp-link" href="https://www.sandiego.edu" target="_blank">sandiego.edu</a></p>
+								<a class="fancy-link" href="https://sandiego.edu" target="_blank">learn more</a>
 							</div>
 						</div>
 					</div>
@@ -240,13 +240,13 @@
 							<p class="content-text">For me, coding is as much a hobby as it is a career. Here's a few things I've built.</p>
 							<div class="row">
 								<div class="button-container">
-									<a href="project_index.html">
+									<a href="{{src:project_index.html}}">
 										<div class="button-content">projects &nbsp;🏗</div>
 									</a>
 								</div>
 
 								<div class="button-container">
-									<a href="blog_index.html">
+									<a href="{{src:blog_index.html}}">
 										<div class="button-content">blog &nbsp;📖</div>
 									</a>
 								</div>
@@ -273,8 +273,8 @@
 		</div>
 
 		<!-- logo -->
-		<a id="logo-container" href="../index.html">
-			<img id="logo" alt="willcarh.art logo" src="../ico/android-chrome-512x512.png">
+		<a id="logo-container" href="{{sys:home}}">
+			<img id="logo" alt="willcarh.art logo" src="{{ico:android-chrome-512x512.png}}">
 		</a>
 
 		<!-- dark mode toggle -->

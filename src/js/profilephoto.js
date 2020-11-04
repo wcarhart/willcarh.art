@@ -1,9 +1,9 @@
 // rotate profile pictures on about page
 $(document).ready(async () => {
 	const photos = [
-		'{{cdn:img/profile.jpg}}',
-		'{{cdn:img/profile4.jpeg}}',
-		'{{cdn:img/profile2.jpeg}}'
+		'https://storage.googleapis.com/willcarh-art/img/profile.jpg',
+		'https://storage.googleapis.com/willcarh-art/img/profile4.jpeg',
+		'https://storage.googleapis.com/willcarh-art/img/profile2.jpeg'
 	]
 
 	let index = 0

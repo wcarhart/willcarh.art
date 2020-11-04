@@ -4,14 +4,15 @@ const util = require('util')
 const core = require('./core.js')
 
 const readdirPromise = util.promisify(fs.readdir)
+const statPromise = util.promisify(fs.stat)
 
 // verify content markdown files are as expected
 const verifyContentFileStructure = async () => {
 	console.log('Verifying build content...')
-	await fs.promises.access('content/about/index.md')
-	await fs.promises.access('content/blog/index.md')
-	await fs.promises.access('content/projects/index.md')
-	await fs.promises.access('content/apps/index.md')
+	await fs.promises.access('content/about.md')
+	await fs.promises.access('content/blog_index.md')
+	await fs.promises.access('content/project_index.md')
+	await fs.promises.access('content/app_index.md')
 }
 
 // validate if generation was successful
@@ -28,7 +29,8 @@ const validateBuild = async () => {
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
 	let tree = '.\n├── index.html'
-	tree += await buildTrees(['font', 'ico', 'css', 'js', 'src'])
+	// TODO: fix this garbage
+	tree += await buildTrees(['font', 'ico', 'css', 'src', 'src/js'])
 	console.log(tree)
 }
 
@@ -38,8 +40,10 @@ const buildTrees = async (dirs) => {
 	for (let [index, dir] of dirs.entries()) {
 		if (index === dirs.length - 1) {
 			tree += await buildTreeString(dir, true)
+			// tree += await buildTreeString(dir, '', false, '')
 		} else {
 			tree += await buildTreeString(dir, false)
+			// tree += await buildTreeString(dir, '', true, '')
 		}
 	}
 	return tree
@@ -67,6 +71,7 @@ const buildTreeString = async (dir, final) => {
 	return tree
 }
 
+// show usage statement
 const usage = async () => {
 	console.log('forge - build pages for willcarh.art')
 	console.log('')
@@ -76,6 +81,7 @@ const usage = async () => {
 	console.log('  -d, --develop   Do not exit on validation errors')
 }
 
+// parse command line arguments
 const parseArgs = async (args) => {
 	let parsedArgs = {}
 	if (args.includes('-h') || args.includes('--help')) {
@@ -101,6 +107,7 @@ const main = async () => {
 		await core.generate('blog')
 		await core.generate('projects')
 		await core.generate('apps')
+		await core.generate('scripts')
 		if (args.develop !== true) {
 			await validateBuild()
 		}

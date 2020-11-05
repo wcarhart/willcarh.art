@@ -50,77 +50,104 @@
 	</head>
 	<body>
 
+		<!-- TODO: should project logos have same ring animation as site logo? -->
+
+		<!-- TODO: use js to resize card heights evenly -->
+
 		<!-- text content -->
 		<div id="content-main">
 			<h1>Projects</h1>
 			<div id="content-body">
 				<div class="spacer"></div>
 				<div class="section" id="section-0">
-					
-					<div class="featured-project-container-row">
-						<div class="row">
-							<div class="col-md-6 featured-project-container-left">
-								<div id="proj-doku" class="featured-project-container project-container col-md-12 row">
-									<div class="col-md-2">
-										<img class="featured-project-logo" alt="doku logo" src="{{cdn:img/logos/doku.png"}}>
+					<div class="project-row-featured-left row">
+						<div class="col-md-6"></div>
+						<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="project-container-regular">
+										<div id="proj-koi" class="col-md-12 project-border">
+											<div class="row">
+												<img class="project-logo" alt="koi logo" src="{{cdn:img/logos/koi.png}}">
+											</div>
+											<div class="project-content-regular">
+												<h3 id="title-koi">Koi</h3>
+												<p class="project-regular-subtitle-text">Bashful argument parsing aaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaa aaaaaaaa</p>
+												<p class="technologies-list">Bash</p>
+												<div class="row icons">
+													<a class="github-icon" href="https://github.com/wcarhart/koi" target="_blank"><i class="fab fa-github"></i></a>
+													<a class="link-icon" href="{{url}}" target="_blank"><i class="fas fa-external-link-square-alt"></i></a>
+													<a class="docs-icon" href="https://willcarhart.dev/docs/koi" target="_blank"><i class="fab fa-readme"></i></a>
+												</div>
+											</div>
+										</div>
 									</div>
-									<div class="col-md-1"></div>
-									<div class="col-md-9">
-										<p class="featured-project-indicator">featured project</p>
-										<h2 id="title-doku">Doku</h2>
-										<p class="featured-subtitle-text">Automated Sudoku solver</p>
-										<p class="technologies-list">JavaScript · Deno</p>
-										<div class="row icons">
-											<a class="github-icon" href="https://github.com/wcarhart/doku" target="_blank"><i class="fab fa-github"></i></a>
-											<a class="link-icon" href="#" target="_blank"><i class="fas fa-external-link-square-alt" data-fa-transform="right-10"></i></a>
+								</div>
+								<div class="col-md-6">
+									<div class="project-container-regular">
+										<div id="proj-doku" class="col-md-12 project-border">
+											<div class="row">
+												<img class="project-logo" alt="doku logo" src="{{cdn:img/logos/doku.png}}">
+											</div>
+											<div class="project-content-regular">
+												<h3 id="title-doku">Doku</h3>
+												<p class="project-regular-subtitle-text">Automatic Sudoku solver</p>
+												<p class="technologies-list">Javascript · Deno</p>
+												<div class="row icons">
+													<a class="github-icon" href="https://github.com/wcarhart/doku" target="_blank"><i class="fab fa-github"></i></a>
+													<a class="link-icon" href="{{url}}" target="_blank"><i class="fas fa-external-link-square-alt"></i></a>
+													<a class="docs-icon" href="https://willcarhart.dev/docs/doku" target="_blank"><i class="fab fa-readme"></i></a>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 featured-project-container-right">
-								<div id="proj-lurker" class="featured-project-container project-container col-md-12 row">
-									<div class="col-md-2">
-										<img class="featured-project-logo" alt="lurker logo" src="{{cdn:img/logos/lurker.png"}}>
-									</div>
-									<div class="col-md-1"></div>
-									<div class="col-md-9">
-										<p class="featured-project-indicator">featured project</p>
-										<h2 id="title-lurker">Lurker</h2>
-										<p class="featured-subtitle-text">Hacker News terminal client</p>
-										<p class="technologies-list">Bash · Hacker News API</p>
-										<a class="github-icon" href="https://github.com/wcarhart/lurker" target="_blank"><i class="fab fa-github"></i></a>
+							<div class="spacer-small"></div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="project-container-regular">
+										<div id="proj-konphig" class="col-md-12 project-border">
+											<div class="row">
+												<img class="project-logo" alt="konphig logo" src="{{cdn:img/logos/konphig.png}}">
+											</div>
+											<div class="project-content-regular">
+												<h3 id="title-konphig">Konphig</h3>
+												<p class="project-regular-subtitle-text">Dotfiles and more</p>
+												<p class="technologies-list">Bash Vim script</p>
+												<div class="row icons">
+													<a class="github-icon" href="https://github.com/wcarhart/konphig" target="_blank"><i class="fab fa-github"></i></a>
+													<a class="link-icon" href="{{url}}" target="_blank"><i class="fas fa-external-link-square-alt"></i></a>
+													<a class="docs-icon" href="https://willcarhart.dev/docs/konphig" target="_blank"><i class="fab fa-readme"></i></a>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
+								<div class="col-md-6">
+									<div class="project-container-regular">
+										<div id="proj-konphig" class="col-md-12 project-border">
+											<div class="row">
+												<img class="project-logo" alt="konphig logo" src="{{cdn:img/logos/konphig.png}}">
+											</div>
+											<div class="project-content-regular">
+												<h3 id="title-konphig">Konphig</h3>
+												<p class="project-regular-subtitle-text">Dotfiles and more</p>
+												<p class="technologies-list">Bash Vim script</p>
+												<div class="row icons">
+													<a class="github-icon" href="https://github.com/wcarhart/konphig" target="_blank"><i class="fab fa-github"></i></a>
+													<a class="link-icon" href="{{url}}" target="_blank"><i class="fas fa-external-link-square-alt"></i></a>
+													<a class="docs-icon" href="https://willcarhart.dev/docs/konphig" target="_blank"><i class="fab fa-readme"></i></a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
 							</div>
 						</div>
 					</div>
-
 					<div class="spacer-small"></div>
-
-					<div class="featured-project-container-row">
-						<div class="row">
-							<div class="col-md-6 featured-project-container-left">
-								<div id="proj-smoosh" class="featured-project-container project-container col-md-12 row">
-									<div class="col-md-2">
-										<img class="featured-project-logo" alt="smoosh logo" src="{{cdn:img/logos/smoosh.png"}}>
-									</div>
-									<div class="col-md-1"></div>
-									<div class="col-md-9">
-										<p class="featured-project-indicator">featured project</p>
-										<h2 id="title-smoosh">Smoosh</h2>
-										<p class="featured-subtitle-text">A simple algorithm for summarizing text</p>
-										<p class="technologies-list">Python · BeautifulSoup</p>
-										<div class="row icons">
-											<a class="github-icon" href="https://github.com/wcarhart/smoosh" target="_blank"><i class="fab fa-github"></i></a>
-											<a class="link-icon" href="#" target="_blank"><i class="fas fa-external-link-square-alt" data-fa-transform="right-10"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 featured-project-container-right"></div>
-						</div>
-					</div>
-
 				</div>
 
 				<div class="spacer"></div>
@@ -128,7 +155,12 @@
 				<div class="section" id="section-1">
 					<h2>All Projects</h2>
 					<h5>View archived projects in <a class="fancy-link" href="{{src:vault.html}}">the vault</a>.</h5>
+					<div class="spacer-small"></div>
+
 				</div>
+
+				<div class="spacer"></div>
+
 			</div>
 		</div>
 

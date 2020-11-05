@@ -44,6 +44,11 @@ h5 {
 	font-size: 5rem !important;
 }
 
+.row {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
 .spacer {
 	height: 6rem;
 }
@@ -52,20 +57,30 @@ h5 {
 	height: 2rem;
 }
 
-.featured-project-container {
+.project-border {
 	padding: 1rem;
 	border: solid 0.2rem var(--text);
 	border-radius: 1rem;
 }
 
-.featured-project-indicator {
+.project-super-indicator-text {
 	color: var(--color) !important;
 	margin: 0;
 }
 
-.featured-subtitle-text {
+.project-super-subtitle-text {
 	color: var(--subtitle) !important;
 	font-size: 1.5rem !important;
+}
+
+.project-regular-subtitle-text {
+	color: var(--subtitle) !important;
+	margin-bottom: 0.5rem;
+}
+
+.project-logo {
+	display: table;
+	margin: 0 auto;
 }
 
 .technologies-list {
@@ -73,18 +88,19 @@ h5 {
 	font-family: 'Roboto Mono', monospace;
 }
 
-.icons {
-	padding-left: 1rem;
-}
-
-.github-icon, .link-icon {
+.github-icon, .link-icon, .docs-icon {
 	color: var(--text);
-	padding: 0;
+	padding-right: 1rem;
 	margin: 0;
 }
 
-.github-icon:hover, .link-icon:hover {
+.github-icon:hover, .link-icon:hover, .docs-icon:hover {
 	color: var(--color);
+}
+
+.equal {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 [id^=title-] {
@@ -95,4 +111,8 @@ h5 {
 	background-repeat: no-repeat;
 	background-size: 0% 0.125rem;
 	transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+}
+
+.featured-project-logo {
+	padding: 2rem;
 }

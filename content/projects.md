@@ -7,11 +7,11 @@ technologies: Hacker News API
 img: {{cdn:img/logos/lurker.png}}
 repo: https://github.com/wcarhart/lurker
 latest_version: 1.7.0
-status: active
+status: stable
 install: brew install wcarhart/tools/lurker
 documentation: https://willcarhart.dev/docs/lurker
 related: koi, smoosh
-featured: true
+visibility: super
 tags: cli
 
 name: doku
@@ -22,11 +22,11 @@ technologies:
 img: {{cdn:img/logos/doku.png}}
 repo: https://github.com/wcarhart/doku
 latest_version: 1.0.3
-status: active
+status: stable
 install: brew install wcarhart/tools/doku
 documentation:
 related:
-featured: false
+visibility: featured
 tags: cli
 
 name: smoosh
@@ -37,11 +37,11 @@ technologies: BeautifulSoup
 img: {{cdn:img/logos/smoosh.png}}
 repo: https://github.com/wcarhart/smoosh
 latest_version: 2.2.0
-status: active
+status: stable
 install: brew install wcarhart/tools/smoosh
 documentation:
 related:
-featured: true
+visibility: featured
 tags: cli
 
 name: koi
@@ -52,11 +52,11 @@ technologies:
 img: {{cdn:img/logos/koi.png}}
 repo: https://github.com/wcarhart/koi
 latest_version: 1.2.1
-status: active
+status: stable
 install: brew install wcarhart/tools/koi
 documentation: https://willcarhart.dev/docs/koi
 related:
-featured: true
+visibility: super
 tags: library
 
 name: snug
@@ -70,7 +70,7 @@ latest_version:
 status: in development
 documentation:
 related:
-featured: false
+visibility: none
 tags: cli, cloud
 
 name: willcarh.art
@@ -85,7 +85,7 @@ status: in development
 install:
 documentation:
 related:
-featured: false
+visibility: featured
 tags: cli, web
 
 name: docs
@@ -96,11 +96,11 @@ technologies: Netlify, Docsify
 img: {{cdn:img/logos/docs.png}}
 repo: https://github.com/wcarhart/docs
 latest_version:
-status: active
+status: stable
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: web
 
 name: konphig
@@ -111,11 +111,11 @@ technologies:
 img: {{cdn:img/logos/konphig.png}}
 repo: https://github.com/wcarhart/konphig
 latest_version: 1.0.4
-status: active
+status: stable
 install: brew install wcarhart/tools/kn
 documentation: https://willcarhart.dev/docs/konphig
 related: koi
-featured: false
+visibility: normal
 tags: cli, configuration
 
 name: hustle
@@ -130,7 +130,7 @@ status: in development
 install:
 documentation:
 related:
-featured: false
+visibility: none
 tags: api, cli, cloud
 
 name: soliloquy
@@ -145,7 +145,7 @@ status: stale
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: web
 
 name: odin
@@ -160,7 +160,7 @@ status: in development
 install:
 documentation:
 related:
-featured: false
+visibility: none
 tags: desktop, cli
 
 name: birdhouse
@@ -171,11 +171,11 @@ technologies: Twitter API
 img: {{cdn:img/logos/birdhouse.png}}
 repo: https://github.com/wcarhart/birdhouse
 latest_version: 12
-status: active
+status: stable
 install: brew install wcarhart/tools/birdhouse
 documentation: https://willcarhart.dev/docs/birdhouse
 related: koi
-featured: true
+visibility: normal
 tags: cli
 
 name: thoth
@@ -186,11 +186,11 @@ technologies:
 img: {{cdn:img/logos/thoth.png}}
 repo: https://github.com/wcarhart/thoth
 latest_version: 1
-status: active
+status: stable
 install: brew install wcarhart/tools/thoth
 documentation:
 related: koi
-featured: false
+visibility: normal
 tags: cli
 
 name: chiller
@@ -201,11 +201,11 @@ technologies: GitHub API
 img: {{cdn:img/logos/chiller.png}}
 repo: https://github.com/wcarhart/chiller
 latest_version: 1.1.5
-status: active
+status: stable
 install: brew install wcarhart/tools/chiller
 documentation: https://willcarhart.dev/docs/chiller
 related: koi
-featured: false
+visibility: normal
 tags: cli, configuration
 
 name: wanda
@@ -216,11 +216,11 @@ technologies: Netlify
 img: {{cdn:img/logos/wanda.png}}
 repo: https://github.com/wcarhart/wanda
 latest_version: 1.2.0
-status: active
+status: stable
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: web
 
 name: aerogram
@@ -235,7 +235,7 @@ status: stale
 install:
 documentation:
 related: koi
-featured: false
+visibility: normal
 tags: cli
 
 name: beaver
@@ -250,7 +250,7 @@ status: stale
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: cli
 
 name: despicable
@@ -265,7 +265,7 @@ status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: less
 tags: cli
 
 name: cheqit
@@ -280,7 +280,7 @@ status: stale
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: cli
 
 name: locksmith
@@ -295,7 +295,7 @@ status: stale
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: library
 
 name: othello
@@ -310,7 +310,7 @@ status: stale
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: cli
 
 name: Cheers
@@ -321,11 +321,11 @@ technologies: iOS, Yelp Fusion API, Lyft API, Uber API, Firebase
 img: {{cdn:img/logos/cheer.png}}
 repo: https://github.com/wcarhart/cheers
 latest_version:
-status: archived-visible
+status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: less
 tags: mobile
 
 name: FitPals
@@ -340,7 +340,7 @@ status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: less
 tags: mobile
 
 name: Chordpanion
@@ -355,7 +355,7 @@ status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: less
 tags: mobile
 
 name: NASA APOD
@@ -370,7 +370,7 @@ status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: less
 tags: mobile
 
 name: TI Checkers
@@ -381,11 +381,11 @@ technologies:
 img: {{cdn:img/logos/ti_checkers.png}}
 repo: https://github.com/wcarhart/ti84-checkers
 latest_version:
-status: archived-visible
+status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: less
 tags: calculator
 
 name: TI TicTacToe
@@ -396,11 +396,11 @@ technologies:
 img: {{cdn:img/logos/ti_tictactoe.png}}
 repo: https://github.com/wcarhart/ti84-tictactoe
 latest_version:
-status: archived-visible
+status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: less
 tags: calculator
 
 name: kartracer
@@ -415,7 +415,7 @@ status: archived
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: desktop
 
 name: algos
@@ -430,5 +430,5 @@ status: stale
 install:
 documentation:
 related:
-featured: false
+visibility: normal
 tags: library

@@ -44,11 +44,11 @@ class Project {
 		img='',
 		repo='',
 		latestVersion='',
-		status='',
+		status='', // one of [stable, in development, stale, archived]
 		install='',
 		documentation='',
 		related=[],
-		featured=false,
+		visibility='', // one of: [super, featured, normal, less, none]
 		tags=[]
 	}) {
 

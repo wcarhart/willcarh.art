@@ -116,11 +116,6 @@ div.col-md-6.no-shift {
 	flex-wrap: wrap;
 }
 
-/*.no-impact-wrapping {
-	padding: 0rem !important;
-	margin: 0.5rem !important;
-}*/
-
 [id^=title-] {
 	color: var(--text) !important;
 	text-decoration: none;

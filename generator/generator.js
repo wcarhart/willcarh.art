@@ -1,3 +1,4 @@
+const startTime = new Date().getTime()
 const fs = require('fs')
 const util = require('util')
 
@@ -96,12 +97,15 @@ const parseArgs = async (args) => {
 
 const main = async () => {
 	try {
-		const startTime = new Date().getTime()
 		const args = await parseArgs(process.argv.slice(2))
 		if (args.develop !== true) {
 			await verifyContentFileStructure()
 		}
-		assets = ['home', 'vault', 'about', 'blog', 'projects', 'apps', 'scripts']
+
+		// asset order is essential:
+		//  - scripts must be build first
+		//  - vault must be built before projects
+		const assets = ['scripts', 'home', 'vault', 'about', 'blog', 'projects', 'apps']
 		for (let asset of assets) {
 			await core.generate(asset)
 		}

@@ -43,7 +43,7 @@ const aboutTaglines = [
 	'customer oriented ',
 	'revolutionary ',
 	'modular ',
-	'dependable'
+	'dependable '
 ]
 
 // taglines for 'home' page

@@ -1,7 +1,7 @@
 name: lurker
 blurb: Hacker News terminal client
 about: Lurker is a simple terminal client for reading Y Combinator's Hacker News. It uses the public Hacker News API and is written entirely in Bash so it runs smoothly in the majority of terminal environments.
-about: Lurker embraces the "hacker" in Hacker News by exposing a simple CLI for reading stories, comments, and user information. This makes it easy to read Hacker News while completing other command line activities, especially when combined with tools like tmux.
+about: Lurker embraces the hacker in Hacker News by exposing a simple CLI for reading stories, comments, and user information. This makes it easy to read Hacker News while completing other command line activities, especially when combined with tools like tmux.
 languages: Bash
 technologies: Hacker News API
 img: {{cdn:img/logos/lurker.png}}
@@ -10,7 +10,8 @@ latest_version: 1.7.0
 status: stable
 install: brew install wcarhart/tools/lurker
 documentation: https://willcarhart.dev/docs/lurker
-related: koi, smoosh
+related: koi
+related: smoosh
 visibility: super
 tags: cli
 

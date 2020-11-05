@@ -44,11 +44,6 @@ h5 {
 	font-size: 5rem !important;
 }
 
-.row {
-	margin-left: 0 !important;
-	margin-right: 0 !important;
-}
-
 .spacer {
 	height: 6rem;
 }
@@ -61,6 +56,10 @@ h5 {
 	padding: 1rem;
 	border: solid 0.2rem var(--text);
 	border-radius: 1rem;
+}
+
+div.col-md-6.no-shift {
+	left: 1rem !important;
 }
 
 .project-super-indicator-text {
@@ -78,14 +77,28 @@ h5 {
 	margin-bottom: 0.5rem;
 }
 
+.project-featured-subtitle-text {
+	color: var(--subtitle) !important;
+	font-size: 1.3rem !important;
+}
+
 .project-logo {
 	display: table;
 	margin: 0 auto;
+	padding-bottom: 1rem;
+}
+
+.project-logo-featured {
+	padding: 2rem;
 }
 
 .technologies-list {
 	font-size: 0.75rem;
 	font-family: 'Roboto Mono', monospace;
+}
+
+.icons {
+	padding-left: 1rem;
 }
 
 .github-icon, .link-icon, .docs-icon {
@@ -102,6 +115,11 @@ h5 {
 	display: flex;
 	flex-wrap: wrap;
 }
+
+/*.no-impact-wrapping {
+	padding: 0rem !important;
+	margin: 0.5rem !important;
+}*/
 
 [id^=title-] {
 	color: var(--text) !important;

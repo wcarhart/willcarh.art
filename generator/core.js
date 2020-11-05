@@ -86,15 +86,9 @@ Supported asset tags:
 // TODO
 /*
 Supported content tags:
-  {{content:exp:all}}       --> build interactive HTML for all experiences
-  {{content:exp:...}}       --> build interactive HTML for specific experience
-  {{content:proj:featured}} --> build interactive HTML for featured projects
-  {{content:proj:all}}      --> build interactive HTML for all projects
-  {{content:proj:...}}      --> build interactive HTML for specific project
-  {{content:blog:latest}}   --> build interactive HTML for latest blog post
-  {{content:blog:featured}} --> build interactive HTML for featured blog posts
-  {{content:blog:all}}      --> build interactive HTML for all blog posts
-  {{content:blog:...}}      --> build interactive HTML for specific blog post
+  {{content:exp-tabs}}      --> build HTML for experience tabs on about page
+  {{content:proj-featured}} --> build HTML for featured projects on project page
+  {{content:proj-all}}      --> build HTML for all projects based on visibility
 */
 
 // generate HTML files based on page type

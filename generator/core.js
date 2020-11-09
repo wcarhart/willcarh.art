@@ -145,6 +145,7 @@ const buildMultiplePages = async (kind) => {
 }
 
 // TODO: minify scripts - should we minify HTML and CSS as well?
+// TODO: copy css files to src/ and do the same as js
 // build JS scripts
 const buildScripts = async () => {
 	try {

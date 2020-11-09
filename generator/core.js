@@ -126,8 +126,8 @@ const buildPageFromTemplate = async ({template='', page='', isIndex=false}) => {
 	// resolve static and dynamic assets
 	data = await resolveAssets(data, isIndex)
 
-	// prettify text
 	// TODO: this messes up html, need to fix
+	// prettify text
 	// data = html.prettyPrint(data, {indent_size: 4});
 
 	// write to source file
@@ -337,6 +337,7 @@ const buildExpTabs = async (experiences) => {
 	let detailSnippet = await readFilePromise('snippets/experience/detail.html')
 	let highlightSnippet = await readFilePromise('snippets/experience/highlight.html')
 	let titleSnippet = await readFilePromise('snippets/experience/title.html')
+	let tidbitSnippet = await readFilePromise('snippets/experience/tidbit.html')
 
 	tabsSnippet = tabsSnippet.toString()
 	selectorSnippet = selectorSnippet.toString()
@@ -344,6 +345,7 @@ const buildExpTabs = async (experiences) => {
 	detailSnippet = detailSnippet.toString()
 	highlightSnippet = highlightSnippet.toString()
 	titleSnippet = titleSnippet.toString()
+	tidbitSnippet = tidbitSnippet.toString()
 
 	let selectors = ''
 	let contents = ''
@@ -376,10 +378,36 @@ const buildExpTabs = async (experiences) => {
 		content = content.replace('{{company_lower}}', experience.companyId)
 		content = content.replace('{{date}}', experience.date)
 		content = content.replace('{{details}}', details)
-		content = content.replace('{{languages_and_libraries}}', experience.languagesAndLibraries)
-		content = content.replace('{{tools}}', experience.tools)
-		content = content.replace('{{platforms}}', experience.platforms)
-		content = content.replace('{{infrastructure}}', experience.infrastructure)
+		if (experience.languagesAndLibraries.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries)
+			content = content.replace('{{languages_and_libraries}}', tidbit)
+		} else {
+			content = content.replace('{{languages_and_libraries}}', '')
+		}
+		if (experience.languagesAndLibraries.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries)
+			content = content.replace('{{languages_and_libraries}}', tidbit)
+		} else {
+			content = content.replace('{{languages_and_libraries}}', '')
+		}
+		if (experience.tools.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Tools').replace('{{tidbit}}', experience.tools)
+			content = content.replace('{{tools}}', tidbit)
+		} else {
+			content = content.replace('{{tools}}', '')
+		}
+		if (experience.platforms.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Platforms').replace('{{tidbit}}', experience.platforms)
+			content = content.replace('{{platforms}}', tidbit)
+		} else {
+			content = content.replace('{{platforms}}', '')
+		}
+		if (experience.infrastructure.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Infrastructure').replace('{{tidbit}}', experience.infrastructure)
+			content = content.replace('{{infrastructure}}', tidbit)
+		} else {
+			content = content.replace('{{infrastructure}}', '')
+		}
 		content = content.replace('{{url}}', experience.url)
 		content = content.replace('{{is_active}}', index === 0 ? 'exp-active' : 'exp-hidden')
 		contents += content

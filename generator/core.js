@@ -19,8 +19,8 @@ Supported asset tags:
   {{css:...}}      --> static CSS file
   {{ico:...}}      --> static icon file
   {{font:...}}     --> static font file
-  {{js:...}}       --> static js file
-  {{src:...}}      --> static compiled source file
+  {{js:...}}       --> static built js file
+  {{src:...}}      --> static built source file
   {{cdn:...}}      --> file stored in CDN
   {{sys:header}}   --> generated header for HTML files
   {{sys:headerjs}} --> generated header for JS files
@@ -79,6 +79,21 @@ const generate = async (page) => {
 	} catch (e) {
 		await mkdirPromise('src')
 	}
+	try {
+		await fs.promises.access('src/project')
+	} catch (e) {
+		await mkdirPromise('src/project')
+	}
+	try {
+		await fs.promises.access('src/blog')
+	} catch (e) {
+		await mkdirPromise('src/blog')
+	}
+	try {
+		await fs.promises.access('src/demo')
+	} catch (e) {
+		await mkdirPromise('src/demo')
+	}
 	switch (page) {
 		case 'home':
 			console.log('🏠  Building home...')
@@ -106,8 +121,15 @@ const generate = async (page) => {
 			await buildScripts()
 			break
 		case 'vault':
+			// TODO
 			console.log('🗄  Building vault...')
-			await buildVault()
+			await buildPageFromTemplate({template: 'templates/vault.html', page: 'src/vault.html', isIndex: false})
+			break
+		case 'demo':
+			// TODO
+			console.log('🏃‍♂️  Building demos...')
+			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo_index.html', isIndex: false})
+			await buildMultiplePages('demo')
 			break
 		default:
 			throw new Error(`Unknown page '${page}'`)
@@ -157,11 +179,6 @@ const buildScripts = async () => {
 	for (let script of scripts) {
 		await buildPageFromTemplate({template: `js/${script}`, page: `src/js/${script}`, isIndex: false})
 	}
-}
-
-// TODO
-const buildVault = async () => {
-	await buildPageFromTemplate({template: 'templates/vault.html', page: 'src/vault.html', isIndex: false})
 }
 
 // TODO
@@ -254,7 +271,7 @@ const buildDynamicAsset = async (data, match, asset, isIndex) => {
 // replace content tags in template
 const resolveContent = async (data, isIndex) => {
 	let resolvedData = data
-	const supportedTags = ['html', 'code']
+	const supportedTags = ['html', 'code', 'meta']
 
 	// process each tag
 	for (let tag of supportedTags) {
@@ -277,6 +294,9 @@ const resolveContent = async (data, isIndex) => {
 					case 'code':
 						resolvedData = await buildCode(resolvedData, match, value)
 						break
+					case 'meta':
+						resolvedData = await buildMeta(resolvedData, match, value)
+						break
 					default:
 						throw new Error(`Unknown tag '${tag}'`)
 				}
@@ -284,6 +304,57 @@ const resolveContent = async (data, isIndex) => {
 		}
 	}
 	return resolvedData
+}
+
+// build meta objects for webpages
+const buildMeta = async (data, match, key) => {
+	let resolvedData = data
+	let meta = ''
+	switch (key) {
+		case 'home':
+			meta = await buildMetaHtml({description: 'Will Carhart\'s personal portfolio website', url: 'https://willcarh.art'})
+			resolvedData = resolvedData.replace(match, meta)
+			break
+		case 'proj':
+			meta = await buildMetaHtml({description: 'Will Carhart\'s projects', url: 'https://willcarh.art/projects'})
+			resolvedData = resolvedData.replace(match, meta)
+			break
+		case (key.match(/^proj:.*$/) || {}):
+			// TODO
+			break
+		case 'blog':
+			meta = await buildMetaHtml({description: 'Will Carhart\'s blog', url: 'https://willcarh.art/blog'})
+			resolvedData = resolvedData.replace(match, meta)
+			break
+		case (key.match(/^blog:.*$/) || {}):
+			// TODO
+			break
+		case 'vault':
+			meta = await buildMetaHtml({description: 'Will Carhart\'s vault', url: 'https://willcarh.art/vault'})
+			resolvedData = resolvedData.replace(match, meta)
+			break
+		case 'demo':
+			meta = await buildMetaHtml({description: 'Will Carhart\'s demos', url: 'https://willcarh.art/demo'})
+			resolvedData = resolvedData.replace(match, meta)
+			break
+		case (key.match(/^demo:.*$/) || {}):
+			// TODO
+			break
+		default:
+			throw new Error(`Unknown meta type '${key}'`)
+	}
+	return resolvedData
+}
+
+// build actual HTML meta tags for meta objects
+const buildMetaHtml = async ({description='', url=''}) => {
+	let template = await readFilePromise('snippets/meta/meta.html')
+	template = template.toString()
+
+	template = template.replace(/\{\{description\}\}/g, description)
+	template = template.replace(/\{\{url\}\}/g, url)
+
+	return template
 }
 
 // TODO
@@ -296,8 +367,10 @@ const buildHtml = async (data, match, key) => {
 			let html = await buildExpTabs(experiences)
 			resolvedData = resolvedData.replace(match, html)
 		case 'proj-featured':
+			//TODO
 			break
 		case 'proj-all':
+			//TODO
 			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
@@ -498,7 +571,6 @@ const findFiles = async ({kind='', prefix="content/"}) => {
 	let files = []
 	try {
 		files = await readdirPromise(`${prefix}${kind}`)
-		files = files.flatMap(file => file !== 'index.md' ? file : [])
 	} catch (e) {}
 	return files
 }

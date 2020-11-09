@@ -20,7 +20,9 @@ const verifyContentFileStructure = async () => {
 const validateBuild = async () => {
 	console.log('Validating built pages...')
 	await fs.promises.access('index.html')
+	await fs.promises.access('src/vault.html')
 	await fs.promises.access('src/about.html')
+	await fs.promises.access('src/demo_index.html')
 	await fs.promises.access('src/blog_index.html')
 	await fs.promises.access('src/project_index.html')
 	// TODO: uncomment when apps are implemented
@@ -105,7 +107,7 @@ const main = async () => {
 		// asset order is essential:
 		//  - scripts must be build first
 		//  - vault must be built before projects
-		const assets = ['scripts', 'home', 'vault', 'about', 'blog', 'projects', 'apps']
+		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'apps']
 		for (let asset of assets) {
 			await core.generate(asset)
 		}

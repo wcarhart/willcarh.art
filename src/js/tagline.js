@@ -57,6 +57,7 @@ const homeTaglines = [
 	'a bash addict. ',
 	'a lifelong learner. ',
 	'an internet denizen. ',
+	'a practicer of radical empathy. ',
 	'a daily boba drinker. ',
 	'a proud owner of too many monsteras. ',
 	'a ukulele aficionado. ',				

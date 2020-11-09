@@ -36,21 +36,40 @@ Supported content tags:
   {{html:proj-all}}      --> build HTML for all projects based on visibility
   {{code:proj}}          --> load projects into code
   {{code:blog}}          --> load blogs into code
+  {{meta:home}}          --> build HTML meta for home page
+  {{meta:proj}}          --> build HTML meta for project index
+  {{meta:proj:...}}      --> build HTML meta for specific project
+  {{meta:blog}}          --> build HTML meta for blog index
+  {{meta:blog:...}}      --> build HTML meta for specific blog post
+  {{meta:vault}}         --> build HTML meta for vault
+  {{meta:demo}}          --> build HTML meta for demo index
+  {{meta:demo:...}}      --> build HTML meta for specific demo
 */
 
-// TODO
 class Experience {
 	constructor({
 		company='',
+		companyId = '',
 		title=[],
 		date='',
 		detail=[],
-		languagesAndLibraries=[],
-		tools=[],
-		platforms=[],
-		infrastructure=[],
+		languagesAndLibraries='',
+		tools='',
+		platforms='',
+		infrastructure='',
 		url=''
-	}) {}
+	}) {
+		this.company = company
+		this.companyId = companyId
+		this.title = title
+		this.date = date
+		this.detail = detail
+		this.languagesAndLibraries = languagesAndLibraries
+		this.tools = tools
+		this.platforms = platforms
+		this.infrastructure = infrastructure
+		this.url = url
+	}
 }
 
 // generate HTML files based on page type
@@ -106,6 +125,10 @@ const buildPageFromTemplate = async ({template='', page='', isIndex=false}) => {
 
 	// resolve static and dynamic assets
 	data = await resolveAssets(data, isIndex)
+
+	// prettify text
+	// TODO: this messes up html, need to fix
+	// data = html.prettyPrint(data, {indent_size: 4});
 
 	// write to source file
 	await writeFilePromise(page, data)
@@ -268,7 +291,9 @@ const buildHtml = async (data, match, key) => {
 	let resolvedData = data
 	switch (key) {
 		case 'exp-tabs':
-			break
+			let experiences = await parseExperiences()
+			let html = await buildExpTabs(experiences)
+			resolvedData = resolvedData.replace(match, html)
 		case 'proj-featured':
 			break
 		case 'proj-all':
@@ -276,7 +301,91 @@ const buildHtml = async (data, match, key) => {
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
 	}
-	return data
+	return resolvedData
+}
+
+// parse experiences from markdown file
+const parseExperiences = async () => {
+	const experienceData = await readFilePromise('content/experience.md')
+	let experiences = []
+	let newExperience = new Experience({})
+
+	for (let line of experienceData.toString().split('\n')) {
+		if (line !== '') {
+			let elements = line.split(': ')
+			let key = elements.shift()
+			let value = elements.join(': ')
+			if(['title', 'detail'].includes(key)) {
+				newExperience[key].push(value)
+			} else {
+				newExperience[key] = value
+			}
+		} else {
+			experiences.push(newExperience)
+			newExperience = new Experience({})
+		}
+	}
+
+	return experiences
+}
+
+// build experience tabs HTML
+const buildExpTabs = async (experiences) => {
+	let tabsSnippet = await readFilePromise('snippets/experience/tabs.html')
+	let selectorSnippet = await readFilePromise('snippets/experience/selector.html')
+	let contentSnippet = await readFilePromise('snippets/experience/content.html')
+	let detailSnippet = await readFilePromise('snippets/experience/detail.html')
+	let highlightSnippet = await readFilePromise('snippets/experience/highlight.html')
+	let titleSnippet = await readFilePromise('snippets/experience/title.html')
+
+	tabsSnippet = tabsSnippet.toString()
+	selectorSnippet = selectorSnippet.toString()
+	contentSnippet = contentSnippet.toString()
+	detailSnippet = detailSnippet.toString()
+	highlightSnippet = highlightSnippet.toString()
+	titleSnippet = titleSnippet.toString()
+
+	let selectors = ''
+	let contents = ''
+
+	for (let [index, experience] of experiences.entries()) {
+		// add selector
+		let selector = selectorSnippet.replace('{{company_upper}}', experience.company)
+		selector = selector.replace('{{company_lower}}', experience.companyId)
+		selector = selector.replace('{{is_active}}', index === 0 ? 'exp-selector-active' : '')
+		selectors += selector
+
+		// add content
+		let titles = ''
+		for (let t of experience.title) {
+			titles += titleSnippet.replace('{{title}}', t)
+		}
+		let details = ''
+		for (let d of experience.detail) {
+			let detail = detailSnippet.replace('{{detail}}', d)
+			let matches = d.match(/\*\*.+?\*\*/g)
+			if (matches !== null) {
+				for (let match of matches) {
+					let text = match.replace(/^\*\*/, '').replace(/\*\*$/, '')
+					detail = detail.replace(match, highlightSnippet.replace('{{hightlight}}', text))
+				}
+			}
+			details += detail
+		}
+		let content = contentSnippet.replace('{{titles}}', titles)
+		content = content.replace('{{company_lower}}', experience.companyId)
+		content = content.replace('{{date}}', experience.date)
+		content = content.replace('{{details}}', details)
+		content = content.replace('{{languages_and_libraries}}', experience.languagesAndLibraries)
+		content = content.replace('{{tools}}', experience.tools)
+		content = content.replace('{{platforms}}', experience.platforms)
+		content = content.replace('{{infrastructure}}', experience.infrastructure)
+		content = content.replace('{{url}}', experience.url)
+		content = content.replace('{{is_active}}', index === 0 ? 'exp-active' : 'exp-hidden')
+		contents += content
+	}
+
+	return tabsSnippet.replace('{{selectors}}', selectors).replace('{{contents}}', contents)
 }
 
 // replace {{code:...}} tags
@@ -307,7 +416,6 @@ const buildCode = async (data, match, key) => {
 					attributes = []
 				}
 			}
-			console.log(match)
 			resolvedData = resolvedData.replace(match, newProjects.join('\n'))
 			break
 		case 'blog':

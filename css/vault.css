@@ -35,3 +35,7 @@
 #content-main h1 {
 	font-size: 5rem !important;
 }
+
+h5 {
+	color: var(--subtitle) !important;
+}

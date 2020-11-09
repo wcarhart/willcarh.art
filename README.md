@@ -24,7 +24,7 @@ forge [-h] [-d]
 ```
 
 ### Understanding this respository
-This repo uses node.js to generate webpages based on HTML, CSS, and JS templates. When a new version of the site is generated, the `forge` utilizes `generator/generator.js` and `generator/core.js` to build valid webpages and components in `src/`. It pulls templates from these directories:
+The _forge_ ([`forge`](https://github.com/wcarhart/willcarh.art/blob/master/forge)) generates webpages based on HTML, CSS, and JS templates. When a new version of the site is generated, the forge utilizes `generator/generator.js` and `generator/core.js` to build valid webpages and components in `src/`. It pulls templates from these directories:
 * `templates/` - template HTML files for building the webpages in `src/`
 * `js/` - template JS files to be included in `src/`
 * `snippets/` - HTML and JS snippets from which to build content, used repeatedly throughout the website

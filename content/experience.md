@@ -32,8 +32,8 @@ companyId: starlit
 title: Web Developer Intern
 date: Summer 2017
 detail: Built **responsive webpages** for various clients using HTML5, CSS3, and React
-detail: Maintained and updated documentation for production web apps.
-Troubleshot Elixir backend, **managed Docker delopyments**
+detail: Maintained and updated documentation for production web apps
+detail: Troubleshot Elixir backend, **managed Docker delopyments**
 languagesAndLibraries: React, HTML5, CSS3, Elixir
 tools: git, GitHub, Trello
 platforms: Docker, Linux

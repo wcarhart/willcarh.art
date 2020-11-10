@@ -1,4 +1,31 @@
 #!/bin/bash
+set -e
 
+# get forge source dir
 SOURCE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-node "${SOURCE}/generator/generator.js" "$@"
+
+# check for dependencies
+if ! yarn check > /dev/null 2>&1 ; then
+	>&2 echo "Dependencies are not installed, installing them now..."
+	yarn install > /dev/null 2>&1
+fi
+
+# forge a new build
+if [[ "$@" == *"-s"* || "$@" == *"--silent"* ]] ; then
+	node "${SOURCE}/generator/generator.js" "$@" > /dev/null
+else
+	node "${SOURCE}/generator/generator.js" "$@"
+fi
+
+# open the newly built pages in a browser window
+if [[ "$@" == *"-b"* || "$@" == *"--browser"* ]] ; then
+	if [[ "$(uname -s)" == *"Darwin"* ]] ; then
+		if [[ -f index.html ]] ; then
+			open index.html
+		else
+			>&2 echo "No such file 'index.html' - did the build fail?"
+		fi
+	else
+		>&2 echo "Cannot open file in browser, this feature is only available on macOS"
+	fi
+fi

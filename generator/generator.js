@@ -77,9 +77,11 @@ const usage = async () => {
 	console.log('forge - build pages for willcarh.art')
 	console.log('')
 	console.log('Usage:')
-	console.log('forge [-h] [-d]')
+	console.log('forge [-h] [-d] [-b] [-s]')
 	console.log('  -h, --help      Show this menu and exit')
 	console.log('  -d, --develop   Do not exit on validation errors')
+	console.log('  -b, --browser   Open the newly built website in a new browser window')
+	console.log('  -s, --silent    Silence build output')
 }
 
 // parse command line arguments
@@ -118,7 +120,7 @@ const main = async () => {
 		const endTime = new Date().getTime()
 		console.log(`✨  Done in ${(endTime - startTime) / 1000} seconds`)
 	} catch (e) {
-		console.log(e.stack)
+		console.error(e.stack)
 		process.exit(1)
 	}
 }

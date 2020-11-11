@@ -44,14 +44,6 @@ h5 {
 	font-size: 5rem !important;
 }
 
-.spacer {
-	height: 6rem;
-}
-
-.spacer-small {
-	height: 2rem;
-}
-
 .project-border {
 	padding: 1rem;
 	border: solid 0.2rem var(--text);

@@ -46,7 +46,7 @@
 	border-top-color: var(--color);
 	border-right-color: var(--color);
 	border-bottom-color: var(--color);
-transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
+	transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
 }
 
 #logo-container::after {
@@ -54,9 +54,9 @@ transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s,
 }
 
 #logo-container:hover::after {
-  border-top: 0.15rem solid var(--color);
-  border-left-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(270deg);
-  transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+	border-top: 0.15rem solid var(--color);
+	border-left-width: 0.15rem;
+	border-right-width: 0.15rem;
+	transform: rotate(270deg);
+	transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
 }

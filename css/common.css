@@ -53,3 +53,11 @@ body {
 	color: var(--text) !important;
 	background-color: var(--background) !important;
 }
+
+.spacer {
+	height: 6rem;
+}
+
+.spacer-small {
+	height: 2rem;
+}

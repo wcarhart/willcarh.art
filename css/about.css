@@ -152,14 +152,6 @@ h2 {
 	outline: 0;
 }
 
-.spacer {
-	height: 6rem;
-}
-
-.spacer-small {
-	height: 2rem;
-}
-
 .highlight-text {
 	color: var(--color) !important;
 }

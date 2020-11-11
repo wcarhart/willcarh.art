@@ -225,6 +225,10 @@ a.home-block {
 	outline: none;
 }
 
+#tidbit-text {
+	font-size: 1.5rem;
+}
+
 #credits {
 	text-align: center;
 	position: fixed;

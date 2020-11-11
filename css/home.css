@@ -89,6 +89,11 @@ h2 {
 	border-radius: 4rem;
 	background-color: var(--text);
 	position: relative;
+	transition: all ease 0.3s;
+}
+
+#home-about-logo {
+	content: var(--home-about);
 }
 
 #home-projects-logo {
@@ -97,48 +102,6 @@ h2 {
 
 #home-blog-logo {
 	content: var(--home-blog);
-}
-
-#home-about-logo {
-	content: var(--home-about);
-}
-
-#home-projects-container::before, #home-projects-container::after {
-	box-sizing: inherit;
-	content: '';
-	position: absolute;
-	width: 8rem;
-	height: 8rem;
-	border-radius: 100%;
-	top: 0;
-	left: 0;
-}
-
-#home-projects-container:hover {
-	color: var(--color);
-}
-
-#home-projects-container::before {
-	border: 0.15rem solid transparent;
-}
-
-#home-projects-container:hover::before {
-	border-top-color: var(--color);
-	border-right-color: var(--color);
-	border-bottom-color: var(--color);
-	transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
-}
-
-#home-projects-container::after {
-	border: 0 solid transparent;
-}
-
-#home-projects-container:hover::after {
-  border-top: 0.15rem solid var(--color);
-  border-left-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(270deg);
-  transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
 }
 
 #home-about-container::before, #home-about-container::after {
@@ -154,6 +117,7 @@ h2 {
 
 #home-about-container:hover {
 	color: var(--color);
+	transform: scale(1.1);
 }
 
 #home-about-container::before {
@@ -172,11 +136,50 @@ h2 {
 }
 
 #home-about-container:hover::after {
-  border-top: 0.15rem solid var(--color);
-  border-left-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(270deg);
-  transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+	border-top: 0.15rem solid var(--color);
+	border-left-width: 0.15rem;
+	border-right-width: 0.15rem;
+	transform: rotate(270deg);
+	transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+}
+
+#home-projects-container::before, #home-projects-container::after {
+	box-sizing: inherit;
+	content: '';
+	position: absolute;
+	width: 8rem;
+	height: 8rem;
+	border-radius: 100%;
+	top: 0;
+	left: 0;
+}
+
+#home-projects-container:hover {
+	color: var(--color);
+	transform: scale(1.1);
+}
+
+#home-projects-container::before {
+	border: 0.15rem solid transparent;
+}
+
+#home-projects-container:hover::before {
+	border-top-color: var(--color);
+	border-right-color: var(--color);
+	border-bottom-color: var(--color);
+	transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
+}
+
+#home-projects-container::after {
+	border: 0 solid transparent;
+}
+
+#home-projects-container:hover::after {
+	border-top: 0.15rem solid var(--color);
+	border-left-width: 0.15rem;
+	border-right-width: 0.15rem;
+	transform: rotate(270deg);
+	transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
 }
 
 #home-blog-container::before, #home-blog-container::after {
@@ -192,6 +195,7 @@ h2 {
 
 #home-blog-container:hover {
 	color: var(--color);
+	transform: scale(1.1);
 }
 
 #home-blog-container::before {
@@ -210,11 +214,11 @@ h2 {
 }
 
 #home-blog-container:hover::after {
-  border-top: 0.15rem solid var(--color);
-  border-left-width: 0.15rem;
-  border-right-width: 0.15rem;
-  transform: rotate(270deg);
-  transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+	border-top: 0.15rem solid var(--color);
+	border-left-width: 0.15rem;
+	border-right-width: 0.15rem;
+	transform: rotate(270deg);
+	transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
 }
 
 a.home-block {

@@ -2,7 +2,7 @@
 set -e
 
 # get forge source dir
-SOURCE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # check for dependencies
 if ! yarn check > /dev/null 2>&1 ; then
@@ -12,9 +12,9 @@ fi
 
 # forge a new build
 if [[ "$@" == *"-s"* || "$@" == *"--silent"* ]] ; then
-	node "${SOURCE}/generator/generator.js" "$@" > /dev/null
+	node "${source}/generator/generator.js" "$@" > /dev/null
 else
-	node "${SOURCE}/generator/generator.js" "$@"
+	node "${source}/generator/generator.js" "$@"
 fi
 
 # open the newly built pages in a browser window

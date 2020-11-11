@@ -39,3 +39,42 @@
 h5 {
 	color: var(--subtitle) !important;
 }
+
+.vault-header {
+	font-size: 1.5rem !important;
+	color: var(--text) !important;
+}
+
+#vault-header-type, #vault-header-year {
+	text-align: center;
+}
+
+.vault-row {
+	padding-bottom: 1rem;
+}
+
+.vault-year {
+	color: var(--color) !important;
+	text-align: center
+}
+
+.vault-type {
+	text-align: center;
+	color: var(--subtitle);
+}
+
+.vault-resources {
+	font-family: 'Roboto Mono', monospace;
+	color: var(--subtitle) !important;
+	font-size: 0.75rem;
+}
+
+.vault-title {
+	color: var(--text) !important;
+	text-decoration: none;
+	background-image: linear-gradient(var(--color), var(--color));
+	background-position: 0% 100%;
+	background-repeat: no-repeat;
+	background-size: 0% 0.125rem;
+	transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+}

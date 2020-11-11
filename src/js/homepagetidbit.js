@@ -1,5 +1,4 @@
 // update text below blocks on homepage
-
 $(document).ready(async () => {
 	$('#home-about-container').hover(async () => {
 		$('#more-information').fadeOut('fast', async () => {

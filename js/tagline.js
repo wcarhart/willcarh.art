@@ -55,6 +55,7 @@ const homeTaglines = [
 	'a Hacker News lurker. ',
 	'a night owl coder. ',
 	'a bash addict. ',
+	'a professional jerry-rigger. ',
 	'a lifelong learner. ',
 	'an internet denizen. ',
 	'a practicer of radical empathy. ',

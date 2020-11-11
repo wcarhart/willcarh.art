@@ -1,0 +1,9 @@
+.github-icon, .link-icon, .docs-icon, .demo-icon {
+	color: var(--text);
+	padding-right: 1rem;
+	margin: 0;
+}
+
+.github-icon:hover, .link-icon:hover, .docs-icon:hover, .demo-icon:hover {
+	color: var(--color);
+}

@@ -93,16 +93,6 @@ div.col-md-6.no-shift {
 	padding-left: 1rem;
 }
 
-.github-icon, .link-icon, .docs-icon, .demo-icon {
-	color: var(--text);
-	padding-right: 1rem;
-	margin: 0;
-}
-
-.github-icon:hover, .link-icon:hover, .docs-icon:hover, .demo-icon:hover {
-	color: var(--color);
-}
-
 .equal {
 	display: flex;
 	flex-wrap: wrap;

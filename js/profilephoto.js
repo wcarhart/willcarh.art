@@ -1,3 +1,5 @@
+{{sys:headerjs}}
+
 // rotate profile pictures on about page
 $(document).ready(async () => {
 	const photos = [

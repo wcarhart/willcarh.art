@@ -1,3 +1,5 @@
+{{sys:headerjs}}
+
 // set up dark mode
 
 // init dark mode

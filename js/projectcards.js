@@ -1,3 +1,5 @@
+{{sys:headerjs}}
+
 // handle hover and click for project cards
 $(document).ready(async () => {
 	// handle animations for hover

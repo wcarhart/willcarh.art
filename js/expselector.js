@@ -1,3 +1,5 @@
+{{sys:headerjs}}
+
 // toggle experience modals on about page
 
 // init tabs

@@ -1,3 +1,5 @@
+{{sys:headerjs}}
+
 // make vault rows clickable
 $(document).ready(async () => {
 	$('.vault-row').hover(async function() {

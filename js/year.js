@@ -1,3 +1,5 @@
+{{sys:headerjs}}
+
 // dynamically update footer year
 const year = new Date().getFullYear();
 $(document).ready(async () => {

@@ -116,7 +116,7 @@ link:
 demo:
 latest_version: 2.0.0
 published: 2019
-status: in development
+status: stale
 install:
 documentation:
 related:

@@ -14,6 +14,9 @@ const copyFilePromise = util.promisify(fs.copyFile)
 const writeFilePromise = util.promisify(fs.writeFile)
 const mkdirPromise = util.promisify(fs.mkdir)
 
+// TODO: add verbose comments
+
+// TODO: add color
 /*
 Supported asset tags:
   {{css:...}}      --> static CSS file
@@ -22,6 +25,7 @@ Supported asset tags:
   {{js:...}}       --> static built js file
   {{src:...}}      --> static built source file
   {{cdn:...}}      --> file stored in CDN
+  {{color:...}}    --> color from the system color palette
   {{sys:header}}   --> generated header for HTML files
   {{sys:headerjs}} --> generated header for JS files
   {{sys:home}}     --> path to homepage
@@ -497,6 +501,7 @@ const parseBlogPosts = async () => {
 
 // build vault rows HTML
 const buildVaultRows = async (experiences, projects, blogPosts) => {
+	// parse HTML snippets
 	let vaultRowsSnippet = await readFilePromise('snippets/vault/vault-row.html')
 	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
@@ -509,6 +514,7 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 	githubIconSnippet = githubIconSnippet.toString()
 	linkIconSnippet = linkIconSnippet.toString()
 
+	// template for how we will fill in the rows
 	class RowTemplate {
 		constructor({year='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl=''}) {
 			this.year = year
@@ -521,8 +527,9 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 			this.linkUrl = linkUrl
 		}
 	}
-
 	let rows = []
+
+	// parse experiences into rows
 	for (let experience of experiences) {
 		for (let [index, title] of experience.title.entries()) {
 			let r = new RowTemplate({})
@@ -545,9 +552,11 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 		}
 	}
 
-	// process.exit()
-
+	// parse projects into rows
 	for (let project of projects) {
+		if (project.status === 'in development') {
+			continue
+		}
 		let r = new RowTemplate({})
 		r.year = project.published
 		r.title = project.name
@@ -562,8 +571,11 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 	}
 
 	// TODO: add blog posts
+	// parse blog posts into rows
 	// for (let post of blogPosts) {}
 
+	// TODO: this sort is greedy, need to rethink how to store dates on projects, experiences, and blog posts
+	// sort rows based on year, prioritizing projects
 	rows.sort((a, b) => {
 		if (a.year > b.year) {
 			return -1
@@ -579,9 +591,9 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 		return 0
 	})
 
+	// build html
 	let html = ''
 	for (let row of rows) {
-		// if row.year
 		let newRow = vaultRowsSnippet.replace('{{year}}', row.year)
 		newRow = newRow.replace('{{title}}', row.title)
 		switch (row.type) {
@@ -597,11 +609,11 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 			default:
 				throw new Error(`Unknown vault row type ${row.type}`)
 		}
-		newRow = newRow.replace('{{resources}}', row.resources.join(' · '))
+		newRow = newRow.replace('{{resources}}', row.resources.flatMap(r => r === '' ? [] : r).join(' · '))
 
 		linkHtml = ''
 		if (row.githubName !== '') {
-			linkHtml += githubIconSnippet.replace('{{name}}', row.githubName)
+			linkHtml += githubIconSnippet.replace('{{name}}', row.title)
 		}
 		if (row.docsName !== '') {
 			linkHtml += docsIconSnippet.replace('{{name}}', row.title)

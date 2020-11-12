@@ -34,6 +34,7 @@ Supported content tags:
   {{html:exp-tabs}}      --> build HTML for experience tabs on about page
   {{html:proj-featured}} --> build HTML for featured projects on project page
   {{html:proj-all}}      --> build HTML for all projects based on visibility
+  {{html:vault-rows}}    --> built HTML for rows in the vault
   {{code:proj}}          --> load projects into code
   {{code:blog}}          --> load blogs into code
   {{meta:home}}          --> build HTML meta for home page
@@ -51,12 +52,12 @@ class Experience {
 		company='',
 		companyId = '',
 		title=[],
-		date='',
+		date=[],
 		detail=[],
-		languagesAndLibraries='',
-		tools='',
-		platforms='',
-		infrastructure='',
+		languagesAndLibraries=[],
+		tools=[],
+		platforms=[],
+		infrastructure=[],
 		url=''
 	}) {
 		this.company = company
@@ -69,6 +70,52 @@ class Experience {
 		this.platforms = platforms
 		this.infrastructure = infrastructure
 		this.url = url
+	}
+}
+
+class Project {
+	constructor({
+		name='',
+		blurb='',
+		about=[],
+		languages=[],
+		technologies=[],
+		img='',
+		repo='',
+		link='',
+		demo='',
+		latestVersion='',
+		published='',
+		status='',
+		install='',
+		documentation='',
+		related=[],
+		visibility='',
+		tags=[]
+	}) {
+		this.name = name
+		this.blurb = blurb
+		this.about = about
+		this.languages = languages
+		this.technologies = technologies
+		this.img = img
+		this.repo = repo
+		this.link = link
+		this.demo = demo
+		this.latestVersion = latestVersion
+		this.published = published
+		if (!['stable', 'in development', 'stale', 'archived'].includes(status)) {
+			console.error(`Unknown status '${status}'`)
+		}
+		this.status = status
+		this.install = install
+		this.documentation = documentation
+		this.related = related
+		if (!['super', 'featured', 'normal', 'less', 'none'].includes(visibility)) {
+			console.error(`Unknown visibility '${visibility}'`)
+		}
+		this.visibility = visibility
+		this.tags = tags
 	}
 }
 
@@ -357,20 +404,29 @@ const buildMetaHtml = async ({description='', url=''}) => {
 	return template
 }
 
-// TODO
 // replace {{html:...}} tags
 const buildHtml = async (data, match, key) => {
 	let resolvedData = data
+	let experiences = null, projects = null, blogPosts = null
+	let html = null
 	switch (key) {
 		case 'exp-tabs':
-			let experiences = await parseExperiences()
-			let html = await buildExpTabs(experiences)
+			experiences = await parseExperiences()
+			html = await buildExpTabs(experiences)
 			resolvedData = resolvedData.replace(match, html)
+			break
 		case 'proj-featured':
 			//TODO
 			break
 		case 'proj-all':
 			//TODO
+			break
+		case 'vault-rows':
+			experiences = await parseExperiences()
+			projects = await parseProjects()
+			blogPosts = await parseBlogPosts()
+			html = await buildVaultRows(experiences, projects, blogPosts)
+			resolvedData = resolvedData.replace(match, html)
 			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
@@ -386,10 +442,13 @@ const parseExperiences = async () => {
 
 	for (let line of experienceData.toString().split('\n')) {
 		if (line !== '') {
-			let elements = line.split(': ')
+			let elements = line.split(':')
 			let key = elements.shift()
-			let value = elements.join(': ')
-			if(['title', 'detail'].includes(key)) {
+			let value = elements.join(':')
+			if (value[0] === ' ') {
+				value = value.slice(1)
+			}
+			if(['title', 'date', 'detail', 'languagesAndLibraries', 'tools', 'platforms', 'infrastructure'].includes(key)) {
 				newExperience[key].push(value)
 			} else {
 				newExperience[key] = value
@@ -401,6 +460,164 @@ const parseExperiences = async () => {
 	}
 
 	return experiences
+}
+
+// parse projects from markdown file
+const parseProjects = async () => {
+	const projectData = await readFilePromise('content/projects.md')
+	let projects = []
+	let newProject = new Project({})
+
+	for (let line of projectData.toString().split('\n')) {
+		if (line !== '') {
+			let elements = line.split(':')
+			let key = elements.shift()
+			let value = elements.join(':')
+			if (value[0] === ' ') {
+				value = value.slice(1)
+			}
+			if (['about', 'languages', 'technologies', 'related', 'tags'].includes(key)) {
+				newProject[key].push(value)
+			} else {
+				newProject[key] = value
+			}
+		} else {
+			projects.push(newProject)
+			newProject = new Project({})
+		}
+	}
+
+	return projects
+}
+
+// parse blog posts from markdown file
+const parseBlogPosts = async () => {
+	// TODO
+}
+
+// build vault rows HTML
+const buildVaultRows = async (experiences, projects, blogPosts) => {
+	let vaultRowsSnippet = await readFilePromise('snippets/vault/vault-row.html')
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+
+	vaultRowsSnippet = vaultRowsSnippet.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+
+	class RowTemplate {
+		constructor({year='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl=''}) {
+			this.year = year
+			this.title = title
+			this.type = type
+			this.resources = resources
+			this.demoName = demoName
+			this.docsName = docsName
+			this.githubName = githubName
+			this.linkUrl = linkUrl
+		}
+	}
+
+	let rows = []
+	for (let experience of experiences) {
+		for (let [index, title] of experience.title.entries()) {
+			let r = new RowTemplate({})
+			if (/[a-zA-Z]/g.test(experience.date)) {
+				let matches = experience.date[index].match(/[0-9]+/g)
+				r.year = matches[0]
+			} else {
+				let matches = experience.date[index].match(/[0-9]+/g)
+				r.year = matches[1]
+			}
+			r.title = `${experience.title[index]} @ ${experience.company}`
+			r.type = 'experience'
+			r.resources = experience.languagesAndLibraries.concat(experience.platforms.concat(experience.infrastructure))
+			r.demoName = ''
+			r.docsName = ''
+			r.githubName = ''
+			r.linkUrl = experience.url
+
+			rows.push(r)
+		}
+	}
+
+	// process.exit()
+
+	for (let project of projects) {
+		let r = new RowTemplate({})
+		r.year = project.published
+		r.title = project.name
+		r.type = 'project'
+		r.resources = project.languages.concat(project.technologies)
+		r.demoName = project.demo
+		r.docsName = project.documentation
+		r.githubName = project.repo
+		r.urlLink = project.link
+
+		rows.push(r)
+	}
+
+	// TODO: add blog posts
+	// for (let post of blogPosts) {}
+
+	rows.sort((a, b) => {
+		if (a.year > b.year) {
+			return -1
+		} else if (a.year < b.year) {
+			return 1
+		} else {
+			if (a.type === 'experience') {
+				return -1
+			} else {
+				return 1
+			}
+		}
+		return 0
+	})
+
+	let html = ''
+	for (let row of rows) {
+		// if row.year
+		let newRow = vaultRowsSnippet.replace('{{year}}', row.year)
+		newRow = newRow.replace('{{title}}', row.title)
+		switch (row.type) {
+			case 'experience':
+				newRow = newRow.replace('{{type}}', 'user-circle')
+				break
+			case 'project':
+				newRow = newRow.replace('{{type}}', 'terminal')
+				break
+			case 'blogPost':
+				newRow = newRow.replace('{{type}}', 'book')
+				break
+			default:
+				throw new Error(`Unknown vault row type ${row.type}`)
+		}
+		newRow = newRow.replace('{{resources}}', row.resources.join(' · '))
+
+		linkHtml = ''
+		if (row.githubName !== '') {
+			linkHtml += githubIconSnippet.replace('{{name}}', row.githubName)
+		}
+		if (row.docsName !== '') {
+			linkHtml += docsIconSnippet.replace('{{name}}', row.title)
+		}
+		if (row.demoName !== '') {
+			linkHtml += demoIconSnippet.replace('{{name}}', row.demoName)
+		}
+		if (row.linkUrl !== '') {
+			linkHtml += linkIconSnippet.replace('{{url}}', row.linkUrl)
+		}
+		newRow = newRow.replace('{{links}}', linkHtml)
+
+		html += newRow
+	}
+
+	return html
 }
 
 // build experience tabs HTML
@@ -450,34 +667,28 @@ const buildExpTabs = async (experiences) => {
 		}
 		let content = contentSnippet.replace('{{titles}}', titles)
 		content = content.replace('{{company_lower}}', experience.companyId)
-		content = content.replace('{{date}}', experience.date)
+		content = content.replace('{{date}}', experience.date[0])
 		content = content.replace('{{details}}', details)
 		if (experience.languagesAndLibraries.length !== 0) {
-			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries)
-			content = content.replace('{{languages_and_libraries}}', tidbit)
-		} else {
-			content = content.replace('{{languages_and_libraries}}', '')
-		}
-		if (experience.languagesAndLibraries.length !== 0) {
-			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries)
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries.join(', '))
 			content = content.replace('{{languages_and_libraries}}', tidbit)
 		} else {
 			content = content.replace('{{languages_and_libraries}}', '')
 		}
 		if (experience.tools.length !== 0) {
-			let tidbit = tidbitSnippet.replace('{{handle}}', 'Tools').replace('{{tidbit}}', experience.tools)
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Tools').replace('{{tidbit}}', experience.tools.join(', '))
 			content = content.replace('{{tools}}', tidbit)
 		} else {
 			content = content.replace('{{tools}}', '')
 		}
 		if (experience.platforms.length !== 0) {
-			let tidbit = tidbitSnippet.replace('{{handle}}', 'Platforms').replace('{{tidbit}}', experience.platforms)
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Platforms').replace('{{tidbit}}', experience.platforms.join(', '))
 			content = content.replace('{{platforms}}', tidbit)
 		} else {
 			content = content.replace('{{platforms}}', '')
 		}
 		if (experience.infrastructure.length !== 0) {
-			let tidbit = tidbitSnippet.replace('{{handle}}', 'Infrastructure').replace('{{tidbit}}', experience.infrastructure)
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Infrastructure').replace('{{tidbit}}', experience.infrastructure.join(', '))
 			content = content.replace('{{infrastructure}}', tidbit)
 		} else {
 			content = content.replace('{{infrastructure}}', '')
@@ -540,6 +751,7 @@ const buildNewProjectString = async (attributes) => {
 		img: '',
 		repo: '',
 		latestVersion: '',
+		published: '',
 		status: '',
 		install: '',
 		documentation: '',

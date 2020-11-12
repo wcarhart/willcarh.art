@@ -55,7 +55,8 @@ h5 {
 
 .vault-year {
 	color: var(--color) !important;
-	text-align: center
+	text-align: center;
+	font-size: 1.2rem;
 }
 
 .vault-type {
@@ -70,6 +71,7 @@ h5 {
 }
 
 .vault-title {
+	font-size: 1.2rem;
 	color: var(--text) !important;
 	text-decoration: none;
 	background-image: linear-gradient(var(--color), var(--color));

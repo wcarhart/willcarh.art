@@ -7,7 +7,10 @@ class Project {
 		technologies=[],
 		img='',
 		repo='',
+		link='',
+		demo='',
 		latestVersion='',
+		published='',
 		status='',
 		install='',
 		documentation='',
@@ -22,7 +25,10 @@ class Project {
 		this.technologies = technologies
 		this.img = img
 		this.repo = repo
+		this.link = link
+		this.demo = demo
 		this.latestVersion = latestVersion
+		this.published = published
 		if (!['stable', 'in development', 'stale', 'archived'].includes(status)) {
 			console.error(`Unknown status '${status}'`)
 		}

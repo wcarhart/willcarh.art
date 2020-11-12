@@ -4,6 +4,7 @@ class Blog {
 		subtitle='',
 		blurb='',
 		cover='',
+		coverAuthor='',
 		coverCredit='',
 		published='',
 		updated='',

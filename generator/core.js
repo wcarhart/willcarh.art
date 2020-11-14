@@ -124,6 +124,39 @@ class Project {
 	}
 }
 
+class Blog {
+	constructor({
+		title='',
+		subtitle='',
+		blurb='',
+		cover='',
+		coverAuthor='',
+		coverCredit='',
+		published='',
+		updated='',
+		resources=[],
+		author='',
+		status='',
+		tags=[],
+		content=[]
+	}) {
+		this.title = title
+		this.subtitle = subtitle
+		this.blurb = blurb
+		this.cover = cover
+		this.coverAuthor = coverAuthor
+		this.coverCredit = coverCredit
+		this.published = published
+		this.updated = updated
+		this.resources = resources
+		this.author = author
+		// TODO: enumerate possible statuses
+		this.status = status
+		this.tags = tags
+		this.content = content
+	}
+}
+
 // generate HTML files based on page type
 const generate = async (page) => {
 	try {
@@ -173,7 +206,6 @@ const generate = async (page) => {
 			await buildScripts()
 			break
 		case 'vault':
-			// TODO
 			console.log('🗄  Building vault...')
 			await buildPageFromTemplate({template: 'templates/vault.html', page: 'src/vault.html', isIndex: false})
 			break
@@ -182,6 +214,11 @@ const generate = async (page) => {
 			console.log('🏃‍♂️  Building demos...')
 			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo_index.html', isIndex: false})
 			await buildMultiplePages('demo')
+			break
+		case 'etc':
+			// TODO
+			console.log('👓  Building etc...')
+			await buildPageFromTemplate({template: 'templates/etc.html', page: 'src/etc.html', isIndex: false})
 			break
 		default:
 			throw new Error(`Unknown page '${page}'`)
@@ -412,7 +449,7 @@ const buildMetaHtml = async ({description='', url=''}) => {
 // replace {{html:...}} tags
 const buildHtml = async (data, match, key) => {
 	let resolvedData = data
-	let experiences = null, projects = null, blogPosts = null
+	let experiences = null, projects = null, blogs = null
 	let html = null
 	switch (key) {
 		case 'exp-tabs':
@@ -429,8 +466,8 @@ const buildHtml = async (data, match, key) => {
 		case 'vault-rows':
 			experiences = await parseExperiences()
 			projects = await parseProjects()
-			blogPosts = await parseBlogPosts()
-			html = await buildVaultRows(experiences, projects, blogPosts)
+			blogs = await parseBlogs()
+			html = await buildVaultRows(experiences, projects, blogs)
 			resolvedData = resolvedData.replace(match, html)
 			break
 		default:
@@ -496,12 +533,35 @@ const parseProjects = async () => {
 }
 
 // parse blog posts from markdown file
-const parseBlogPosts = async () => {
-	// TODO
+const parseBlogs = async () => {
+	const blogData = await readFilePromise('content/blogs.md')
+	let blogs = []
+	let newBlog = new Blog({})
+
+	for (let line of blogData.toString().split('\n')) {
+		if (line !== '') {
+			let elements = line.split(':')
+			let key = elements.shift()
+			let value = elements.join(':')
+			if (value[0] === ' ') {
+				value = value.slice(1)
+			}
+			if (['resources', 'tags', 'content'].includes(key)) {
+				newBlog[key].push(value)
+			} else {
+				newBlog[key] = value
+			}
+		} else {
+			blogs.push(newBlog)
+			newBlog = new Blog({})
+		}
+	}
+
+	return blogs
 }
 
 // build vault rows HTML
-const buildVaultRows = async (experiences, projects, blogPosts) => {
+const buildVaultRows = async (experiences, projects, blogs) => {
 	// parse HTML snippets
 	let vaultRowsSnippet = await readFilePromise('snippets/vault/vault-row.html')
 	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
@@ -566,14 +626,26 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 		r.demoName = project.demo
 		r.docsName = project.documentation
 		r.githubName = project.repo
-		r.urlLink = project.link
+		r.linkUrl = project.link
 
 		rows.push(r)
 	}
 
 	// TODO: add blog posts
 	// parse blog posts into rows
-	// for (let post of blogPosts) {}
+	for (let blog of blogs) {
+		let r = new RowTemplate({})
+		r.year = blog.published
+		r.title = blog.title
+		r.type = 'blog'
+		r.resources = blog.resources
+		r.demoName = ''
+		r.docsName = ''
+		r.githubName = ''
+		r.linkUrl = ''
+
+		rows.push(r)
+	}
 
 	// TODO: this sort is greedy, need to rethink how to store dates on projects, experiences, and blog posts
 	// sort rows based on year, prioritizing projects
@@ -604,7 +676,7 @@ const buildVaultRows = async (experiences, projects, blogPosts) => {
 			case 'project':
 				newRow = newRow.replace('{{type}}', 'terminal')
 				break
-			case 'blogPost':
+			case 'blog':
 				newRow = newRow.replace('{{type}}', 'book')
 				break
 			default:
@@ -787,7 +859,7 @@ const buildNewProjectString = async (attributes) => {
 
 // TODO
 // build string for instatiating a new blog post
-const buildNewBlogPostString = async (attributes) => {
+const buildNewBlogString = async (attributes) => {
 	return
 }
 

@@ -135,7 +135,7 @@ technologies: Netlify
 technologies: Docsify
 img: {{cdn:img/logos/docs.png}}
 repo: https://github.com/wcarhart/docs
-link:
+link: https://willcarhart.dev
 demo:
 latest_version:
 published: 2020

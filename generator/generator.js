@@ -109,7 +109,7 @@ const main = async () => {
 		// asset order is essential:
 		//  - scripts must be build first
 		//  - vault must be built before projects
-		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'apps']
+		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc', 'apps']
 		for (let asset of assets) {
 			await core.generate(asset)
 		}

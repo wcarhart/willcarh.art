@@ -4,8 +4,9 @@ blurb: Announcing my all new personal website, portfolio, and full stack web app
 cover: {{cdn:img/blog/covers/img2.png}}
 coverAuthor: HoHoHO
 coverCredit: https://steamcommunity.com/id/themell
-published:
+published: 2019
 updated:
+resources: python
 author: Will Carhart
 status:
 tags:
@@ -17,8 +18,9 @@ blurb: Python comes packed out of the box with some powerful introspection capab
 cover: {{cdn:img/blog/covers/firewatch.jpg}}
 coverAuthor: AaronOlive
 coverCredit: https://www.deviantart.com/aaronolive
-published: 
+published: 2019
 updated:
+resources: python
 author: Will Carhart
 status:
 tags:
@@ -30,8 +32,11 @@ blurb: Python provides some awesome libraries for sending emails, but sometimes 
 cover: {{cdn:img/blog/covers/img1.png}}
 coverAuthor: Campo Santo
 coverCredit: https://blog.camposanto.com/post/138965082204/firewatch-launch-wallpaper-when-we-redid-the
-published:
+published: 2019
 updated:
+resources: python
+resources: bash
+resources: Gmail API
 author: Will Carhart
 status:
 tags:
@@ -43,8 +48,12 @@ blurb: Using the GitHub API, we can automate just about any functionality of Git
 cover: {{cdn:img/blog/covers/img4.jpg}}
 coverAuthor: Jason Scheier
 coverCredit: https://www.artstation.com/d3cap
-published:
+published: 2019
 updated:
+resources: python
+resources: bash
+resources: GitHub API
+resources: Travis CI
 author: Will Carhart
 status:
 tags:

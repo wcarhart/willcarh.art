@@ -16,6 +16,8 @@ const mkdirPromise = util.promisify(fs.mkdir)
 
 // TODO: add verbose comments
 
+// TODO: break this file up, it's getting quite long
+
 // TODO: add color
 /*
 Supported asset tags:
@@ -461,7 +463,10 @@ const buildHtml = async (data, match, key) => {
 			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'proj-all':
-			//TODO
+			projects = await parseProjects()
+			html = await buildProjAll(projects)
+			process.exit()
+			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'vault-rows':
 			experiences = await parseExperiences()
@@ -579,7 +584,6 @@ const buildProjSuper = async (projects) => {
 
 	// build html
 	let html = ''
-	// TODO: change i to index
 	for (let superIndex = 0; superIndex < projects.length / 2 ; superIndex++) {
 		let rowHtml = projectRowSuperSnippet
 		let superContainer = ''
@@ -618,7 +622,6 @@ const buildProjSuper = async (projects) => {
 			rowHtml = rowHtml.replace('{{project-container-super}}', superContainer)
 		}
 		html += rowHtml
-		// html += '<div class="spacer-small"></div>'
 	}
 	return html
 }

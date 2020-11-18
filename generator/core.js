@@ -210,13 +210,11 @@ const generate = async (page) => {
 			await buildPageFromTemplate({template: 'templates/vault.html', page: 'src/vault.html', isIndex: false})
 			break
 		case 'demo':
-			// TODO
 			console.log('🏃‍♂️  Building demos...')
 			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo_index.html', isIndex: false})
 			await buildMultiplePages('demo')
 			break
 		case 'etc':
-			// TODO
 			console.log('👓  Building etc...')
 			await buildPageFromTemplate({template: 'templates/etc.html', page: 'src/etc.html', isIndex: false})
 			break
@@ -457,8 +455,10 @@ const buildHtml = async (data, match, key) => {
 			html = await buildExpTabs(experiences)
 			resolvedData = resolvedData.replace(match, html)
 			break
-		case 'proj-featured':
-			//TODO
+		case 'proj-super':
+			projects = await parseProjects()
+			html = await buildProjSuper(projects.filter(p => p.visibility === 'super'))
+			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'proj-all':
 			//TODO
@@ -560,6 +560,81 @@ const parseBlogs = async () => {
 	return blogs
 }
 
+// build super project rows
+const buildProjSuper = async (projects) => {
+	// parse HTML snippets
+	let projectContainerSuperSnippet = await readFilePromise('snippets/projects/project-container-super.html')
+	let projectRowSuperSnippet = await readFilePromise('snippets/projects/project-row-super.html')
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+
+	projectContainerSuperSnippet = projectContainerSuperSnippet.toString()
+	projectRowSuperSnippet = projectRowSuperSnippet.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+
+	// build html
+	let html = ''
+	// TODO: change i to index
+	for (let superIndex = 0; superIndex < projects.length / 2 ; superIndex++) {
+		let rowHtml = projectRowSuperSnippet
+		let superContainer = ''
+		for (let subIndex = 0; subIndex < 2 ; subIndex++) {
+
+			let index = 2*superIndex + subIndex
+			if (index >= projects.length) {
+				rowHtml = rowHtml.replace('{{project-container-super}}', '')
+				continue
+			}
+			superContainer = projectContainerSuperSnippet.replace(/\{\{name\}\}/g, projects[index].name.toLowerCase())
+			superContainer = superContainer.replace('{{title}}', projects[index].name)
+			superContainer = superContainer.replace('{{blurb}}', projects[index].blurb)
+			superContainer = superContainer.replace(
+				'{{technologies}}',
+				projects[index].languages.concat(projects[index].technologies).filter(p => p !== '').join(' · ')
+			)
+			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+			if (projects[index].repo !== '') {
+				githubIconHtml = githubIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
+			}
+			if (projects[index].documentation !== '') {
+				docsIconHtml = docsIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
+			}
+			if (projects[index].demo !== '') {
+				demoIconHtml = demoIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
+			}
+			if (projects[index].link !== '') {
+				linkIconHtml = linkIconSnippet.replace('{{url}}', projects[index].link)
+			}
+
+			superContainer = superContainer.replace('{{github-icon}}', githubIconHtml)
+			superContainer = superContainer.replace('{{docs-icon}}', docsIconHtml)
+			superContainer = superContainer.replace('{{demo-icon}}', demoIconHtml)
+			superContainer = superContainer.replace('{{link-icon}}', linkIconHtml)
+			rowHtml = rowHtml.replace('{{project-container-super}}', superContainer)
+		}
+		html += rowHtml
+		// html += '<div class="spacer-small"></div>'
+	}
+	return html
+}
+
+// TODO
+// build all project rows
+const buildProjAll = async (projects) => {
+	// parse HTML snippets
+	let projectContainerFeaturedSnippet = await readFilePromise('snippets/projects/project-container-featured.html')
+	let projectContainerRegularSnippet = await readFilePromise('snippets/projects/project-container-regular.html')
+	let projectRowFeaturedLeftSnippet = await readFilePromise('snippets/projects/project-row-featured-left.html')
+	let projectRowFeaturedRightSnippet = await readFilePromise('snippets/projects/project-row-featured-right.html')
+	let projectRowNormalSnippet = await readFilePromise('snippets/projects/project-row-normal.html')
+	return
+}
+
 // build vault rows HTML
 const buildVaultRows = async (experiences, projects, blogs) => {
 	// parse HTML snippets
@@ -631,7 +706,6 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		rows.push(r)
 	}
 
-	// TODO: add blog posts
 	// parse blog posts into rows
 	for (let blog of blogs) {
 		let r = new RowTemplate({})

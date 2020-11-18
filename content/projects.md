@@ -52,7 +52,7 @@ status: stable
 install: brew install wcarhart/tools/smoosh
 documentation:
 related:
-visibility: featured
+visibility: super
 tags: cli
 
 name: koi

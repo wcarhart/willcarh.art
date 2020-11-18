@@ -276,3 +276,7 @@ h2 {
 	padding: 0;
 	margin: 0;
 }
+
+#credits a:hover {
+	color: var(--color) !important;
+}

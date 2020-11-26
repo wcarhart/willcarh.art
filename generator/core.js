@@ -636,7 +636,6 @@ const buildProjSuper = async (projects) => {
 	return html
 }
 
-// TODO
 // build all project rows
 const buildProjAll = async (projects) => {
 	// parse HTML snippets
@@ -694,6 +693,7 @@ const buildProjAll = async (projects) => {
 		let featuredContainer = projectContainerFeaturedSnippet
 
 		// build container for super project in proj-all
+		featuredContainer = featuredContainer.replace('{{class}}', `proj-row-${index}`)
 		featuredContainer = featuredContainer.replace(/\{\{name\}\}/g, project.name.toLowerCase())
 		featuredContainer = featuredContainer.replace('{{title}}', project.name)
 		featuredContainer = featuredContainer.replace('{{blurb}}', project.blurb)
@@ -733,7 +733,13 @@ const buildProjAll = async (projects) => {
 				throw new Error('Insufficient project combinations, either too many super projects or too few featured + normal projects')
 			}
 
+			let projRowClass = 'proj-mini-top'
+			if (i > 1) {
+				projRowClass = 'proj-mini-bottom'
+			}
+
 			let tileContainer = projectContainerRegularSnippet
+			tileContainer = tileContainer.replace('{{class}}', `proj-row-${index} ${projRowClass}`)
 			tileContainer = tileContainer.replace(/\{\{name\}\}/g, tileProject.name.toLowerCase())
 			tileContainer = tileContainer.replace('{{title}}', tileProject.name)
 			tileContainer = tileContainer.replace('{{blurb}}', tileProject.blurb)

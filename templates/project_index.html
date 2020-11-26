@@ -36,7 +36,7 @@
 		<script src="{{js:darkmode.js}}"></script>
 		<script src="{{js:tagline.js}}"></script>
 		<script src="{{js:year.js}}"></script>
-		<script src="{{js:projectcards.js}}"></script>
+		<!-- projectcards script is loaded after body for performance reasons -->
 	</head>
 	<body>
 
@@ -268,5 +268,8 @@
 		<div id="dark-mode-toggle-container">
 			<button id="dark-mode-toggle"></button>
 		</div>
+
+		<!-- TODO: why does this fail intermittently? -->
+		<script defer src="{{js:projectcards.js}}"></script>
 	</body>
 </html>

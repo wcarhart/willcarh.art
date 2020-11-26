@@ -3,7 +3,7 @@
 // handle hover and click for project cards
 $(document).ready(async () => {
 
-	// TODO: why does this fail when doing hard refresh
+	// resize the project containers after the page loads
 	await resizeProjectContainers()
 	// TODO: fix this garbage, doesn't call function when window is resized
 	$(window).resize(async () => { 
@@ -27,32 +27,43 @@ $(document).ready(async () => {
 	})
 })
 
-// TODO: do we need this for resizing after DOM is ready?
-// $(window).on('load', function() { });
-
 const resizeProjectContainers = async () => {
-	// calculate dynamic row heights
-	let miniTopHeight = 0
-	let miniBottomHeight = 0
-	for (let el of $('.proj-mini-top')) {
-		if ($(el).height() > miniTopHeight) {
-			miniTopHeight = $(el).height()
-		}
-	}
-	for (let el of $('.proj-mini-bottom')) {
-		if ($(el).height() > miniBottomHeight) {
-			miniBottomHeight = $(el).height()
-		}
-	}
 
-	// update row heights
-	for (let el of $('.proj-mini-top')) {
-		$(el).height(miniTopHeight)
-	}
-	for (let el of $('.proj-mini-bottom')) {
-		$(el).height(miniBottomHeight)
-	}
-	// spacer small is 2rem, and 1rem = 16px - need to add 4.5rem (72px) for spacing
-	$('.proj-main').height(miniTopHeight + 72 + miniBottomHeight)
-	$('.proj-main').css('padding-top', '2rem')
+	// TODO: fix this, it's janky af
+	// wait for page to settle
+	await new Promise(r => setTimeout(r, 100));
+
+	// re-size columns in row one at a time
+	let index = -1
+	do {
+		// start with row 0
+		index += 1
+
+		// calculate dynamic row heights
+		let miniTopHeight = 0
+		let miniBottomHeight = 0
+		for (let el of $(`.proj-row-${index}.proj-mini-top`)) {
+			if ($(el).height() > miniTopHeight) {
+				miniTopHeight = $(el).height()
+			}
+		}
+		for (let el of $(`.proj-row-${index}.proj-mini-bottom`)) {
+			if ($(el).height() > miniBottomHeight) {
+				miniBottomHeight = $(el).height()
+			}
+		}
+
+		// update row heights
+		for (let el of $(`.proj-row-${index}.proj-mini-top`)) {
+			$(el).height(miniTopHeight)
+		}
+		for (let el of $(`.proj-row-${index}.proj-mini-bottom`)) {
+			$(el).height(miniBottomHeight)
+		}
+
+		// spacer small is 2rem, and 1rem = 16px - need to add 4.5rem (72px) for spacing
+		$(`.proj-row-${index}.proj-main`).height(miniTopHeight + 72 + miniBottomHeight)
+		$(`.proj-row-${index}.proj-main`).css('padding-top', '2rem')
+
+	} while ($(`.proj-row-${index+1}`).length !== 0)
 }

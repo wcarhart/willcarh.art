@@ -13,6 +13,8 @@ const readFilePromise = util.promisify(fs.readFile)
 const copyFilePromise = util.promisify(fs.copyFile)
 const writeFilePromise = util.promisify(fs.writeFile)
 const mkdirPromise = util.promisify(fs.mkdir)
+const truncatePromise = util.promisify(fs.truncate)
+const appendFilePromise = util.promisify(fs.appendFile)
 
 // TODO: add verbose comments
 
@@ -251,6 +253,9 @@ const buildPageFromTemplate = async ({template='', page='', isIndex=false}) => {
 	// prettify text
 	// data = html.prettyPrint(data, {indent_size: 4});
 
+	// update redirects for Netlify
+	await updateRedirects(page)
+
 	// write to source file
 	await writeFilePromise(page, data)
 }
@@ -261,7 +266,8 @@ const buildMultiplePages = async (kind) => {
 	for (let file of files) {
 		let name = file.split('/').pop().split('.').shift()
 		await buildPageFromTemplate({template: `templates/${kind}_specific.html`, page: `src/${kind}/${name}.html`, isIndex: false})
-		await updateRedirects(`${kind}/${file.split('/').pop()}`, `${kind}/${name}`)
+		// TODO: fix redirects
+		// await updateRedirects(`${kind}/${file.split('/').pop()}`, `${kind}/${name}`)
 	}
 }
 
@@ -281,8 +287,47 @@ const buildScripts = async () => {
 }
 
 // TODO
-const updateRedirects = async (from, to) => {
-	return
+const updateRedirects = async (page) => {
+	if (page.endsWith('.html')) {
+		let redirect = ''
+		switch(page) {
+			case 'index.html':
+				redirect = '/'
+				break
+			case 'src/demo_index.html':
+				redirect = '/demo'
+				break
+			case 'src/project_index.html':
+				redirect = '/projects'
+				break
+			case 'src/blog_index.html':
+				redirect = '/blog'
+				break
+			case 'src/vault.html':
+				redirect = '/vault'
+				break
+			case 'src/etc.html':
+				redirect = '/etc'
+				break
+			case 'src/about.html':
+				redirect = '/about'
+				break
+			case String(page.match(/^src\/project\/.*$/)):
+				// TODO
+				break
+			case String(page.match(/^src\/blog\/.*$/)):
+				// TODO
+				break
+			case String(page.match(/^src\/demo\/.*$/)):
+				// TODO
+				break
+			default:
+				throw new Error(`Unknown redirect file: '${page}'`)
+		}
+		if (redirect !== '') {
+			await appendFilePromise('_redirects', `${page}\t${redirect}\n`)
+		}
+	}
 }
 
 // replace static asset tags in template
@@ -1142,6 +1187,14 @@ const findFiles = async ({kind='', prefix="content/"}) => {
 	return files
 }
 
+// clear the redirects file
+const refreshRedirects = async () => {
+	console.log('👉  Building redirects...')
+	await truncatePromise('_redirects', 0)
+	await writeFilePromise('_redirects', '/project\t/projects\n')
+}
+
 module.exports = {
-	generate: generate
+	generate: generate,
+	refreshRedirects: refreshRedirects
 }

@@ -106,6 +106,8 @@ const main = async () => {
 			await verifyContentFileStructure()
 		}
 
+		await core.refreshRedirects()
+
 		// asset order is essential:
 		//  - scripts must be build first
 		//  - vault must be built before projects

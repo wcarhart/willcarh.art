@@ -43,7 +43,8 @@ Supported content tags:
   {{html:exp-tabs}}      --> build HTML for experience tabs on about page
   {{html:proj-featured}} --> build HTML for featured projects on project page
   {{html:proj-all}}      --> build HTML for all projects based on visibility
-  {{html:vault-rows}}    --> built HTML for rows in the vault
+  {{html:vault-rows}}    --> build HTML for rows in the vault
+  {{html:demo-rows}}     --> build HTML for rows on demo index
   {{code:proj}}          --> load projects into code
   {{code:blog}}          --> load blogs into code
   {{meta:home}}          --> build HTML meta for home page
@@ -535,6 +536,11 @@ const buildHtml = async (data, match, key) => {
 			html = await buildVaultRows(experiences, projects, blogs)
 			resolvedData = resolvedData.replace(match, html)
 			break
+		case 'demo-rows':
+			projects = await parseProjects()
+			html = await buildDemoRows(projects)
+			resolvedData = resolvedData.replace(match, html)
+			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
 	}
@@ -623,6 +629,30 @@ const parseBlogs = async () => {
 	}
 
 	return blogs
+}
+
+// build demo rows
+const buildDemoRows = async (projects) => {
+	// parse HTML snippets
+	let demoProjectContainerSnippet = await readFilePromise('snippets/demo/demo-project-container.html')
+
+	demoProjectContainerSnippet = demoProjectContainerSnippet.toString()
+
+	// build HTML
+	let html = ''
+	for (let p of projects) {
+		if (p.demo !== 'true') {
+			continue
+		}
+		let rowHtml = demoProjectContainerSnippet
+
+		rowHtml = rowHtml.replace(/\{\{name\}\}/g, p.name)
+		rowHtml = rowHtml.replace('{{logo}}', p.img)
+
+		html += rowHtml
+	}
+
+	return html
 }
 
 // build super project rows

@@ -1,8 +1,8 @@
 /project	/projects
-index.html	/
-src/vault.html	/vault
-src/demo_index.html	/demo
-src/about.html	/about
-src/blog_index.html	/blog
-src/project_index.html	/projects
-src/etc.html	/etc
+/index.html	/
+/src/vault.html	/vault
+/src/demo_index.html	/demo
+/src/about.html	/about
+/src/blog_index.html	/blog
+/src/project_index.html	/projects
+/src/etc.html	/etc

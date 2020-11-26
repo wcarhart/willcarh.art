@@ -325,7 +325,7 @@ const updateRedirects = async (page) => {
 				throw new Error(`Unknown redirect file: '${page}'`)
 		}
 		if (redirect !== '') {
-			await appendFilePromise('_redirects', `${page}\t${redirect}\n`)
+			await appendFilePromise('_redirects', `/${page}\t${redirect}\n`)
 		}
 	}
 }

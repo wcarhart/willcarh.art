@@ -292,25 +292,25 @@ const updateRedirects = async (page) => {
 		let redirect = ''
 		switch(page) {
 			case 'index.html':
-				redirect = '/'
+				await appendFilePromise('_redirects', `/index /\n`)
 				break
 			case 'src/demo_index.html':
-				redirect = '/demo'
+				await appendFilePromise('_redirects', `/src/demo_index /demo\n`)
 				break
 			case 'src/project_index.html':
-				redirect = '/projects'
+				await appendFilePromise('_redirects', `/src/project_index /projects\n`)
 				break
 			case 'src/blog_index.html':
-				redirect = '/blog'
+				await appendFilePromise('_redirects', `/src/blog_index /blog\n`)
 				break
 			case 'src/vault.html':
-				redirect = '/vault'
+				await appendFilePromise('_redirects', `/src/vault /vault\n`)
 				break
 			case 'src/etc.html':
-				redirect = '/etc'
+				await appendFilePromise('_redirects', `/src/etc /etc\n`)
 				break
 			case 'src/about.html':
-				redirect = '/about'
+				await appendFilePromise('_redirects', `/src/about /about\n`)
 				break
 			case String(page.match(/^src\/project\/.*$/)):
 				// TODO
@@ -324,9 +324,6 @@ const updateRedirects = async (page) => {
 			default:
 				throw new Error(`Unknown redirect file: '${page}'`)
 		}
-		if (redirect !== '') {
-			await appendFilePromise('_redirects', `/${page}\t${redirect}\n`)
-		}
 	}
 }
 
@@ -338,7 +335,7 @@ const resolveAssets = async (data, isIndex) => {
 	// process each asset
 	for (let asset of supportedAssets) {
 		// build regex
-		let query = `{{${asset}:.*}}`
+		let query = `{{${asset}:.*?}}`
 		let regex = new RegExp(query, 'g')
 		let matches = data.match(regex)
 

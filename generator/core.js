@@ -687,7 +687,10 @@ const buildProjAll = async (projects) => {
 
 	// build HTML
 	let html = ''
+
+	// build featured rows first
 	for (let [index, project] of superProjects.entries()) {
+
 		// build row HTML
 		let rowHtml = index % 2 === 0 ? projectRowFeaturedLeftSnippet : projectRowFeaturedRightSnippet 
 		let featuredContainer = projectContainerFeaturedSnippet
@@ -769,6 +772,59 @@ const buildProjAll = async (projects) => {
 			rowHtml = rowHtml.replace('{{project-container-regular}}', tileContainer)
 		}
 
+		html += rowHtml
+	}
+
+	// then, build normal rows
+	let normalIndex = 0
+	while (featuredProjects.length !== 0 || normalProjects.length !== 0 || lessProjects.length !== 0) {
+		let rowHtml = projectRowNormalSnippet
+
+		for (let i = 0; i < 4; i++) {
+			let project = null
+			if (featuredProjects.length !== 0) {
+				project = featuredProjects.pop()
+			} else if (normalProjects.length !== 0) {
+				project = normalProjects.pop()
+			} else if (lessProjects.length !== 0) {
+				project = lessProjects.pop()
+			} else {
+				continue
+			}
+
+			let projContainer = projectContainerRegularSnippet
+			projContainer = projContainer.replace('{{class}}', `proj-normal-row-${normalIndex} proj-normal`)
+			projContainer = projContainer.replace(/\{\{name\}\}/g, project.name.toLowerCase())
+			projContainer = projContainer.replace('{{title}}', project.name)
+			projContainer = projContainer.replace('{{blurb}}', project.blurb)
+			projContainer = projContainer.replace('{{logo}}', project.img)
+			projContainer = projContainer.replace(
+				'{{technologies}}',
+				project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
+			)
+			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+			if (project.repo !== '') {
+				githubIconHtml = githubIconSnippet.replace('{{name}}', project.name.toLowerCase())
+			}
+			if (project.documentation !== '') {
+				docsIconHtml = docsIconSnippet.replace('{{name}}', project.name.toLowerCase())
+			}
+			if (project.demo === 'true') {
+				demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
+			}
+			if (project.link !== '') {
+				linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
+			}
+
+			projContainer = projContainer.replace('{{github-icon}}', githubIconHtml)
+			projContainer = projContainer.replace('{{docs-icon}}', docsIconHtml)
+			projContainer = projContainer.replace('{{demo-icon}}', demoIconHtml)
+			projContainer = projContainer.replace('{{link-icon}}', linkIconHtml)
+			rowHtml = rowHtml.replace('{{project-container-regular}}', projContainer)
+		}
+
+		normalIndex += 1
+		rowHtml = rowHtml.replace(/\{\{project-container-regular\}\}/g, '')
 		html += rowHtml
 	}
 

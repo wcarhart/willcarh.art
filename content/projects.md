@@ -190,8 +190,8 @@ tags: cli
 tags: cloud
 
 name: soliloquy
-blurb: (n) an act of speaking one's thoughts aloud when by oneself or regardless of any hearers
-about: Soliloquy is a portfolio website for showcasing software projects. Developers can add their own software projects to demo what they've been working on recently.
+blurb: Project showcase website
+about: The word soliloquy means an act of speaking one's thoughts aloud when by oneself or regardless of any hearers. Soliloquy aims to live up to that definition; it is a portfolio website for showcasing software projects. Developers can add their own software projects to demo what they've been working on recently.
 languages: Python
 languages: HTML
 languages: CSS
@@ -212,7 +212,7 @@ status: stale
 install:
 documentation:
 related:
-visibility: less
+visibility: normal
 tags: web
 
 name: odin
@@ -436,7 +436,7 @@ technologies: Yelp Fusion API
 technologies: Lyft API
 technologies: Uber API
 technologies: Firebase
-img: {{cdn:img/logos/cheer.png}}
+img: {{cdn:img/logos/cheers.png}}
 repo: https://github.com/wcarhart/cheers
 link:
 demo: false
@@ -509,7 +509,7 @@ visibility: less
 tags: mobile
 
 name: TI Checkers
-blurb: Implementation of Checkers for the TI-84 calculator
+blurb: Checkers for the TI-84 calculator
 about: TI Checkers is a simple implementation of the game checkers for the TI-83/84 family of calculators. I originally learned programming on a TI calculator and this was one of my first programs.
 languages: Z80 Assembly
 languages: TI-BASIC
@@ -528,7 +528,7 @@ visibility: less
 tags: calculator
 
 name: TI TicTacToe
-blurb: Implementation of TicTacToe for the TI-84 calculator
+blurb: TicTacToe for the TI-84 calculator
 about: TI TicTacToe is a simple implementation of the game tic-tac-toe for the TI-83/84 family of calculators. I originally learned programming on a TI calculator and this was one of my first programs.
 languages: Z80 Assembly
 languages: TI-BASIC

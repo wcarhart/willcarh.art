@@ -3,13 +3,6 @@
 // handle hover and click for project cards
 $(document).ready(async () => {
 
-	// resize the project containers after the page loads
-	await resizeProjectContainers()
-	// TODO: fix this garbage, doesn't call function when window is resized
-	$(window).resize(async () => { 
-		await resizeProjectContainers()
-	})
-
 	// TODO: handle cases where HTML class has nonalphanumeric character (e.g. willcarh.art)
 	// handle animations for hover
 	$('.project-border').hover(async function() {
@@ -24,7 +17,15 @@ $(document).ready(async () => {
 	// TODO
 	// handle click to specific project
 	$('.project-border').click(async function() {
-		console.log(this.id)
+		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '')
+		window.location.href=`project/${name}.html`
+	})
+
+	// resize the project containers after the page loads
+	await resizeProjectContainers()
+	// TODO: fix this garbage, doesn't call function when window is resized
+	$(window).resize(async () => { 
+		await resizeProjectContainers()
 	})
 })
 

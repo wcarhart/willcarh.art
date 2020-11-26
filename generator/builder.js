@@ -11,7 +11,7 @@ const readFilePromise = util.promisify(fs.readFile)
 const copyFilePromise = util.promisify(fs.copyFile)
 
 // build meta objects for webpages
-const buildMeta = async (data, match, key) => {
+const buildMeta = async ({data='', match='', key='', page=''}) => {
 	let resolvedData = data
 	let meta = ''
 	switch (key) {
@@ -23,14 +23,16 @@ const buildMeta = async (data, match, key) => {
 			meta = await buildMetaHtml({description: 'Will Carhart\'s projects', url: 'https://willcarh.art/projects'})
 			resolvedData = resolvedData.replace(match, meta)
 			break
-		case (key.match(/^proj:.*$/) || {}):
-			// TODO
+		case 'proj-spec':
+			let projectName = page.split('/').pop().split('.html')[0]
+			meta = await buildMetaHtml({description: projectName, url: `https://willcarh.art/project/${projectName}`})
+			resolvedData = resolvedData.replace(match, meta)
 			break
 		case 'blog':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s blog', url: 'https://willcarh.art/blog'})
 			resolvedData = resolvedData.replace(match, meta)
 			break
-		case (key.match(/^blog:.*$/) || {}):
+		case 'blog-spec':
 			// TODO
 			break
 		case 'vault':
@@ -41,8 +43,10 @@ const buildMeta = async (data, match, key) => {
 			meta = await buildMetaHtml({description: 'Will Carhart\'s demos', url: 'https://willcarh.art/demo'})
 			resolvedData = resolvedData.replace(match, meta)
 			break
-		case (key.match(/^demo:.*$/) || {}):
-			// TODO
+		case 'demo-spec':
+			let demoName = page.split('/').pop().split('.html')[0]
+			meta = await buildMetaHtml({description: `${demoName} demo`, url: `https://willcarh.art/project/${demoName}`})
+			resolvedData = resolvedData.replace(match, meta)
 			break
 		default:
 			throw new Error(`Unknown meta type '${key}'`)
@@ -52,13 +56,13 @@ const buildMeta = async (data, match, key) => {
 
 // build actual HTML meta tags for meta objects
 const buildMetaHtml = async ({description='', url=''}) => {
-	let template = await readFilePromise('snippets/meta/meta.html')
-	template = template.toString()
+	let metaSnippet = await readFilePromise('snippets/meta/meta.html')
+	metaSnippet = metaSnippet.toString()
 
-	template = template.replace(/\{\{description\}\}/g, description)
-	template = template.replace(/\{\{url\}\}/g, url)
+	metaSnippet = metaSnippet.replace(/\{\{description\}\}/g, description)
+	metaSnippet = metaSnippet.replace(/\{\{url\}\}/g, url)
 
-	return template
+	return metaSnippet
 }
 
 // replace {{html:...}} tags
@@ -684,7 +688,7 @@ const buildNewBlogString = async (attributes) => {
 }
 
 // replace content tags in template
-const resolveContent = async (data, isIndex) => {
+const resolveContent = async ({data='', page=''}) => {
 	let resolvedData = data
 	const supportedTags = ['html', 'code', 'meta']
 
@@ -710,7 +714,12 @@ const resolveContent = async (data, isIndex) => {
 						resolvedData = await buildCode(resolvedData, match, value)
 						break
 					case 'meta':
-						resolvedData = await buildMeta(resolvedData, match, value)
+						resolvedData = await buildMeta({
+							data: resolvedData,
+							match: match,
+							key: value,
+							page: page
+						})
 						break
 					default:
 						throw new Error(`Unknown tag '${tag}'`)

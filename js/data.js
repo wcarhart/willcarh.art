@@ -1,5 +1,7 @@
 {{sys:headerjs}}
 
+// full content data for client-side filtering
+
 {{code:classes}}
 
 let ALL_PROJECTS = []

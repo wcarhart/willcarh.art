@@ -1,4 +1,4 @@
-# Demo
+# Lurker
 By utilizing the [Hacker News API](https://github.com/HackerNews/API), lurker exposes a simple to use CLI for reading HN stories and comments. It's massively parallelized, extremely portable and lightweight, and easy to use.
 
 ### Lightweight and portable

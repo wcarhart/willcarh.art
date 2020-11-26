@@ -108,8 +108,9 @@ const main = async () => {
 
 		await core.refreshRedirects()
 
-		// asset order is essential:
-		//  - scripts must be build first
+		// TODO: this shouldn't matter
+		// asset order is essential, due to how linking occurs:
+		//  - scripts must be built first
 		//  - vault must be built before projects
 		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc', 'apps']
 		for (let asset of assets) {

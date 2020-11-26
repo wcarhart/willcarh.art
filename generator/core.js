@@ -292,25 +292,33 @@ const updateRedirects = async (page) => {
 		let redirect = ''
 		switch(page) {
 			case 'index.html':
-				await appendFilePromise('_redirects', `/index /\n`)
+				await appendFilePromise('_redirects', `/ /index\n`)
+				await appendFilePromise('_redirects', `/ /index.html\n`)
 				break
 			case 'src/demo_index.html':
-				await appendFilePromise('_redirects', `/src/demo_index /demo\n`)
+				await appendFilePromise('_redirects', `/demo /src/demo_index\n`)
+				await appendFilePromise('_redirects', `/demo /src/demo_index.html\n`)
 				break
 			case 'src/project_index.html':
-				await appendFilePromise('_redirects', `/src/project_index /projects\n`)
+				await appendFilePromise('_redirects', `/projects /src/project_index\n`)
+				await appendFilePromise('_redirects', `/projects /src/project_index.html\n`)
+				await appendFilePromise('_redirects', '/projects /project\n')
 				break
 			case 'src/blog_index.html':
-				await appendFilePromise('_redirects', `/src/blog_index /blog\n`)
+				await appendFilePromise('_redirects', `/blog /src/blog_index\n`)
+				await appendFilePromise('_redirects', `/blog /src/blog_index.html\n`)
 				break
 			case 'src/vault.html':
-				await appendFilePromise('_redirects', `/src/vault /vault\n`)
+				await appendFilePromise('_redirects', `/vault /src/vault\n`)
+				await appendFilePromise('_redirects', `/vault /src/vault.html\n`)
 				break
 			case 'src/etc.html':
-				await appendFilePromise('_redirects', `/src/etc /etc\n`)
+				await appendFilePromise('_redirects', `/etc /src/etc\n`)
+				await appendFilePromise('_redirects', `/etc /src/etc.html\n`)
 				break
 			case 'src/about.html':
-				await appendFilePromise('_redirects', `/src/about /about\n`)
+				await appendFilePromise('_redirects', `/about /src/about\n`)
+				await appendFilePromise('_redirects', `/about /src/about.html\n`)
 				break
 			case String(page.match(/^src\/project\/.*$/)):
 				// TODO
@@ -1188,7 +1196,6 @@ const findFiles = async ({kind='', prefix="content/"}) => {
 const refreshRedirects = async () => {
 	console.log('👉  Building redirects...')
 	await truncatePromise('_redirects', 0)
-	await writeFilePromise('_redirects', '/project\t/projects\n')
 }
 
 module.exports = {

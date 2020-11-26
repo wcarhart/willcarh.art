@@ -35,3 +35,51 @@
 #content-main h1 {
 	font-size: 5rem !important;
 }
+
+h5 {
+	color: var(--subtitle) !important;
+}
+
+#demo-container {
+	width: 75%;
+	margin: 0 auto;
+}
+
+.demo-project-container {
+	padding-bottom: 2rem;
+}
+
+.demo-border {
+	padding: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+}
+
+.demo-title {
+	transform: translateY(50%);
+}
+
+/*.demo-title {
+	height: 6rem;
+	line-height: 6rem;
+	white-space: nowrap;
+}*/
+
+[id^=title-] {
+	color: var(--text) !important;
+	text-decoration: none;
+	background-image: linear-gradient(var(--color), var(--color));
+	background-position: 0% 100%;
+	background-repeat: no-repeat;
+	background-size: 0% 0.125rem;
+	transition: background-size cubic-bezier(0,.5,0,1) 0.3s;
+}
+
+.more-text {
+	padding-left: 2rem;
+	padding-top: 1rem;
+}
+
+.arrow {
+	color: var(--color) !important;
+}

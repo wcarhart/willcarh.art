@@ -10,6 +10,7 @@ $(document).ready(async () => {
 		await resizeProjectContainers()
 	})
 
+	// TODO: handle cases where HTML class has nonalphanumeric character (e.g. willcarh.art)
 	// handle animations for hover
 	$('.project-border').hover(async function() {
 		const id = `#title-${this.id.replace('proj-', '')}`
@@ -31,7 +32,7 @@ const resizeProjectContainers = async () => {
 
 	// TODO: fix this, it's janky af
 	// wait for page to settle
-	await new Promise(r => setTimeout(r, 100));
+	await new Promise(r => setTimeout(r, 500));
 
 	// re-size columns in featured rows one at a time
 	let index = -1

@@ -286,7 +286,7 @@ const buildScripts = async () => {
 	}
 }
 
-// TODO
+// TODO: still showing .html ending
 const updateRedirects = async (page) => {
 	if (page.endsWith('.html')) {
 		let redirect = ''
@@ -686,6 +686,7 @@ const buildProjSuper = async (projects) => {
 	return html
 }
 
+// TODO: 'about' for projects shouldn't be an array, and we shouldn't use about[0]
 // build all project rows
 const buildProjAll = async (projects) => {
 	// parse HTML snippets

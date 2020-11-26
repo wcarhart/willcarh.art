@@ -111,15 +111,25 @@ class Project {
 		this.demo = demo
 		this.latestVersion = latestVersion
 		this.published = published
-		if (!['stable', 'in development', 'stale', 'archived'].includes(status)) {
-			console.error(`Unknown status '${status}'`)
+		// TODO: should this be dynamic based on commit date?
+		if (status !== '') {
+			if (!['stable', 'in development', 'stale', 'archived'].includes(status)) {
+				console.error(`Unknown status '${status}'`)
+			}
 		}
 		this.status = status
 		this.install = install
 		this.documentation = documentation
 		this.related = related
-		if (!['super', 'featured', 'normal', 'less', 'none'].includes(visibility)) {
-			console.error(`Unknown visibility '${visibility}'`)
+		// super:    is in the big featured projects at the top, as well as bigger tiles in the proj-all list
+		// featured: is prioritized when building tiles with super projects in proj-all list
+		// normal:   can be used in tiles with super projects in proj-all list, but not necessarily
+		// less:     cannot be used in tiles with super projects in proj-all list
+		// none:     is likely archived and should not be displayed in proj-all list (will still be in vault)
+		if (visibility !== '') {
+			if (!['super', 'featured', 'normal', 'less', 'none'].includes(visibility)) {
+				console.error(`Unknown visibility '${visibility}'`)
+			}
 		}
 		this.visibility = visibility
 		this.tags = tags
@@ -300,7 +310,8 @@ const resolveAssets = async (data, isIndex) => {
 					resolvedData = await buildDynamicAsset(resolvedData, match, value, isIndex)
 				} else {
 					let file = `${asset}/${value}`
-					await fs.promises.access(file)
+					// TODO: fix this check
+					// await fs.promises.access(file)
 
 					// configure relative file path
 					let path = ''
@@ -465,7 +476,6 @@ const buildHtml = async (data, match, key) => {
 		case 'proj-all':
 			projects = await parseProjects()
 			html = await buildProjAll(projects)
-			process.exit()
 			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'vault-rows':
@@ -582,7 +592,7 @@ const buildProjSuper = async (projects) => {
 	githubIconSnippet = githubIconSnippet.toString()
 	linkIconSnippet = linkIconSnippet.toString()
 
-	// build html
+	// build HTML
 	let html = ''
 	for (let superIndex = 0; superIndex < projects.length / 2 ; superIndex++) {
 		let rowHtml = projectRowSuperSnippet
@@ -608,7 +618,7 @@ const buildProjSuper = async (projects) => {
 			if (projects[index].documentation !== '') {
 				docsIconHtml = docsIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
 			}
-			if (projects[index].demo !== '') {
+			if (projects[index].demo === 'true') {
 				demoIconHtml = demoIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
 			}
 			if (projects[index].link !== '') {
@@ -635,7 +645,128 @@ const buildProjAll = async (projects) => {
 	let projectRowFeaturedLeftSnippet = await readFilePromise('snippets/projects/project-row-featured-left.html')
 	let projectRowFeaturedRightSnippet = await readFilePromise('snippets/projects/project-row-featured-right.html')
 	let projectRowNormalSnippet = await readFilePromise('snippets/projects/project-row-normal.html')
-	return
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	
+	projectContainerFeaturedSnippet = projectContainerFeaturedSnippet.toString()
+	projectContainerRegularSnippet = projectContainerRegularSnippet.toString()
+	projectRowFeaturedLeftSnippet = projectRowFeaturedLeftSnippet.toString()
+	projectRowFeaturedRightSnippet = projectRowFeaturedRightSnippet.toString()
+	projectRowNormalSnippet = projectRowNormalSnippet.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+
+	// sort projects
+	let superProjects = []
+	let featuredProjects = []
+	let normalProjects = []
+	let lessProjects = []
+	for (let p of projects) {
+		switch (p.visibility) {
+			case 'super':
+				superProjects.push(p)
+				break
+			case 'featured':
+				featuredProjects.push(p)
+				break
+			case 'normal':
+				normalProjects.push(p)
+				break
+			case 'less':
+				lessProjects.push(p)
+				break
+			case 'none':
+				break
+			default:
+				throw new Error(`Unknown project visibility: '${p.visibility}'`)
+		}
+	}
+
+	// build HTML
+	let html = ''
+	for (let [index, project] of superProjects.entries()) {
+		// build row HTML
+		let rowHtml = index % 2 === 0 ? projectRowFeaturedLeftSnippet : projectRowFeaturedRightSnippet 
+		let featuredContainer = projectContainerFeaturedSnippet
+
+		// build container for super project in proj-all
+		featuredContainer = featuredContainer.replace(/\{\{name\}\}/g, project.name.toLowerCase())
+		featuredContainer = featuredContainer.replace('{{title}}', project.name)
+		featuredContainer = featuredContainer.replace('{{blurb}}', project.blurb)
+		featuredContainer = featuredContainer.replace('{{about}}', project.about[0])
+		featuredContainer = featuredContainer.replace(
+			'{{technologies}}',
+			project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
+		)
+		let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+		if (project.repo !== '') {
+			githubIconHtml = githubIconSnippet.replace('{{name}}', project.name.toLowerCase())
+		}
+		if (project.documentation !== '') {
+			docsIconHtml = docsIconSnippet.replace('{{name}}', project.name.toLowerCase())
+		}
+		if (project.demo === 'true') {
+			demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
+		}
+		if (project.link !== '') {
+			linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
+		}
+
+		featuredContainer = featuredContainer.replace('{{github-icon}}', githubIconHtml)
+		featuredContainer = featuredContainer.replace('{{docs-icon}}', docsIconHtml)
+		featuredContainer = featuredContainer.replace('{{demo-icon}}', demoIconHtml)
+		featuredContainer = featuredContainer.replace('{{link-icon}}', linkIconHtml)
+		rowHtml = rowHtml.replace('{{project-container-featured}}', featuredContainer)
+
+		// build additional tile containers to fit in row
+		for (let i = 0; i < 4; i++) {
+			let tileProject = null
+			if (featuredProjects.length !== 0) {
+				tileProject = featuredProjects.pop()
+			} else if (normalProjects.length !== 0) {
+				tileProject = normalProjects.pop()
+			} else {
+				throw new Error('Insufficient project combinations, either too many super projects or too few featured + normal projects')
+			}
+
+			let tileContainer = projectContainerRegularSnippet
+			tileContainer = tileContainer.replace(/\{\{name\}\}/g, tileProject.name.toLowerCase())
+			tileContainer = tileContainer.replace('{{title}}', tileProject.name)
+			tileContainer = tileContainer.replace('{{blurb}}', tileProject.blurb)
+			tileContainer = tileContainer.replace('{{logo}}', tileProject.img)
+			tileContainer = tileContainer.replace(
+				'{{technologies}}',
+				tileProject.languages.concat(tileProject.technologies).filter(p => p !== '').join(' · ')
+			)
+			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+			if (tileProject.repo !== '') {
+				githubIconHtml = githubIconSnippet.replace('{{name}}', tileProject.name.toLowerCase())
+			}
+			if (tileProject.documentation !== '') {
+				docsIconHtml = docsIconSnippet.replace('{{name}}', tileProject.name.toLowerCase())
+			}
+			if (tileProject.demo === 'true') {
+				demoIconHtml = demoIconSnippet.replace('{{name}}', tileProject.name.toLowerCase())
+			}
+			if (tileProject.link !== '') {
+				linkIconHtml = linkIconSnippet.replace('{{url}}', tileProject.link)
+			}
+
+			tileContainer = tileContainer.replace('{{github-icon}}', githubIconHtml)
+			tileContainer = tileContainer.replace('{{docs-icon}}', docsIconHtml)
+			tileContainer = tileContainer.replace('{{demo-icon}}', demoIconHtml)
+			tileContainer = tileContainer.replace('{{link-icon}}', linkIconHtml)
+			rowHtml = rowHtml.replace('{{project-container-regular}}', tileContainer)
+		}
+
+		html += rowHtml
+	}
+
+	return html
 }
 
 // build vault rows HTML
@@ -701,7 +832,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.title = project.name
 		r.type = 'project'
 		r.resources = project.languages.concat(project.technologies)
-		r.demoName = project.demo
+		r.demoName = project.demo === 'true' ? project.name.toLowerCase() : ''
 		r.docsName = project.documentation
 		r.githubName = project.repo
 		r.linkUrl = project.link

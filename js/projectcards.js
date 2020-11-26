@@ -27,6 +27,9 @@ $(document).ready(async () => {
 	})
 })
 
+// TODO: do we need this for resizing after DOM is ready?
+// $(window).on('load', function() { });
+
 const resizeProjectContainers = async () => {
 	// calculate dynamic row heights
 	let miniTopHeight = 0

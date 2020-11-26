@@ -74,6 +74,11 @@ div.col-md-6.no-shift {
 	font-size: 1.3rem !important;
 }
 
+.project-featured-about-text {
+	color: var(--text) !important;
+	font-size: 1.1rem !important;
+}
+
 .project-logo {
 	display: table;
 	margin: 0 auto;

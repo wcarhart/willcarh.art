@@ -24,5 +24,5 @@ function checkstockprice {
 ```
 
 ### Verbose and complete documentation
-For detailed descriptions and in-depth examples of koi's functionality, checkout its [documentation site](https://willcarhart.dev/docs/koi).
+For detailed descriptions and in-depth examples of koi's functionality, check out its [documentation site](https://willcarhart.dev/docs/koi).
 Koi's documentation site is built via another one of my projects, [docs]({{src:project/docs.html}}).

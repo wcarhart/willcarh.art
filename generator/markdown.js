@@ -18,6 +18,9 @@ const convert = async (md) => {
 	blockCodeSnippet = blockCodeSnippet.toString()
 	shoutoutSnippet = shoutoutSnippet.toString()
 
+	// TODO: add support for lists
+	// TODO: add support for images
+
 	// convert MD to HTML
 	let lines = md.split('\n')
 	let html = ''

@@ -79,6 +79,11 @@ h5 {
 	font-family: 'Roboto Mono', monospace;
 }
 
+.technologies-list-metadata {
+	font-size: 0.85rem;
+	font-family: 'Roboto Mono', monospace;
+}
+
 #icons-container {
 	margin: 0 auto;
 	text-align: center;

@@ -164,6 +164,7 @@ const buildProjectSpec = async (projects, page) => {
 	// read in snippets
 	let specSnippet = await readFilePromise('snippets/project/spec.html')
 	
+	let technologiesMetadataSnippet = await readFilePromise('snippets/project/metadata/technologies-project-metadata.html')
 	let githubStarsMetadataSnippet = await readFilePromise('snippets/project/metadata/github-stars-project-metadata.html')
 	let installMetadataSnippet = await readFilePromise('snippets/project/metadata/install-project-metadata.html')
 	let latestReleaseMetadataSnippet = await readFilePromise('snippets/project/metadata/latest-release-project-metadata.html')
@@ -177,6 +178,7 @@ const buildProjectSpec = async (projects, page) => {
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
 
 	specSnippet = specSnippet.toString()
+	technologiesMetadataSnippet = technologiesMetadataSnippet.toString()
 	githubStarsMetadataSnippet = githubStarsMetadataSnippet.toString()
 	installMetadataSnippet = installMetadataSnippet.toString()
 	latestReleaseMetadataSnippet = latestReleaseMetadataSnippet.toString()
@@ -222,6 +224,7 @@ const buildProjectSpec = async (projects, page) => {
 	html = html.replace(/\{\{link-icon\}\}/g, linkIconHtml)
 
 	// build project metadata
+	let technologiesMetadataHtml = technologiesMetadataSnippet.replace('{{technologies}}', project.languages.concat(project.technologies).filter(p => p !== '').join(' · '))
 	// TODO: implement github stars
 	let githubStarsMetadataHtml = githubStarsMetadataSnippet.replace('{{github-stars}}', '-')
 	// TODO: if install is empty, should not use color nor monospace font
@@ -243,6 +246,7 @@ const buildProjectSpec = async (projects, page) => {
 		relatedProjectsMetadataHtml = relatedProjectsMetadataSnippet.replace('{{links}}', '-')
 	}
 	let statusMetadataHtml = statusMetadataSnippet.replace('{{status}}', project.status)
+	html = html.replace('{{technologies-metadata}}', technologiesMetadataHtml)
 	html = html.replace('{{github-stars-metadata}}', githubStarsMetadataHtml)
     html = html.replace('{{install-metadata}}', installMetadataHtml)
 	html = html.replace('{{publish-date-metadata}}', latestReleaseMetadataHtml)

@@ -112,25 +112,36 @@ const buildSubcomponents = async (text) => {
 		subcomponent = subcomponent.replace(match, html)
 	}
 
+	// TODO: currently, italics, bold, and strikethrough must be wrapped by spaces, need to fix
+
 	// handle italics: _..._
-	while (/ _.+?_ /.exec(subcomponent)) {
-		let match = / _.+?_ /.exec(subcomponent)[0]
-		let italics = match.replace(/^ _/, '').replace(/_ $/, '')
-		subcomponent = subcomponent.replace(match, ` <i>${italics}</i> `)
+	while (/[^A-Za-z0-9"']_.+?_[^A-Za-z0-9"']/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"']_.+?_[^A-Za-z0-9"']/.exec(subcomponent)[0]
+		let startChar = match[0]
+		let endChar = match[match.length - 1]
+		let cleansedMatch = match.substring(1, match.length - 2)
+		let italics = cleansedMatch.replace(/^_/, '').replace(/_$/, '')
+		subcomponent = subcomponent.replace(match, `${startChar}<i>${italics}</i>${endChar}`)
 	}
 
 	// handle bold: **...**
-	while (/ \*\*.+?\*\* /.exec(subcomponent)) {
-		let match = / \*\*.+?\*\* /.exec(subcomponent)[0]
-		let bold = match.replace(/^ \*\*/, '').replace(/\*\* $/, '')
-		subcomponent = subcomponent.replace(match, ` <b>${bold}</b> `)
+	while (/[^A-Za-z0-9"']\*\*.+?\*\*[^A-Za-z0-9"']/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"']\*\*.+?\*\*[^A-Za-z0-9"']/.exec(subcomponent)[0]
+		let startChar = match[0]
+		let endChar = match[match.length - 1]
+		let cleansedMatch = match.substring(1, match.length - 2)
+		let bold = cleansedMatch.replace(/^\*\*/, '').replace(/\*\*$/, '')
+		subcomponent = subcomponent.replace(match, `${startChar}<b>${bold}</b>${endChar}`)
 	}
 
 	// handle strikethrough: ~~...~~
-	while (/ ~~.+?~~ /.exec(subcomponent)) {
-		let match = / ~~.+?~~ /.exec(subcomponent)[0]
-		let strikethrough = match.replace(/^ ~~/, '').replace(/~~ $/, '')
-		subcomponent = subcomponent.replace(match, ` <s>${strikethrough}</s> `)
+	while (/[^A-Za-z0-9"']~~.+?~~[^A-Za-z0-9"']/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"']~~.+?~~[^A-Za-z0-9"']/.exec(subcomponent)[0]
+		let startChar = match[0]
+		let endChar = match[match.length - 1]
+		let cleansedMatch = match.substring(1, match.length - 2)
+		let strikethrough = cleansedMatch.replace(/^~~/, '').replace(/~~$/, '')
+		subcomponent = subcomponent.replace(match, `${startChar}<s>${strikethrough}</s>${endChar}`)
 	}
 
 	return subcomponent

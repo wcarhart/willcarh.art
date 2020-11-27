@@ -23,6 +23,10 @@
 	--toggle: url(../ico/dark-mode-toggle-dark.png);
 }
 
+.animate__animated.animate__fadeInUp, .animate__animated.animate__fadeIn {
+	--animate-delay: 0.3s
+}
+
 #content-main {
 	position: relative;
 	z-index: 20;
@@ -42,4 +46,91 @@ h2 {
 
 h5 {
 	color: var(--subtitle) !important;
+}
+
+#content-body {
+	width: 75%;
+	margin: 0 auto;
+}
+
+#project-logo-container {
+	margin: 0 auto;
+	padding-bottom: 2rem;
+}
+
+#project-logo {
+	margin: 0 auto;
+	text-align: center;
+	display: block;
+}
+
+#project-title {
+	text-align: center;
+}
+
+#project-blurb {
+	text-align: center;
+	padding-bottom: 0.5rem;
+}
+
+#technologies-list {
+	text-align: center;
+	font-size: 0.75rem;
+	font-family: 'Roboto Mono', monospace;
+}
+
+#icons-container {
+	margin: 0 auto;
+	text-align: center;
+}
+
+#metadata-container {
+	padding: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+}
+
+.project-metadata-label {
+	padding: 0rem;
+	margin: 0rem;
+	color: var(--subtitle);
+	font-size: 0.7rem;
+}
+
+.project-metadata-value {
+	padding: 0rem 0rem 1rem 0rem;
+	margin: 0rem;
+}
+
+#project-metadata-icons {
+	padding-left: 1rem;
+}
+
+#project-about-container {
+	padding: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+}
+
+.about-text {
+	color: var(--subtitle);
+}
+
+#start-about-text {
+	font-size: 1.5rem;
+}
+
+.inline-code {
+	color: var(--color);
+}
+
+.block-code {
+	color: var(--text);
+	font-family: 'Roboto Mono', monospace;
+}
+
+.code-container {
+	background-color: var(--detail);
+	padding: 1rem;
+	font-family: 'Roboto Mono', monospace;
 }

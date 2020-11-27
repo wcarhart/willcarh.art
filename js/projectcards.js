@@ -14,7 +14,8 @@ $(document).ready(async () => {
 		$(id).css('background-size', '0% 0.125rem')
 	})
 
-	// TODO
+	// TODO: prevent default when anchors are clicked within project containers
+
 	// handle click to specific project
 	$('.project-border').click(async function() {
 		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '')

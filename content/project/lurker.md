@@ -1,5 +1,4 @@
-# Lurker
-By utilizing the [Hacker News API](https://github.com/HackerNews/API), lurker exposes a simple to use CLI for reading HN stories and comments. It's massively parallelized, extremely portable and lightweight, and easy to use.
+By utilizing the [Hacker News API](https://github.com/HackerNews/API), lurker exposes a simple to use CLI for reading HN stories and comments. It's massively parallelized, extremely portable, lightweight, and easy-to-use.
 
 ### Lightweight and portable
 Lurker is a single Bash script with minimal dependencies, which means it can run almost anywhere. Install it with `brew install wcarhart/tools/lurker`.
@@ -111,7 +110,7 @@ All systems go for UK’s £55M fusion energy experiment (ccfe.ukaea.uk)
 ```
 
 ### Summarize webpages in just a few sentences
-Never leave the comfort of your terminal again with [smoosh](https://willcarh.art/project/smoosh)
+Never leave the comfort of your terminal again with [smoosh](https://willcarh.art/project/smoosh).
 ```
 > smoosh 1
 MAST Upgrade first plasma For the first time, after a seven-year build, UKAEA's labelled Mega 

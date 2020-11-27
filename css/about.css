@@ -21,23 +21,6 @@
 	--toggle: url(../ico/dark-mode-toggle-dark.png);
 }
 
-ul {
-	list-style: none;
-}
-
-ul li::before {
-	content: "\2022";
-	color: var(--color);
-	font-weight: bold;
-	display: inline-block;
-	width: 1em;
-	margin-left: -1em;
-}
-
-li {
-	color: var(--subtitle);
-}
-
 h2 {
 	font-size: 3rem !important;
 }

@@ -11,21 +11,27 @@ const convert = async (md) => {
 	let startAboutTextSnippet = await readFilePromise('snippets/project/start-about-text.html')
 	let blockCodeSnippet = await readFilePromise('snippets/project/block-code.html')
 	let shoutoutSnippet = await readFilePromise('snippets/project/shoutout.html')
+	let ulSnippet = await readFilePromise('snippets/project/ul.html')
+	let liSnippet = await readFilePromise('snippets/project/li.html')
+	let imgSnippet = await readFilePromise('snippets/project/img.html')
 
 	aboutSubtitleSnippet = aboutSubtitleSnippet.toString()
 	aboutTextSnippet = aboutTextSnippet.toString()
 	startAboutTextSnippet = startAboutTextSnippet.toString()
 	blockCodeSnippet = blockCodeSnippet.toString()
 	shoutoutSnippet = shoutoutSnippet.toString()
-
-	// TODO: add support for lists
-	// TODO: add support for images
+	ulSnippet = ulSnippet.toString()
+	liSnippet = liSnippet.toString()
+	imgSnippet = imgSnippet.toString()
 
 	// convert MD to HTML
 	let lines = md.split('\n')
 	let html = ''
 	let inCodeBlock = false
 	let codeblock = []
+
+	let inList = false
+	let listItems = []
 	for (let line of lines) {
 
 		// we'll need to keep track of the state of the markdown
@@ -54,12 +60,30 @@ const convert = async (md) => {
 				shoutoutText = await buildSubcomponents(shoutoutText)
 				html += shoutoutSnippet.replace('{{title}}', shoutoutTitle).replace('{{text}}', shoutoutText)
 
+			// lines that start with '*' are interpreted to be lists
+			}  else if (line.startsWith('* ')) {
+				inList = true
+				let text = line.replace(/^\* /, '')
+				listItems.push(text)
+
+			// lines that start with '!' are interpreted to be images
+			} else if (line.startsWith('![')) {
+				let imgAlt = line.replace(/^!\[/, '').replace(/\].*$/, '')
+				let imgSrc = line.replace(/^.*\(/, '').replace(/\).*$/, '')
+				let imgSubtitle = line.replace(/^.*</, '').replace(/>$/, '')
+				html += imgSnippet.replace('{{alt}}', imgAlt).replace('{{src}}', imgSrc).replace('{{subtitle}}', imgSubtitle)
+
 			// lines that are '```' are interpreted to be the start or end of a code block
 			} else if (line === '```') {
 				inCodeBlock = true
 
 			// empty lines are interpreted to be line breaks
 			} else if (line === '') {
+				if (inList) {
+					html += ulSnippet.replace('{{list-items}}', listItems.map(li => liSnippet.replace('{{text}}', li)).join(''))
+					listItems = []
+					inList = false
+				}
 				html += '<br>'
 
 			// all other lines are interpreted to be regular about text
@@ -114,8 +138,6 @@ const buildSubcomponents = async (text) => {
 		let html = inlineCodeSnippet.replace('{{code}}', code)
 		subcomponent = subcomponent.replace(match, html)
 	}
-
-	// TODO: currently, italics, bold, and strikethrough must be wrapped by spaces, need to fix
 
 	// handle italics: _..._
 	while (/[^A-Za-z0-9"']_.+?_[^A-Za-z0-9"']/.exec(subcomponent)) {

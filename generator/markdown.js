@@ -4,7 +4,7 @@ const util = require('util')
 const readFilePromise = util.promisify(fs.readFile)
 
 // convert markdown to HTML
-const convert = async (md) => {
+const convert = async (md, page) => {
 	// parse snippets
 	let aboutSubtitleSnippet = await readFilePromise('snippets/project/about-subtitle.html')
 	let aboutTextSnippet = await readFilePromise('snippets/project/about-text.html')
@@ -104,6 +104,14 @@ const convert = async (md) => {
 				codeblock.push(line)
 			}
 		}
+	}
+
+	// handle invalid markdown cases
+	if (inCodeBlock) {
+		throw new Error(`Invalid markdown: unclosed code block in '${page}'`)
+	}
+	if (inList) {
+		throw new Error(`Invalid markdown: unclosed list in '${page}'`)
 	}
 
 	return html

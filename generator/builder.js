@@ -256,7 +256,7 @@ const buildProjectSpec = async (projects, page) => {
 
 	// build project content
 	let projectMarkdown = await readFilePromise(`content/project/${name}.md`)
-	let projectContent = await markdown.convert(projectMarkdown.toString())
+	let projectContent = await markdown.convert(projectMarkdown.toString(), page)
 	html = html.replace('{{project-content}}', projectContent)
 
 	return html

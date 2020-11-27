@@ -84,6 +84,11 @@ h5 {
 	text-align: center;
 }
 
+.shift-icons a {
+	padding-left: 0rem !important;
+	padding-right: 1rem !important;
+}
+
 #metadata-container {
 	padding: 1rem;
 	border: solid 0.2rem var(--text);

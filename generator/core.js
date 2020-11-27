@@ -33,6 +33,7 @@ Supported asset tags:
   {{sys:header}}   --> generated header for HTML files
   {{sys:headerjs}} --> generated header for JS files
   {{sys:home}}     --> path to homepage
+  {{sys:pokemon}}  --> Pokemon ascii art
 */
 
 
@@ -329,6 +330,15 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			let file = 'index.html'
 			let assetPath = path.join(...Array(level).fill('..'), file)
 			resolvedData = resolvedData.replace(match, assetPath)
+			break
+		case 'pokemon':
+			let charizard = await readFilePromise('generator/charizard.txt')
+			charizard = charizard.toString()
+			let message = '<!-- Hmm, what are you doing here?? Bet you weren\'t expecting to see ASCII charizard, were you! -->\n'
+			message += '<!--\n'
+			message += charizard
+			message += '\n-->\n'
+			resolvedData = resolvedData.replace(match, message)
 			break
 		default:
 			throw new Error(`Unknown system asset: '${asset}'`)

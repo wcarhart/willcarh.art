@@ -149,7 +149,11 @@ published: 2020
 status: stable
 install:
 documentation:
-related:
+related: lurker
+related: koi
+related: birdhouse
+related: konphig
+related: chiller
 visibility: featured
 tags: web
 
@@ -441,6 +445,7 @@ technologies: Yelp Fusion API
 technologies: Lyft API
 technologies: Uber API
 technologies: Firebase
+technologies: CocoaPods
 img: {{cdn:img/logos/cheers.png}}
 repo: https://github.com/wcarhart/cheers
 link:
@@ -461,6 +466,7 @@ languages: Swift
 languages: Objective-C
 technologies: iOS
 technologies: Firebase
+technologies: CocoaPods
 img: {{cdn:img/logos/fitpals.png}}
 repo: https://github.com/wcarhart/fitpals
 link:
@@ -480,6 +486,7 @@ about: Chordpanion is an iOS application for building chord progressions. Given 
 languages: Swift
 languages: Objective-C
 technologies: iOS
+technologies: CocoaPods
 img: {{cdn:img/logos/chordpanion.png}}
 repo: https://github.com/wcarhart/chordpanion
 link:

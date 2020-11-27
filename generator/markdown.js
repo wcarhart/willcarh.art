@@ -114,23 +114,23 @@ const buildSubcomponents = async (text) => {
 
 	// handle italics: _..._
 	while (/ _.+?_ /.exec(subcomponent)) {
-		let match = / _.+?_ /.exec(subcomponent)
+		let match = / _.+?_ /.exec(subcomponent)[0]
 		let italics = match.replace(/^ _/, '').replace(/_ $/, '')
-		subcomponent = subcomponent.replace(match, `<i>${italics}</i>`)
+		subcomponent = subcomponent.replace(match, ` <i>${italics}</i> `)
 	}
 
 	// handle bold: **...**
 	while (/ \*\*.+?\*\* /.exec(subcomponent)) {
-		let match = / \*\*.+?\*\* /.exec(subcomponent)
+		let match = / \*\*.+?\*\* /.exec(subcomponent)[0]
 		let bold = match.replace(/^ \*\*/, '').replace(/\*\* $/, '')
-		subcomponent = subcomponent.replace(match, `<b>${bold}</b>`)
+		subcomponent = subcomponent.replace(match, ` <b>${bold}</b> `)
 	}
 
 	// handle strikethrough: ~~...~~
 	while (/ ~~.+?~~ /.exec(subcomponent)) {
-		let match = / ~~.+?~~ /.exec(subcomponent)
+		let match = / ~~.+?~~ /.exec(subcomponent)[0]
 		let strikethrough = match.replace(/^ ~~/, '').replace(/~~ $/, '')
-		subcomponent = subcomponent.replace(match, `<s>${strikethrough}</s>`)
+		subcomponent = subcomponent.replace(match, ` <s>${strikethrough}</s> `)
 	}
 
 	return subcomponent

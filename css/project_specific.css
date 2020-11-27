@@ -139,8 +139,8 @@ h5 {
 .shoutout {
 	border: solid 0.2rem var(--text);
 	border-radius: 1rem;
-	/*background-color: var(--color);*/
 	padding: 1rem;
+	margin: 0rem;
 }
 
 .shoutout-title {

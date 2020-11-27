@@ -15,8 +15,9 @@ Add Homebrew, Yarn, and other packages to track in version control
 ```
 kn new --brew yarn
 Added brew formula 'yarn' to konphig
-Helpful Bash functions
 ```
+
+### Helpful Bash functions
 Join a list of strings
 ```
 merge '-' 'a b' c d

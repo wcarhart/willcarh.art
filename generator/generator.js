@@ -6,6 +6,7 @@ const util = require('util')
 const core = require('./core.js')
 
 const readdirPromise = util.promisify(fs.readdir)
+const rmdirPromise = util.promisify(fs.rmdir)
 const statPromise = util.promisify(fs.stat)
 
 // verify content markdown files are as expected
@@ -14,7 +15,6 @@ const verifyContentFileStructure = async () => {
 	await fs.promises.access('content/experience.md')
 	await fs.promises.access('content/blogs.md')
 	await fs.promises.access('content/projects.md')
-	await fs.promises.access('content/apps.md')
 }
 
 // validate if generation was successful
@@ -26,8 +26,6 @@ const validateBuild = async () => {
 	await fs.promises.access('src/demo_index.html')
 	await fs.promises.access('src/blog_index.html')
 	await fs.promises.access('src/project_index.html')
-	// TODO: uncomment when apps are implemented
-	// await fs.promises.access('../src/app_index.html')
 }
 
 // build the output file tree of the files that were generated
@@ -89,13 +87,17 @@ const main = async () => {
 			await verifyContentFileStructure()
 		}
 
+		// refresh redirects
 		await core.refreshRedirects()
+
+		// clear out source directory
+		await rmdirPromise('src/', { recursive: true })
 
 		// TODO: this shouldn't matter
 		// asset order is essential, due to how linking occurs:
 		//  - scripts must be built first
 		//  - vault must be built before projects
-		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc', 'apps']
+		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc']
 		for (let asset of assets) {
 			await core.generate(asset, args.develop)
 		}

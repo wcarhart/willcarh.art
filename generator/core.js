@@ -38,7 +38,6 @@ Supported asset tags:
 
 
 // TODO: implement these
-// TODO: do we need the specific proj,blog tags? Or will the generator just generate pages for all?
 /*
 Supported HTML tags:
   {{html:exp-tabs}}      --> build HTML for experience tabs on about page

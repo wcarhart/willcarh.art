@@ -1,0 +1,46 @@
+/*uncomment this line for debugging*/
+/** {
+	outline: solid 0.25rem;
+}*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+:root {
+	--background: #ecf0f1;
+	--detail: #bdc3c7;
+	--subtitle: #6A6C6E;
+	--color: #e67e22;
+	--text: #252323;
+	--toggle: url(../ico/dark-mode-toggle-light.png);
+}
+
+:root.dark-mode {
+	--background: #292929;
+	--detail: #34495e;
+	--subtitle: #8895A1;
+	--color: #6642ac;
+	--text: #ecf0f1;
+	--toggle: url(../ico/dark-mode-toggle-dark.png);
+}
+
+#content-main {
+	position: relative;
+	z-index: 20;
+	top: 8rem;
+	display: table;
+	margin: 0 auto;
+	width: 75%;
+}
+
+#content-main h1 {
+	font-size: 5rem !important;
+}
+
+h5 {
+	color: var(--subtitle) !important;
+}
+
+#demo-container {
+	width: 75%;
+	margin: 0 auto;
+}

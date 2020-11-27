@@ -9,13 +9,13 @@
 		<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>willcarh.art</title>
-<meta name="description" content="doku" />
+<meta name="description" content="koi" />
 <meta name="twitter:card" value="summary" />
 <meta property="og:name" content="willcarh.art" />
-<meta property="og:url" content="https://willcarh.art/project/doku" />
+<meta property="og:url" content="https://willcarh.art/project/koi" />
 <meta property="og:image" content="../../ico/android-chrome-512x512.png" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="doku" />
+<meta property="og:description" content="koi" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:site_name" content="willcarh.art" />
 
@@ -56,31 +56,28 @@
 			<div class="spacer"></div>
 			<div id="content-body">
 				<div id="project-logo-container" class="animate__animated animated_faster animate__fadeInUp">
-	<img id="project-logo" alt="doku logo" src="https://storage.googleapis.com/willcarh-art/img/logos/doku.png">
+	<img id="project-logo" alt="koi logo" src="https://storage.googleapis.com/willcarh-art/img/logos/koi.png">
 </div>
 <div id="project-title-container" class="animate__animated animated_faster animate__fadeInUp animate__delay-1s">
-	<h1 id="project-title">Doku</h1>
+	<h1 id="project-title">Koi</h1>
 </div>
 <div id="project-blurb-container" class="animate__animated animated_faster animate__fadeInUp animate__delay-2s">
-	<h5 id="project-blurb" >Automated Sudoku solver</h5>
+	<h5 id="project-blurb" >Bashful argument parsing</h5>
 </div>
 <div id="project-technologies-container" class="animate__animated animated_faster animate__fadeInUp animate__delay-3s">
-	<p id="technologies-list">Deno · JavaScript</p>
+	<p id="technologies-list">Bash</p>
 </div>
 <div id="icons-container" class="animate__animated animated_faster animate__fadeInUp animate__delay-4s">
 	<div class="row justify-content-center">
-        <a class="github-icon" href="https://github.com/wcarhart/doku" target="_blank"><i class="fab fa-github"></i></a>
+        <a class="github-icon" href="https://github.com/wcarhart/koi" target="_blank"><i class="fab fa-github"></i></a>
         
+        <a class="docs-icon" href="https://willcarhart.dev/docs/koi" target="_blank"><i class="fab fa-readme"></i></a>
         
-        <a class="demo-icon" href="../demo/doku.html"><i class="fas fa-bullhorn"></i></a>
 	</div>
 </div>
 <div class="spacer"></div>
 <div id="project-about-container" class="animate__animated animated_faster animate__fadeIn animate__delay-5s">
-    <p id="start-about-text" class="about-text">Solve any Sudoku board instantly!</p><br><div class="shoutout">
-	<p class="shoutout-title"><b>Try it out!</b></p>
-	<p class="shoutout-text">Try out doku yourself on <a class="fancy-link" href="../demo_index.html">the demo page</a></p>
-</div><br><h4>Solve puzzles instantly</h4><p class="about-text">Doku is an efficient Sudoku board solver, all from the command line.</p><br><h4>How it works</h4><p class="about-text">Doku uses dynamic programming and memoization to solve Sudoku boards. Essentially, doku strategically makes moves on the board and simulates the effect they will have. In order not to be overwhelmed with the immense number of possible board states, doku utilizes memoization to create a highly-pruned tree of board states and then performs a depth-first search to determine the solution.</p><br><h4>How to use it</h4><p class="about-text">You can specify input via a JSON file or a more human-readable text format. For some examples, see the <a class="fancy-link" href="https://github.com/wcarhart/doku/tree/master/puzzles" target="_blank">puzzles/</a> folder in doku's repository.</p><br><p class="about-text">For example, here is one possible input puzzle:</p><pre class="code-container"><code class="block-code">* * * | 5 * 6 | * * * <br>* * 4 | * * * | 8 * * <br>* 9 * | 1 * 2 | * 6 * <br>---------------------<br>9 * 8 | * * * | 3 * 2 <br>* * * | * 9 * | * * * <br>1 * 2 | * * * | 4 * 7 <br>---------------------<br>* 2 * | 3 * 4 | * 8 * <br>* * 7 | * * * | 9 * * <br>* * * | 9 * 5 | * * *</code></pre><br><p class="about-text">If this file was saved in <code class="inline-code">puzzle.txt</code>, you can solve it with:</p><pre class="code-container"><code class="block-code">doku puzzle.txt</code></pre><br><p class="about-text">Which would print:</p><pre class="code-container"><code class="block-code">2 8 1 | 5 4 6 | 7 3 9 <br>6 5 4 | 7 3 9 | 8 2 1 <br>7 9 3 | 1 8 2 | 5 6 4 <br>---------------------<br>9 7 8 | 4 6 1 | 3 5 2 <br>4 3 5 | 2 9 7 | 6 1 8 <br>1 6 2 | 8 5 3 | 4 9 7 <br>---------------------<br>5 2 9 | 3 7 4 | 1 8 6 <br>3 1 7 | 6 2 8 | 9 4 5 <br>8 4 6 | 9 1 5 | 2 7 3</code></pre><br><p class="about-text">Built with ❤️via <a class="fancy-link" href="https://deno.land/" target="_blank">Deno</a>.</p>
+    <p id="start-about-text" class="about-text">Create powerful CLI applications with ease. All in Bash.</p><br><h4>Easily add command line arguments for Bash functions!</h4><p class="about-text">Inspired by Python's argparse.</p><pre class="code-container"><code class="block-code">function sendrequest {<br>    __addarg "-h" "--help" "help" "optional" "" "Send an HTTP request"<br>    __addarg "-m" "--method" "storevalue" "optional" "GET" "The HTTP method"<br>    __addarg "-u" "--url" "storevalue" "required" "" "The url of the HTTP request"<br>    __parseargs "$@"<br>    curl -X "$method" "$url"<br>}</code></pre><pre class="code-container"><code class="block-code">function checkstockprice {<br>    __addarg "-h" "--help" "help" "optional" "" "Check a stock's price"<br>    __addarg "" "symbol" "positionalarray" "required" "" "The ticker symbol(s) to check"<br>    __addarg "-e" "--exchange" "storevalue" "optional" "NYSE" "The exchange to use"<br>    __addarg "-p" "--port" "storevalue" "required" "" "The port to use"<br>    __addarg "-q" "--quiet" "flag" "optional" "" "If included, run in quiet mode"<br>    __parseargs "$@"<br>    # check the stock price<br>}</code></pre><br><h4>Verbose and complete documentation</h4><p class="about-text">For detailed descriptions and in-depth examples of koi's functionality, checkout it <a class="fancy-link" href="https://willcarhart.dev/docs/koi" target="_blank">documentation site</a>.</p><p class="about-text">Koi's documentation site is built via another one of my projects, <a class="fancy-link" href="../project/docs.html">docs</a>.</p>
 </div>
 <div class="spacer-small"></div>
 <div id="metadata-container" class="animate__animated animated_faster animate__fadeIn animate__delay-5s">
@@ -88,22 +85,22 @@
 	<p class="project-metadata-label">LINKS</p>
 	<div class="project-metadata-value">
 		<div id="project-metadata-icons" class="row">
-            <a class="github-icon" href="https://github.com/wcarhart/doku" target="_blank"><i class="fab fa-github"></i></a>
+            <a class="github-icon" href="https://github.com/wcarhart/koi" target="_blank"><i class="fab fa-github"></i></a>
             
+            <a class="docs-icon" href="https://willcarhart.dev/docs/koi" target="_blank"><i class="fab fa-readme"></i></a>
             
-            <a class="demo-icon" href="../demo/doku.html"><i class="fas fa-bullhorn"></i></a>
 		</div>
 	</div>
     <p class="project-metadata-label">STARS</p>
 <p class="project-metadata-value">-</p>
     <p class="project-metadata-label">INSTALL</p>
-<p class="project-metadata-value"><code class="inline-code">brew install wcarhart/tools/doku</code></p>
+<p class="project-metadata-value"><code class="inline-code">brew install wcarhart/tools/koi</code></p>
 	<p class="project-metadata-label">LATEST RELEASE</p>
-<p class="project-metadata-value">1.0.3</p>
+<p class="project-metadata-value">1.2.1</p>
     <p class="project-metadata-label">ORIGINALLY PUBLISHED</p>
 <p class="project-metadata-value">2020</p>
     <p class="project-metadata-label">RELATED PROJECTS</p>
-<p class="project-metadata-value">-</p>
+<p class="project-metadata-value"><a class="fancy-link" href="../project/lurker.html">lurker</a> &nbsp;&nbsp;·&nbsp;&nbsp;<a class="fancy-link" href="../project/birdhouse.html">birdhouse</a> &nbsp;&nbsp;·&nbsp;&nbsp;<a class="fancy-link" href="../project/konphig.html">konphig</a> &nbsp;&nbsp;·&nbsp;&nbsp;<a class="fancy-link" href="../project/chiller.html">chiller</a> &nbsp;&nbsp;·&nbsp;&nbsp;<a class="fancy-link" href="../project/thoth.html">thoth</a> &nbsp;&nbsp;·&nbsp;&nbsp;<a class="fancy-link" href="../project/docs.html">docs</a> </p>
     <p class="project-metadata-label">STATUS</p>
 <p class="project-metadata-value">stable</p>
 </div>

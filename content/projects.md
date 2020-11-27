@@ -70,7 +70,12 @@ published: 2020
 status: stable
 install: brew install wcarhart/tools/koi
 documentation: https://willcarhart.dev/docs/koi
-related:
+related: lurker
+related: birdhouse
+related: konphig
+related: chiller
+related: thoth
+related: docs
 visibility: super
 tags: library
 

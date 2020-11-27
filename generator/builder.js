@@ -234,7 +234,7 @@ const buildProjectSpec = async (projects, page) => {
 	}
 	let relatedProjectsMetadataHtml = ''
 	if (relatedProjectLinks.length !== 0) {
-		relatedProjectsMetadataHtml = relatedProjectsMetadataSnippet.replace('{{links}}', relatedProjectLinks.join(' · '))
+		relatedProjectsMetadataHtml = relatedProjectsMetadataSnippet.replace('{{links}}', relatedProjectLinks.join('&nbsp;&nbsp;·&nbsp;&nbsp;'))
 	} else {
 		relatedProjectsMetadataHtml = relatedProjectsMetadataSnippet.replace('{{links}}', '-')
 	}

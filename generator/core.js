@@ -155,7 +155,7 @@ const buildPageFromTemplate = async ({template='', page='', level=0, develop=fal
 const buildMultiplePages = async (kind, develop) => {
 	let files = await findFiles({kind: kind})
 	for (let file of files) {
-		let name = file.split('/').pop().split('.').shift()
+		let name = file.split('/').pop().split('.md').shift()
 		await buildPageFromTemplate({template: `templates/${kind}_specific.html`, page: `src/${kind}/${name}.html`, level: 2, develop: develop})
 		// TODO: fix redirects
 		// await updateRedirects(`${kind}/${file.split('/').pop()}`, `${kind}/${name}`)

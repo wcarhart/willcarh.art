@@ -1,6 +1,7 @@
 .github-icon, .link-icon, .docs-icon, .demo-icon {
 	color: var(--text);
-	padding-right: 1rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 	margin: 0;
 }
 

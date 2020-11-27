@@ -152,9 +152,12 @@ const buildCode = async (data, match, key) => {
 const buildProjectSpec = async (projects, page) => {
 	// determine project name
 	let name = page.split('/').pop().split('.html')[0]
-	let project = projects.filter(p => p.name === name)
+	let project = projects.filter(p => p.name.toLowerCase() === name)
+	if (project.length === 0) {
+		throw new Error(`No project data found for '${name}'`)
+	}
 	if (project.length !== 1) {
-		throw new Error(`Multiple projects found for ${name}`)
+		throw new Error(`Multiple projects found for '${name}'`)
 	}
 	project = project[0]
 
@@ -221,6 +224,7 @@ const buildProjectSpec = async (projects, page) => {
 	// build project metadata
 	// TODO: implement github stars
 	let githubStarsMetadataHtml = githubStarsMetadataSnippet.replace('{{github-stars}}', '-')
+	// TODO: if install is empty, should not use color nor monospace font
 	let installMetadataHtml = installMetadataSnippet.replace('{{install}}', project.install === '' ? '-' : project.install)
 	let latestReleaseMetadataHtml = latestReleaseMetadataSnippet.replace('{{version}}', project.latest_version === '' ? '-' : project.latest_version)
 	let publishDateMetadataHtml = publishDateMetadataSnippet.replace('{{publish-date}}', project.published === '' ? '-' : project.published)

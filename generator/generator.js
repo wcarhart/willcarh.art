@@ -1,5 +1,6 @@
 const startTime = new Date().getTime()
 const fs = require('fs')
+const path = require('path')
 const util = require('util')
 
 const core = require('./core.js')
@@ -31,45 +32,27 @@ const validateBuild = async () => {
 
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
-	let tree = '.\n├── index.html'
-	// TODO: fix this garbage
-	tree += await buildTrees(['font', 'ico', 'css', 'src', 'src/js'])
+	let tree = '.\n├── index.html\n'
+	for (let dir of ['font', 'ico', 'css', 'src']) {
+		tree += await buildTree(dir, '', dir === 'src' ? true : false, '')
+	}
 	console.log(tree)
 }
 
-// build a set of file trees based on a list of source directories
-const buildTrees = async (dirs) => {
-	let tree = ''
-	for (let [index, dir] of dirs.entries()) {
-		if (index === dirs.length - 1) {
-			tree += await buildTreeString(dir, true)
-		} else {
-			tree += await buildTreeString(dir, false)
-		}
+const buildTree = async (dir, indent, isTail, result) => {
+	let stats = await statPromise(dir)
+	let files = []
+	if (stats.isDirectory()) {
+		files = await readdirPromise(dir)
 	}
-	return tree
-}
-
-// build a visual file tree based on a directory
-const buildTreeString = async (dir, final) => {
-	try {
-		await fs.promises.access(dir)
-	} catch (e) {
-		return ''
+	result += indent + (isTail === true ? '└── ' : '├── ') + path.basename(dir) + (stats.isDirectory() ? '/' : '') + '\n'
+	for (let index = 0; index < files.length - 1; index++) {
+		result = await buildTree(path.join(dir, files[index]), indent + (isTail === true ? '    ' : '|   '), false, result)
 	}
-	const parentChar = final ? '   ' : '|  '
-	let tree = final ? `\n└── ${dir}` : `\n├── ${dir}`
-	let files = await readdirPromise(dir)
-	while (files.length > 0) {
-		if (files.length === 1) {
-			tree += `\n${parentChar} └── ${files[0]}`
-			files.shift()
-		} else {
-			tree += `\n${parentChar} ├── ${files[0]}`
-			files.shift()
-		}
+	if (files.length > 0) {
+		result = await buildTree(path.join(dir, files[files.length - 1]), indent + (isTail === true ? '    ' : '|   '), true, result)
 	}
-	return tree
+	return result
 }
 
 // show usage statement

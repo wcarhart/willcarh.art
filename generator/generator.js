@@ -114,7 +114,7 @@ const main = async () => {
 		//  - vault must be built before projects
 		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc', 'apps']
 		for (let asset of assets) {
-			await core.generate(asset)
+			await core.generate(asset, args.develop)
 		}
 		if (args.develop !== true) {
 			await validateBuild()

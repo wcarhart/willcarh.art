@@ -1,4 +1,4 @@
-By utilizing the [Hacker News API](https://github.com/HackerNews/API), lurker exposes a simple to use CLI for reading HN stories and comments. It's massively parallelized, extremely portable, lightweight, and easy-to-use.
+# By utilizing the [Hacker News API](https://github.com/HackerNews/API), lurker exposes a simple to use CLI for reading HN stories and comments. It's massively parallelized, extremely portable, lightweight, and easy-to-use.
 
 ### Lightweight and portable
 Lurker is a single Bash script with minimal dependencies, which means it can run almost anywhere. Install it with `brew install wcarhart/tools/lurker`.
@@ -32,7 +32,6 @@ Get trending stories with the command `lurker`.
    100 points by amzans 6 hours ago | 38 comments
 10. Scientist Believes Aging Is Optional (www.outsideonline.com)
     162 points by evo_9 10 hours ago | 93 comments
-> 
 ```
 
 ### Lurk through discussions in real time
@@ -110,7 +109,7 @@ All systems go for UK’s £55M fusion energy experiment (ccfe.ukaea.uk)
 ```
 
 ### Summarize webpages in just a few sentences
-Never leave the comfort of your terminal again with [smoosh](https://willcarh.art/project/smoosh).
+Never leave the comfort of your terminal again with [smoosh]({{src:project/smoosh.html}}).
 ```
 > smoosh 1
 MAST Upgrade first plasma For the first time, after a seven-year build, UKAEA's labelled Mega 
@@ -148,5 +147,4 @@ Available commands:
   refresh     - refresh the master post list, which will reset the ordering of posts
   clear       - clear the screen
   exit        - quit lurker
->
 ```

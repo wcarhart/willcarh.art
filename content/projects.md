@@ -191,7 +191,7 @@ tags: cloud
 
 name: soliloquy
 blurb: Project showcase website
-about: The word soliloquy means an act of speaking one's thoughts aloud when by oneself or regardless of any hearers. Soliloquy aims to live up to that definition; it is a portfolio website for showcasing software projects. Developers can add their own software projects to demo what they've been working on recently.
+about: The word soliloquy means an act of speaking one's thoughts aloud when by oneself or regardless of any hearers. Soliloquy aims to live up to that definition; it is a portfolio website for showcasing software projects. Developers can add their own software projects to demo what they have been working on recently.
 languages: Python
 languages: HTML
 languages: CSS

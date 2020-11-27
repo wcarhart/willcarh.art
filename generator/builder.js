@@ -5,13 +5,14 @@ const minify = require('minify')
 const tryToCatch = require('try-to-catch')
 
 const parser = require('./parser.js')
+const markdown = require('./markdown.js')
 
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
 const copyFilePromise = util.promisify(fs.copyFile)
 
 // build meta objects for webpages
-const buildMeta = async ({data='', match='', key='', page=''}) => {
+const buildMeta = async (data, match, key, page) => {
 	let resolvedData = data
 	let meta = ''
 	switch (key) {
@@ -66,7 +67,7 @@ const buildMetaHtml = async ({description='', url=''}) => {
 }
 
 // replace {{html:...}} tags
-const buildHtml = async (data, match, key) => {
+const buildHtml = async (data, match, key, page) => {
 	let resolvedData = data
 	let experiences = null, projects = null, blogs = null
 	let html = null
@@ -84,6 +85,11 @@ const buildHtml = async (data, match, key) => {
 		case 'proj-all':
 			projects = await parser.parseProjects()
 			html = await buildProjAll(projects)
+			resolvedData = resolvedData.replace(match, html)
+			break
+		case 'proj-spec':
+			projects = await parser.parseProjects()
+			html = await buildProjectSpec(projects, page)
 			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'vault-rows':
@@ -141,6 +147,106 @@ const buildCode = async (data, match, key) => {
 			throw new Error(`Unknown {{code}} key '${key}'`)
 	}
 	return resolvedData
+}
+
+const buildProjectSpec = async (projects, page) => {
+	// determine project name
+	let name = page.split('/').pop().split('.html')[0]
+	let project = projects.filter(p => p.name === name)
+	if (project.length !== 1) {
+		throw new Error(`Multiple projects found for ${name}`)
+	}
+	project = project[0]
+
+	// read in snippets
+	let specSnippet = await readFilePromise('snippets/project/spec.html')
+	
+	let githubStarsMetadataSnippet = await readFilePromise('snippets/project/metadata/github-stars-project-metadata.html')
+	let installMetadataSnippet = await readFilePromise('snippets/project/metadata/install-project-metadata.html')
+	let latestReleaseMetadataSnippet = await readFilePromise('snippets/project/metadata/latest-release-project-metadata.html')
+	let publishDateMetadataSnippet = await readFilePromise('snippets/project/metadata/publish-date-project-metadata.html')
+	let relatedProjectsMetadataSnippet = await readFilePromise('snippets/project/metadata/related-projects-project-metadata.html')
+	let relatedProjectLinkMetadataSnippet = await readFilePromise('snippets/project/metadata/related-project-link-project-metadata.html')
+	let statusMetadataSnippet = await readFilePromise('snippets/project/metadata/status-project-metadata.html')
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+
+	specSnippet = specSnippet.toString()
+	githubStarsMetadataSnippet = githubStarsMetadataSnippet.toString()
+	installMetadataSnippet = installMetadataSnippet.toString()
+	latestReleaseMetadataSnippet = latestReleaseMetadataSnippet.toString()
+	publishDateMetadataSnippet = publishDateMetadataSnippet.toString()
+	relatedProjectsMetadataSnippet = relatedProjectsMetadataSnippet.toString()
+	relatedProjectLinkMetadataSnippet = relatedProjectLinkMetadataSnippet.toString()
+	statusMetadataSnippet = statusMetadataSnippet.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+
+	// build HTML
+	let html = specSnippet
+
+	// build basic information
+	html = html.replace('{{name}}', project.name)
+	html = html.replace('{{logo}}', project.img)
+	html = html.replace('{{title}}', project.name[0].toUpperCase() + project.name.slice(1))
+	html = html.replace('{{blurb}}', project.blurb)
+	html = html.replace(
+		'{{technologies}}',
+		project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
+	)
+
+	// build links
+	let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+	if (project.repo !== '') {
+		githubIconHtml = githubIconSnippet.replace('{{name}}', project.name.toLowerCase())
+	}
+	if (project.documentation !== '') {
+		docsIconHtml = docsIconSnippet.replace('{{name}}', project.name.toLowerCase())
+	}
+	if (project.demo === 'true') {
+		demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
+	}
+	if (project.link !== '') {
+		linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
+	}
+	html = html.replace(/\{\{github-icon\}\}/g, githubIconHtml)
+	html = html.replace(/\{\{docs-icon\}\}/g, docsIconHtml)
+	html = html.replace(/\{\{demo-icon\}\}/g, demoIconHtml)
+	html = html.replace(/\{\{link-icon\}\}/g, linkIconHtml)
+
+	// build project metadata
+	// TODO: implement github stars
+	let githubStarsMetadataHtml = githubStarsMetadataSnippet.replace('{{github-stars}}', '-')
+	let installMetadataHtml = installMetadataSnippet.replace('{{install}}', project.install === '' ? '-' : project.install)
+	let latestReleaseMetadataHtml = latestReleaseMetadataSnippet.replace('{{version}}', project.latest_version === '' ? '-' : project.latest_version)
+	let publishDateMetadataHtml = publishDateMetadataSnippet.replace('{{publish-date}}', project.published === '' ? '-' : project.published)
+	let relatedProjectLinks = []
+	for (let related of project.related) {
+		let linkHtml = relatedProjectLinkMetadataSnippet.replace(/\{\{name\}\}/g, related)
+		relatedProjectLinks.push(linkHtml)
+	}
+	let relatedProjectsMetadataHtml = '-'
+	if (relatedProjectLinks.length !== 0) {
+		relatedProjectsMetadataHtml =  relatedProjectsMetadataSnippet.replace('{{links}}', relatedProjectLinks.join(' · '))
+	}
+	let statusMetadataHtml = statusMetadataSnippet.replace('{{status}}', project.status)
+	html = html.replace('{{github-stars-metadata}}', githubStarsMetadataHtml)
+    html = html.replace('{{install-metadata}}', installMetadataHtml)
+	html = html.replace('{{publish-date-metadata}}', latestReleaseMetadataHtml)
+    html = html.replace('{{latest-release-metadata}}', publishDateMetadataHtml)
+    html = html.replace('{{status-metadata}}', relatedProjectsMetadataHtml)
+    html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
+
+	// build project content
+	let projectMarkdown = await readFilePromise(`content/project/${name}.md`)
+	let projectContent = await markdown.convert(projectMarkdown.toString())
+	html = html.replace('{{project-content}}', projectContent)
+
+	return html
 }
 
 // build demo rows
@@ -688,7 +794,7 @@ const buildNewBlogString = async (attributes) => {
 }
 
 // replace content tags in template
-const resolveContent = async ({data='', page=''}) => {
+const resolveContent = async (data, page) => {
 	let resolvedData = data
 	const supportedTags = ['html', 'code', 'meta']
 
@@ -708,18 +814,13 @@ const resolveContent = async ({data='', page=''}) => {
 				// handle each tag
 				switch (tag) {
 					case 'html':
-						resolvedData = await buildHtml(resolvedData, match, value)
+						resolvedData = await buildHtml(resolvedData, match, value, page)
 						break
 					case 'code':
 						resolvedData = await buildCode(resolvedData, match, value)
 						break
 					case 'meta':
-						resolvedData = await buildMeta({
-							data: resolvedData,
-							match: match,
-							key: value,
-							page: page
-						})
+						resolvedData = await buildMeta(resolvedData, match, value, page)
 						break
 					default:
 						throw new Error(`Unknown tag '${tag}'`)

@@ -45,6 +45,7 @@ Supported HTML tags:
   {{html:proj-all}}      --> build HTML for all projects based on visibility
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
+  {{html:proj-spec}}     --> build HTML for specific project page
 
 Supported code tags:
   {{code:proj}}          --> load projects into code
@@ -62,7 +63,7 @@ Supported meta tags:
 */
 
 // generate HTML files based on page type
-const generate = async (page) => {
+const generate = async (page, develop) => {
 	try {
 		await fs.promises.access('src')
 	} catch (e) {
@@ -86,41 +87,41 @@ const generate = async (page) => {
 	switch (page) {
 		case 'home':
 			console.log('🏠  Building home...')
-			await buildPageFromTemplate({template: 'templates/home.html', page: 'index.html', level: 0})
+			await buildPageFromTemplate({template: 'templates/home.html', page: 'index.html', level: 0, develop: develop})
 			break
 		case 'about':
 			console.log('💁‍♂️  Building about...')
-			await buildPageFromTemplate({template: 'templates/about.html', page: 'src/about.html', level: 1})
+			await buildPageFromTemplate({template: 'templates/about.html', page: 'src/about.html', level: 1, develop: develop})
 			break
 		case 'blog':
 			console.log('📖  Building blog...')
-			await buildPageFromTemplate({template: 'templates/blog_index.html', page: 'src/blog_index.html', level: 1})
-			await buildMultiplePages('blog')
+			await buildPageFromTemplate({template: 'templates/blog_index.html', page: 'src/blog_index.html', level: 1, develop: develop})
+			await buildMultiplePages('blog', develop)
 			break
 		case 'projects':
 			console.log('🏗  Building projects...')
-			await buildPageFromTemplate({template: 'templates/project_index.html', page: 'src/project_index.html', level: 1})
-			await buildMultiplePages('project')
+			await buildPageFromTemplate({template: 'templates/project_index.html', page: 'src/project_index.html', level: 1, develop: develop})
+			await buildMultiplePages('project', develop)
 			break
 		case 'apps':
 			console.log('🖥  Building apps...')
 			break
 		case 'scripts':
 			console.log('🖋  Building scripts...')
-			await buildScripts()
+			await buildScripts(develop)
 			break
 		case 'vault':
 			console.log('🗄  Building vault...')
-			await buildPageFromTemplate({template: 'templates/vault.html', page: 'src/vault.html', level: 1})
+			await buildPageFromTemplate({template: 'templates/vault.html', page: 'src/vault.html', level: 1, develop: develop})
 			break
 		case 'demo':
 			console.log('🏃‍♂️  Building demos...')
-			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo_index.html', level: 1})
-			await buildMultiplePages('demo')
+			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo_index.html', level: 1, develop: develop})
+			await buildMultiplePages('demo', develop)
 			break
 		case 'etc':
 			console.log('👓  Building etc...')
-			await buildPageFromTemplate({template: 'templates/etc.html', page: 'src/etc.html', level: 1})
+			await buildPageFromTemplate({template: 'templates/etc.html', page: 'src/etc.html', level: 1, develop: develop})
 			break
 		default:
 			throw new Error(`Unknown page '${page}'`)
@@ -128,16 +129,16 @@ const generate = async (page) => {
 }
 
 // build HTML page from template
-const buildPageFromTemplate = async ({template='', page='', level=0}) => {
+const buildPageFromTemplate = async ({template='', page='', level=0, develop=false}) => {
 	// read from template
 	let data = await readFilePromise(template)
 	data = data.toString()
 
 	// we must resolve content first, because some content might resolve to asset tags
-	data = await builder.resolveContent({data: data, page: page})
+	data = await builder.resolveContent(data, page)
 
 	// resolve static and dynamic assets
-	data = await resolveAssets(data, level)
+	data = await resolveAssets(data, level, develop)
 
 	// TODO: this messes up html, need to fix
 	// prettify text
@@ -151,11 +152,11 @@ const buildPageFromTemplate = async ({template='', page='', level=0}) => {
 }
 
 // build multiple pages in a repo
-const buildMultiplePages = async (kind) => {
+const buildMultiplePages = async (kind, develop) => {
 	let files = await findFiles({kind: kind})
 	for (let file of files) {
 		let name = file.split('/').pop().split('.').shift()
-		await buildPageFromTemplate({template: `templates/${kind}_specific.html`, page: `src/${kind}/${name}.html`, level: 2})
+		await buildPageFromTemplate({template: `templates/${kind}_specific.html`, page: `src/${kind}/${name}.html`, level: 2, develop: develop})
 		// TODO: fix redirects
 		// await updateRedirects(`${kind}/${file.split('/').pop()}`, `${kind}/${name}`)
 	}
@@ -164,7 +165,7 @@ const buildMultiplePages = async (kind) => {
 // TODO: minify scripts - should we minify HTML and CSS as well?
 // TODO: copy css files to src/ and do the same as js
 // build JS scripts
-const buildScripts = async () => {
+const buildScripts = async (develop) => {
 	try {
 		await fs.promises.access('src/js')
 	} catch (e) {
@@ -172,7 +173,7 @@ const buildScripts = async () => {
 	}
 	let scripts = await findFiles({kind: 'js', prefix: ''})
 	for (let script of scripts) {
-		await buildPageFromTemplate({template: `js/${script}`, page: `src/js/${script}`, level: 1})
+		await buildPageFromTemplate({template: `js/${script}`, page: `src/js/${script}`, level: 1, develop: false})
 	}
 }
 
@@ -226,7 +227,7 @@ const updateRedirects = async (page) => {
 }
 
 // replace static asset tags in template
-const resolveAssets = async (data, level) => {
+const resolveAssets = async (data, level, develop) => {
 	let resolvedData = data
 	const supportedAssets = ['css', 'cdn', 'font', 'ico', 'js', 'src', 'sys']
 
@@ -249,7 +250,7 @@ const resolveAssets = async (data, level) => {
 
 				// sys is used for dynamically generated assets (not static files)
 				} else if (asset === 'sys') {
-					resolvedData = await buildDynamicAsset(resolvedData, match, value, level)
+					resolvedData = await buildDynamicAsset(resolvedData, match, value, level, develop)
 
 				// css, ico, and font static files are stored outside the src/ directory
 				} else if (['css', 'ico', 'font'].includes(asset)) {
@@ -265,6 +266,15 @@ const resolveAssets = async (data, level) => {
 					// js files are a special folder in src/ because they are also generated from templates
 					if (asset === 'js') {
 						file = path.join('js', file)
+					}
+
+					// make sure file exists
+					if (develop === false) {
+						try {
+							await fs.promises.access(`src/${file}`)
+						} catch (e) {
+							throw new Error(`No such referenced file: 'src/${file}'`)
+						}
 					}
 
 					// configure relative path based on nesting level
@@ -291,7 +301,7 @@ const resolveAssets = async (data, level) => {
 }
 
 // replace dynamic asset tags in template
-const buildDynamicAsset = async (data, match, asset, level) => {
+const buildDynamicAsset = async (data, match, asset, level, develop) => {
 	let resolvedData = data
 	const now = Date().toLocaleString()
 	switch (asset) {
@@ -300,6 +310,9 @@ const buildDynamicAsset = async (data, match, asset, level) => {
 			headerData.push('<!-- This is an autogenerated file - DO NOT EDIT DIRECTLY -->')
 			headerData.push(`<!-- This file was generated on ${now} via the forge in willcarh.art v${package.version}-->`)
 			headerData.push('<!-- Learn more: https://github.com/wcarhart/willcarh.art -->')
+			if (develop === true) {
+				headerData.push('<!-- THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION! -->')
+			}
 			resolvedData = resolvedData.replace(match, headerData.join('\n'))
 			break
 		case 'headerjs':
@@ -307,6 +320,9 @@ const buildDynamicAsset = async (data, match, asset, level) => {
 			headerjsData.push('// This is an autogenerated file - DO NOT EDIT DIRECTLY')
 			headerjsData.push(`// This file was generated on ${now} via the forge in willcarh.art v${package.version}`)
 			headerjsData.push('// Learn more: https://github.com/wcarhart/willcarh.art')
+			if (develop === true) {
+				headerData.push('// THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!')
+			}
 			resolvedData = resolvedData.replace(match, headerjsData.join('\n'))
 			break
 		case 'home':

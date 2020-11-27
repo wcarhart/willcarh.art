@@ -10,11 +10,13 @@ const convert = async (md) => {
 	let aboutTextSnippet = await readFilePromise('snippets/project/about-text.html')
 	let startAboutTextSnippet = await readFilePromise('snippets/project/start-about-text.html')
 	let blockCodeSnippet = await readFilePromise('snippets/project/block-code.html')
+	let shoutoutSnippet = await readFilePromise('snippets/project/shoutout.html')
 
 	aboutSubtitleSnippet = aboutSubtitleSnippet.toString()
 	aboutTextSnippet = aboutTextSnippet.toString()
 	startAboutTextSnippet = startAboutTextSnippet.toString()
 	blockCodeSnippet = blockCodeSnippet.toString()
+	shoutoutSnippet = shoutoutSnippet.toString()
 
 	// convert MD to HTML
 	let lines = md.split('\n')
@@ -38,6 +40,16 @@ const convert = async (md) => {
 				let text = line.replace(/^### /, '')
 				let subcomponent = await buildSubcomponents(text)
 				html += aboutSubtitleSnippet.replace('{{subtitle}}', subcomponent)
+
+			// lines that start with '>' are interpreted to be shoutouts
+			} else if (line.startsWith('> ')) {
+				let shoutout = line.replace(/^> /, '')
+				let components = shoutout.split(' | ')
+				let shoutoutTitle = components.shift()
+				let shoutoutText = components.join(' | ')
+				shoutoutTitle = await buildSubcomponents(shoutoutTitle)
+				shoutoutText = await buildSubcomponents(shoutoutText)
+				html += shoutoutSnippet.replace('{{title}}', shoutoutTitle).replace('{{text}}', shoutoutText)
 
 			// lines that are '```' are interpreted to be the start or end of a code block
 			} else if (line === '```') {

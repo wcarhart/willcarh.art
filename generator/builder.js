@@ -226,12 +226,17 @@ const buildProjectSpec = async (projects, page) => {
 	let publishDateMetadataHtml = publishDateMetadataSnippet.replace('{{publish-date}}', project.published === '' ? '-' : project.published)
 	let relatedProjectLinks = []
 	for (let related of project.related) {
+		if (related === '') {
+			continue
+		}
 		let linkHtml = relatedProjectLinkMetadataSnippet.replace(/\{\{name\}\}/g, related)
 		relatedProjectLinks.push(linkHtml)
 	}
-	let relatedProjectsMetadataHtml = '-'
+	let relatedProjectsMetadataHtml = ''
 	if (relatedProjectLinks.length !== 0) {
-		relatedProjectsMetadataHtml =  relatedProjectsMetadataSnippet.replace('{{links}}', relatedProjectLinks.join(' · '))
+		relatedProjectsMetadataHtml = relatedProjectsMetadataSnippet.replace('{{links}}', relatedProjectLinks.join(' · '))
+	} else {
+		relatedProjectsMetadataHtml = relatedProjectsMetadataSnippet.replace('{{links}}', '-')
 	}
 	let statusMetadataHtml = statusMetadataSnippet.replace('{{status}}', project.status)
 	html = html.replace('{{github-stars-metadata}}', githubStarsMetadataHtml)

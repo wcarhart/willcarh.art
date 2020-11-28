@@ -37,6 +37,7 @@ const convert = async (md, page) => {
 		// TODO: add support for tables
 		// TODO: add support for ol
 		// TODO: add support for nested lists
+		// TODO: add support for syntax highlighting with ```language and class="language-..." (see https://github.com/highlightjs/highlight.js/)
 
 		// we'll need to keep track of the state of the markdown
 		// there are two states - in a code block or not in a code block

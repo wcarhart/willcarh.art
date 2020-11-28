@@ -11,6 +11,50 @@ const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
 const copyFilePromise = util.promisify(fs.copyFile)
 
+// TODO: add color
+/*
+Supported asset tags:
+  {{css:...}}      --> static CSS file
+  {{ico:...}}      --> static icon file
+  {{font:...}}     --> static font file
+  {{js:...}}       --> static built js file
+  {{src:...}}      --> static built source file
+  {{cdn:...}}      --> file stored in CDN
+  {{color:...}}    --> color from the system color palette
+  {{sys:header}}   --> generated header for HTML files
+  {{sys:headerjs}} --> generated header for JS files
+  {{sys:home}}     --> path to homepage
+  {{sys:pokemon}}  --> Pokemon ascii art
+*/
+
+
+// TODO: implement these
+/*
+Supported HTML tags:
+  {{html:exp-tabs}}      --> build HTML for experience tabs on about page
+  {{html:proj-featured}} --> build HTML for featured projects on project page
+  {{html:proj-all}}      --> build HTML for all projects based on visibility
+  {{html:proj-spec}}     --> build HTML for specific project page
+  {{html:blog-latest}}   --> build HTML for latest blog post on blog page
+  {{html:blog-all}}      --> build HTML for all blog posts
+  {{html:vault-rows}}    --> build HTML for rows in the vault
+  {{html:demo-rows}}     --> build HTML for rows on demo index
+
+Supported code tags:
+  {{code:proj}}          --> load projects into code
+  {{code:blog}}          --> load blogs into code
+
+Supported meta tags:
+  {{meta:home}}          --> build HTML meta for home page
+  {{meta:proj}}          --> build HTML meta for project index
+  {{meta:proj-spec}}     --> build HTML meta for specific project
+  {{meta:blog}}          --> build HTML meta for blog index
+  {{meta:blog-spec}}     --> build HTML meta for specific blog post
+  {{meta:vault}}         --> build HTML meta for vault
+  {{meta:demo}}          --> build HTML meta for demo index
+  {{meta:demo-spec}}     --> build HTML meta for specific demo
+*/
+
 // build meta objects for webpages
 const buildMeta = async (data, match, key, page) => {
 	let resolvedData = data
@@ -75,38 +119,41 @@ const buildHtml = async (data, match, key, page) => {
 		case 'exp-tabs':
 			experiences = await parser.parseExperiences()
 			html = await buildExpTabs(experiences)
-			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'proj-super':
 			projects = await parser.parseProjects()
 			html = await buildProjSuper(projects.filter(p => p.visibility === 'super'))
-			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'proj-all':
 			projects = await parser.parseProjects()
 			html = await buildProjAll(projects)
-			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'proj-spec':
 			projects = await parser.parseProjects()
 			html = await buildProjectSpec(projects, page)
-			resolvedData = resolvedData.replace(match, html)
+			break
+		case 'blog-latest':
+			blogs = await parser.parseBlogs()
+			html = await buildBlogLatest(blogs)
+			break
+		case 'blog-all':
+			blogs = await parser.parseBlogs()
+			html = await buildBlogAll(blogs)
 			break
 		case 'vault-rows':
 			experiences = await parser.parseExperiences()
 			projects = await parser.parseProjects()
 			blogs = await parser.parseBlogs()
 			html = await buildVaultRows(experiences, projects, blogs)
-			resolvedData = resolvedData.replace(match, html)
 			break
 		case 'demo-rows':
 			projects = await parser.parseProjects()
 			html = await buildDemoRows(projects)
-			resolvedData = resolvedData.replace(match, html)
 			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
 	}
+	resolvedData = resolvedData.replace(match, html)
 	return resolvedData
 }
 
@@ -149,6 +196,92 @@ const buildCode = async (data, match, key) => {
 	return resolvedData
 }
 
+// build HTML for latest blog post on blog index
+const buildBlogLatest = async (blogs) => {
+	// determine latest blog
+	let blog = blogs.reduce((latest, current) => { return current.published > latest.published ? current : latest })
+	let date = new Date(blog.published * 1000)
+	// TODO: verify that dates in blogs.md are actually correct, they seem a little off
+	let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+
+	// parse HTML snippets
+	let blogLatestSnippet = await readFilePromise('snippets/blog/blog-latest.html')
+	blogLatestSnippet = blogLatestSnippet.toString()
+
+	// build HTML
+	let html = blogLatestSnippet
+
+	// determine information
+	html = html.replace('{{cover}}', blog.cover)
+	html = html.replace('{{subtitle}}', blog.subtitle)
+	html = html.replace('{{title}}', blog.title)
+	html = html.replace('{{technologies}}', blog.resources.join(' · '))
+	html = html.replace('{{blurb}}', blog.blurb)
+	html = html.replace('{{author}}', blog.author)
+	html = html.replace('{{published}}', displayDate)
+	// TODO: implement readtime based on blog post word count
+	// general formula: readtime = Math.ceil(words.length / 200)
+	html = html.replace('{{readtime}}', 'TBD min read')
+
+	return html
+}
+
+// build HTML for all blog posts on blog index
+const buildBlogAll = async (blogs) => {
+	// sort blogs
+	let sortedBlogs = blogs.sort((a, b) => {
+		if (a.published > b.published) {
+			return -1
+		} else if (a.published < b.published) {
+			return 1
+		}
+		return 0
+	})
+
+	// parse HTML snippets
+	let blogRowSnippet = await readFilePromise('snippets/blog/blog-row.html')
+	let blogRegularSnippet = await readFilePromise('snippets/blog/blog-regular.html')
+	blogRowSnippet = blogRowSnippet.toString()
+	blogRegularSnippet = blogRegularSnippet.toString()
+
+	// build HTML
+	let html = ''
+	for (let rowIndex = 0; rowIndex < sortedBlogs.length / 2; rowIndex++) {
+		let rowHtml = blogRowSnippet
+		for (let columnIndex = 0; columnIndex < 2; columnIndex++) {
+			let index = rowIndex*2 + columnIndex
+			if (index >= sortedBlogs.length) {
+				rowHtml = rowHtml.replace('{{blog-regular}}', '')
+				continue
+			}
+
+			// build individual container for each blog
+			let blogHtml = blogRegularSnippet
+			blogHtml = blogHtml.replace('{{cover}}', sortedBlogs[index].cover)
+			blogHtml = blogHtml.replace('{{subtitle}}', sortedBlogs[index].subtitle)
+			blogHtml = blogHtml.replace('{{title}}', sortedBlogs[index].title)
+			blogHtml = blogHtml.replace('{{technologies}}', sortedBlogs[index].resources.join(' · '))
+			blogHtml = blogHtml.replace('{{blurb}}', sortedBlogs[index].blurb)
+			blogHtml = blogHtml.replace('{{index}}', index)
+			blogHtml = blogHtml.replace('{{row-index}}', rowIndex)
+			blogHtml = blogHtml.replace('{{author}}', sortedBlogs[index].author)
+			let date = new Date(sortedBlogs[index].published * 1000)
+			// TODO: verify that dates in blogs.md are actually correct, they seem a little off
+			let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+			blogHtml = blogHtml.replace('{{published}}', displayDate)
+			// TODO: implement readtime based on blog post word count
+			// general formula: readtime = Math.ceil(words.length / 200)
+			blogHtml = blogHtml.replace('{{readtime}}', 'TBD min read')
+
+			rowHtml = rowHtml.replace('{{blog-regular}}', blogHtml)
+		}
+		html += rowHtml
+	}
+
+	return html
+}
+
+// build HTML for specific project
 const buildProjectSpec = async (projects, page) => {
 	// determine project name
 	let name = page.split('/').pop().split('.html')[0]
@@ -176,7 +309,6 @@ const buildProjectSpec = async (projects, page) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
-
 	specSnippet = specSnippet.toString()
 	technologiesMetadataSnippet = technologiesMetadataSnippet.toString()
 	githubStarsMetadataSnippet = githubStarsMetadataSnippet.toString()
@@ -266,7 +398,6 @@ const buildProjectSpec = async (projects, page) => {
 const buildDemoRows = async (projects) => {
 	// parse HTML snippets
 	let demoProjectContainerSnippet = await readFilePromise('snippets/demo/demo-project-container.html')
-
 	demoProjectContainerSnippet = demoProjectContainerSnippet.toString()
 
 	// build HTML
@@ -295,7 +426,6 @@ const buildProjSuper = async (projects) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
-
 	projectContainerSuperSnippet = projectContainerSuperSnippet.toString()
 	projectRowSuperSnippet = projectRowSuperSnippet.toString()
 	demoIconSnippet = demoIconSnippet.toString()
@@ -360,7 +490,6 @@ const buildProjAll = async (projects) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
-	
 	projectContainerFeaturedSnippet = projectContainerFeaturedSnippet.toString()
 	projectContainerRegularSnippet = projectContainerRegularSnippet.toString()
 	projectRowFeaturedLeftSnippet = projectRowFeaturedLeftSnippet.toString()
@@ -551,7 +680,6 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
-
 	vaultRowsSnippet = vaultRowsSnippet.toString()
 	demoIconSnippet = demoIconSnippet.toString()
 	docsIconSnippet = docsIconSnippet.toString()
@@ -696,7 +824,6 @@ const buildExpTabs = async (experiences) => {
 	let highlightSnippet = await readFilePromise('snippets/experience/highlight.html')
 	let titleSnippet = await readFilePromise('snippets/experience/title.html')
 	let tidbitSnippet = await readFilePromise('snippets/experience/tidbit.html')
-
 	tabsSnippet = tabsSnippet.toString()
 	selectorSnippet = selectorSnippet.toString()
 	contentSnippet = contentSnippet.toString()

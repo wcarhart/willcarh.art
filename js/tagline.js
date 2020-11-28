@@ -69,7 +69,7 @@ const homeTaglines = [
 	'a rubix cube fan. ',
 	'an outdoorsman. ',
 	'a wearer of fuzzy socks. ',
-	'a lover of cats and dogs. ',
+	'a cat lover and dog snuggler. ',
 	'a sidecar enthusiast. ',
 	'a sucker for a good sunrise. ',
 	'a passionate feminist. ',

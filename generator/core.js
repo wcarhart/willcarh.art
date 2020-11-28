@@ -20,48 +20,6 @@ const appendFilePromise = util.promisify(fs.appendFile)
 
 // TODO: add verbose comments
 
-// TODO: add color
-/*
-Supported asset tags:
-  {{css:...}}      --> static CSS file
-  {{ico:...}}      --> static icon file
-  {{font:...}}     --> static font file
-  {{js:...}}       --> static built js file
-  {{src:...}}      --> static built source file
-  {{cdn:...}}      --> file stored in CDN
-  {{color:...}}    --> color from the system color palette
-  {{sys:header}}   --> generated header for HTML files
-  {{sys:headerjs}} --> generated header for JS files
-  {{sys:home}}     --> path to homepage
-  {{sys:pokemon}}  --> Pokemon ascii art
-*/
-
-
-// TODO: implement these
-/*
-Supported HTML tags:
-  {{html:exp-tabs}}      --> build HTML for experience tabs on about page
-  {{html:proj-featured}} --> build HTML for featured projects on project page
-  {{html:proj-all}}      --> build HTML for all projects based on visibility
-  {{html:vault-rows}}    --> build HTML for rows in the vault
-  {{html:demo-rows}}     --> build HTML for rows on demo index
-  {{html:proj-spec}}     --> build HTML for specific project page
-
-Supported code tags:
-  {{code:proj}}          --> load projects into code
-  {{code:blog}}          --> load blogs into code
-
-Supported meta tags:
-  {{meta:home}}          --> build HTML meta for home page
-  {{meta:proj}}          --> build HTML meta for project index
-  {{meta:proj-spec}}     --> build HTML meta for specific project
-  {{meta:blog}}          --> build HTML meta for blog index
-  {{meta:blog-spec}}     --> build HTML meta for specific blog post
-  {{meta:vault}}         --> build HTML meta for vault
-  {{meta:demo}}          --> build HTML meta for demo index
-  {{meta:demo-spec}}     --> build HTML meta for specific demo
-*/
-
 // generate HTML files based on page type
 const generate = async (page, develop) => {
 	try {

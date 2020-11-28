@@ -4,7 +4,7 @@ blurb: Announcing my all new personal website, portfolio, and full stack web app
 cover: {{cdn:img/blog/introducing-willcarh.art/cover.png}}
 coverAuthor: HoHoHO
 coverCredit: https://steamcommunity.com/id/themell
-published: 1586052720
+published: 1555474320
 updated:
 resources: Python
 resources: HTML
@@ -25,7 +25,7 @@ blurb: Python comes packed out of the box with some powerful introspection capab
 cover: {{cdn:img/blog/the-power-of-introspection-in-python/cover.jpg}}
 coverAuthor: AaronOlive
 coverCredit: https://www.deviantart.com/aaronolive
-published: 1588600260
+published: 1555516260
 updated:
 resources: Python
 author: Will Carhart
@@ -39,7 +39,7 @@ blurb: Python provides some awesome libraries for sending emails, but sometimes 
 cover: {{cdn:img/blog/automating-emails-in-python/cover.png}}
 coverAuthor: Campo Santo
 coverCredit: https://blog.camposanto.com/post/138965082204/firewatch-launch-wallpaper-when-we-redid-the
-published: 1620445680
+published: 1564465680
 updated:
 resources: Python
 resources: Bash
@@ -55,7 +55,7 @@ blurb: Using the GitHub API, we can automate just about any functionality of Git
 cover: {{cdn:img/blog/building-chatbots-for-github/cover.jpg}}
 coverAuthor: Jason Scheier
 coverCredit: https://www.artstation.com/d3cap
-published: 1591677960
+published: 1566197160
 updated:
 resources: Python
 resources: Bash

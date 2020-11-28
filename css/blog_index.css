@@ -75,6 +75,10 @@ hr {
 	transform: scale(1.1);
 }
 
+.blog-border:hover .read-more {
+	visibility: visible;
+}
+
 #latest-post-container {
 	width: 75%;
 	margin: 0 auto;
@@ -220,18 +224,13 @@ hr {
 	padding: 0rem;
 }
 
-#read-more-latest {
+.read-more {
 	position: absolute;
 	bottom: 0rem;
 	right: 1rem;
 	color: var(--color);
-}
-
-.read-more-all {
-	position: absolute;
-	bottom: 0rem;
-	right: 1rem;
-	color: var(--color);
+	visibility: hidden;
+	font-size: 1.5rem;
 }
 
 .color {

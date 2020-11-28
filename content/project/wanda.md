@@ -1,6 +1,6 @@
 # A meaningful website. A technical experiment.
 
-> See it yourself! | Wanda is deployed to [alexxandwill.us](https://alexxandwill.us). Check it out yourself to see wanda in action.
+>> See it yourself! | Wanda is deployed to [alexxandwill.us](https://alexxandwill.us). Check it out yourself to see wanda in action.
 
 ### A wonderful site for a wonderful person
 For the 2019 holidays, I wanted to be more creative than a simple Christmas card for my beautiful girlfriend, Alexx. Instead, I built her a website, [alexxandwill.us](https://alexxandwill.us), and gave it the codename `wanda` (an acronym for _Will and Alexx_) to hide it until it was ready. Since then, it's blossomed into a fun way to document our relationship.

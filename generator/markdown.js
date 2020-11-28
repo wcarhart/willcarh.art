@@ -34,6 +34,10 @@ const convert = async (md, page) => {
 	let listItems = []
 	for (let line of lines) {
 
+		// TODO: add support for tables
+		// TODO: add support for ol
+		// TODO: add support for nested lists
+
 		// we'll need to keep track of the state of the markdown
 		// there are two states - in a code block or not in a code block
 		if (!inCodeBlock) {
@@ -50,9 +54,9 @@ const convert = async (md, page) => {
 				let subcomponent = await buildSubcomponents(text)
 				html += aboutSubtitleSnippet.replace('{{subtitle}}', subcomponent)
 
-			// lines that start with '>' are interpreted to be shoutouts
-			} else if (line.startsWith('> ')) {
-				let shoutout = line.replace(/^> /, '')
+			// lines that start with '>>' are interpreted to be shoutouts
+			} else if (line.startsWith('>> ')) {
+				let shoutout = line.replace(/^>> /, '')
 				let components = shoutout.split(' | ')
 				let shoutoutTitle = components.shift()
 				let shoutoutText = components.join(' | ')
@@ -76,6 +80,10 @@ const convert = async (md, page) => {
 			// lines that are '```' are interpreted to be the start or end of a code block
 			} else if (line === '```') {
 				inCodeBlock = true
+
+			// lines that are '---' or '___' are interpreted to be horizontal rules
+			} else if (line === '---' || line === '___') {
+				html += '<hr>'
 
 			// empty lines are interpreted to be line breaks
 			} else if (line === '') {

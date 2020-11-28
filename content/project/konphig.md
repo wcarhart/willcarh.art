@@ -1,7 +1,7 @@
 # Dotfiles, on steroids.
 Konphig comes packed out of the box with tons of cool functionality. Here are a few highlights.
 
-> Read the docs | Konphig has a plethora of shell-related features. To explore them all, check out its [documentation site](https://willcarhart.dev/docs/konphig).
+>> Read the docs | Konphig has a plethora of shell-related features. To explore them all, check out its [documentation site](https://willcarhart.dev/docs/konphig).
 
 ### A powerful CLI
 Pull multiple registered repositories at once

@@ -113,7 +113,7 @@ hr {
 	padding-top: 1rem;
 	padding-left: 2rem;
 	margin-bottom: 0rem;
-	color: var(--subtitle);
+	color: var(--color);
 }
 
 .blog-subtitle-all {
@@ -121,7 +121,7 @@ hr {
 	padding-top: 0.2rem;
 	padding-left: 1rem;
 	margin-bottom: 0rem;
-	color: var(--subtitle);
+	color: var(--color);
 }
 
 #blog-title-latest {

@@ -7,6 +7,11 @@ coverCredit: https://steamcommunity.com/id/themell
 published: 1586052720
 updated:
 resources: Python
+resources: HTML
+resources: CSS
+resources: JavaScript
+resources: jQuery
+resources: Bootstrap
 resources: Django
 resources: Heroku
 author: Will Carhart

@@ -106,7 +106,13 @@ class Blog {
 		this.updated = updated
 		this.resources = resources
 		this.author = author
-		// TODO: enumerate possible statuses
+		// active: blog post was written under a current version of willcarh.art and included links + code should be valid
+		// stale:  blog post was written under a previous version of willcarh.art and included links + code may contain flaws
+		if (status !== '') {
+			if (!['active', 'stale'].includes(status)) {
+				console.error(`Unknown status '${status}'`)
+			}
+		}
 		this.status = status
 		this.tags = tags
 		this.content = content

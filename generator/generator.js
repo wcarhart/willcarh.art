@@ -30,8 +30,8 @@ const validateBuild = async () => {
 
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
-	let tree = '.\n├── index.html\n'
-	for (let dir of ['font', 'ico', 'css', 'src']) {
+	let tree = '.\n'
+	for (let dir of ['index.html', 'font', 'ico', 'css', 'src']) {
 		tree += await buildTree(dir, '', dir === 'src' ? true : false, '')
 	}
 	console.log(tree)
@@ -43,7 +43,12 @@ const buildTree = async (dir, indent, isTail, result) => {
 	if (stats.isDirectory()) {
 		files = await readdirPromise(dir)
 	}
-	result += indent + (isTail === true ? '└── ' : '├── ') + path.basename(dir) + (stats.isDirectory() ? '/' : '') + '\n'
+
+	let appendChar = ''
+	if (stats.isDirectory() && dir[dir.length] !== '/') {
+		appendChar = '/'
+	}
+	result += indent + (isTail === true ? '└── ' : '├── ') + path.basename(dir) + appendChar + '\n'
 	for (let index = 0; index < files.length - 1; index++) {
 		result = await buildTree(path.join(dir, files[index]), indent + (isTail === true ? '    ' : '|   '), false, result)
 	}

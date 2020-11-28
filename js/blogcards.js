@@ -1,8 +1,11 @@
 {{sys:headerjs}}
 
 $(document).ready(async () => {
-	// TODO: add underline to titles on blog cards
-	// TODO: handle clicks on individual blog cards
+	$('.blog-border').click(async function() {
+		let blog = this.id.replace(/^blog-card-/, '')
+		blog = blog.replace(/^latest-/, '')
+		window.location.href=`blog/${blog}.html`
+	})
 
 	await resizeBlogCards()
 	// TODO: verify this actually works

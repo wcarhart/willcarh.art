@@ -212,6 +212,8 @@ const buildBlogLatest = async (blogs) => {
 	let html = blogLatestSnippet
 
 	// determine information
+	let name = blog.content.replace(/^blog\//, '').replace(/\.html$/, '')
+	html = html.replace(/\{\{name\}\}/g, name)
 	html = html.replace('{{cover}}', blog.cover)
 	html = html.replace('{{subtitle}}', blog.subtitle)
 	html = html.replace('{{title}}', blog.title)
@@ -251,12 +253,14 @@ const buildBlogAll = async (blogs) => {
 		for (let columnIndex = 0; columnIndex < 2; columnIndex++) {
 			let index = rowIndex*2 + columnIndex
 			if (index >= sortedBlogs.length) {
-				rowHtml = rowHtml.replace('{{blog-regular}}', '')
+				rowHtml = rowHtml.replace('{{blog-regular}}', '<div class="col-md-6 row"></div>')
 				continue
 			}
 
 			// build individual container for each blog
 			let blogHtml = blogRegularSnippet
+			let name = sortedBlogs[index].content.replace(/^blog\//, '').replace(/\.html$/, '')
+			blogHtml = blogHtml.replace(/\{\{name\}\}/g, name)
 			blogHtml = blogHtml.replace('{{cover}}', sortedBlogs[index].cover)
 			blogHtml = blogHtml.replace('{{subtitle}}', sortedBlogs[index].subtitle)
 			blogHtml = blogHtml.replace('{{title}}', sortedBlogs[index].title)

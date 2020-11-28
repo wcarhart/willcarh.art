@@ -75,7 +75,7 @@ const parseBlogs = async () => {
 			if (value[0] === ' ') {
 				value = value.slice(1)
 			}
-			if (['resources', 'tags', 'content'].includes(key)) {
+			if (['resources', 'tags'].includes(key)) {
 				newBlog[key].push(value)
 			} else {
 				newBlog[key] = value

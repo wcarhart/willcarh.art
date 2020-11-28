@@ -27,6 +27,11 @@ hr {
 	background-color: var(--subtitle);
 }
 
+.section-title {
+	font-size: 2rem !important;
+	padding-bottom: 0.5rem;
+}
+
 #content-main {
 	position: relative;
 	z-index: 20;

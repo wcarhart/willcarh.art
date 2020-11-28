@@ -48,75 +48,88 @@ h5 {
 	color: var(--subtitle) !important;
 }
 
+.color {
+	color: var(--color);
+}
+
 #content-body {
 	width: 75%;
 	margin: 0 auto;
 }
 
-#project-logo-container {
+#blog-logo-container {
 	margin: 0 auto;
 	padding-bottom: 2rem;
 }
 
-#project-logo {
+#blog-logo {
 	margin: 0 auto;
 	text-align: center;
 	display: block;
 }
 
-#project-title {
+#blog-title {
 	text-align: center;
 }
 
-#project-blurb {
+#blog-credits {
+	padding-bottom: 1rem;
+}
+
+#blog-author-img-container {
+	padding-left: 1rem;
+	padding-right: 0.5rem;
+	display: flex;
+	align-items: center;
+}
+
+#blog-author-img-container img {
+	margin: auto;
+	display: block;
+	width: 2rem;
+	max-width: 2rem;
+	height: 2rem;
+	max-height: 2rem;
+	border-radius: 2rem;
+}
+
+#blog-author {
+	margin: 0;
+	font-size: 1rem;
+}
+
+.blog-metadata {
+	margin-bottom: 0rem;
+	font-size: 0.8rem;
+	color: var(--subtitle);
+}
+
+#blog-cover {
+	/*max-height: 15rem;*/
+	height: 100%;
+	width: 100%;
+	background-size: cover;
+	object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    overflow: hidden !important;
+    border-radius: 1rem;
+	transition: transform .4s ease;
+}
+
+#blog-cover-container {
+	overflow: hidden;
+	margin: 0rem;
+	padding: 0 0 1rem 0;
+}
+
+#blog-subtitle {
 	text-align: center;
 	padding-bottom: 0.5rem;
+	color: var(--color) !important;
 }
 
-#technologies-list {
-	text-align: center;
-	font-size: 0.75rem;
-	font-family: 'Roboto Mono', monospace;
-}
-
-.technologies-list-metadata {
-	font-size: 0.85rem;
-	font-family: 'Roboto Mono', monospace;
-}
-
-#icons-container {
-	margin: 0 auto;
-	text-align: center;
-}
-
-.shift-icons a {
-	padding-left: 0rem !important;
-	padding-right: 1rem !important;
-}
-
-#metadata-container {
-	padding: 1rem;
-	border: solid 0.2rem var(--text);
-	border-radius: 1rem;
-}
-
-.project-metadata-label {
-	padding: 0rem;
-	margin: 0rem;
-	color: var(--subtitle);
-	font-size: 0.7rem;
-}
-
-.project-metadata-value {
-	padding: 0rem 0rem 1rem 0rem;
-	margin: 0rem;
-}
-
-#project-metadata-icons {
-	padding-left: 1rem;
-}
-
-#project-about-container {
+#blog-content-container {
 	padding: 1rem;
 	border: solid 0.2rem var(--text);
 	border-radius: 1rem;

@@ -1,0 +1,60 @@
+.content-text {
+	color: var(--subtitle);
+	font-size: 1.1rem;
+}
+
+#start-content-text {
+	font-size: 1.8rem;
+	text-align: center;
+}
+
+.inline-code {
+	color: var(--color);
+}
+
+.block-code {
+	color: var(--text);
+	font-family: 'Roboto Mono', monospace;
+}
+
+.code-container {
+	background-color: var(--detail);
+	padding: 1rem;
+	font-family: 'Roboto Mono', monospace;
+}
+
+.shoutout {
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+	padding: 1rem;
+	margin: 0rem;
+}
+
+.shoutout-title {
+	color: var(--color);
+	font-size: 1.3rem;
+	padding-bottom: 0rem;
+	margin-bottom: 0rem;
+}
+
+.shoutout-text {
+	color: var(--subtitle);
+	font-size: 1.2rem;
+	margin: 0rem;
+}
+
+.content-img {
+	width: 100%;
+	background-size: cover;
+	object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.img-subtitle {
+	padding-top: 0.5rem;
+	text-align: center;
+	font-size: 0.8rem;
+	font-style: italic;
+	color: var(--subtitle);
+}

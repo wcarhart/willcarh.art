@@ -37,6 +37,7 @@ Supported HTML tags:
   {{html:proj-spec}}     --> build HTML for specific project page
   {{html:blog-latest}}   --> build HTML for latest blog post on blog page
   {{html:blog-all}}      --> build HTML for all blog posts
+  {{html:blog-spec}}     --> build HTML for specific blog post
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
 
@@ -62,40 +63,41 @@ const buildMeta = async (data, match, key, page) => {
 	switch (key) {
 		case 'home':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s personal portfolio website', url: 'https://willcarh.art'})
-			resolvedData = resolvedData.replace(match, meta)
 			break
 		case 'proj':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s projects', url: 'https://willcarh.art/projects'})
-			resolvedData = resolvedData.replace(match, meta)
 			break
 		case 'proj-spec':
 			let projectName = page.split('/').pop().split('.html')[0]
 			meta = await buildMetaHtml({description: projectName, url: `https://willcarh.art/project/${projectName}`})
-			resolvedData = resolvedData.replace(match, meta)
 			break
 		case 'blog':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s blog', url: 'https://willcarh.art/blog'})
-			resolvedData = resolvedData.replace(match, meta)
 			break
 		case 'blog-spec':
-			// TODO
+			let blogUrl = page.split('/').pop().split('.html')[0]
+			let blogName = blogUrl.split('-').map((word, index) => {
+				if (index !== 0 && ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','onto','or','so','to','the','with','yet'].includes(word)) {
+					return word
+				}
+				return word[0].toUpperCase() + word.slice(1)
+			}).join(' ')
+			meta = await buildMetaHtml({description: blogName, url: `https://willcarh.art/blog/${blogUrl}`})
 			break
 		case 'vault':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s vault', url: 'https://willcarh.art/vault'})
-			resolvedData = resolvedData.replace(match, meta)
 			break
 		case 'demo':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s demos', url: 'https://willcarh.art/demo'})
-			resolvedData = resolvedData.replace(match, meta)
 			break
 		case 'demo-spec':
 			let demoName = page.split('/').pop().split('.html')[0]
 			meta = await buildMetaHtml({description: `${demoName} demo`, url: `https://willcarh.art/project/${demoName}`})
-			resolvedData = resolvedData.replace(match, meta)
 			break
 		default:
 			throw new Error(`Unknown meta type '${key}'`)
 	}
+	resolvedData = resolvedData.replace(match, meta)
 	return resolvedData
 }
 
@@ -139,6 +141,10 @@ const buildHtml = async (data, match, key, page) => {
 		case 'blog-all':
 			blogs = await parser.parseBlogs()
 			html = await buildBlogAll(blogs)
+			break
+		case 'blog-spec':
+			blogs = await parser.parseBlogs()
+			html = await buildBlogSpec(blogs, page)
 			break
 		case 'vault-rows':
 			experiences = await parser.parseExperiences()
@@ -212,8 +218,7 @@ const buildBlogLatest = async (blogs) => {
 	let html = blogLatestSnippet
 
 	// determine information
-	let name = blog.content.replace(/^blog\//, '').replace(/\.html$/, '')
-	html = html.replace(/\{\{name\}\}/g, name)
+	html = html.replace(/\{\{name\}\}/g, blog.id)
 	html = html.replace('{{cover}}', blog.cover)
 	html = html.replace('{{subtitle}}', blog.subtitle)
 	html = html.replace('{{title}}', blog.title)
@@ -259,8 +264,7 @@ const buildBlogAll = async (blogs) => {
 
 			// build individual container for each blog
 			let blogHtml = blogRegularSnippet
-			let name = sortedBlogs[index].content.replace(/^blog\//, '').replace(/\.html$/, '')
-			blogHtml = blogHtml.replace(/\{\{name\}\}/g, name)
+			blogHtml = blogHtml.replace(/\{\{name\}\}/g, sortedBlogs[index].id)
 			blogHtml = blogHtml.replace('{{cover}}', sortedBlogs[index].cover)
 			blogHtml = blogHtml.replace('{{subtitle}}', sortedBlogs[index].subtitle)
 			blogHtml = blogHtml.replace('{{title}}', sortedBlogs[index].title)
@@ -270,7 +274,6 @@ const buildBlogAll = async (blogs) => {
 			blogHtml = blogHtml.replace('{{row-index}}', rowIndex)
 			blogHtml = blogHtml.replace('{{author}}', sortedBlogs[index].author)
 			let date = new Date(sortedBlogs[index].published * 1000)
-			// TODO: verify that dates in blogs.md are actually correct, they seem a little off
 			let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 			blogHtml = blogHtml.replace('{{published}}', displayDate)
 			// TODO: implement readtime based on blog post word count
@@ -281,6 +284,73 @@ const buildBlogAll = async (blogs) => {
 		}
 		html += rowHtml
 	}
+
+	return html
+}
+
+// build HTML for specific blog
+const buildBlogSpec = async (blogs, page) => {
+	// determine blog
+	let blogId = page.split('/').pop().split('.html')[0]
+	let blog = blogs.filter(b => b.id === blogId)
+	if (blog.length === 0) {
+		throw new Error(`No blog data found for '${blogId}'`)
+	}
+	if (blog.length !== 1) {
+		throw new Error(`Multiple blogs found for '${blogId}'`)
+	}
+	blog = blog[0]
+
+	// get blog markdown comment
+	let blogContentFile = `content/blog/${blog.id}.md`
+	try {
+		await fs.promises.access(blogContentFile)
+	} catch (e) {
+		throw new Error(`No content file found for blog: '${blog.id}'`)
+	}
+	blogContentFile = await readFilePromise(blogContentFile)
+
+	// parse HTML snippets
+	let specSnippet = await readFilePromise('snippets/blog-spec/spec.html')
+	specSnippet = specSnippet.toString()
+
+	// build HTML
+	let html = specSnippet
+
+	// build blog information
+	html = html.replace(/\{\{title\}\}/g, blog.title)
+	html = html.replace('{{author}}', blog.author)
+
+	// date calculation
+	let date = new Date(blog.published * 1000)
+	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+	const dayEndings = {
+		'st': [1,21],
+		'nd': [2,22],
+		'rd': [3,23],
+		'th': [1,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,26,27,28,29,30,31]
+	}
+	let ending = Object.keys(dayEndings).reduce((solution, ending) => {dayEndings[ending].includes(date.getDate()) ? ending : solution}, 'th')
+	let month = months[date.getMonth()]
+	let day = date.getDate()
+	let year = date.getFullYear()
+	// let hours = date.getHours()
+	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+	let displayDate = `${month} ${day}, ${year} at ${timestamp}`
+	html = html.replace('{{full-datetimestamp}}', displayDate)
+
+	// TODO: figure out updated time
+	html = html.replace('{{updated-full-datetimestamp}}', 'Updated on TBD at TBD')
+
+	// TODO: implement readtime based on blog post word count
+	// general formula: readtime = Math.ceil(words.length / 200)
+	html = html.replace('{{readtime}}', 'TBD min read')
+	html = html.replace('{{cover}}', blog.cover)
+	html = html.replace('{{subtitle}}', blog.subtitle)
+
+	// build blog content
+	let blogContent = await markdown.convert(blogContentFile.toString(), page)
+	html = html.replace('{{blog-content}}', blogContent)
 
 	return html
 }
@@ -298,17 +368,25 @@ const buildProjectSpec = async (projects, page) => {
 	}
 	project = project[0]
 
-	// read in snippets
-	let specSnippet = await readFilePromise('snippets/project/spec.html')
-	
-	let technologiesMetadataSnippet = await readFilePromise('snippets/project/metadata/technologies-project-metadata.html')
-	let githubStarsMetadataSnippet = await readFilePromise('snippets/project/metadata/github-stars-project-metadata.html')
-	let installMetadataSnippet = await readFilePromise('snippets/project/metadata/install-project-metadata.html')
-	let latestReleaseMetadataSnippet = await readFilePromise('snippets/project/metadata/latest-release-project-metadata.html')
-	let publishDateMetadataSnippet = await readFilePromise('snippets/project/metadata/publish-date-project-metadata.html')
-	let relatedProjectsMetadataSnippet = await readFilePromise('snippets/project/metadata/related-projects-project-metadata.html')
-	let relatedProjectLinkMetadataSnippet = await readFilePromise('snippets/project/metadata/related-project-link-project-metadata.html')
-	let statusMetadataSnippet = await readFilePromise('snippets/project/metadata/status-project-metadata.html')
+	// get project markdown content
+	let projectContentFile = `content/project/${name}.md`
+	try {
+		await fs.promises.access(projectContentFile)
+	} catch (e) {
+		throw new Error(`No content file found for project: '${name}'`)
+	}
+	projectContentFile = await readFilePromise(projectContentFile)
+
+	// parse HTML snippets
+	let specSnippet = await readFilePromise('snippets/project-spec/spec.html')
+	let technologiesMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/technologies-project-metadata.html')
+	let githubStarsMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/github-stars-project-metadata.html')
+	let installMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/install-project-metadata.html')
+	let latestReleaseMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/latest-release-project-metadata.html')
+	let publishDateMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/publish-date-project-metadata.html')
+	let relatedProjectsMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/related-projects-project-metadata.html')
+	let relatedProjectLinkMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/related-project-link-project-metadata.html')
+	let statusMetadataSnippet = await readFilePromise('snippets/project-spec/metadata/status-project-metadata.html')
 	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
@@ -391,8 +469,7 @@ const buildProjectSpec = async (projects, page) => {
     html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
 
 	// build project content
-	let projectMarkdown = await readFilePromise(`content/project/${name}.md`)
-	let projectContent = await markdown.convert(projectMarkdown.toString(), page)
+	let projectContent = await markdown.convert(projectContentFile.toString(), page)
 	html = html.replace('{{project-content}}', projectContent)
 
 	return html

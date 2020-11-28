@@ -1,0 +1,24 @@
+<div id="blog-title-container" class="animate__animated animated_faster animate__fadeInUp animate__delay-1s">
+	<h1 id="blog-title">{{title}}</h1>
+</div>
+<div id="blog-credits" class="animate__animated animated_faster animate__fadeInUp animate__delay-2s">
+	<div class="row justify-content-center">
+		<div id="blog-author-img-container">
+			<img id="blog-author-img" alt="author profile image" src="{{cdn:img/profile.jpg}}">
+		</div>
+		<div id="blog-credits-details">
+			<h5 id="blog-author">{{author}}</h5>
+			<p class="blog-metadata">Published on {{full-datetimestamp}}</p>
+			<p class="blog-metadata">{{updated-full-datetimestamp}}</p>
+			<p class="blog-metadata"><span class="color">{{readtime}}</span></p>
+		</div>
+	</div>
+</div>
+<div id="blog-cover-container" class="animate__animated animated_faster animate__fadeIn animate__delay-4s">
+	<img id="blog-cover" alt="{{title}} cover image" src="{{cover}}">
+</div>
+<div id="blog-content-container" class="blog-border animate__animated animated_faster animate__fadeIn animate__delay-4s">
+	<h5 id="blog-subtitle">{{subtitle}}</h5>
+    {{blog-content}}
+</div>
+<div class="spacer-small"></div>

@@ -94,7 +94,7 @@ class Blog {
 		author='',
 		status='',
 		tags=[],
-		content=[]
+		id=''
 	}) {
 		this.title = title
 		this.subtitle = subtitle
@@ -115,7 +115,7 @@ class Blog {
 		}
 		this.status = status
 		this.tags = tags
-		this.content = content
+		this.id = id
 	}
 }
 

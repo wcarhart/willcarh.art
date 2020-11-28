@@ -17,7 +17,7 @@ resources: Heroku
 author: Will Carhart
 status: stale
 tags:
-content: blog/introducing-willcarh.art.html
+id: introducing-willcarh.art
 
 title: The Power of Introspection in Python
 subtitle: getattr explained
@@ -31,7 +31,7 @@ resources: Python
 author: Will Carhart
 status: stale
 tags:
-content: blog/the-power-of-introspection-in-python.html
+id: the-power-of-introspection-in-python
 
 title: Automating Emails in Python
 subtitle: Why Gmail sometimes says no
@@ -47,7 +47,7 @@ resources: Gmail API
 author: Will Carhart
 status: stale
 tags:
-content: blog/automating-emails-in-python.html
+id: automating-emails-in-python
 
 title: Building Chatbots for GitHub
 subtitle: I am definitely a human beep boop
@@ -64,4 +64,4 @@ resources: Travis CI
 author: Will Carhart
 status: stale
 tags:
-content: blog/building-chatbots-for-github.html
+id: building-chatbots-for-github

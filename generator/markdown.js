@@ -6,18 +6,18 @@ const readFilePromise = util.promisify(fs.readFile)
 // convert markdown to HTML
 const convert = async (md, page) => {
 	// parse snippets
-	let aboutSubtitleSnippet = await readFilePromise('snippets/project/about-subtitle.html')
-	let aboutTextSnippet = await readFilePromise('snippets/project/about-text.html')
-	let startAboutTextSnippet = await readFilePromise('snippets/project/start-about-text.html')
-	let blockCodeSnippet = await readFilePromise('snippets/project/block-code.html')
-	let shoutoutSnippet = await readFilePromise('snippets/project/shoutout.html')
-	let ulSnippet = await readFilePromise('snippets/project/ul.html')
-	let liSnippet = await readFilePromise('snippets/project/li.html')
-	let imgSnippet = await readFilePromise('snippets/project/img.html')
+	let contentSubtitleSnippet = await readFilePromise('snippets/markdown/content-subtitle.html')
+	let contentTextSnippet = await readFilePromise('snippets/markdown/content-text.html')
+	let startContentTextSnippet = await readFilePromise('snippets/markdown/start-content-text.html')
+	let blockCodeSnippet = await readFilePromise('snippets/markdown/block-code.html')
+	let shoutoutSnippet = await readFilePromise('snippets/markdown/shoutout.html')
+	let ulSnippet = await readFilePromise('snippets/markdown/ul.html')
+	let liSnippet = await readFilePromise('snippets/markdown/li.html')
+	let imgSnippet = await readFilePromise('snippets/markdown/img.html')
 
-	aboutSubtitleSnippet = aboutSubtitleSnippet.toString()
-	aboutTextSnippet = aboutTextSnippet.toString()
-	startAboutTextSnippet = startAboutTextSnippet.toString()
+	contentSubtitleSnippet = contentSubtitleSnippet.toString()
+	contentTextSnippet = contentTextSnippet.toString()
+	startContentTextSnippet = startContentTextSnippet.toString()
 	blockCodeSnippet = blockCodeSnippet.toString()
 	shoutoutSnippet = shoutoutSnippet.toString()
 	ulSnippet = ulSnippet.toString()
@@ -44,17 +44,17 @@ const convert = async (md, page) => {
 		// there are two states - in a code block or not in a code block
 		if (!inCodeBlock) {
 
-			// lines that start with '#' are interpreted to be the start of the about text
+			// lines that start with '#' are interpreted to be the start of the content text and should only occur once
 			if (line.startsWith('# ')) {
 				let text = line.replace(/^# /, '')
 				let subcomponent = await buildSubcomponents(text)
-				html += startAboutTextSnippet.replace('{{text}}', subcomponent)
+				html += startContentTextSnippet.replace('{{text}}', subcomponent)
 
-			// lines that start with '###' are interpreted to be subtitles in the about text
+			// lines that start with '###' are interpreted to be subtitles in the content text
 			} else if (line.startsWith('### ')) {
 				let text = line.replace(/^### /, '')
 				let subcomponent = await buildSubcomponents(text)
-				html += aboutSubtitleSnippet.replace('{{subtitle}}', subcomponent)
+				html += contentSubtitleSnippet.replace('{{subtitle}}', subcomponent)
 
 			// lines that start with '>>' are interpreted to be shoutouts
 			} else if (line.startsWith('>> ')) {
@@ -96,10 +96,10 @@ const convert = async (md, page) => {
 				}
 				html += '<br>'
 
-			// all other lines are interpreted to be regular about text
+			// all other lines are interpreted to be regular content text
 			} else {
 				let subcomponent = await buildSubcomponents(line)
-				html += aboutTextSnippet.replace('{{text}}', subcomponent)
+				html += contentTextSnippet.replace('{{text}}', subcomponent)
 			}
 		} else {
 			// if we encounter another '```', close the code block
@@ -129,7 +129,7 @@ const convert = async (md, page) => {
 
 const buildSubcomponents = async (text) => {
 	// parse snippets
-	let inlineCodeSnippet = await readFilePromise('snippets/project/inline-code.html')
+	let inlineCodeSnippet = await readFilePromise('snippets/markdown/inline-code.html')
 	inlineCodeSnippet = inlineCodeSnippet.toString()
 
 	// build components

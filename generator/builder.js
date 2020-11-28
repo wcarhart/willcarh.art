@@ -334,9 +334,9 @@ const buildBlogSpec = async (blogs, page) => {
 	let month = months[date.getMonth()]
 	let day = date.getDate()
 	let year = date.getFullYear()
-	// let hours = date.getHours()
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	let displayDate = `${month} ${day}, ${year} at ${timestamp}`
+	let tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+	let displayDate = `${month} ${day}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
 	// TODO: figure out updated time
@@ -347,6 +347,8 @@ const buildBlogSpec = async (blogs, page) => {
 	html = html.replace('{{readtime}}', 'TBD min read')
 	html = html.replace('{{cover}}', blog.cover)
 	html = html.replace('{{subtitle}}', blog.subtitle)
+	html = html.replace('{{cover-credit}}', blog.coverCredit)
+	html = html.replace('{{cover-author}}', blog.coverAuthor)
 
 	// build blog content
 	let blogContent = await markdown.convert(blogContentFile.toString(), page)

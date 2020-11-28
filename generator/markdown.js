@@ -98,8 +98,14 @@ const convert = async (md, page) => {
 
 			// all other lines are interpreted to be regular content text
 			} else {
-				let subcomponent = await buildSubcomponents(line)
-				html += contentTextSnippet.replace('{{text}}', subcomponent)
+				if (inList) {
+					html += ulSnippet.replace('{{list-items}}', listItems.map(li => liSnippet.replace('{{text}}', li)).join(''))
+					listItems = []
+					inList = false
+				} else {
+					let subcomponent = await buildSubcomponents(line)
+					html += contentTextSnippet.replace('{{text}}', subcomponent)
+				}
 			}
 		} else {
 			// if we encounter another '```', close the code block

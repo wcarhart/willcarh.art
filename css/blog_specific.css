@@ -3,6 +3,7 @@
 	outline: solid 0.25rem;
 }*/
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
 :root {
@@ -102,10 +103,10 @@ h5 {
 	margin-bottom: 0rem;
 	font-size: 0.8rem;
 	color: var(--subtitle);
+	font-family: 'Lato', sans-serif;
 }
 
 #blog-cover {
-	/*max-height: 15rem;*/
 	height: 100%;
 	width: 100%;
 	background-size: cover;
@@ -133,4 +134,18 @@ h5 {
 	padding: 1rem;
 	border: solid 0.2rem var(--text);
 	border-radius: 1rem;
+}
+
+#cover-credit {
+	padding-top: 1rem;
+	color: var(--subtitle) !important;
+}
+
+/* overwrite markdown CSS for blogs */
+.content-subtitle {
+	font-size: 3rem !important;
+}
+
+.content-text {
+	font-size: 1.2rem !important;
 }

@@ -5,7 +5,7 @@ cover: {{cdn:img/blog/introducing-willcarh.art/cover.png}}
 coverAuthor: HoHoHO
 coverCredit: https://steamcommunity.com/id/themell
 published: 1555474320
-updated:
+updated: 1606613597
 resources: Python
 resources: HTML
 resources: CSS
@@ -26,7 +26,7 @@ cover: {{cdn:img/blog/the-power-of-introspection-in-python/cover.jpg}}
 coverAuthor: AaronOlive
 coverCredit: https://www.deviantart.com/aaronolive
 published: 1555516260
-updated:
+updated: 1606613597
 resources: Python
 author: Will Carhart
 status: stale
@@ -40,7 +40,7 @@ cover: {{cdn:img/blog/automating-emails-in-python/cover.png}}
 coverAuthor: Campo Santo
 coverCredit: https://blog.camposanto.com/post/138965082204/firewatch-launch-wallpaper-when-we-redid-the
 published: 1564465680
-updated:
+updated: 1606613597
 resources: Python
 resources: Bash
 resources: Gmail API
@@ -56,7 +56,7 @@ cover: {{cdn:img/blog/building-chatbots-for-github/cover.jpg}}
 coverAuthor: Jason Scheier
 coverCredit: https://www.artstation.com/d3cap
 published: 1566197160
-updated:
+updated: 1606613597
 resources: Python
 resources: Bash
 resources: GitHub API

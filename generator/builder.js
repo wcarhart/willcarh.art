@@ -330,17 +330,25 @@ const buildBlogSpec = async (blogs, page) => {
 		'rd': [3,23],
 		'th': [1,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,26,27,28,29,30,31]
 	}
-	let ending = Object.keys(dayEndings).reduce((solution, ending) => {dayEndings[ending].includes(date.getDate()) ? ending : solution}, 'th')
 	let month = months[date.getMonth()]
 	let day = date.getDate()
+	let ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 	let year = date.getFullYear()
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 	let tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
-	let displayDate = `${month} ${day}, ${year} at ${timestamp} ${tz}`
+	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
 	// TODO: figure out updated time
-	html = html.replace('{{updated-full-datetimestamp}}', 'Updated on TBD at TBD')
+	date = new Date(blog.updated * 1000)
+	month = months[date.getMonth()]
+	day = date.getDate()
+	ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
+	year = date.getFullYear()
+	timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+	tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+	displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
+	html = html.replace('{{updated-full-datetimestamp}}', displayDate)
 
 	// TODO: implement readtime based on blog post word count
 	// general formula: readtime = Math.ceil(words.length / 200)

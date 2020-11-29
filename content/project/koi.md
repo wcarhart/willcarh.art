@@ -1,7 +1,7 @@
 # Create powerful CLI applications with ease. All in Bash.
 
-### Easily add command line arguments for Bash functions!
-Inspired by Python's argparse.
+### Easily add command line arguments for Bash functions
+Inspired by Python's [argparse](https://docs.python.org/3/library/argparse.html).
 ```
 function sendrequest {
     __addarg "-h" "--help" "help" "optional" "" "Send an HTTP request"

@@ -1,5 +1,4 @@
-# Solve any Sudoku board instantly!
-
+# Solve any Sudoku board instantly.
 >> Try it out! | Try out doku yourself on [the demo page]({{src:demo_index.html}})
 
 ### Solve puzzles instantly
@@ -7,10 +6,10 @@ Doku is an efficient Sudoku board solver, all from the command line.
 
 ### How it works
 Doku uses dynamic programming and memoization to solve Sudoku boards. Essentially, doku strategically makes moves on the board and simulates the effect they will have. In order not to be overwhelmed with the immense number of possible board states, doku utilizes memoization to create a highly-pruned tree of board states and then performs a depth-first search to determine the solution.
+Doku was my first experiment with [Deno](https://deno.land), a simple, modern, and secure runtime for JavaScript and TypeScript that uses V8 and is built in Rust. Deno is a project by [Ryan Dahl](https://en.wikipedia.org/wiki/Ryan_Dahl), the original author of [Node.js](https://nodejs.org).
 
 ### How to use it
 You can specify input via a JSON file or a more human-readable text format. For some examples, see the [puzzles/](https://github.com/wcarhart/doku/tree/master/puzzles) folder in doku's repository.
-
 For example, here is one possible input puzzle:
 ```
 * * * | 5 * 6 | * * * 
@@ -25,12 +24,10 @@ For example, here is one possible input puzzle:
 * * 7 | * * * | 9 * * 
 * * * | 9 * 5 | * * *
 ```
-
 If this file was saved in `puzzle.txt`, you can solve it with:
 ```
 doku puzzle.txt
 ```
-
 Which would print:
 ```
 2 8 1 | 5 4 6 | 7 3 9 

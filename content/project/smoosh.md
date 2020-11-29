@@ -1,5 +1,4 @@
 # The modern web browsing experience has become encumbered with cookie notices, newsletter signups, and browser notifications. Smoosh allows you to read _just the important bits_ from most webpages by using a smart summarizing algorithm.
-
 >> Try it out! | Try out smoosh yourself on [the demo page]({{src:demo_index.html}}).
 
 ### What it is
@@ -13,12 +12,10 @@ You can use smoosh on a webpage.
 ```
 smoosh 'https://www.cnn.com/2020/10/27/investing/amd-xilinx-purchase/index.html'
 ```
-
 Or, on a local file.
 ```
 smoosh my_articles/spacex.txt
 ```
-
 Output shows the summary and some metrics, which you can silence with the `--quiet` flag or make verbose with the `--verbose` flag.
 ```
 It will be an operational monument to Elon Musk's vision: a towering SpaceX launch control center,

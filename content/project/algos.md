@@ -6,7 +6,7 @@ When I performed my last job search, I started by simply reimplementing all of t
 ### Contents
 Algos contains inplementations for tree data structures (BST, AVL, Trie, Bubble Tree, etc.), linked list data structures (queue, stack, Towers of Hanoi, etc.), sorting algorithms (mergesort, quicksort, heapsort, etc.), and much more. To see everything, check out [the repo](https://github.com/wcarhart/algos).
 
-### A new kind of tree: Bubble Tree
+### A new data structure: Bubble Tree
 In addition to standard tree data structures, I created a new data structure called _Bubble Tree_. Bubble Tree is a tree structure that bubbles up common values and prunes congruent subtrees. It is used for storing key value pairs, where keys are Linux paths and values are any data structure that is comparable.
 Build a Bubble Tree:
 ```

@@ -1,4 +1,4 @@
-# Play Othello on the command line
+# Play Othello on the command line.
 
 ### Simple concept, complex theory
 Othello is a simple game. Players take turns placing disks on a 8x8 grid with their assigned color, either black or white. If any of a player's disks are _sandwiched_ between their opponent's disks, they are flipped colors. Although the premise is simple, the game's theory is quite complex, because often the winner of the game is only decided in the last few moves.
@@ -8,11 +8,10 @@ Othello can be played with either two human players or one human and one AI play
 Othello's AI adversaries (_Euclid_, _Lovelace_, _Dijkstra_, and _Turing_), which are named after famous computer scientists, use knowledge of the game's theory to try to win the game. The most challenging of the AI players, Turing, uses concepts like mobility to dominate most players.
 
 ### Playing the game
-Start a new game with:
+Start a new game with `othello.py`.
 ```
 python othello.py
 ```
-Which will draw a board on the terminal:
 ```
 Welcome to Othello!
 Player 1 vs. Player 2
@@ -28,7 +27,7 @@ G - - - - - - - -
 H - - - - - - - - 
 Player 1, where do you want to move? 
 ```
-The available commands in-game can be shown by typing `help`:
+The available commands can be shown by typing `help`.
 ```
 ====Command list====
  B6     -> attempts to place new tile on location B6
@@ -40,7 +39,7 @@ The available commands in-game can be shown by typing `help`:
  color  -> changes the current player's color
  exit   -> ends the game (you can also use 'done')
 ```
-Othello's coolest feature, its AI players, can be played by specifying them by name:
+Othello's coolest feature, its AI players, can be played by specifying them by name.
 ```
 python othello.py --adversary Turing
 ```

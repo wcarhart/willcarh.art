@@ -1,5 +1,4 @@
 # Your liaison between repository secrets and the great beyond.
-=Locksmith acts as an interface between secrets and the Python code using them.
 
 ### A simple use case
 Consider the following scenario: Your cool new app requires a slick, unique API key to run. Perhaps your framework requires you to put this API key in a `manifest.json` or similar configuration file. However, your manifest file(s) need to be checked into GitHub, thus exposing your precious API key. Locksmith provides a layer of security to prevent you from having to type out your secrets in plaintext anywhere in your repository.

@@ -15,7 +15,7 @@ Depsite the primitive graphics, the game still had plenty of cool features:
 * intelligent keypress detection
 * working, but primitive, physics engine
 
-### Demo
+### A quick look
 ![kartracer vehicle demo](https://github.com/wcarhart/kartracer/blob/master/vehiclesdemo.gif?raw=true)<Kartracer has 3 different vehicle models.>
 
 ![kartracer track demo](https://github.com/wcarhart/kartracer/blob/master/trackdemo.gif?raw=true)<Kartracer features a full track with lap timing and minimap functionality.>

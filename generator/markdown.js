@@ -229,14 +229,12 @@ const buildTable = async (headers, configs, rows, page) => {
 	let thSnippet = await readFilePromise('snippets/markdown/table/th.html')
 	let tbodySnippet = await readFilePromise('snippets/markdown/table/tbody.html')
 	let tdSnippet = await readFilePromise('snippets/markdown/table/td.html')
-	let captionSnippet = await readFilePromise('snippets/markdown/table/caption.html')
 	tableSnippet = tableSnippet.toString()
 	theadSnippet = theadSnippet.toString()
 	trSnippet = trSnippet.toString()
 	thSnippet = thSnippet.toString()
 	tbodySnippet = tbodySnippet.toString()
 	tdSnippet = tdSnippet.toString()
-	captionSnippet = captionSnippet.toString()
 
 	// verify table is sized properly
 	//  - all data rows must have same number of cols

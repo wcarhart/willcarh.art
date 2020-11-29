@@ -8,21 +8,25 @@ const convert = async (md, page) => {
 	// parse snippets
 	let contentSubtitleSnippet = await readFilePromise('snippets/markdown/content-subtitle.html')
 	let contentTextSnippet = await readFilePromise('snippets/markdown/content-text.html')
+	let centeredTextSnippet = await readFilePromise('snippets/markdown/centered-text.html')
 	let startContentTextSnippet = await readFilePromise('snippets/markdown/start-content-text.html')
 	let blockCodeSnippet = await readFilePromise('snippets/markdown/block-code.html')
 	let shoutoutSnippet = await readFilePromise('snippets/markdown/shoutout.html')
 	let ulSnippet = await readFilePromise('snippets/markdown/ul.html')
 	let liSnippet = await readFilePromise('snippets/markdown/li.html')
 	let imgSnippet = await readFilePromise('snippets/markdown/img.html')
+	let imgSubtitleSnippet = await readFilePromise('snippets/markdown/img-subtitle.html')
 
 	contentSubtitleSnippet = contentSubtitleSnippet.toString()
 	contentTextSnippet = contentTextSnippet.toString()
+	centeredTextSnippet = centeredTextSnippet.toString()
 	startContentTextSnippet = startContentTextSnippet.toString()
 	blockCodeSnippet = blockCodeSnippet.toString()
 	shoutoutSnippet = shoutoutSnippet.toString()
 	ulSnippet = ulSnippet.toString()
 	liSnippet = liSnippet.toString()
 	imgSnippet = imgSnippet.toString()
+	imgSubtitleSnippet = imgSubtitleSnippet.toString()
 
 	// convert MD to HTML
 	let lines = md.split('\n')
@@ -76,8 +80,20 @@ const convert = async (md, page) => {
 			} else if (line.startsWith('![')) {
 				let imgAlt = line.replace(/^!\[/, '').replace(/\].*$/, '')
 				let imgSrc = line.replace(/^.*\(/, '').replace(/\).*$/, '')
-				let imgSubtitle = line.replace(/^.*</, '').replace(/>$/, '')
-				html += imgSnippet.replace('{{alt}}', imgAlt).replace('{{src}}', imgSrc).replace('{{subtitle}}', imgSubtitle)
+				let remaining = line.replace(/^!\[.*\]\(.*\)/, '')
+				let subtitleText = ''
+				console.log(remaining)
+				if (remaining[0] === '<' && remaining[remaining.length-1] === '>') {
+					subtitleText = line.replace(/^.*</, '').replace(/>$/, '')
+				}
+				let imgSubtitle = imgSubtitleSnippet.replace('{{subtitle}}', subtitleText)
+				html += imgSnippet.replace('{{alt}}', imgAlt).replace('{{src}}', imgSrc).replace('{{img-subtitle}}', imgSubtitle)
+
+			// lines that start with '=' are interpreted to be centered
+			} else if (line.startsWith('=')) {
+				let text = line.replace(/^=/, '')
+				let subcomponent = await buildSubcomponents(text)
+				html += centeredTextSnippet.replace('{{text}}', subcomponent)
 
 			// lines that are '```' are interpreted to be the start or end of a code block
 			} else if (line === '```') {
@@ -148,7 +164,7 @@ const buildSubcomponents = async (text) => {
 		let anchor = match.replace(/^\[/, '').replace(/\].*$/, '')
 		let href = match.replace(/^.*\(/, '').replace(/\)$/, '')
 		let html = ''
-		if (/\{\{src:.*\}\}/.exec(match)) {
+		if (/\{\{src:.*\}\}/.exec(match) || /\{\{sys:home\}\}/.exec(match)) {
 			html = `<a class="fancy-link" href="${href}">${anchor}</a>`
 		} else {
 			html = `<a class="fancy-link" href="${href}" target="_blank">${anchor}</a>`

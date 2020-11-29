@@ -128,4 +128,4 @@ I did all of the above in my latest personal project, [Soliloquy]({{src:project/
 And there you have it! This blog post barely scratches the surface of what automation is possible via Travis CI and the GitHub API. What's even more exciting is the [introduction of CI/CD in GitHub Actions](https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/), which was announced in August 2019. Who knows, maybe this tutorial will be deprecated within the near future due to GitHub Actions!
 >> Hey there! | If you've made a cool software project using some of the lessons from this blog post, I'd love for you to submit it to [Soliloquy](https://www.soliloquy.dev/)!
 
-🦉
+=🦉

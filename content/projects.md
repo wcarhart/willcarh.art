@@ -446,6 +446,7 @@ technologies: Lyft API
 technologies: Uber API
 technologies: Firebase
 technologies: CocoaPods
+technologies: Balsamiq
 img: {{cdn:img/logos/cheers.png}}
 repo: https://github.com/wcarhart/cheers
 link:

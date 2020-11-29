@@ -16,6 +16,7 @@ const convert = async (md, page) => {
 	let liSnippet = await readFilePromise('snippets/markdown/li.html')
 	let imgSnippet = await readFilePromise('snippets/markdown/img.html')
 	let imgSubtitleSnippet = await readFilePromise('snippets/markdown/img-subtitle.html')
+	let youtubeVideoSnippet = await readFilePromise('snippets/markdown/youtube.html')
 
 	contentSubtitleSnippet = contentSubtitleSnippet.toString()
 	contentTextSnippet = contentTextSnippet.toString()
@@ -27,6 +28,7 @@ const convert = async (md, page) => {
 	liSnippet = liSnippet.toString()
 	imgSnippet = imgSnippet.toString()
 	imgSubtitleSnippet = imgSubtitleSnippet.toString()
+	youtubeVideoSnippet = youtubeVideoSnippet.toString()
 
 	// convert MD to HTML
 	let lines = md.split('\n')
@@ -93,6 +95,11 @@ const convert = async (md, page) => {
 				}
 				let imgSubtitle = imgSubtitleSnippet.replace('{{subtitle}}', subtitleText)
 				html += imgSnippet.replace('{{alt}}', imgAlt).replace('{{src}}', imgSrc).replace('{{img-subtitle}}', imgSubtitle)
+
+			// lines that start with '~' are interpreted to be YouTube vides
+			} else if (line.startsWith('~(')) {
+				let videoId = line.replace(/^~\(/, '').replace(/\)$/, '')
+				html += youtubeVideoSnippet.replace('\{\{video-id\}\}', videoId)
 
 			// lines that start with '=' are interpreted to be centered
 			} else if (line.startsWith('=')) {

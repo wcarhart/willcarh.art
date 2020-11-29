@@ -133,6 +133,7 @@ const convert = async (md, page) => {
 	return html
 }
 
+// build markdown subcomponents for each line
 const buildSubcomponents = async (text) => {
 	// parse snippets
 	let inlineCodeSnippet = await readFilePromise('snippets/markdown/inline-code.html')

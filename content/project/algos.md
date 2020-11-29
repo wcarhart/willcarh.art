@@ -8,7 +8,6 @@ Algos contains inplementations for tree data structures (BST, AVL, Trie, Bubble 
 
 ### A new kind of tree: Bubble Tree
 In addition to standard tree data structures, I created a new data structure called _Bubble Tree_. Bubble Tree is a tree structure that bubbles up common values and prunes congruent subtrees. It is used for storing key value pairs, where keys are Linux paths and values are any data structure that is comparable.
-
 Build a Bubble Tree:
 ```
 >>> from trees import BubbleTreeNode

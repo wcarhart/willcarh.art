@@ -250,7 +250,7 @@ tags: desktop
 tags: cli
 
 name: birdhouse
-blurb: 🐦 Passive tweet watcher from the command line
+blurb: Streaming tweets to the command line
 about: Birdhouse is a CLI for interacting with tweets. It can stream tweets bash on author and hashtag and exposes and easy-to-use interface for interacting with Twitter from the command line.
 languages: Bash
 technologies: Twitter API

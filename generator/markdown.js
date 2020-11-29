@@ -130,8 +130,8 @@ const convert = async (md, page) => {
 				html += blockCodeSnippet.replace('{{code}}', codeblock.join('<br>'))
 				codeblock = []
 			} else {
-
 				// append to the code block
+				// TODO: add colors via color.css and span tags (especially for othello)
 				codeblock.push(line)
 			}
 		}

@@ -31,22 +31,28 @@ const convert = async (md, page) => {
 	// convert MD to HTML
 	let lines = md.split('\n')
 	let html = ''
+
 	let inCodeBlock = false
 	let codeblock = []
-
 	let inList = false
 	let listItems = []
-	for (let line of lines) {
+	let inTable = false
+	let tableHeaders = []
+	let tableConfigs = []
+	let tableRows = []
 
-		// TODO: add support for tables
+	for (let [index, line] of lines.entries()) {
+
 		// TODO: add support for ol
 		// TODO: add support for nested lists
 		// TODO: add support for block quotes (lines starting with '>')
 		// TODO: add support for syntax highlighting with ```language and class="language-..." (see https://github.com/highlightjs/highlight.js/)
 
 		// we'll need to keep track of the state of the markdown
-		// there are two states - in a code block or not in a code block
-		if (!inCodeBlock) {
+		// there are three states - in code block, in table, and normal
+
+		// normal state
+		if (inCodeBlock === false && inTable === false) {
 
 			// lines that start with '#' are interpreted to be the start of the content text and should only occur once
 			if (line.startsWith('# ')) {
@@ -94,6 +100,24 @@ const convert = async (md, page) => {
 				let subcomponent = await buildSubcomponents(text)
 				html += centeredTextSnippet.replace('{{text}}', subcomponent)
 
+			// lines that start with '?' are interpretted to be comments and should not be rendered as HTML
+			} else if (line.startsWith('?')) {
+				continue
+
+			// lines that start with '|' are interpretted to be table contents
+			} else if (line.startsWith('|')) {
+				inTable = true
+				let tableComponents = line.split('|')
+				await validateTableRow(line, index, page)
+				tableComponents = tableComponents.filter(tc => tc !== '')
+				let isConfig = tableComponents.reduce((result, tc) => { return Boolean(/^:?-+:?$/.exec(tc.trim())) && result }, true)
+				if (isConfig === false) {
+					tableHeaders = tableHeaders.concat(tableComponents.map(tc => tc.trim()))
+				} else {
+					tableConfigs = tableConfigs.concat(tableComponents.map(tc => tc.trim().replace(/-+/, '-')))
+					await validateTableConfigs(tableConfigs, index, page)
+				}
+
 			// lines that are '```' are interpreted to be the start or end of a code block
 			} else if (line === '```') {
 				inCodeBlock = true
@@ -122,7 +146,34 @@ const convert = async (md, page) => {
 					html += contentTextSnippet.replace('{{text}}', subcomponent)
 				}
 			}
-		} else {
+
+		// in table state
+		} else if (inTable === true) {
+			// table ends when we encounter a blank line
+			if (line === '') {
+				inTable = false
+				let tableHtml = await buildTable(tableHeaders, tableConfigs, tableRows, page)
+				html += tableHtml
+				tableHeaders = []
+				tableConfigs = []
+				tableRows = []
+			} else {
+				if (!line.startsWith('|')) {
+					throw new Error(`Invalid table row (line ${index}): did you forget to end the table with an empty newline?`)
+				}
+				let tableComponents = line.split('|')
+				await validateTableRow(line, index, page)
+				tableComponents = tableComponents.filter(tc => tc !== '')
+				if (tableConfigs.length === 0) {
+					tableConfigs = tableConfigs.concat(tableComponents.map(tc => tc.trim().replace(/-+/, '-')))
+					await validateTableConfigs(tableConfigs, index, page)
+				} else {
+					tableRows.push(await Promise.all(tableComponents.map(async (tc) => { return await buildSubcomponents(tc) })))
+				}
+			}
+
+		// in code block state
+		} else if (inCodeBlock === true) {
 			// if we encounter another '```', close the code block
 			if (line === '```') {
 				inCodeBlock = false
@@ -134,6 +185,9 @@ const convert = async (md, page) => {
 				// TODO: add colors via color.css and span tags (especially for othello)
 				codeblock.push(line)
 			}
+
+		} else {
+			throw new Error(`Ambiguous markdown state: in table and in code block at the same time`)
 		}
 	}
 
@@ -144,13 +198,144 @@ const convert = async (md, page) => {
 	if (inList) {
 		throw new Error(`Invalid markdown: unclosed list in '${page}'`)
 	}
+	if (inTable) {
+		throw new Error(`Invalid markdown: unclosed table in '${page}', did you forget to end the table with an empty newline?`)
+	}
 
 	return html
 }
 
+// make sure tables start and end with '|'
+const validateTableRow = async (row, lineNumber, page) => {
+	if (row[0] !== '|' || row[row.length-1] !== '|') {
+		throw new Error(`Invalid table row in '${page}' (line ${lineNumber}): line does not start and end with '|'`)
+	}
+}
+
+// make sure table configs are valid
+const validateTableConfigs = async (configs, lineNumber, page) => {
+	let isConfig = configs.reduce((result, tc) => { return Boolean(/^:?-+:?$/.exec(tc.trim())) && result }, true)
+	if (isConfig === false) {
+		throw new Error(`Invalid table row in '${page}' (line ${lineNumber}): invalid table configuration`)
+	}
+}
+
+// build table HTML
+const buildTable = async (headers, configs, rows, page) => {
+	// parse HTML snippets
+	let tableSnippet = await readFilePromise('snippets/markdown/table/table.html')
+	let theadSnippet = await readFilePromise('snippets/markdown/table/thead.html')
+	let trSnippet = await readFilePromise('snippets/markdown/table/tr.html')
+	let thSnippet = await readFilePromise('snippets/markdown/table/th.html')
+	let tbodySnippet = await readFilePromise('snippets/markdown/table/tbody.html')
+	let tdSnippet = await readFilePromise('snippets/markdown/table/td.html')
+	let captionSnippet = await readFilePromise('snippets/markdown/table/caption.html')
+	tableSnippet = tableSnippet.toString()
+	theadSnippet = theadSnippet.toString()
+	trSnippet = trSnippet.toString()
+	thSnippet = thSnippet.toString()
+	tbodySnippet = tbodySnippet.toString()
+	tdSnippet = tdSnippet.toString()
+	captionSnippet = captionSnippet.toString()
+
+	// verify table is sized properly
+	//  - all data rows must have same number of cols
+	//  - configs and all rows must have same number of cols
+	//  - if table has headers, headers, configs, and all rows must have same number of cols
+	let rowColumnCounts = rows.reduce((result, row) => { return result.includes(row.length) ? result : result.concat(row.length) }, [])
+	if (rowColumnCounts.length !== 1) {
+		throw new Error(`Invalid markdown: invalid table in '${page}', unequal columns found in table data`)
+	}
+	rowColumnCounts = rowColumnCounts[0]
+	if (headers.length !== 0) {
+		if (headers.length !== configs.length && configs.length !== rowColumnCounts) {
+			throw new Error(`Invalid markdown: invalid table in '${page}', unequal table headers, configurations, and rows`)
+		}
+	} else {
+		if (configs.length !== rowColumnCounts) {
+			throw new Error(`Invalid markdown: invalid table in '${page}', unequal table configurations and rows`)
+		}
+	}
+
+	// build html templates
+	let table = tableSnippet
+	let headerRow = ''
+	let bodyRows = []
+
+	// determine column alignments
+	let columnAligns = configs.map(col => {
+		switch(col) {
+			case '-':
+			case ':-':
+				return 'left'
+			case ':-:':
+				return 'center'
+			case '-:':
+				return 'right'
+		}
+	})
+	
+	// compute colspan for each header
+	let colspan = 1
+	let previous = null
+	let headerMap = []
+	for (let [index, header] of headers.entries()) {
+		if (previous === null) {
+			previous = header
+			continue
+		}
+		if (previous === header) {
+			colspan += 1
+		} else {
+			headerMap.push([previous, colspan])
+			previous = header
+			colspan = 1
+		}
+		if (index === headers.length - 1) {
+			headerMap.push([previous, colspan])
+		}
+	}
+
+	// build optional header row
+	headerRow = trSnippet.replace(
+		'{{row}}',
+		headerMap.map((elements, i) => {
+			return thSnippet
+				.replace('{{header-align}}', columnAligns[i])
+				.replace('{{colspan}}', elements[1])
+				.replace('{{header}}', elements[0])
+		}).join('\n')
+	)
+
+	// build body rows
+	for (let [index, row] of rows.entries()) {
+		// append row to body
+		bodyRows.push(trSnippet.replace(
+			'{{row}}',
+			row.map((col, i) => {
+				return tdSnippet
+					.replace('{{data-align}}', columnAligns[i])
+					.replace('{{data}}', col)
+			}).join('\n')
+		))
+	}
+
+	// construct table
+	table = table
+		.replace(
+			'{{table-headers}}',
+			theadSnippet.replace('{{headers}}', headerRow)
+		)
+		.replace(
+			'{{table-rows}}',
+			tbodySnippet.replace('{{body}}', bodyRows.join('\n'))
+		)
+	return table
+}
+
 // build markdown subcomponents for each line
 const buildSubcomponents = async (text) => {
-	// parse snippets
+	// parse HTML snippets
 	let inlineCodeSnippet = await readFilePromise('snippets/markdown/inline-code.html')
 	inlineCodeSnippet = inlineCodeSnippet.toString()
 

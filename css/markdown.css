@@ -85,3 +85,29 @@
 	font-style: italic;
 	color: var(--subtitle);
 }
+
+.table-align-left {
+	text-align: left
+}
+
+.table-align-center {
+	text-align: center
+}
+
+.table-align-right {
+	text-align: right
+}
+
+th {
+	padding: 0 0.5rem;
+}
+
+td {
+	padding: 0 0.5rem;
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+}
+
+/*table {
+	margin: 0 auto;
+}*/

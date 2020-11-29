@@ -286,7 +286,7 @@ visibility: normal
 tags: cli
 
 name: chiller
-blurb: 🍺 Helpful GitHub repository and Homebrew tools
+blurb: Helpful GitHub repository and Homebrew tools 🍺
 about: Chiller is a command line tool for managing GitHub releases and Homebrew formulae. It makes it easy to bump Homebrew formulae when a newer version of a repository is published.
 languages: Bash
 technologies: GitHub API
@@ -327,7 +327,7 @@ visibility: featured
 tags: web
 
 name: aerogram
-blurb: Serverless chat via ssh/scp
+blurb: Serverless chat via ssh and scp
 about: Aerogram is a CLI chat application based on ssh. It allows you to chat with other users on remote machines without setting up an intermediate server or any other infrastructure.
 languages: Bash
 technologies: ssh

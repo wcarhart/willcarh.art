@@ -72,3 +72,7 @@ body {
 	color: inherit;
 	cursor: default;
 }
+
+.hidden-tidbit {
+	display: none;
+}

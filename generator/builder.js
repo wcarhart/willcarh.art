@@ -226,9 +226,13 @@ const buildBlogLatest = async (blogs) => {
 	html = html.replace('{{blurb}}', blog.blurb)
 	html = html.replace('{{author}}', blog.author)
 	html = html.replace('{{published}}', displayDate)
-	// TODO: implement readtime based on blog post word count
-	// general formula: readtime = Math.ceil(words.length / 200)
-	html = html.replace('{{readtime}}', 'TBD min read')
+
+	// calculate read time
+	let blogMarkdownContent = await readFilePromise(`content/blog/${blog.id}.md`)
+	blogMarkdownContent = blogMarkdownContent.toString()
+	let wordCount = blogMarkdownContent.split(' ').length
+	let readTime = Math.ceil(wordCount / 200)
+	html = html.replace('{{readtime}}', `${readTime} min read`)
 
 	return html
 }
@@ -273,12 +277,18 @@ const buildBlogAll = async (blogs) => {
 			blogHtml = blogHtml.replace('{{index}}', index)
 			blogHtml = blogHtml.replace('{{row-index}}', rowIndex)
 			blogHtml = blogHtml.replace('{{author}}', sortedBlogs[index].author)
+
+			// calculate date
 			let date = new Date(sortedBlogs[index].published * 1000)
 			let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 			blogHtml = blogHtml.replace('{{published}}', displayDate)
-			// TODO: implement readtime based on blog post word count
-			// general formula: readtime = Math.ceil(words.length / 200)
-			blogHtml = blogHtml.replace('{{readtime}}', 'TBD min read')
+			
+			// calculate read time
+			let blogMarkdownContent = await readFilePromise(`content/blog/${sortedBlogs[index].id}.md`)
+			blogMarkdownContent = blogMarkdownContent.toString()
+			let wordCount = blogMarkdownContent.split(' ').length
+			let readTime = Math.ceil(wordCount / 200)
+			blogHtml = blogHtml.replace('{{readtime}}', `${readTime} min read`)
 
 			rowHtml = rowHtml.replace('{{blog-regular}}', blogHtml)
 		}
@@ -339,7 +349,6 @@ const buildBlogSpec = async (blogs, page) => {
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
-	// TODO: figure out updated time
 	date = new Date(blog.updated * 1000)
 	month = months[date.getMonth()]
 	day = date.getDate()
@@ -350,9 +359,13 @@ const buildBlogSpec = async (blogs, page) => {
 	displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{updated-full-datetimestamp}}', displayDate)
 
-	// TODO: implement readtime based on blog post word count
-	// general formula: readtime = Math.ceil(words.length / 200)
-	html = html.replace('{{readtime}}', 'TBD min read')
+	// calculate read time
+	let blogMarkdownContent = await readFilePromise(`content/blog/${blog.id}.md`)
+	blogMarkdownContent = blogMarkdownContent.toString()
+	let wordCount = blogMarkdownContent.split(' ').length
+	let readTime = Math.ceil(wordCount / 200)
+	html = html.replace('{{word-count}}', wordCount)
+	html = html.replace(/\{\{readtime\}\}/g, `${readTime} min read`)
 	html = html.replace('{{cover}}', blog.cover)
 	html = html.replace('{{subtitle}}', blog.subtitle)
 	html = html.replace('{{cover-credit}}', blog.coverCredit)

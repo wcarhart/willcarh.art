@@ -382,7 +382,7 @@ visibility: less
 tags: cli
 
 name: cheqit
-blurb: URL status checker
+blurb: Website status checker
 about: Cheqit is a simple CLI tool for monitoring the status of websites. It was inspired by Downdetector.
 languages: Python
 technologies:

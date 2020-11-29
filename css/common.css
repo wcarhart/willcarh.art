@@ -61,3 +61,14 @@ body {
 .spacer-small {
 	height: 2rem;
 }
+
+.silent-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.silent-link:hover {
+	text-decoration: none;
+	color: inherit;
+	cursor: default;
+}

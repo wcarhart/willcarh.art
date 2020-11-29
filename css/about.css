@@ -3,6 +3,8 @@
 	outline: solid 0.25rem;
 }*/
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
 :root {
 	--background: #ecf0f1;
 	--detail: #bdc3c7;
@@ -55,6 +57,12 @@ h2 {
 .content-text {
 	color: var(--subtitle);
 	font-size: 1.2rem;
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+}
+
+.fancy-link {
+	font-weight: 400;
 }
 
 #content-body {
@@ -189,6 +197,8 @@ h2 {
 
 .exp-tidbit {
 	color: var(--subtitle) !important;
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
 }
 
 .button-container {

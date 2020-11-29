@@ -3,6 +3,7 @@
 	outline: solid 0.25rem;
 }*/
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
 :root {
@@ -160,10 +161,12 @@ hr {
 
 #blog-blurb-latest {
 	font-size: 1.3rem !important;
+	font-family: 'Lato', sans-serif;
 }
 
 .blog-blurb-all {
 	font-size: 1.1rem !important;
+	font-family: 'Lato', sans-serif;
 }
 
 #blog-author-img-latest-container {

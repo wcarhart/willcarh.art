@@ -1,9 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+.bold-text {
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+}
+
+.fancy-link {
+	font-weight: 400;
+}
 
 .content-text {
 	color: var(--subtitle);
 	font-size: 1.1rem;
 	font-family: 'Lato', sans-serif;
+	font-weight: 300;
 }
 
 .content-subtitle {
@@ -43,12 +53,15 @@
 	font-size: 1.3rem;
 	padding-bottom: 0rem;
 	margin-bottom: 0rem;
+	font-family: 'EksellDisplayMedium' !important;
 }
 
 .shoutout-text {
 	color: var(--subtitle);
 	font-size: 1.2rem;
 	margin: 0rem;
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
 }
 
 .content-img {

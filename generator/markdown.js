@@ -205,6 +205,12 @@ const buildSubcomponents = async (text) => {
 		let italics = cleansedMatch.replace(/^_/, '').replace(/_$/, '')
 		subcomponent = subcomponent.replace(match, `${startChar}<i>${italics}</i>`)
 	}
+	// whole string
+	while (/^_.+?_$/.exec(subcomponent)) {
+		let match = /^_.+?_$/.exec(subcomponent)[0]
+		let italics = match.replace(/^_/, '').replace(/_$/, '')
+		subcomponent = subcomponent.replace(match, `<i>${italics}</i>`)
+	}
 
 	// handle bold: **...**
 	// middle of string
@@ -232,6 +238,12 @@ const buildSubcomponents = async (text) => {
 		let bold = cleansedMatch.replace(/^\*\*/, '').replace(/\*\*$/, '')
 		subcomponent = subcomponent.replace(match, `${startChar}<b class="bold-text">${bold}</b>`)
 	}
+	// whole string
+	while (/^\*\*.+?\*\*$/.exec(subcomponent)) {
+		let match = /^\*\*.+?\*\*$/.exec(subcomponent)[0]
+		let bold = match.replace(/^\*\*/, '').replace(/\*\*$/, '')
+		subcomponent = subcomponent.replace(match, `<b class="bold-text">${bold}</b>`)
+	}
 
 	// handle strikethrough: ~~...~~
 	// middle of string
@@ -258,6 +270,12 @@ const buildSubcomponents = async (text) => {
 		let cleansedMatch = match.substring(1, match.length - 2)
 		let strikethrough = cleansedMatch.replace(/^~~/, '').replace(/~~$/, '')
 		subcomponent = subcomponent.replace(match, `${startChar}<s>${strikethrough}</s>`)
+	}
+	// whole string
+	while (/^~~.+?~~$/.exec(subcomponent)) {
+		let match = /^~~.+?~~$/.exec(subcomponent)[0]
+		let strikethrough = match.replace(/^~~/, '').replace(/~~$/, '')
+		subcomponent = subcomponent.replace(match, `<s>${strikethrough}</s>`)
 	}
 
 	return subcomponent

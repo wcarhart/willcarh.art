@@ -82,7 +82,6 @@ const convert = async (md, page) => {
 				let imgSrc = line.replace(/^.*\(/, '').replace(/\).*$/, '')
 				let remaining = line.replace(/^!\[.*\]\(.*\)/, '')
 				let subtitleText = ''
-				console.log(remaining)
 				if (remaining[0] === '<' && remaining[remaining.length-1] === '>') {
 					subtitleText = line.replace(/^.*</, '').replace(/>$/, '')
 				}
@@ -182,8 +181,8 @@ const buildSubcomponents = async (text) => {
 
 	// handle italics: _..._
 	// middle of string
-	while (/[^A-Za-z0-9"']_.+?_[^A-Za-z0-9"']/.exec(subcomponent)) {
-		let match = /[^A-Za-z0-9"']_.+?_[^A-Za-z0-9"']/.exec(subcomponent)[0]
+	while (/[^A-Za-z0-9"'`]_.+?_[^A-Za-z0-9"'`]/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"'`]_.+?_[^A-Za-z0-9"'`]/.exec(subcomponent)[0]
 		let startChar = match[0]
 		let endChar = match[match.length - 1]
 		let cleansedMatch = match.substring(1, match.length - 2)
@@ -191,16 +190,16 @@ const buildSubcomponents = async (text) => {
 		subcomponent = subcomponent.replace(match, `${startChar}<i>${italics}</i>${endChar}`)
 	}
 	// start of string
-	while (/^_.+?_[^A-Za-z0-9"']/.exec(subcomponent)) {
-		let match = /^_.+?_[^A-Za-z0-9"']/.exec(subcomponent)[0]
+	while (/^_.+?_[^A-Za-z0-9"'`]/.exec(subcomponent)) {
+		let match = /^_.+?_[^A-Za-z0-9"'`]/.exec(subcomponent)[0]
 		let endChar = match[match.length - 1]
 		let cleansedMatch = match.substring(0, match.length - 2)
 		let italics = cleansedMatch.replace(/^_/, '').replace(/_$/, '')
 		subcomponent = subcomponent.replace(match, `<i>${italics}</i>${endChar}`)
 	}
 	// end of string
-	while (/[^A-Za-z0-9"']_.+?_$/.exec(subcomponent)) {
-		let match = /[^A-Za-z0-9"']_.+?_$/.exec(subcomponent)[0]
+	while (/[^A-Za-z0-9"'`]_.+?_$/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"'`]_.+?_$/.exec(subcomponent)[0]
 		let startChar = match[0]
 		let cleansedMatch = match.substring(1, match.length - 1)
 		let italics = cleansedMatch.replace(/^_/, '').replace(/_$/, '')
@@ -209,8 +208,8 @@ const buildSubcomponents = async (text) => {
 
 	// handle bold: **...**
 	// middle of string
-	while (/[^A-Za-z0-9"']\*\*.+?\*\*[^A-Za-z0-9"']/.exec(subcomponent)) {
-		let match = /[^A-Za-z0-9"']\*\*.+?\*\*[^A-Za-z0-9"']/.exec(subcomponent)[0]
+	while (/[^A-Za-z0-9"'`]\*\*.+?\*\*[^A-Za-z0-9"'`]/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"'`]\*\*.+?\*\*[^A-Za-z0-9"'`]/.exec(subcomponent)[0]
 		let startChar = match[0]
 		let endChar = match[match.length - 1]
 		let cleansedMatch = match.substring(1, match.length - 3)
@@ -218,16 +217,16 @@ const buildSubcomponents = async (text) => {
 		subcomponent = subcomponent.replace(match, `${startChar}<b class="bold-text">${bold}</b>${endChar}`)
 	}
 	// start of string
-	while (/^\*\*.+?\*\*[^A-Za-z0-9"']/.exec(subcomponent)) {
-		let match = /^\*\*.+?\*\*[^A-Za-z0-9"']/.exec(subcomponent)[0]
+	while (/^\*\*.+?\*\*[^A-Za-z0-9"'`]/.exec(subcomponent)) {
+		let match = /^\*\*.+?\*\*[^A-Za-z0-9"'`]/.exec(subcomponent)[0]
 		let endChar = match[match.length - 1]
 		let cleansedMatch = match.substring(0, match.length - 3)
 		let bold = cleansedMatch.replace(/^\*\*/, '').replace(/\*\*$/, '')
 		subcomponent = subcomponent.replace(match, `<b class="bold-text">${bold}</b>${endChar}`)
 	}
 	// end of string
-	while (/[^A-Za-z0-9"']\*\*.+?\*\*$/.exec(subcomponent)) {
-		let match = /[^A-Za-z0-9"']\*\*.+?\*\*$/.exec(subcomponent)[0]
+	while (/[^A-Za-z0-9"'`]\*\*.+?\*\*$/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"'`]\*\*.+?\*\*$/.exec(subcomponent)[0]
 		let startChar = match[0]
 		let cleansedMatch = match.substring(1, match.length - 2)
 		let bold = cleansedMatch.replace(/^\*\*/, '').replace(/\*\*$/, '')
@@ -236,8 +235,8 @@ const buildSubcomponents = async (text) => {
 
 	// handle strikethrough: ~~...~~
 	// middle of string
-	while (/[^A-Za-z0-9"']~~.+?~~[^A-Za-z0-9"']/.exec(subcomponent)) {
-		let match = /[^A-Za-z0-9"']~~.+?~~[^A-Za-z0-9"']/.exec(subcomponent)[0]
+	while (/[^A-Za-z0-9"'`]~~.+?~~[^A-Za-z0-9"'`]/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"'`]~~.+?~~[^A-Za-z0-9"'`]/.exec(subcomponent)[0]
 		let startChar = match[0]
 		let endChar = match[match.length - 1]
 		let cleansedMatch = match.substring(1, match.length - 3)
@@ -245,16 +244,16 @@ const buildSubcomponents = async (text) => {
 		subcomponent = subcomponent.replace(match, `${startChar}<s>${strikethrough}</s>${endChar}`)
 	}
 	// start of string
-	while (/^~~.+?~~[^A-Za-z0-9"']/.exec(subcomponent)) {
-		let match = /^~~.+?~~[^A-Za-z0-9"']/.exec(subcomponent)[0]
+	while (/^~~.+?~~[^A-Za-z0-9"'`]/.exec(subcomponent)) {
+		let match = /^~~.+?~~[^A-Za-z0-9"'`]/.exec(subcomponent)[0]
 		let endChar = match[match.length - 1]
 		let cleansedMatch = match.substring(0, match.length - 3)
 		let strikethrough = cleansedMatch.replace(/^~~/, '').replace(/~~$/, '')
 		subcomponent = subcomponent.replace(match, `<s>${strikethrough}</s>${endChar}`)
 	}
 	// end of string
-	while (/[^A-Za-z0-9"']~~.+?~~$/.exec(subcomponent)) {
-		let match = /[^A-Za-z0-9"']~~.+?~~$/.exec(subcomponent)[0]
+	while (/[^A-Za-z0-9"'`]~~.+?~~$/.exec(subcomponent)) {
+		let match = /[^A-Za-z0-9"'`]~~.+?~~$/.exec(subcomponent)[0]
 		let startChar = match[0]
 		let cleansedMatch = match.substring(1, match.length - 2)
 		let strikethrough = cleansedMatch.replace(/^~~/, '').replace(/~~$/, '')

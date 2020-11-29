@@ -12,7 +12,7 @@ $(document).ready(async () => {
 			.replace(/,/g, '')
 			.replace(/at /g, '')
 			.replace(/([0-9])+(st|nd|rd|th)/g, '$1')
-		let epochtime = Date.parse(datetime)
+		let epochtime = Date.parse(datetime) / 1000
 		if (!isNaN(epochtime)) {
 			$(this).css('cursor', 'crosshair')
 			$(this).width(width)

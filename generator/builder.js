@@ -549,7 +549,7 @@ const buildProjSuper = async (projects) => {
 				rowHtml = rowHtml.replace('{{project-container-super}}', '')
 				continue
 			}
-			superContainer = projectContainerSuperSnippet.replace(/\{\{name\}\}/g, projects[index].name.toLowerCase())
+			superContainer = projectContainerSuperSnippet.replace(/\{\{name\}\}/g, await htmlSafify(projects[index].name))
 			superContainer = superContainer.replace('{{title}}', projects[index].name)
 			superContainer = superContainer.replace('{{blurb}}', projects[index].blurb)
 			superContainer = superContainer.replace(
@@ -579,6 +579,10 @@ const buildProjSuper = async (projects) => {
 		html += rowHtml
 	}
 	return html
+}
+
+const htmlSafify = async (string) => {
+	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_')
 }
 
 // TODO: 'about' for projects shouldn't be an array, and we shouldn't use about[0]
@@ -642,7 +646,7 @@ const buildProjAll = async (projects) => {
 
 		// build container for super project in proj-all
 		featuredContainer = featuredContainer.replace('{{class}}', `proj-row-${index}`)
-		featuredContainer = featuredContainer.replace(/\{\{name\}\}/g, project.name.toLowerCase())
+		featuredContainer = featuredContainer.replace(/\{\{name\}\}/g, await htmlSafify(project.name))
 		featuredContainer = featuredContainer.replace('{{title}}', project.name)
 		featuredContainer = featuredContainer.replace('{{blurb}}', project.blurb)
 		featuredContainer = featuredContainer.replace('{{about}}', project.about[0])
@@ -688,7 +692,7 @@ const buildProjAll = async (projects) => {
 
 			let tileContainer = projectContainerRegularSnippet
 			tileContainer = tileContainer.replace('{{class}}', `proj-row-${index} ${projRowClass}`)
-			tileContainer = tileContainer.replace(/\{\{name\}\}/g, tileProject.name.toLowerCase())
+			tileContainer = tileContainer.replace(/\{\{name\}\}/g, await htmlSafify(tileProject.name))
 			tileContainer = tileContainer.replace('{{title}}', tileProject.name)
 			tileContainer = tileContainer.replace('{{blurb}}', tileProject.blurb)
 			tileContainer = tileContainer.replace('{{logo}}', tileProject.img)
@@ -739,7 +743,7 @@ const buildProjAll = async (projects) => {
 
 			let projContainer = projectContainerRegularSnippet
 			projContainer = projContainer.replace('{{class}}', `proj-normal-row-${normalIndex} proj-normal`)
-			projContainer = projContainer.replace(/\{\{name\}\}/g, project.name.toLowerCase())
+			projContainer = projContainer.replace(/\{\{name\}\}/g, await htmlSafify(project.name))
 			projContainer = projContainer.replace('{{title}}', project.name)
 			projContainer = projContainer.replace('{{blurb}}', project.blurb)
 			projContainer = projContainer.replace('{{logo}}', project.img)

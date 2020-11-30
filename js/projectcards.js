@@ -3,9 +3,9 @@
 // handle hover and click for project cards
 $(document).ready(async () => {
 
-	// TODO: handle cases where HTML class has nonalphanumeric character (e.g. willcarh.art)
 	// handle animations for hover
 	$('.project-border').hover(async function() {
+		console.log(this.id)
 		const id = `#title-${this.id.replace('proj-', '')}`
 		$(id).css('background-size', '100% 0.125rem')
 		$(this).css('cursor', 'pointer')
@@ -17,8 +17,10 @@ $(document).ready(async () => {
 	// TODO: prevent default when anchors are clicked within project containers
 
 	// handle click to specific project
+	// if a file name contains ('.'), like 'willcarh.art', we use '-----' to replace it
+	// it's not a bulletproof approach, but it's unlikely a project name will naturally contain the string '----'
 	$('.project-border').click(async function() {
-		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '')
+		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '').replace('----', '.')
 		window.location.href=`project/${name}.html`
 	})
 

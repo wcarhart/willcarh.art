@@ -14,8 +14,6 @@ $(document).ready(async () => {
 		$(id).css('background-size', '0% 0.125rem')
 	})
 
-	// TODO: prevent default when anchors are clicked within project containers
-
 	// handle click to specific project
 	// if a file name contains ('.'), like 'willcarh.art', we use '-----' to replace it
 	// it's not a bulletproof approach, but it's unlikely a project name will naturally contain the string '----'

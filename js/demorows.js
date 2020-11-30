@@ -2,7 +2,6 @@
 
 // handle hover and click for demo rows
 $(document).ready(async () => {
-	// TODO: handle cases where HTML class has nonalphanumeric character (e.g. willcarh.art)
 	// handle animations for hover
 	$('.demo-border').hover(async function() {
 		const project = this.id.replace('demo-', '')
@@ -20,9 +19,9 @@ $(document).ready(async () => {
 		})
 	})
 
-	// TODO
 	// handle click to specific demo
 	$('.demo-border').click(async function() {
-		console.log(this.id)
+		const name = this.id.replace('demo-', '').replace('----', '.')
+		window.location.href=`demo/${name}.html`
 	})
 })

@@ -60,7 +60,10 @@ class Project {
 		this.demo = demo
 		this.latestVersion = latestVersion
 		this.published = published
-		// TODO: should this be dynamic based on commit date?
+		// stable:         actively developed or maintained
+		// in development: currently in development
+		// stale:          lagging updates and maintenance
+		// archived:       no longer maintained
 		if (status !== '') {
 			if (!['stable', 'in development', 'stale', 'archived'].includes(status)) {
 				console.error(`Unknown status '${status}'`)

@@ -10,7 +10,7 @@ repo: https://github.com/wcarhart/lurker
 link:
 demo: false
 latest_version: 1.7.0
-published: 2019
+published: 1566108000
 status: stable
 install: brew install wcarhart/tools/lurker
 documentation: https://willcarhart.dev/docs/lurker
@@ -30,7 +30,7 @@ repo: https://github.com/wcarhart/doku
 link:
 demo: true
 latest_version: 1.0.3
-published: 2020
+published: 1603087200
 status: stable
 install: brew install wcarhart/tools/doku
 documentation:
@@ -48,7 +48,7 @@ repo: https://github.com/wcarhart/smoosh
 link:
 demo: true
 latest_version: 2.2.0
-published: 2019
+published: 1528610400
 status: stable
 install: brew install wcarhart/tools/smoosh
 documentation:
@@ -66,7 +66,7 @@ repo: https://github.com/wcarhart/koi
 link:
 demo: false
 latest_version: 1.2.1
-published: 2020
+published: 1581490800
 status: stable
 install: brew install wcarhart/tools/koi
 documentation: https://willcarhart.dev/docs/koi
@@ -121,7 +121,7 @@ repo: https://github.com/wcarhart/willcarh.art
 link: https://willcarh.art
 demo: false
 latest_version: 2.0.0
-published: 2019
+published: 1555394400
 status: stale
 install:
 documentation:
@@ -145,7 +145,7 @@ repo: https://github.com/wcarhart/docs
 link: https://willcarhart.dev
 demo: false
 latest_version:
-published: 2020
+published: 1587189600
 status: stable
 install:
 documentation:
@@ -168,7 +168,7 @@ repo: https://github.com/wcarhart/konphig
 link:
 demo: false
 latest_version: 1.0.4
-published: 2018
+published: 1535608800
 status: stable
 install: brew install wcarhart/tools/kn
 documentation: https://willcarhart.dev/docs/konphig
@@ -216,7 +216,7 @@ repo: https://github.com/wcarhart/soliloquy
 link: https://soliloquy.dev
 demo: false
 latest_version:
-published: 2019
+published: 1566108000
 status: stale
 install:
 documentation:
@@ -259,7 +259,7 @@ repo: https://github.com/wcarhart/birdhouse
 link:
 demo: true
 latest_version: 12
-published: 2020
+published: 1584165600
 status: stable
 install: brew install wcarhart/tools/birdhouse
 documentation: https://willcarhart.dev/docs/birdhouse
@@ -277,7 +277,7 @@ repo: https://github.com/wcarhart/thoth
 link:
 demo: false
 latest_version: 1
-published: 2020
+published: 1581577200
 status: stable
 install: brew install wcarhart/tools/thoth
 documentation:
@@ -296,7 +296,7 @@ repo: https://github.com/wcarhart/chiller
 link:
 demo: false
 latest_version: 1.1.5
-published: 2020
+published: 1583906400
 status: stable
 install: brew install wcarhart/tools/chiller
 documentation: https://willcarhart.dev/docs/chiller
@@ -318,7 +318,7 @@ repo: https://github.com/wcarhart/wanda
 link: https://alexxandwill.us
 demo: false
 latest_version: 1.2.0
-published: 2019
+published: 1576566000
 status: stable
 install:
 documentation:
@@ -337,7 +337,7 @@ repo: https://github.com/wcarhart/aerogram
 link:
 demo: false
 latest_version:
-published: 2019
+published: 1561960800
 status: stale
 install:
 documentation:
@@ -355,7 +355,7 @@ repo: https://github.com/wcarhart/beaver
 link:
 demo: false
 latest_version:
-published: 2019
+published: 1554530400
 status: stale
 install:
 documentation:
@@ -373,7 +373,7 @@ repo: https://github.com/wcarhart/despicable
 link:
 demo: false
 latest_version:
-published: 2018
+published: 1535868000
 status: archived
 install:
 documentation:
@@ -391,7 +391,7 @@ repo: https://github.com/wcarhart/cheqit
 link:
 demo: false
 latest_version:
-published: 2019
+published: 1553925600
 status: stale
 install:
 documentation:
@@ -409,7 +409,7 @@ repo: https://github.com/wcarhart/locksmith
 link:
 demo: false
 latest_version:
-published: 2019
+published: 1550991600
 status: stale
 install:
 documentation:
@@ -427,7 +427,7 @@ repo: https://github.com/wcarhart/othello
 link:
 demo: false
 latest_version:
-published: 2018
+published: 1545634800
 status: stale
 install:
 documentation:
@@ -452,7 +452,7 @@ repo: https://github.com/wcarhart/cheers
 link:
 demo: false
 latest_version:
-published: 2018
+published: 1526450400
 status: archived
 install:
 documentation:
@@ -473,7 +473,7 @@ repo: https://github.com/wcarhart/fitpals
 link:
 demo: false
 latest_version:
-published: 2018
+published: 1523599200
 status: archived
 install:
 documentation:
@@ -493,7 +493,7 @@ repo: https://github.com/wcarhart/chordpanion
 link:
 demo: false
 latest_version:
-published: 2018
+published: 1524290400
 status: archived
 install:
 documentation:
@@ -513,7 +513,7 @@ repo: https://github.com/wcarhart/nasa_apod
 link:
 demo: false
 latest_version:
-published: 2018
+published: 1525327200
 status: archived
 install:
 documentation:
@@ -532,7 +532,7 @@ repo: https://github.com/wcarhart/ti84-checkers
 link:
 demo: false
 latest_version:
-published: 2012
+published: 1337925600
 status: archived
 install:
 documentation:
@@ -551,7 +551,7 @@ repo: https://github.com/wcarhart/ti84-tictactoe
 link:
 demo: false
 latest_version:
-published: 2012
+published: 1337925600
 status: archived
 install:
 documentation:
@@ -569,7 +569,7 @@ repo: https://github.com/wcarhart/kartracer
 link:
 demo: false
 latest_version:
-published: 2016
+published: 1463983200
 status: archived
 install:
 documentation:
@@ -587,7 +587,7 @@ repo: https://github.com/wcarhart/algos
 link:
 demo: false
 latest_version:
-published: 2019
+published: 1569132000
 status: stale
 install:
 documentation:
@@ -605,7 +605,7 @@ repo: https://github.com/wcarhart/rise-and-shine
 link:
 demo: false
 latest_version:
-published: 2017
+published: 1495346400
 status: archived
 intall:
 documentation:

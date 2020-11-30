@@ -19,7 +19,7 @@ const parseExperiences = async () => {
 			if (value[0] === ' ') {
 				value = value.slice(1)
 			}
-			if(['title', 'date', 'detail', 'languagesAndLibraries', 'tools', 'platforms', 'infrastructure'].includes(key)) {
+			if(['title', 'date', 'displayDate', 'detail', 'languagesAndLibraries', 'tools', 'platforms', 'infrastructure'].includes(key)) {
 				newExperience[key].push(value)
 			} else {
 				newExperience[key] = value

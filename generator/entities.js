@@ -4,6 +4,7 @@ class Experience {
 		companyId = '',
 		title=[],
 		date=[],
+		displayDate=[],
 		detail=[],
 		languagesAndLibraries=[],
 		tools=[],
@@ -15,6 +16,7 @@ class Experience {
 		this.companyId = companyId
 		this.title = title
 		this.date = date
+		this.displayDate = displayDate
 		this.detail = detail
 		this.languagesAndLibraries = languagesAndLibraries
 		this.tools = tools

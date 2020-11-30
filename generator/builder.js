@@ -27,8 +27,6 @@ Supported asset tags:
   {{sys:pokemon}}  --> Pokemon ascii art
 */
 
-
-// TODO: implement these
 /*
 Supported HTML tags:
   {{html:exp-tabs}}      --> build HTML for experience tabs on about page
@@ -207,7 +205,6 @@ const buildBlogLatest = async (blogs) => {
 	// determine latest blog
 	let blog = blogs.reduce((latest, current) => { return current.published > latest.published ? current : latest })
 	let date = new Date(blog.published * 1000)
-	// TODO: verify that dates in blogs.md are actually correct, they seem a little off
 	let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 
 	// parse HTML snippets
@@ -798,8 +795,9 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 
 	// template for how we will fill in the rows
 	class RowTemplate {
-		constructor({year='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl=''}) {
+		constructor({year='', sortDate='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl=''}) {
 			this.year = year
+			this.sortDate = sortDate
 			this.title = title
 			this.type = type
 			this.resources = resources
@@ -815,13 +813,14 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 	for (let experience of experiences) {
 		for (let [index, title] of experience.title.entries()) {
 			let r = new RowTemplate({})
-			if (/[a-zA-Z]/g.test(experience.date)) {
-				let matches = experience.date[index].match(/[0-9]+/g)
+			if (/[a-zA-Z]/g.test(experience.displayDate)) {
+				let matches = experience.displayDate[index].match(/[0-9]+/g)
 				r.year = matches[0]
 			} else {
-				let matches = experience.date[index].match(/[0-9]+/g)
+				let matches = experience.displayDate[index].match(/[0-9]+/g)
 				r.year = matches[1]
 			}
+			r.sortDate = experience.date[index]
 			r.title = `${experience.title[index]} @ ${experience.company}`
 			r.type = 'experience'
 			r.resources = experience.languagesAndLibraries.concat(experience.platforms.concat(experience.infrastructure))
@@ -840,7 +839,9 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			continue
 		}
 		let r = new RowTemplate({})
-		r.year = project.published
+		let date = new Date(project.published * 1000)
+		r.year = date.getFullYear()
+		r.sortDate = project.published
 		r.title = project.name
 		r.type = 'project'
 		r.resources = project.languages.concat(project.technologies)
@@ -855,7 +856,9 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 	// parse blog posts into rows
 	for (let blog of blogs) {
 		let r = new RowTemplate({})
-		r.year = blog.published
+		let date = new Date(blog.published * 1000)
+		r.year = date.getFullYear()
+		r.sortDate = blog.published
 		r.title = blog.title
 		r.type = 'blog'
 		r.resources = blog.resources
@@ -867,12 +870,11 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		rows.push(r)
 	}
 
-	// TODO: this sort is greedy, need to rethink how to store dates on projects, experiences, and blog posts
 	// sort rows based on year, prioritizing projects
 	rows.sort((a, b) => {
-		if (a.year > b.year) {
+		if (a.sortDate > b.sortDate) {
 			return -1
-		} else if (a.year < b.year) {
+		} else if (a.sortDate < b.sortDate) {
 			return 1
 		} else {
 			if (a.type === 'experience') {
@@ -971,7 +973,7 @@ const buildExpTabs = async (experiences) => {
 		}
 		let content = contentSnippet.replace('{{titles}}', titles)
 		content = content.replace('{{company_lower}}', experience.companyId)
-		content = content.replace('{{date}}', experience.date[0])
+		content = content.replace('{{date}}', experience.displayDate[0])
 		content = content.replace('{{details}}', details)
 		if (experience.languagesAndLibraries.length !== 0) {
 			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries.join(', '))

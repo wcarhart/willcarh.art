@@ -382,7 +382,9 @@ const buildBlogSpec = async (blogs, page) => {
 const buildProjectSpec = async (projects, page) => {
 	// determine project name
 	let name = page.split('/').pop().split('.html')[0]
-	let project = projects.filter(p => p.name.toLowerCase() === name)
+
+	// we need to replace space with an underscore in order for filename to resolve
+	let project = projects.filter(p => p.name.toLowerCase().replace(' ', '_') === name)
 	if (project.length === 0) {
 		throw new Error(`No project data found for '${name}'`)
 	}
@@ -444,10 +446,10 @@ const buildProjectSpec = async (projects, page) => {
 	// build links
 	let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
 	if (project.repo !== '') {
-		githubIconHtml = githubIconSnippet.replace('{{name}}', project.name.toLowerCase())
+		githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
 	}
 	if (project.documentation !== '') {
-		docsIconHtml = docsIconSnippet.replace('{{name}}', project.name.toLowerCase())
+		docsIconHtml = docsIconSnippet.replace('{{docs}}', project.documentation)
 	}
 	if (project.demo === 'true') {
 		demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
@@ -656,10 +658,10 @@ const buildProjAll = async (projects) => {
 		)
 		let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
 		if (project.repo !== '') {
-			githubIconHtml = githubIconSnippet.replace('{{name}}', project.name.toLowerCase())
+			githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
 		}
 		if (project.documentation !== '') {
-			docsIconHtml = docsIconSnippet.replace('{{name}}', project.name.toLowerCase())
+			docsIconHtml = docsIconSnippet.replace('{{docs}}', project.documentation)
 		}
 		if (project.demo === 'true') {
 			demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
@@ -753,10 +755,10 @@ const buildProjAll = async (projects) => {
 			)
 			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
 			if (project.repo !== '') {
-				githubIconHtml = githubIconSnippet.replace('{{name}}', project.name.toLowerCase())
+				githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
 			}
 			if (project.documentation !== '') {
-				docsIconHtml = docsIconSnippet.replace('{{name}}', project.name.toLowerCase())
+				docsIconHtml = docsIconSnippet.replace('{{docs}}', project.documentation)
 			}
 			if (project.demo === 'true') {
 				demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
@@ -904,10 +906,10 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 
 		linkHtml = ''
 		if (row.githubName !== '') {
-			linkHtml += githubIconSnippet.replace('{{name}}', row.title)
+			linkHtml += githubIconSnippet.replace('{{repo}}', row.githubName)
 		}
 		if (row.docsName !== '') {
-			linkHtml += docsIconSnippet.replace('{{name}}', row.title)
+			linkHtml += docsIconSnippet.replace('{{docs}}', row.title)
 		}
 		if (row.demoName !== '') {
 			linkHtml += demoIconSnippet.replace('{{name}}', row.demoName)

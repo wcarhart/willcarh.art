@@ -14,4 +14,10 @@ $(document).ready(async () => {
 		$(titleEl).css('background-size', '0% 0.125rem')
 		$(typeEl).css('color', 'var(--subtitle)')
 	})
+
+	$('.vault-row').click(async function() {
+		let href = $(this).children('.vault-link').text()
+		console.log(href)
+		window.location.href = href
+	})
 })

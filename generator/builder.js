@@ -795,7 +795,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 
 	// template for how we will fill in the rows
 	class RowTemplate {
-		constructor({year='', sortDate='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl=''}) {
+		constructor({year='', sortDate='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl='', vaultLink=''}) {
 			this.year = year
 			this.sortDate = sortDate
 			this.title = title
@@ -805,6 +805,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			this.docsName = docsName
 			this.githubName = githubName
 			this.linkUrl = linkUrl
+			this.vaultLink = vaultLink
 		}
 	}
 	let rows = []
@@ -828,6 +829,8 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			r.docsName = ''
 			r.githubName = ''
 			r.linkUrl = experience.url
+			// TODO: this should redirect to the actual exp-tab, not just the page scroll location
+			r.vaultLink = '{{src:about.html}}#experience'
 
 			rows.push(r)
 		}
@@ -849,6 +852,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = project.documentation
 		r.githubName = project.repo
 		r.linkUrl = project.link
+		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}.html}}`
 
 		rows.push(r)
 	}
@@ -866,6 +870,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
+		r.vaultLink = `{{src:blog/${blog.title.toLowerCase().replace(/ /g, '-')}.html}}`
 
 		rows.push(r)
 	}
@@ -920,6 +925,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			linkHtml += linkIconSnippet.replace('{{url}}', row.linkUrl)
 		}
 		newRow = newRow.replace('{{links}}', linkHtml)
+		newRow = newRow.replace('{{vault-link}}', row.vaultLink)
 
 		html += newRow
 	}

@@ -60,11 +60,11 @@ h5 {
 	line-height: 2rem;
 	transform: translateY(30%);
 	white-space: nowrap;
+	margin-right: 1rem;
 }
 
 .color-palette-hex-code {
-	margin-left: 3rem;
-	padding: 0.3rem;
+	padding: 0.4rem;
 	border-radius: 1rem;
 }
 
@@ -80,17 +80,14 @@ h5 {
 
 #color-palette-color-subtitle {
 	color: var(--subtitle);
-	background-color: var(--text);
 }
 
 #color-palette-color-color {
 	color: var(--color);
-	background-color: var(--text);
 }
 
 #color-palette-color-text {
 	color: var(--text);
-	background-color: var(--color);
 }
 
 .color-palette-color-background-container {
@@ -119,6 +116,31 @@ h5 {
 }
 
 .color-palette-row {
+	overflow: hidden;
 	padding-bottom: 0.2rem;
 	padding-left: 2rem;
+}
+
+.icon-row {
+	overflow: hidden;
+	padding-bottom: 0.2rem;
+	padding-left: 2rem;
+}
+
+.icon-description {
+	color: var(--subtitle);
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+}
+
+.icon-label {
+	height: 2rem;
+	line-height: 2rem;
+	transform: translateY(30%);
+	white-space: nowrap;
+	margin-right: 1rem;
+}
+
+.icon-icon:hover {
+	color: var(--color);
 }

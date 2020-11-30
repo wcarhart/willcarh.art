@@ -3,10 +3,9 @@
 // Learn more: https://github.com/wcarhart/willcarh.art
 // THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!
 
-// jump to an anchor's scroll location on a page
+// prevent default when link icons are clicked - because some divs are clickable
 $(document).ready(async () => {
-	if (/#.*/.exec(window.location.pathname)) {
-		let hash = /#.*/.exec(window.location.pathname)[0]
-		window.scrollTo(getPosition(hash));
-	}
+	$('.link-icon-no-default').click((event) => {
+		event.stopPropagation()
+	})
 })

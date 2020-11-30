@@ -10,7 +10,8 @@ class Experience {
 		tools=[],
 		platforms=[],
 		infrastructure=[],
-		url=''
+		url='',
+		blogPost=''
 	}) {
 		this.company = company
 		this.companyId = companyId
@@ -23,6 +24,7 @@ class Experience {
 		this.platforms = platforms
 		this.infrastructure = infrastructure
 		this.url = url
+		this.blogPost = blogPost
 	}
 }
 
@@ -44,6 +46,7 @@ class Project {
 		documentation='',
 		related=[],
 		visibility='',
+		blogPost='',
 		tags=[]
 	}) {
 		this.name = name
@@ -78,6 +81,7 @@ class Project {
 			}
 		}
 		this.visibility = visibility
+		this.blogPost = blogPost
 		this.tags = tags
 	}
 }

@@ -25,6 +25,7 @@ infrastructure: Bamboo
 infrastructure: Puppet
 infrastructure: Kubernetes (GKE)
 url: https://wisk.aero
+blogPost:
 
 company: Illumina
 companyId: illumina
@@ -52,6 +53,7 @@ infrastructure: AWS (S3, EC2, SNS, Lambda)
 infrastructure: Jenkins
 infrastructure: GNU Make
 url: https://www.illumina.com
+blogPost:
 
 company: Starlit Software
 companyId: starlit
@@ -71,6 +73,7 @@ tools: Trello
 platforms: Docker
 platforms: Linux
 url: https://www.starlitsoftware.com
+blogPost:
 
 company: Qolsys
 companyId: qolsys
@@ -84,6 +87,7 @@ platforms: Linux
 platforms: Busybox
 platforms: Android
 url: https://www.qolsys.com
+blogPost:
 
 company: University of San Diego
 companyId: usd
@@ -109,3 +113,4 @@ platforms: macOS
 infrastructure: Firebase
 infrastructure: GNU Make
 url: https://sandiego.edu
+blogPost:

@@ -529,12 +529,14 @@ const buildProjSuper = async (projects) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
 	projectContainerSuperSnippet = projectContainerSuperSnippet.toString()
 	projectRowSuperSnippet = projectRowSuperSnippet.toString()
 	demoIconSnippet = demoIconSnippet.toString()
 	docsIconSnippet = docsIconSnippet.toString()
 	githubIconSnippet = githubIconSnippet.toString()
 	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
 
 	// build HTML
 	let html = ''
@@ -555,7 +557,7 @@ const buildProjSuper = async (projects) => {
 				'{{technologies}}',
 				projects[index].languages.concat(projects[index].technologies).filter(p => p !== '').join(' · ')
 			)
-			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
 			if (projects[index].repo !== '') {
 				githubIconHtml = githubIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
 			}
@@ -568,11 +570,15 @@ const buildProjSuper = async (projects) => {
 			if (projects[index].link !== '') {
 				linkIconHtml = linkIconSnippet.replace('{{url}}', projects[index].link)
 			}
+			if (projects[index].blogPost !== '') {
+				blogIconHtml = blogIconSnippet.replace('{{blog}}', projects[index].blogPost)
+			}
 
 			superContainer = superContainer.replace('{{github-icon}}', githubIconHtml)
 			superContainer = superContainer.replace('{{docs-icon}}', docsIconHtml)
 			superContainer = superContainer.replace('{{demo-icon}}', demoIconHtml)
 			superContainer = superContainer.replace('{{link-icon}}', linkIconHtml)
+			superContainer = superContainer.replace('{{blog-icon}}', blogIconHtml)
 			rowHtml = rowHtml.replace('{{project-container-super}}', superContainer)
 		}
 		html += rowHtml
@@ -597,6 +603,7 @@ const buildProjAll = async (projects) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
 	projectContainerFeaturedSnippet = projectContainerFeaturedSnippet.toString()
 	projectContainerRegularSnippet = projectContainerRegularSnippet.toString()
 	projectRowFeaturedLeftSnippet = projectRowFeaturedLeftSnippet.toString()
@@ -606,6 +613,7 @@ const buildProjAll = async (projects) => {
 	docsIconSnippet = docsIconSnippet.toString()
 	githubIconSnippet = githubIconSnippet.toString()
 	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
 
 	// sort projects
 	let superProjects = []
@@ -653,7 +661,7 @@ const buildProjAll = async (projects) => {
 			'{{technologies}}',
 			project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
 		)
-		let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+		let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
 		if (project.repo !== '') {
 			githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
 		}
@@ -666,14 +674,19 @@ const buildProjAll = async (projects) => {
 		if (project.link !== '') {
 			linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
 		}
+		if (project.blogPost !== '') {
+			linkIconHtml = blogIconSnippet.replace('{{blog}}', project.blogPost)
+		}
 
 		featuredContainer = featuredContainer.replace('{{github-icon}}', githubIconHtml)
 		featuredContainer = featuredContainer.replace('{{docs-icon}}', docsIconHtml)
 		featuredContainer = featuredContainer.replace('{{demo-icon}}', demoIconHtml)
 		featuredContainer = featuredContainer.replace('{{link-icon}}', linkIconHtml)
+		featuredContainer = featuredContainer.replace('{{blog-icon}}', blogIconHtml)
 		rowHtml = rowHtml.replace('{{project-container-featured}}', featuredContainer)
 
 		// build additional tile containers to fit in row
+		// TODO: this is not DRY - repeated for featured, tile, and regular - should be function
 		for (let i = 0; i < 4; i++) {
 			let tileProject = null
 			if (featuredProjects.length !== 0) {
@@ -699,12 +712,12 @@ const buildProjAll = async (projects) => {
 				'{{technologies}}',
 				tileProject.languages.concat(tileProject.technologies).filter(p => p !== '').join(' · ')
 			)
-			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
 			if (tileProject.repo !== '') {
-				githubIconHtml = githubIconSnippet.replace('{{name}}', tileProject.name.toLowerCase())
+				githubIconHtml = githubIconSnippet.replace('{{repo}}', tileProject.repo)
 			}
 			if (tileProject.documentation !== '') {
-				docsIconHtml = docsIconSnippet.replace('{{name}}', tileProject.name.toLowerCase())
+				docsIconHtml = docsIconSnippet.replace('{{docs}}', tileProject.documentation)
 			}
 			if (tileProject.demo === 'true') {
 				demoIconHtml = demoIconSnippet.replace('{{name}}', tileProject.name.toLowerCase())
@@ -712,11 +725,15 @@ const buildProjAll = async (projects) => {
 			if (tileProject.link !== '') {
 				linkIconHtml = linkIconSnippet.replace('{{url}}', tileProject.link)
 			}
+			if (tileProject.blogPost !== '') {
+				blogIconHtml = blogIconSnippet.replace('{{blog}}', tileProject.blogPost)
+			}
 
 			tileContainer = tileContainer.replace('{{github-icon}}', githubIconHtml)
 			tileContainer = tileContainer.replace('{{docs-icon}}', docsIconHtml)
 			tileContainer = tileContainer.replace('{{demo-icon}}', demoIconHtml)
 			tileContainer = tileContainer.replace('{{link-icon}}', linkIconHtml)
+			tileContainer = tileContainer.replace('{{blog-icon}}', blogIconHtml)
 			rowHtml = rowHtml.replace('{{project-container-regular}}', tileContainer)
 		}
 
@@ -750,7 +767,7 @@ const buildProjAll = async (projects) => {
 				'{{technologies}}',
 				project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
 			)
-			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
 			if (project.repo !== '') {
 				githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
 			}
@@ -763,11 +780,15 @@ const buildProjAll = async (projects) => {
 			if (project.link !== '') {
 				linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
 			}
+			if (project.blogPost !== '') {
+				blogIconHtml = blogIconSnippet.replace('{{blog}}', project.blogPost)
+			}
 
 			projContainer = projContainer.replace('{{github-icon}}', githubIconHtml)
 			projContainer = projContainer.replace('{{docs-icon}}', docsIconHtml)
 			projContainer = projContainer.replace('{{demo-icon}}', demoIconHtml)
 			projContainer = projContainer.replace('{{link-icon}}', linkIconHtml)
+			projContainer = projContainer.replace('{{blog-icon}}', blogIconHtml)
 			rowHtml = rowHtml.replace('{{project-container-regular}}', projContainer)
 		}
 
@@ -787,15 +808,17 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
 	vaultRowsSnippet = vaultRowsSnippet.toString()
 	demoIconSnippet = demoIconSnippet.toString()
 	docsIconSnippet = docsIconSnippet.toString()
 	githubIconSnippet = githubIconSnippet.toString()
 	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
 
 	// template for how we will fill in the rows
 	class RowTemplate {
-		constructor({year='', sortDate='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl='', vaultLink=''}) {
+		constructor({year='', sortDate='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl='', blogPost='', vaultLink=''}) {
 			this.year = year
 			this.sortDate = sortDate
 			this.title = title
@@ -805,6 +828,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			this.docsName = docsName
 			this.githubName = githubName
 			this.linkUrl = linkUrl
+			this.blogPost = blogPost
 			this.vaultLink = vaultLink
 		}
 	}
@@ -829,6 +853,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			r.docsName = ''
 			r.githubName = ''
 			r.linkUrl = experience.url
+			r.blogPost = experience.blogPost
 			// TODO: this should redirect to the actual exp-tab, not just the page scroll location
 			r.vaultLink = '{{src:about.html}}#experience'
 
@@ -852,6 +877,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = project.documentation
 		r.githubName = project.repo
 		r.linkUrl = project.link
+		r.blogPost = project.blogPost
 		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}.html}}`
 
 		rows.push(r)
@@ -870,7 +896,8 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
-		r.vaultLink = `{{src:blog/${blog.title.toLowerCase().replace(/ /g, '-')}.html}}`
+		r.blogPost = `{{src:blog/${blog.title.toLowerCase().replace(/ /g, '-')}.html}}`
+		r.vaultLink = r.blogPost
 
 		rows.push(r)
 	}
@@ -916,7 +943,10 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			linkHtml += githubIconSnippet.replace('{{repo}}', row.githubName)
 		}
 		if (row.docsName !== '') {
-			linkHtml += docsIconSnippet.replace('{{docs}}', row.title)
+			linkHtml += docsIconSnippet.replace('{{docs}}', row.docsName)
+		}
+		if (row.blogPost !== '') {
+			linkHtml += blogIconSnippet.replace('{{blog}}', row.blogPost)
 		}
 		if (row.demoName !== '') {
 			linkHtml += demoIconSnippet.replace('{{name}}', row.demoName)

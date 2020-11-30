@@ -131,7 +131,7 @@ const buildScripts = async (develop) => {
 	}
 	let scripts = await findFiles({kind: 'js', prefix: ''})
 	for (let script of scripts) {
-		await buildPageFromTemplate({template: `js/${script}`, page: `src/js/${script}`, level: 1, develop: false})
+		await buildPageFromTemplate({template: `js/${script}`, page: `src/js/${script}`, level: 1, develop: develop})
 	}
 }
 
@@ -279,7 +279,7 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			headerjsData.push(`// This file was generated on ${now} via the forge in willcarh.art v${package.version}`)
 			headerjsData.push('// Learn more: https://github.com/wcarhart/willcarh.art')
 			if (develop === true) {
-				headerData.push('// THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!')
+				headerjsData.push('// THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!')
 			}
 			resolvedData = resolvedData.replace(match, headerjsData.join('\n'))
 			break

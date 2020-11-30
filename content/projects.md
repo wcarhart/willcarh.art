@@ -17,6 +17,7 @@ documentation: https://willcarhart.dev/docs/lurker
 related: koi
 related: smoosh
 visibility: super
+blogPost:
 tags: cli
 
 name: doku
@@ -36,6 +37,7 @@ install: brew install wcarhart/tools/doku
 documentation:
 related:
 visibility: featured
+blogPost:
 tags: cli
 
 name: smoosh
@@ -54,6 +56,7 @@ install: brew install wcarhart/tools/smoosh
 documentation:
 related:
 visibility: super
+blogPost:
 tags: cli
 
 name: koi
@@ -77,6 +80,7 @@ related: chiller
 related: thoth
 related: docs
 visibility: super
+blogPost:
 tags: library
 
 name: snug
@@ -100,6 +104,7 @@ status: in development
 documentation:
 related:
 visibility: none
+blogPost:
 tags: cli
 tags: cloud
 
@@ -127,6 +132,7 @@ install:
 documentation:
 related:
 visibility: featured
+blogPost: {{src:blog/automating-emails-in-python.html}}
 tags: cli
 tags: web
 
@@ -155,6 +161,7 @@ related: birdhouse
 related: konphig
 related: chiller
 visibility: featured
+blogPost:
 tags: web
 
 name: konphig
@@ -174,6 +181,7 @@ install: brew install wcarhart/tools/kn
 documentation: https://willcarhart.dev/docs/konphig
 related: koi
 visibility: featured
+blogPost:
 tags: cli
 tags: configuration
 
@@ -194,6 +202,7 @@ install:
 documentation:
 related:
 visibility: none
+blogPost:
 tags: api
 tags: cli
 tags: cloud
@@ -222,6 +231,7 @@ install:
 documentation:
 related:
 visibility: normal
+blogPost: {{src:blog/building-chatbots-for-github.html}}
 tags: web
 
 name: odin
@@ -246,6 +256,7 @@ install:
 documentation:
 related:
 visibility: none
+blogPost:
 tags: desktop
 tags: cli
 
@@ -265,6 +276,7 @@ install: brew install wcarhart/tools/birdhouse
 documentation: https://willcarhart.dev/docs/birdhouse
 related: koi
 visibility: featured
+blogPost:
 tags: cli
 
 name: thoth
@@ -283,6 +295,7 @@ install: brew install wcarhart/tools/thoth
 documentation:
 related: koi
 visibility: normal
+blogPost:
 tags: cli
 
 name: chiller
@@ -302,6 +315,7 @@ install: brew install wcarhart/tools/chiller
 documentation: https://willcarhart.dev/docs/chiller
 related: koi
 visibility: normal
+blogPost:
 tags: cli
 tags: configuration
 
@@ -324,6 +338,7 @@ install:
 documentation:
 related:
 visibility: featured
+blogPost:
 tags: web
 
 name: aerogram
@@ -343,6 +358,7 @@ install:
 documentation:
 related: koi
 visibility: normal
+blogPost:
 tags: cli
 
 name: beaver
@@ -361,6 +377,7 @@ install:
 documentation:
 related:
 visibility: normal
+blogPost:
 tags: cli
 
 name: despicable
@@ -379,6 +396,7 @@ install:
 documentation:
 related:
 visibility: less
+blogPost:
 tags: cli
 
 name: cheqit
@@ -397,6 +415,7 @@ install:
 documentation:
 related:
 visibility: normal
+blogPost:
 tags: cli
 
 name: locksmith
@@ -415,6 +434,7 @@ install:
 documentation:
 related:
 visibility: normal
+blogPost:
 tags: library
 
 name: othello
@@ -433,6 +453,7 @@ install:
 documentation:
 related:
 visibility: normal
+blogPost:
 tags: cli
 
 name: Cheers
@@ -458,6 +479,7 @@ install:
 documentation:
 related:
 visibility: less
+blogPost:
 tags: mobile
 
 name: FitPals
@@ -479,6 +501,7 @@ install:
 documentation:
 related:
 visibility: none
+blogPost:
 tags: mobile
 
 name: Chordpanion
@@ -499,6 +522,7 @@ install:
 documentation:
 related:
 visibility: less
+blogPost:
 tags: mobile
 
 name: NASA APOD
@@ -519,6 +543,7 @@ install:
 documentation:
 related:
 visibility: less
+blogPost:
 tags: mobile
 
 name: TI Checkers
@@ -538,6 +563,7 @@ install:
 documentation:
 related:
 visibility: less
+blogPost:
 tags: calculator
 
 name: TI TicTacToe
@@ -557,6 +583,7 @@ install:
 documentation:
 related:
 visibility: less
+blogPost:
 tags: calculator
 
 name: kartracer
@@ -575,6 +602,7 @@ install:
 documentation:
 related:
 visibility: normal
+blogPost:
 tags: desktop
 
 name: algos
@@ -593,6 +621,7 @@ install:
 documentation:
 related:
 visibility: normal
+blogPost:
 tags: library
 
 name: Rise and Shine
@@ -611,4 +640,5 @@ intall:
 documentation:
 related:
 visibility: none
+blogPost:
 tags: embedded

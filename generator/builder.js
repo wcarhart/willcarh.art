@@ -466,7 +466,12 @@ const buildProjSpec = async (projects, page) => {
 	// TODO: if install is empty, should not use color nor monospace font
 	let installMetadataHtml = installMetadataSnippet.replace('{{install}}', project.install === '' ? '-' : project.install)
 	let latestReleaseMetadataHtml = latestReleaseMetadataSnippet.replace('{{version}}', project.latest_version === '' ? '-' : project.latest_version)
-	let publishDateMetadataHtml = publishDateMetadataSnippet.replace('{{publish-date}}', project.published === '' ? '-' : project.published)
+	let dateText = '-'
+	if (project.published !== '') {
+		let date = new Date(project.published * 1000)
+		dateText = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+	}
+	let publishDateMetadataHtml = publishDateMetadataSnippet.replace('{{publish-date}}', dateText)
 	let relatedProjectLinks = []
 	for (let related of project.related) {
 		if (related === '') {

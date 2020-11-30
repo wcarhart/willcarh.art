@@ -132,7 +132,7 @@ const buildHtml = async (data, match, key, page) => {
 			break
 		case 'proj-spec':
 			projects = await parser.parseProjects()
-			html = await buildProjectSpec(projects, page)
+			html = await buildProjSpec(projects, page)
 			break
 		case 'blog-latest':
 			blogs = await parser.parseBlogs()
@@ -379,12 +379,12 @@ const buildBlogSpec = async (blogs, page) => {
 }
 
 // build HTML for specific project
-const buildProjectSpec = async (projects, page) => {
+const buildProjSpec = async (projects, page) => {
 	// determine project name
 	let name = page.split('/').pop().split('.html')[0]
 
 	// we need to replace space with an underscore in order for filename to resolve
-	let project = projects.filter(p => p.name.toLowerCase().replace(' ', '_') === name)
+	let project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)
 	if (project.length === 0) {
 		throw new Error(`No project data found for '${name}'`)
 	}

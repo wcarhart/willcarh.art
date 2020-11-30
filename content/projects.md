@@ -478,7 +478,7 @@ status: archived
 install:
 documentation:
 related:
-visibility: less
+visibility: none
 tags: mobile
 
 name: Chordpanion
@@ -600,7 +600,7 @@ blurb: Automatic daylight-based coffee maker
 about: Rise and Shine was my final project for one my university embedded classes. At a high level, it was an alarm clock with a daylight sensor. When the sensor determined that it is daytime, it would automatically turn on the coffee maker to brew a new cup of coffee.
 languages: C
 technologies: Microchip PIC18F4321
-img: {{cdn:img/logos/rise-and-shine.png}}
+img: {{cdn:img/logos/rise_and_shine.png}}
 repo: https://github.com/wcarhart/rise-and-shine
 link:
 demo: false

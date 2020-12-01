@@ -1,4 +1,4 @@
->> Note | This post will be talking about [Amazon Web Services Simple Storage Solution (S3)](https://aws.amazon.com/s3/). If you're not familiar with this technology, [here is a good primer](https://aws.amazon.com/s3/getting-started/).
+>> Note | This post will be talking about [Amazon Web Services (AWS) Simple Storage Solution (S3)](https://aws.amazon.com/s3/). If you're not familiar with this technology, [here is a good primer](https://aws.amazon.com/s3/getting-started/).
 
 ### Understanding S3 pricing
 S3 Standard - General purpose storage for any type of data, typically used for frequently accessed data

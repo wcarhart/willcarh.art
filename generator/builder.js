@@ -325,7 +325,9 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// parse HTML snippets
 	let specSnippet = await readFilePromise('snippets/blog-spec/spec.html')
+	let staleSnippet = await readFilePromise('snippets/blog-spec/stale.html')
 	specSnippet = specSnippet.toString()
+	staleSnippet = staleSnippet.toString()
 
 	// build HTML
 	let html = specSnippet
@@ -381,6 +383,13 @@ const buildBlogSpec = async (blogs, page) => {
 	// build blog content
 	let blogContent = await markdown.convert(blogContentFile.toString(), page)
 	html = html.replace('{{blog-content}}', blogContent)
+
+	// check if is stale
+	if (blog.status === 'stale') {
+		html = html.replace('{{stale}}', staleSnippet)
+	} else {
+		html = html.replace('{{stale}}', '')
+	}
 
 	return html
 }

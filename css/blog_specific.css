@@ -141,6 +141,13 @@ h5 {
 	color: var(--subtitle) !important;
 }
 
+#stale-content-container {
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+}
+
 /* overwrite markdown CSS for blogs */
 .content-subtitle {
 	font-size: 3rem !important;

@@ -101,6 +101,7 @@ class Blog {
 		updated='',
 		resources=[],
 		author='',
+		authorImg='',
 		status='',
 		tags=[],
 		id=''
@@ -115,6 +116,7 @@ class Blog {
 		this.updated = updated
 		this.resources = resources
 		this.author = author
+		this.authorImg = authorImg
 		// active: blog post was written under a current version of willcarh.art and included links + code should be valid
 		// stale:  blog post was written under a previous version of willcarh.art and included links + code may contain flaws
 		if (status !== '') {

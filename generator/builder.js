@@ -226,6 +226,7 @@ const buildBlogLatest = async (blogs) => {
 	html = html.replace('{{technologies}}', blog.resources.join(' · '))
 	html = html.replace('{{blurb}}', blog.blurb)
 	html = html.replace('{{author}}', blog.author)
+	html = html.replace('{{author-img}}', blog.authorImg)
 	html = html.replace('{{published}}', displayDate)
 
 	// calculate read time
@@ -278,6 +279,7 @@ const buildBlogAll = async (blogs) => {
 			blogHtml = blogHtml.replace('{{index}}', index)
 			blogHtml = blogHtml.replace('{{row-index}}', rowIndex)
 			blogHtml = blogHtml.replace('{{author}}', sortedBlogs[index].author)
+			blogHtml = blogHtml.replace('{{author-img}}', sortedBlogs[index].authorImg)
 
 			// calculate date
 			let date = new Date(sortedBlogs[index].published * 1000)
@@ -331,6 +333,7 @@ const buildBlogSpec = async (blogs, page) => {
 	// build blog information
 	html = html.replace(/\{\{title\}\}/g, blog.title)
 	html = html.replace('{{author}}', blog.author)
+	html = html.replace('{{author-img}}', blog.authorImg)
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
@@ -350,14 +353,17 @@ const buildBlogSpec = async (blogs, page) => {
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
-	date = new Date(blog.updated * 1000)
-	month = months[date.getMonth()]
-	day = date.getDate()
-	ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
-	year = date.getFullYear()
-	timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
-	displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
+	displayDate = ''
+	if (blog.updated !== '') {
+		date = new Date(blog.updated * 1000)
+		month = months[date.getMonth()]
+		day = date.getDate()
+		ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
+		year = date.getFullYear()
+		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+		tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
+	}
 	html = html.replace('{{updated-full-datetimestamp}}', displayDate)
 
 	// calculate read time
@@ -417,6 +423,7 @@ const buildProjSpec = async (projects, page) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
 	specSnippet = specSnippet.toString()
 	technologiesMetadataSnippet = technologiesMetadataSnippet.toString()
 	githubStarsMetadataSnippet = githubStarsMetadataSnippet.toString()
@@ -430,6 +437,7 @@ const buildProjSpec = async (projects, page) => {
 	docsIconSnippet = docsIconSnippet.toString()
 	githubIconSnippet = githubIconSnippet.toString()
 	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
 
 	// build HTML
 	let html = specSnippet
@@ -445,7 +453,7 @@ const buildProjSpec = async (projects, page) => {
 	)
 
 	// build links
-	let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+	let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml=''
 	if (project.repo !== '') {
 		githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
 	}
@@ -458,10 +466,14 @@ const buildProjSpec = async (projects, page) => {
 	if (project.link !== '') {
 		linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
 	}
+	if (project.blogPost !== '') {
+		blogIconHtml = blogIconSnippet.replace('{{blog}}', project.blogPost)
+	}
 	html = html.replace(/\{\{github-icon\}\}/g, githubIconHtml)
 	html = html.replace(/\{\{docs-icon\}\}/g, docsIconHtml)
 	html = html.replace(/\{\{demo-icon\}\}/g, demoIconHtml)
 	html = html.replace(/\{\{link-icon\}\}/g, linkIconHtml)
+	html = html.replace(/\{\{blog-icon\}\}/g, blogIconHtml)
 
 	// build project metadata
 	let technologiesMetadataHtml = technologiesMetadataSnippet.replace('{{technologies}}', project.languages.concat(project.technologies).filter(p => p !== '').join(' · '))

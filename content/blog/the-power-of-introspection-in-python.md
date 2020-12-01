@@ -76,7 +76,6 @@ This might seem like some Python mumbo-jumbo, so let's break it down! The first 
 
 ### A real life example
 `getattr` is actually used in [willcarh.art]({{sys:home}})! All of the content for the site's database is read from a JSON file. Rather than hard coding this content in a Python file, I wrote a simple script called the `Scribe` to read from the JSON file and upload to [willcarh.art]({{sys:home}})'s database. Now, there are multiple different models, or classes, in the database, so `Scribe` needs to be able to dynamically create Python objects. Here's how I used `getattr` to accomplish this...
-
 My JSON schema is defined as such:
 ```
 [

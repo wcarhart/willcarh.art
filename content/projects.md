@@ -56,7 +56,7 @@ install: brew install wcarhart/tools/smoosh
 documentation:
 related:
 visibility: super
-blogPost:
+blogPost: {{src:blog/how-to-summarize-any-article-in-7-sentences-with-software.html}}
 tags: cli
 
 name: koi
@@ -80,7 +80,7 @@ related: chiller
 related: thoth
 related: docs
 visibility: super
-blogPost:
+blogPost: {{src:blog/recreating-pythons-argparse-in-bash.html}}
 tags: library
 
 name: snug
@@ -132,7 +132,7 @@ install:
 documentation:
 related:
 visibility: featured
-blogPost: {{src:blog/automating-emails-in-python.html}}
+blogPost: {{src:blog/why-i-wrote-my-own-static-site-generator.html}}
 tags: cli
 tags: web
 
@@ -621,7 +621,7 @@ install:
 documentation:
 related:
 visibility: normal
-blogPost:
+blogPost: {{src:blog/reducing-aws-s3-storage-costs-with-bubble-trees.html}}
 tags: library
 
 name: Rise and Shine

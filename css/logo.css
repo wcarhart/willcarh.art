@@ -22,7 +22,6 @@
 	z-index: 50;
 }
 
-/* TODO: this is still a little janky */
 #logo-container::before, #logo-container::after {
 	box-sizing: inherit;
 	content: '';

@@ -16,7 +16,6 @@ $(document).ready(async () => {
 
 const resizeBlogCards = async () => {
 
-	// TODO: fix this, it's janky af
 	// wait for page to settle
 	await new Promise(r => setTimeout(r, 500));
 

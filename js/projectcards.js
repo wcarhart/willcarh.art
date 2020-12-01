@@ -32,7 +32,6 @@ $(document).ready(async () => {
 
 const resizeProjectContainers = async () => {
 
-	// TODO: fix this, it's janky af
 	// wait for page to settle
 	await new Promise(r => setTimeout(r, 500));
 

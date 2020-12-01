@@ -13,7 +13,7 @@ const copyFilePromise = util.promisify(fs.copyFile)
 
 // TODO: add color
 /*
-Supported asset tags:
+Supported static asset tags:
   {{css:...}}      --> static CSS file
   {{ico:...}}      --> static icon file
   {{font:...}}     --> static font file
@@ -21,6 +21,10 @@ Supported asset tags:
   {{src:...}}      --> static built source file
   {{cdn:...}}      --> file stored in CDN
   {{color:...}}    --> color from the system color palette
+*/
+
+/*
+Support dynamic asset tags:
   {{sys:header}}   --> generated header for HTML files
   {{sys:headerjs}} --> generated header for JS files
   {{sys:home}}     --> path to homepage

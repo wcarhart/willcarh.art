@@ -218,7 +218,6 @@ const resolveAssets = async (data, level, develop) => {
 				} else {
 					let file = value
 
-					// TODO: should CSS files follow the same pattern as JS files?
 					// js files are a special folder in src/ because they are also generated from templates
 					if (asset === 'js') {
 						file = path.join('js', file)

@@ -1,7 +1,7 @@
 ### Emails in Python: An Introduction
 Ever want to set up an email newsletter on your own? Or have you ever wondered how services like [MailChimp](https://mailchimp.com/) send automated emails? Sending emails programmatically is very common practice, and Python comes out of the box with some awesome packages to help us send emails. Let's dive in!
-
 >> Note | You can download all the demo code from this blog post via this [GitHub gist](https://gist.github.com/wcarhart/b4f509c46ad1515a9954d356aaf10df1).
+
 
 ### What is SMTP?
 The [Simple Mail Transfer Protocol](https://www.geeksforgeeks.org/simple-mail-transfer-protocol-smtp/), or _SMTP_, is one of the most common protocols for sending outgoing emails. SMTP servers are responsible for connecting individual email clients like Gmail and Yahoo to the greater Internet, which in turn allows you to send an email to (almost) anyone in the world! I'm not going to delve into the details of SMTP right now, but a high-level take away is that **SMTP is an interface that allows you to send emails to other recipients' inboxes.**

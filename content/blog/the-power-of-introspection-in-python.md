@@ -26,8 +26,8 @@ We can also use the Python builtin function `getattr` to accomplish this.
 10
 ```
 What just happened? We used the `getattr` function to get named attributes from our `Car` class. Even cooler, not only can we use `getattr` to get the value of class attributes, we can also use it to call functions!
-
 >> Summary | `getattr(object, 'val')` is equivalent to `object.val`
+
 
 ### Why is this powerful?
 On the surface, the introspective power of `getattr` may not be immediately apparent. After all, it took us the same number of steps to drive our `Car` with introspection as without. However, consider the case where you want to call a function via a variable, like a string. Let's rewrite our `Car` class to be a bit more generic:
@@ -94,9 +94,8 @@ def parse_data(entity):
     instance.save()
 ```
 And that's it! These few lines of code save me the hassle of micromanaging my database. This is a watered down version of `Scribe` for demonstration purposes. If you'd like to see the full source code, check it out [here](https://github.com/wcarhart/willcarh.art-v1/blob/master/scribe.py).
-
 >> Summary | `getattr` is a powerful Python builtin. You can use it to acquire a class instance from a module or an attribute from a class, as well as calling class functions.
 
 If you're interested in learning more about [`getattr`](https://docs.python.org/3/library/functions.html#getattr), [here's a great introspection article](https://linux.die.net/diveintopython/html/power_of_introspection/index.html). You could also consider looking into [`setattr`](https://docs.python.org/3/library/functions.html#setattr), [`hasattr`](https://docs.python.org/3/library/functions.html#hasattr), and [`delattr`](https://docs.python.org/3/library/functions.html#delattr).
 
-🦉
+=🦉

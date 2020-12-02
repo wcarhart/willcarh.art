@@ -116,7 +116,7 @@ Could we also print some output with our spinner? What about spinners that are m
 ```
 function start_spinner {
     set +m
-    echo -n "$1...         "
+    echo -n "$1         "
     { while : ; do for X in '  •     ' '   •    ' '    •   ' '     •  ' '      • ' '     •  ' '    •   ' '   •    ' '  •     ' ' •      ' ; do echo -en "\b\b\b\b\b\b\b\b$X" ; sleep 0.1 ; done ; done & } 2>/dev/null
     spinner_pid=$!
 }

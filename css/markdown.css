@@ -43,8 +43,9 @@
 	background-color: var(--detail);
 	padding: 1rem;
 	font-family: 'Roboto Mono', monospace;
-	/*white-space: pre-wrap;
-	overflow-wrap: break-word;*/
+	width: 0;
+	max-width: 100%;
+	min-width: 100%;
 }
 
 .shoutout {

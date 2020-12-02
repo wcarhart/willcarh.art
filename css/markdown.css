@@ -43,6 +43,8 @@
 	background-color: var(--detail);
 	padding: 1rem;
 	font-family: 'Roboto Mono', monospace;
+	/*white-space: pre-wrap;
+	overflow-wrap: break-word;*/
 }
 
 .shoutout {

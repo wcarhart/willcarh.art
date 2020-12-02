@@ -139,8 +139,9 @@ const convert = async (md, page) => {
 					html += ulSnippet.replace('{{list-items}}', listItems.map(li => liSnippet.replace('{{text}}', li)).join(''))
 					listItems = []
 					inList = false
+				} else {
+					html += '<br>'
 				}
-				html += '<br>'
 
 			// all other lines are interpreted to be regular content text
 			} else {

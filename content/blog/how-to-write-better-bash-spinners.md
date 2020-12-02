@@ -137,7 +137,7 @@ stop_spinner
 Try this out yourself on the command line!
 
 ### The final product
-Now that we've written `start_spinner` and `stop_spinner` once, we can just include these functions in all of our shell scripts going forward to enable some pretty awesome spinners. If you'd like to see the final, complete version of our spinner code, please refer to [this gist]().
+Now that we've written `start_spinner` and `stop_spinner` once, we can just include these functions in all of our shell scripts going forward to enable some pretty awesome spinners. If you'd like to see the final, complete version of our spinner code, please refer to [willcarh.art's snippet repo](https://github.com/wcarhart/willcarh.art-snippets/blob/master/how-to-write-better-bash-spinners/snippet.bash).
 If you'd like to see how I've used this spinner in practice, checkout [lurker]({{src:project/lurker.html}}) and [birdhouse]({{src:project/birdhouse.html}}), as they both use a modified version of the code snippets developed in this blog post.
 Please spin responsibly.
 =🦉

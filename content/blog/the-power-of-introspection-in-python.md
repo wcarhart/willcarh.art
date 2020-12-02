@@ -72,7 +72,7 @@ def jsonize(self):
     variables = [var for var in dir(self) if not var.startswith(('_', '__')) and not callable(getattr(self, var))]
     return "{" + ",".join([f"\"{var}\": \"{getattr(self, var)}\"" for var in variables]) + "}"
 ```
-This might seem like some Python mumbo-jumbo, so let's break it down! The first line of `jsonize` gets all of the variables in the class (`self`). Then, the second line calls `getattr` for each variable, and arranges them nicely into JSON format. See, not so bad! Check out the code [here](https://gist.github.com/wcarhart/cf3944f3a62415406f8bd92c427173e5).
+This might seem like some Python mumbo-jumbo, so let's break it down! The first line of `jsonize` gets all of the variables in the class (`self`). Then, the second line calls `getattr` for each variable, and arranges them nicely into JSON format. See, not so bad! Check out the code [here](https://github.com/wcarhart/willcarh.art-snippets/blob/master/the-power-of-introspection-in-python/snippet.py).
 
 ### A real life example
 `getattr` is actually used in [willcarh.art]({{sys:home}})! All of the content for the site's database is read from a JSON file. Rather than hard coding this content in a Python file, I wrote a simple script called the `Scribe` to read from the JSON file and upload to [willcarh.art]({{sys:home}})'s database. Now, there are multiple different models, or classes, in the database, so `Scribe` needs to be able to dynamically create Python objects. Here's how I used `getattr` to accomplish this...

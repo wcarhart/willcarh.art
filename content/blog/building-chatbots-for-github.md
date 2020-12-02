@@ -112,7 +112,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-There ya go! If you have both `.travis.yml` and the above code saved as `comment.py` in your repository, you'll get automated comments on Pull Requests!
+There ya go! If you have both `.travis.yml` and the above code saved as `comment.py` in your repository, you'll get automated comments on Pull Requests! You can also check out the code [here](https://github.com/wcarhart/willcarh.art-snippets/blob/master/building-chatbots-for-github/snippet.py).
 >> Heads Up! | In order for the above code to work, you'll have to add `GITHUB_TOKEN` as a secure environment variable to your Travis environment. There are a few ways to do this, as outlined in [Travis' documentation](https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings).
 
 

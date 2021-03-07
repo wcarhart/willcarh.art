@@ -3,19 +3,9 @@
 // Learn more: https://github.com/wcarhart/willcarh.art
 // THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!
 
-// update text below blocks on homepage
+// update text below blocks on about page
 $(document).ready(async () => {
-	$('#home-about-container').hover(async () => {
-		$('#more-information').fadeOut('fast', async () => {
-			$('#tidbit-title').text('About')
-			$('#tidbit-text').text('Learn more about me.')
-			$('#more-information').fadeIn('fast', async () => {})
-		})
-	}, async () => {
-		$('#more-information').fadeOut('fast', async () => {})
-	})
-
-	$('#home-projects-container').hover(async () => {
+	$('#about-projects-container').hover(async () => {
 		$('#more-information').fadeOut('fast', async () => {
 			$('#tidbit-title').text('Projects')
 			$('#tidbit-text').text('See what I\'ve been working on.')
@@ -25,7 +15,7 @@ $(document).ready(async () => {
 		$('#more-information').fadeOut('fast', async () => {})
 	})
 
-	$('#home-blog-container').hover(async () => {
+	$('#about-blog-container').hover(async () => {
 		$('#more-information').fadeOut('fast', async () => {
 			$('#tidbit-title').text('Blog')
 			$('#tidbit-text').text('Read my blog.')

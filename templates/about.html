@@ -55,6 +55,7 @@
 		<script src="{{js:profilephoto.js}}"></script>
 		<script src="{{js:anchorjump.js}}"></script>
 		<script src="{{js:expselector.js}}"></script>
+		<script src="{{js:aboutpagetidbit.js}}"></script>
 	</head>
 	<body>
 
@@ -155,25 +156,40 @@
 						<div class="col-md-6">
 							<h2>Stuff I've Built.</h2>
 							<p class="content-text">For me, coding is as much a hobby as it is a career. Here are a few things I've built.</p>
-							<div class="row">
-								<div class="button-container">
-									<a href="{{src:project_index.html}}">
-										<div class="button-content">projects &nbsp;🏗</div>
-									</a>
-								</div>
-
-								<div class="button-container">
-									<a href="{{src:blog_index.html}}">
-										<div class="button-content">blog &nbsp;📖</div>
-									</a>
-								</div>
-							</div>
-							<!-- TODO: use buttons from home page -->
 						</div>
 						<div class="col-md-3"></div>
 					</div>
+					<div class="spacer-small"></div>
+					<div class="row">
+						<div class="col-md-2"></div>
+						<a class="col-md-4" href="{{src:project_index.html}}">
+							<div class="col-md-12" align="center">
+								<div id="about-projects-container" class="about-block-container">
+									<img id="about-projects-logo" class="about-block-item" alt="project logo" src="{{ico:home-projects-light.png}}">
+								</div>
+							</div>
+						</a>
+						<a class="col-md-4" href="{{src:blog_index.html}}">
+							<div class="col-md-12" align="center">
+								<div id="about-blog-container" class="about-block-container">
+									<img id="about-blog-logo" class="about-block-item" alt="blog logo" src="{{ico:home-blog-light.png}}">
+								</div>
+							</div>
+						</a>
+						<div class="col-md-2"></div>
+					</div>
+					<div class="spacer-small"></div>
+					<div class="row">
+						<div class="col-md-12" align="center">
+							<div id="more-information">
+								<h2 id="tidbit-title"></h2>
+								<p id="tidbit-text" class="subtitle-text"></p>
+							</div>
+						</div>
+					</div>
 				</div>
 
+				<div class="spacer"></div>
 				<div class="spacer"></div>
 
 				<div class="section" id="section-5">

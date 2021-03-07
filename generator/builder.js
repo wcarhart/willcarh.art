@@ -404,10 +404,10 @@ const buildBlogSpec = async (blogs, page) => {
 	// add next blog link, if possible
 	let blogIndex = sortedBlogs.indexOf(blog) + 1
 	if (blogIndex === sortedBlogs.length) {
-		html = html.replace('{{blog-next}}', await htmlSafify(sortedBlogs[0].id))
+		html = html.replace('{{blog-next}}', await sortedBlogs[0].id)
 		html = html.replace('{{blog-title}}', sortedBlogs[0].title)
 	} else {
-		html = html.replace('{{blog-next}}', await htmlSafify(sortedBlogs[blogIndex].id))
+		html = html.replace('{{blog-next}}', await sortedBlogs[blogIndex].id)
 		html = html.replace('{{blog-title}}', sortedBlogs[blogIndex].title)
 	}
 

@@ -121,3 +121,30 @@ h5 {
 	border: solid 0.2rem var(--text);
 	border-radius: 1rem;
 }
+
+#project-navigation-container {
+	padding: 1rem;
+}
+
+.project-navigation-chunk {
+	padding: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.project-navigation-chunk:hover {
+	cursor: pointer;
+}
+
+.show-more {
+	display: none;
+	color: var(--color);
+}
+
+#project-navigation-back:hover .show-more {
+	display: inline;
+}

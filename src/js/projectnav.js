@@ -3,9 +3,9 @@
 // Learn more: https://github.com/wcarhart/willcarh.art
 // THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!
 
-// prevent default when link icons are clicked - because some divs are clickable
+// handle clicks on project nav items
 $(document).ready(async () => {
-	$('.link-icon-no-default').click((event) => {
-		event.stopPropagation()
+	$('#project-navigation-back').click(async function() {
+		window.location.href = window.location.href.replace(/project.*$/, 'project_index.html')
 	})
 })

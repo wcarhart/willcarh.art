@@ -56,8 +56,8 @@ title: Building Chatbots for GitHub
 subtitle: I am definitely a human beep boop
 blurb: Using the GitHub API, we can automate just about any functionality of GitHub. Let's take a look at how we can conglomerate Python, Travis CI, and the GitHub API to make a friendly chatbot.
 cover: {{cdn:img/blog/building-chatbots-for-github/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: Painterstock
+coverCredit: https://stock.adobe.com/contributor/207043170/painterstock
 published: 1566197160
 updated: 1606613597
 resources: Python
@@ -73,9 +73,9 @@ id: building-chatbots-for-github
 title: Reducing AWS S3 Storage Costs with Bubble Trees
 subtitle: No, there are not actually bubbles in the trees
 blurb: When S3 buckets are used for storing behemoth amounts of data, like genomic data or high-resolution images, costs can run high. Let's look a new kind of data structure, the bubble tree, to try and combat these high costs in some scenarios. 
-cover: {{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/cover.png}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+cover: {{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/cover.jpg}}
+coverAuthor: pronoia
+coverCredit: https://stock.adobe.com/contributor/205152658/pronoia
 published: 1567533600
 updated:
 resources: Python
@@ -94,8 +94,8 @@ title: Recreating Python's argparse in Bash
 subtitle: Leading the way in Bash CLI applications
 blurb: Many languages ship with powerful command line argument parsing libraries, Bash included. One of the best I've had the pleasure of working with is Python's argparse. Let's dive into how argparse became the inspiration for my Bash argument parsing library, koi.
 cover: {{cdn:img/blog/recreating-pythons-argparse-in-bash/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: Painterstock
+coverCredit: https://stock.adobe.com/contributor/207043170/painterstock
 published: 1589338800
 updated:
 resources: Bash
@@ -111,8 +111,8 @@ title: Spinning Up a Fleet of DigitalOcean Droplets
 subtitle: How to create your own minions
 blurb: There are many different options for IaaS these days. Let's look into some awesome use cases for DigitalOcean's VM product, the droplet.
 cover: {{cdn:img/blog/spinning-up-a-fleet-of-digitalocean-droplets/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: serge-b
+coverCredit: https://stock.adobe.com/contributor/200769316/serge-b
 published: 1581447900
 updated:
 resources: DigitalOcean
@@ -130,8 +130,8 @@ title: How to Summarize Any Article in 7 Sentences, with Software
 subtitle: Ain't got time for no readin'
 blurb: Ever wonder how Reddit's auto tl;dr bot works? Let's explore a simple text summarization algorithm and see how smoosh, a text summarizer I wrote, uses it.
 cover: {{cdn:img/blog/how-to-summarize-any-article-in-7-sentences-with-software/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: weris7554
+coverCredit: https://stock.adobe.com/contributor/204819955/weris7554
 published: 1603992180
 updated: 
 resources: Python
@@ -144,10 +144,10 @@ id: how-to-summarize-any-article-in-7-sentences-with-software
 
 title: Why I Wrote my own Static Site Generator
 subtitle: Embracing sustainability
-blurb: My old Django + Heroku application was becoming difficult to maintain, so I decided to switch to a static site. Rather than use an off the shelf generator like Hugo or Jekyll, I decided wrote my own, from scratch.
+blurb: My old Django + Heroku application was becoming difficult to maintain, so I decided to switch to a static site. Rather than use an off the shelf generator like Hugo or Jekyll, I wrote my own, from scratch.
 cover: {{cdn:img/blog/why-i-wrote-my-own-static-site-generator/cover.jpg}}
-coverAuthor: Alena Aenami
-coverCredit: https://www.artstation.com/aenamiart
+coverAuthor: jenteva
+coverCredit: https://stock.adobe.com/contributor/206678109/jenteva
 published: 1606870440
 updated:
 resources: Node.js
@@ -170,8 +170,8 @@ title: The Easy Way to Add Dark Mode to your Website
 subtitle: Kill the lights, yo
 blurb: Seems like the most recent web development fad is dark mode, so why don't we take a look at how willcarh.art implemented it.
 cover: {{cdn:img/blog/the-easy-way-to-add-dark-mode-to-your-website/cover.jpg}}
-coverAuthor: Alena Aenami
-coverCredit: https://www.artstation.com/aenamiart
+coverAuthor: thanawong
+coverCredit: https://stock.adobe.com/contributor/202816684/thanawong
 published: 1604468160
 updated:
 resources: JavaScript
@@ -188,8 +188,8 @@ title: How to Write Better Bash Spinners
 subtitle: Level up your shell scripts
 blurb: Adding a spinner or progress indicator to your script can be super helpful for your users. However, it can be unnecessarily complex thing to do. Let's look at a way you can add a spinner to any Bash script.
 cover: {{cdn:img/blog/how-to-write-better-bash-spinners/cover.jpg}}
-coverAuthor: Alena Aenami
-coverCredit: https://www.artstation.com/aenamiart
+coverAuthor: Painterstock
+coverCredit: https://stock.adobe.com/contributor/207043170/painterstock
 published: 1584599100
 updated: 
 resources: Bash
@@ -203,8 +203,8 @@ title: A Case for Git Filters
 subtitle: Becoming a git sudoer
 blurb: Sometimes pesky secrets can find their way into repositories. Git has an awesome, yet somewhat unknown feature, git filters, that can help us avoid checking secrets into our repositories.
 cover: {{cdn:img/blog/a-case-for-git-filters/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: Svetlana
+coverCredit: https://stock.adobe.com/contributor/208403499/svetlana
 published: 1594163700
 updated: 
 resources: Git
@@ -218,8 +218,8 @@ title: On Failure
 subtitle: Learning and growing
 blurb: Failure hurts. But it can also be a teacher of grace and empathy. I've failed many times in my life, and will continue to do so. Here are my thoughts on how I've done so far.
 cover: {{cdn:img/blog/on-failure/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: oliverzs
+coverCredit: https://stock.adobe.com/contributor/209580837/oliverzs
 published: 1574179200
 updated:
 resources:
@@ -233,8 +233,8 @@ title: A Foray into Homebrew
 subtitle: How to manage your own tap
 blurb: Homebrew has become one of the most powerful widely used package managers for modern software development. Let's pull back the curtain on how Homebrew works and talk about how to create your own Homebrew formulae.
 cover: {{cdn:img/blog/a-foray-into-homebrew/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: Artmirei
+coverCredit: https://stock.adobe.com/contributor/207528138/artmirei
 published: 1587580200
 updated:
 resources: Homebrew
@@ -250,8 +250,8 @@ title: How to Create the Typewriter Effect in JavaScript
 subtitle: Fulfill a SaaS marketer's dream
 blurb: Ever see text on webpages that looks like its being typed automatically? I'm going to show you just how it easy to achieve this, called the typewriter effect, with a little bit of JavaScript and jQuery.
 cover: {{cdn:img/blog/how-to-create-the-typewriter-effect-in-javascript/cover.jpg}}
-coverAuthor: Goedele Godfroid
-coverCredit: https://www.artstation.com/hudley
+coverAuthor: weris7554
+coverCredit: https://stock.adobe.com/contributor/204819955/weris7554
 published: 1608312780
 updated:
 resources: JavaScript
@@ -266,8 +266,8 @@ title: Why I'm Excited About Deno
 subtitle: And why you should be too
 blurb: Deno could be the replacement for Node.js. It's written by Node's original author, Ryan Dahl, and seeks to address a lot of the complaints about Node.js and NPM. But, is it innovative enough to overcome the vast existing Node.js ecosystem?
 cover: {{cdn:img/blog/why-im-excited-about-deno/cover.jpg}}
-coverAuthor: Alena Aenami
-coverCredit: https://www.artstation.com/aenamiart
+coverAuthor: grandfailure
+coverCredit: https://stock.adobe.com/contributor/204918064/grandfailure
 published: 1601492640
 updated:
 resources: Deno
@@ -282,8 +282,8 @@ title: Why I Deleted My Facebook
 subtitle: Reflecting on my social media usage
 blurb: After some deliberation, I've decided to delete my Facebook account. Here are my thoughts on how I reached my decision.
 cover: {{cdn:img/blog/why-i-deleted-my-facebook/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: grandfailure
+coverCredit: https://stock.adobe.com/contributor/204918064/grandfailure
 published: 1614528000
 updated:
 resources: 
@@ -297,8 +297,8 @@ title: How to Print File Trees on the Command Line
 subtitle: Spruce up your file system
 blurb: Sometimes it's helpful to print a set of files and directories on the command line. As this set grows larger, it can often become unwieldy to display. Let's replicate the functionality of the Linux tool 'tree' in JavaScript and Python.
 cover: {{cdn:img/blog/how-to-print-file-trees-on-the-command-line/cover.jpg}}
-coverAuthor: Jason Scheier
-coverCredit: https://www.artstation.com/d3cap
+coverAuthor: Sivenkov
+coverCredit: https://stock.adobe.com/contributor/207352372/sivenkov
 published: 1610992920
 updated:
 resources: JavaScript

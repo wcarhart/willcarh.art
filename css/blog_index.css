@@ -101,6 +101,7 @@ hr {
 
 .blog-cover-all {
 	max-height: 15rem;
+	min-height: 15rem;
 	height: 100%;
 	width: 100%;
 	background-size: cover;

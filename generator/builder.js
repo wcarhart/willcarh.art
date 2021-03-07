@@ -43,6 +43,7 @@ Supported HTML tags:
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
   {{html:footer}}        --> build HTML for footer
+  {{html:analytics}}     --> build HTML for site analytics
 
 Supported code tags:
   {{code:proj}}          --> load projects into code
@@ -118,7 +119,7 @@ const buildMetaHtml = async ({description='', url=''}) => {
 // replace {{html:...}} tags
 const buildHtml = async (data, match, key, page) => {
 	let resolvedData = data
-	let experiences = null, projects = null, blogs = null, footer = null
+	let experiences = null, projects = null, blogs = null, footer = null, analytics = null
 	let html = null
 	switch (key) {
 		case 'exp-tabs':
@@ -162,6 +163,10 @@ const buildHtml = async (data, match, key, page) => {
 		case 'footer':
 			footer = await readFilePromise('snippets/footer/footer.html')
 			html = footer.toString()
+			break
+		case 'analytics':
+			analytics = await readFilePromise('snippets/analytics/analytics.html')
+			html = analytics.toString()
 			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)

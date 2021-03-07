@@ -63,11 +63,12 @@ const usage = async () => {
 	console.log('forge - build pages for willcarh.art')
 	console.log('')
 	console.log('Usage:')
-	console.log('forge [-h] [-d] [-b] [-s]')
+	console.log('forge [-h] [-b] [-d] [-s] [-v]')
 	console.log('  -h, --help      Show this menu and exit')
-	console.log('  -d, --develop   Do not exit on validation errors')
 	console.log('  -b, --browser   Open the newly built website in a new browser window')
+	console.log('  -d, --develop   Do not exit on validation errors')
 	console.log('  -s, --silent    Silence build output')
+	console.log('  -v, --verbose   Show generated files as a result of forge')
 }
 
 // parse command line arguments
@@ -81,6 +82,11 @@ const parseArgs = async (args) => {
 		parsedArgs.develop = true
 	} else {
 		parsedArgs.develop = false
+	}
+	if (args.includes('-v') || args.includes('--verbose')) {
+		parsedArgs.verbose = true
+	} else {
+		parsedArgs.verbose = false
 	}
 	return parsedArgs
 }
@@ -109,7 +115,9 @@ const main = async () => {
 		if (args.develop !== true) {
 			await validateBuild()
 		}
-		await generateFileTree()
+		if (args.verbose === true) {
+			await generateFileTree()
+		}
 		const endTime = new Date().getTime()
 		console.log(`✨  Done in ${(endTime - startTime) / 1000} seconds`)
 	} catch (e) {

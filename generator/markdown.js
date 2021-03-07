@@ -136,7 +136,8 @@ const convert = async (md, page) => {
 			// empty lines are interpreted to be line breaks
 			} else if (line === '') {
 				if (inList) {
-					html += ulSnippet.replace('{{list-items}}', listItems.map(li => liSnippet.replace('{{text}}', li)).join(''))
+					let listHtml = await Promise.all(listItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
+					html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
 					listItems = []
 					inList = false
 				} else {
@@ -146,7 +147,8 @@ const convert = async (md, page) => {
 			// all other lines are interpreted to be regular content text
 			} else {
 				if (inList) {
-					html += ulSnippet.replace('{{list-items}}', listItems.map(li => liSnippet.replace('{{text}}', li)).join(''))
+					let listHtml = await Promise.all(listItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
+					html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
 					listItems = []
 					inList = false
 				} else {

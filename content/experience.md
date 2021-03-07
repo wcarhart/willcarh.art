@@ -12,6 +12,8 @@ languagesAndLibraries: Node.js
 languagesAndLibraries: Express.js
 languagesAndLibraries: Bash
 languagesAndLibraries: Python
+languagesAndLibraries: Dash
+languagesAndLibraries: Plotly
 tools: git
 tools: Bitbucket
 tools: Jira
@@ -20,7 +22,7 @@ tools: Google Drive
 platforms: Docker
 platforms: Linux (Ubuntu)
 platforms: macOS
-infrastructure: GCP (Cloud Storage, Cloud Functions, Compute)
+infrastructure: GCP (Cloud Storage, Cloud Functions, Compute Engine, App Engine, BigQuery)
 infrastructure: Bamboo
 infrastructure: Puppet
 infrastructure: Kubernetes (GKE)
@@ -47,8 +49,8 @@ tools: Jira
 tools: Confluence
 tools: Jama
 platforms: Docker
-tools: Linux (centOS)
-tools: Windows 10
+platforms: Linux (centOS)
+platforms: Windows 10
 infrastructure: AWS (S3, EC2, SNS, Lambda)
 infrastructure: Jenkins
 infrastructure: GNU Make
@@ -64,6 +66,7 @@ detail: Built **responsive webpages** for various clients using HTML5, CSS3, and
 detail: Maintained and updated documentation for production web apps
 detail: Troubleshot Elixir backend, **managed Docker delopyments**
 languagesAndLibraries: React
+languagesAndLibraries: JavaScript
 languagesAndLibraries: HTML5
 languagesAndLibraries: CSS3
 languagesAndLibraries: Elixir

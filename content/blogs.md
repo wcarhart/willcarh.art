@@ -181,6 +181,7 @@ resources: jQuery
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active
+tags:
 id: the-easy-way-to-add-dark-mode-to-your-website
 
 title: How to Write Better Bash Spinners
@@ -195,6 +196,7 @@ resources: Bash
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active
+tags:
 id: how-to-write-better-bash-spinners
 
 title: A Case for Git Filters
@@ -209,6 +211,7 @@ resources: Git
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active
+tags:
 id: a-case-for-git-filters
 
 title: On Failure
@@ -223,6 +226,7 @@ resources:
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active
+tags:
 id: on-failure
 
 title: A Foray into Homebrew
@@ -239,6 +243,7 @@ resources: Git
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active
+tags:
 id: a-foray-into-homebrew
 
 title: How to Create the Typewriter Effect in JavaScript
@@ -254,6 +259,7 @@ resources: jQuery
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active
+tags:
 id: how-to-create-the-typewriter-effect-in-javascript
 
 title: Why I'm Excited About Deno
@@ -269,4 +275,37 @@ resources: JavaScript
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active
+tags:
 id: why-im-excited-about-deno
+
+title: Why I Deleted My Facebook
+subtitle: Reflecting on my social media usage
+blurb: After some deliberation, I've decided to delete my Facebook account. Here are my thoughts on how I reached my decision.
+cover: {{cdn:img/blog/why-i-deleted-my-facebook/cover.jpg}}
+coverAuthor: Jason Scheier
+coverCredit: https://www.artstation.com/d3cap
+published: 1614528000
+updated:
+resources: 
+author: Will Carhart
+authorImg: {{cdn:img/profile.jpg}}
+status: active
+tags:
+id: why-i-deleted-my-facebook
+
+title: How to Print File Trees on the Command Line
+subtitle: Spruce up your file system
+blurb: Sometimes it's helpful to print a set of files and directories on the command line. As this set grows larger, it can often become unwieldy to display. Let's replicate the functionality of the Linux tool 'tree' in JavaScript and Python.
+cover: {{cdn:img/blog/how-to-print-file-trees-on-the-command-line/cover.jpg}}
+coverAuthor: Jason Scheier
+coverCredit: https://www.artstation.com/d3cap
+published: 1610992920
+updated:
+resources: JavaScript
+resources: Python
+resources: Linux
+author: Will Carhart
+authorImg: {{cdn:img/profile.jpg}}
+status: active
+tags:
+id: how-to-print-file-trees-on-the-command-line

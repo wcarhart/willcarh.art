@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="{{css:common.css}}">
 		<link rel="stylesheet" href="{{css:logo.css}}">
 		<link rel="stylesheet" href="{{css:darkmode.css}}">
+		<link rel="stylesheet" href="{{css:footer.css}}">
 		<link rel="stylesheet" href="{{css:home.css}}">
 
 		<!-- jQuery -->
@@ -96,11 +97,6 @@
 		</div>
 
 		<!-- footer -->
-		<div id="credits" class="row">
-			<a id="github-icon" href="https://github.com/wcarhart" target="_blank"><i class="fab fa-github" data-fa-transform="left-6"></i></a>
-			<a id="stackoverflow-icon" href="https://stackoverflow.com/users/6246128/wcarhart" target="_blank"><i class="fab fa-stack-overflow"></i></a>
-			<a id="linkedin-icon" href="https://linkedin.com/in/willcarhart" target="_blank"><i class="fab fa-linkedin" data-fa-transform="left-2"></i></a>
-			<div style="text-align:center">&copy;&nbsp; Will Carhart <span id="year"></span></div>
-		</div>
+		{{html:footer}}
 	</body>
 </html>

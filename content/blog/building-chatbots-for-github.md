@@ -27,7 +27,7 @@ curl -X POST -u $USER https://api.github.com/repos/$USER/$REPONAME/issues/$PRNUM
 }"
 ```
 Bash is kinda hard to read, what would this look like in Python?
->> Heads Up! | From here on out, you'll need to use a personal access token to use the [Github API](https://github.blog/2013-05-16-personal-api-tokens/). Use [this helpful tutorial](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) to generate your own token (all you need is a GitHub account). For our purposes, we'll need to select the `repo:status`, `repo_deployment`, and public_repo scopes found under the repo category.<br><br>**A good rule is to not grant your application more privileges than necessary!** Often a safe way of storing secrets, like API keys, is to [set them as environment variables](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables/58826#58826).
+>> Heads Up! | From here on out, you'll need to use a personal access token to use the [Github API](https://github.blog/2013-05-16-personal-api-tokens/). Use [this helpful tutorial](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) to generate your own token (all you need is a GitHub account). For our purposes, we'll need to select the `repo:status`, `repo_deployment`, and `public_repo` scopes found under the repo category.<br><br>**A good rule is to not grant your application more privileges than necessary!** Often a safe way of storing secrets, like API keys, is to [set them as environment variables](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables/58826#58826).
 
 Here's what the above POST request would look like in Python, via the [`requests` library](https://realpython.com/python-requests/):
 ```

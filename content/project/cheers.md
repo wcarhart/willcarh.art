@@ -24,4 +24,4 @@ Love a bar? Add it to your favorites! Cheers will remember your favorites so you
 Cheers supports Uber, Lyft, and Apple Maps. To discourage drinking and driving, Cheers makes it easy to use ridesharing apps to get from bar to bar.
 
 ### Future plans
-The demo above is of the proof-of-concept Cheers prototype. I have been developing the production version off-and-on, which utilizes a complete Flask API backend, rather than a dummy Firebase database. I would love to be able to release it to TestFlight and more publically at some point.
+The demo above is of the proof-of-concept Cheers prototype. I have been developing the production version off-and-on, which utilizes a complete Flask API backend, rather than a dummy Firebase database. I would love to be able to release it to TestFlight and more publicly at some point.

@@ -42,6 +42,7 @@ Supported HTML tags:
   {{html:blog-spec}}     --> build HTML for specific blog post
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
+  {{html:footer}}        --> build HTML for footer
 
 Supported code tags:
   {{code:proj}}          --> load projects into code
@@ -117,7 +118,7 @@ const buildMetaHtml = async ({description='', url=''}) => {
 // replace {{html:...}} tags
 const buildHtml = async (data, match, key, page) => {
 	let resolvedData = data
-	let experiences = null, projects = null, blogs = null
+	let experiences = null, projects = null, blogs = null, footer = null
 	let html = null
 	switch (key) {
 		case 'exp-tabs':
@@ -157,6 +158,10 @@ const buildHtml = async (data, match, key, page) => {
 		case 'demo-rows':
 			projects = await parser.parseProjects()
 			html = await buildDemoRows(projects)
+			break
+		case 'footer':
+			footer = await readFilePromise('snippets/footer/footer.html')
+			html = footer.toString()
 			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
@@ -617,7 +622,7 @@ const buildProjSuper = async (projects) => {
 }
 
 const htmlSafify = async (string) => {
-	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_')
+	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_').replace(/,/g, '').replace(/'/g, '')
 }
 
 // TODO: 'about' for projects shouldn't be an array, and we shouldn't use about[0]
@@ -926,7 +931,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
-		r.blogPost = `{{src:blog/${blog.title.toLowerCase().replace(/ /g, '-')}.html}}`
+		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}.html}}`
 		r.vaultLink = r.blogPost
 
 		rows.push(r)

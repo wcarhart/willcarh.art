@@ -2,7 +2,7 @@
 Introspection is one of those programming buzzwords that gets thrown around, but what does it actually mean? A quick Google search of introspection returns _the examination or observation of one's own mental and emotional processes._ For a human, introspection is essentially thinking about thinking, such as reconsidering why we acted a certain way or made a decision in the past.
 Introspection with Python is conceptually the same as with humans. We are essentially asking Python to give us some information about itself, whether it be about an instance of a class, object, etc. On the surface, this can sound complex, but in practice it's quite simple. Let's dive right in.
 
-### Introducting `getattr()`
+### Introducing `getattr()`
 Suppose we have the following Python class:
 ```
 class Car():

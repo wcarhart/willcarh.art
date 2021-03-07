@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="{{css:logo.css}}">
 		<link rel="stylesheet" href="{{css:darkmode.css}}">
 		<link rel="stylesheet" href="{{css:fancylink.css}}">
-		<link rel="stylesheet" href="{{css:footer.css}}">
+		<link rel="stylesheet" href="{{css:credits.css}}">
 		<link rel="stylesheet" href="{{css:etc.css}}">
 
 		<!-- jQuery -->
@@ -120,19 +120,15 @@
 				<p class="etc-answer">All of the text content (blog posts, project descriptions, inline code snippets, etc.) on this website is licensed under the <a class="fancy-link" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Creative Commons BY-NC 4.0 License</a>. This means you are free to share and adapt the text content of this website provided you attribute the author and do not use it for commercial purposes. This statement is a human-readable summary and not a substitute of the license.<br><br>The majority of referenced code on this website is free and open-source software licensed under the <a class="fancy-link" href="https://choosealicense.com/licenses/mit/" target="_blank">MIT License</a>. Refer to the associated source code for each project to determine its individual licensing. A repository without a license is not default free and open-source.<br><br>All images and icons are subject to their own licensing. Do not copy or distribute without the express permission of or licensing from the original author. Most icons sourced from <a class="fancy-link" href="https://icons8.com/" target="_blank">Icons8</a> and <a class="fancy-link" href="https://fontawesome.com/" target="_blank">FontAwesome</a>. Most images sourced from <a class="fancy-link" href="https://stock.adobe.com/" target="_blank">Adobe Stock</a> and <a class="fancy-link" href="https://www.artstation.com/" target="_blank">ArtStation</a>.</p>
 			</div>
 
-			{{html:footer}}
+			{{html:credits}}
 
 			<div class="spacer-small"></div>
 		</div>
 
 		<!-- logo -->
-		<a id="logo-container" href="{{sys:home}}">
-			<img id="logo" alt="willcarh.art logo" src="{{ico:android-chrome-512x512.png}}">
-		</a>
+		{{html:logo}}
 
 		<!-- dark mode toggle -->
-		<div id="dark-mode-toggle-container">
-			<button id="dark-mode-toggle"></button>
-		</div>
+		{{html:darkmode}}
 	</body>
 </html>

@@ -11,7 +11,6 @@ const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
 const copyFilePromise = util.promisify(fs.copyFile)
 
-// TODO: add color
 /*
 Supported static asset tags:
   {{css:...}}      --> static CSS file
@@ -20,15 +19,14 @@ Supported static asset tags:
   {{js:...}}       --> static built js file
   {{src:...}}      --> static built source file
   {{cdn:...}}      --> file stored in CDN
-  {{color:...}}    --> color from the system color palette
 */
 
 /*
 Support dynamic asset tags:
-  {{sys:header}}   --> generated header for HTML files
-  {{sys:headerjs}} --> generated header for JS files
-  {{sys:home}}     --> path to homepage
-  {{sys:pokemon}}  --> Pokemon ascii art
+  {{sys:header}}    --> generated header for HTML files
+  {{sys:headerjs}}  --> generated header for JS files
+  {{sys:home}}      --> path to homepage
+  {{sys:charizard}} --> Charizard ascii art
 */
 
 /*
@@ -42,8 +40,11 @@ Supported HTML tags:
   {{html:blog-spec}}     --> build HTML for specific blog post
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
-  {{html:footer}}        --> build HTML for footer
+  {{html:credits}}       --> build HTML for credits
   {{html:analytics}}     --> build HTML for site analytics
+  {{html:logo}}          --> build HTML for site logo
+  {{html:darkmode}}      --> build HTML for dark mode toggle
+  {{html:email}}         --> build HTML for email contact button
 
 Supported code tags:
   {{code:proj}}          --> load projects into code
@@ -119,7 +120,7 @@ const buildMetaHtml = async ({description='', url=''}) => {
 // replace {{html:...}} tags
 const buildHtml = async (data, match, key, page) => {
 	let resolvedData = data
-	let experiences = null, projects = null, blogs = null, footer = null, analytics = null
+	let experiences = null, projects = null, blogs = null, common = null
 	let html = null
 	switch (key) {
 		case 'exp-tabs':
@@ -160,13 +161,13 @@ const buildHtml = async (data, match, key, page) => {
 			projects = await parser.parseProjects()
 			html = await buildDemoRows(projects)
 			break
-		case 'footer':
-			footer = await readFilePromise('snippets/footer/footer.html')
-			html = footer.toString()
-			break
+		case 'credits':
 		case 'analytics':
-			analytics = await readFilePromise('snippets/analytics/analytics.html')
-			html = analytics.toString()
+		case 'logo':
+		case 'darkmode':
+		case 'email':
+			common = await readFilePromise(`snippets/common/${key}.html`)
+			html = common.toString()
 			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
@@ -324,6 +325,16 @@ const buildBlogSpec = async (blogs, page) => {
 	}
 	blog = blog[0]
 
+	// sort blogs
+	let sortedBlogs = blogs.sort((a, b) => {
+		if (a.published > b.published) {
+			return -1
+		} else if (a.published < b.published) {
+			return 1
+		}
+		return 0
+	})
+
 	// get blog markdown comment
 	let blogContentFile = `content/blog/${blog.id}.md`
 	try {
@@ -389,6 +400,16 @@ const buildBlogSpec = async (blogs, page) => {
 	html = html.replace('{{subtitle}}', blog.subtitle)
 	html = html.replace('{{cover-credit}}', blog.coverCredit)
 	html = html.replace('{{cover-author}}', blog.coverAuthor)
+
+	// add next blog link, if possible
+	let blogIndex = sortedBlogs.indexOf(blog) + 1
+	if (blogIndex === sortedBlogs.length) {
+		html = html.replace('{{blog-next}}', await htmlSafify(sortedBlogs[0].id))
+		html = html.replace('{{blog-title}}', sortedBlogs[0].title)
+	} else {
+		html = html.replace('{{blog-next}}', await htmlSafify(sortedBlogs[blogIndex].id))
+		html = html.replace('{{blog-title}}', sortedBlogs[blogIndex].title)
+	}
 
 	// build blog content
 	let blogContent = await markdown.convert(blogContentFile.toString(), page)

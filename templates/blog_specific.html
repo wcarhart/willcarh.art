@@ -13,7 +13,7 @@
 		<link rel="stylesheet" href="{{css:linkicons.css}}">
 		<link rel="stylesheet" href="{{css:list.css}}">
 		<link rel="stylesheet" href="{{css:markdown.css}}">
-		<link rel="stylesheet" href="{{css:footer.css}}">
+		<link rel="stylesheet" href="{{css:credits.css}}">
 		<link rel="stylesheet" href="{{css:blog_specific.css}}">
 
 		<!-- jQuery -->
@@ -43,6 +43,7 @@
 		<script src="{{js:year.js}}"></script>
 		<script src="{{js:epochtime.js}}"></script>
 		<script src="{{js:readtime.js}}"></script>
+		<script src="{{js:blognav.js}}"></script>
 	</head>
 	<body>
 		<!-- text content -->
@@ -54,18 +55,14 @@
 			<div class="spacer"></div>
 			<!-- TODO: add 'next blog' button or something like that -->
 
-			{{html:footer}}
+			{{html:credits}}
 			<div class="spacer-small"></div>
 		</div>
 
 		<!-- logo -->
-		<a id="logo-container" href="{{sys:home}}">
-			<img id="logo" alt="willcarh.art logo" src="{{ico:android-chrome-512x512.png}}">
-		</a>
+		{{html:logo}}
 
 		<!-- dark mode toggle -->
-		<div id="dark-mode-toggle-container">
-			<button id="dark-mode-toggle"></button>
-		</div>
+		{{html:darkmode}}
 	</body>
 </html>

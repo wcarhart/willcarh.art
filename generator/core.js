@@ -285,10 +285,10 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			let assetPath = path.join(...Array(level).fill('..'), file)
 			resolvedData = resolvedData.replace(match, assetPath)
 			break
-		case 'pokemon':
+		case 'charizard':
 			let charizard = await readFilePromise('generator/charizard.txt')
 			charizard = charizard.toString()
-			let message = '<!-- Hmm, what are you doing here?? Bet you weren\'t expecting to see ASCII charizard, were you! -->\n'
+			let message = '<!-- Hmm, what are you doing here? Bet you weren\'t expecting to see ASCII charizard, were you! -->\n'
 			message += '<!--\n'
 			message += charizard
 			message += '\n-->\n'

@@ -131,4 +131,5 @@ smoosh 'https://www.cnn.com/2020/10/27/investing/amd-xilinx-purchase/index.html'
 ### Conclusion
 I love taking seemingly complex problems and solving them elegantly with software. SMMRY is one of those tools that seems complicated at first glance, but is not actually too difficult to recreate. If you'd like to read more about smoosh, check out its [project page]({{src:project/smoosh.html}}) or [repository](https://github.com/wcarhart/smoosh). If you'd like to use the code snippets from this post, please access them [here](https://github.com/wcarhart/willcarh.art-snippets/blob/master/how-to-summarize-any-article-in-7-sentences-with-software/snippet.py). If you'd like to see smoosh in action, check out [lurker]({{src:project/lurker.html}}), which is another project I wrote that utilizes smoosh to read Hacker News threads on the terminal. You can try SMMRY for yourself [here](https://smmry.com/).
 Please smoosh responsibly.
+
 =🦉

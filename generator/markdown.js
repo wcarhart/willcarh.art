@@ -219,8 +219,13 @@ const convert = async (md, page) => {
 				html += blockCodeSnippet.replace('{{code}}', codeblock.join('<br>'))
 				codeblock = []
 			} else {
-				// append to the code block
+				// handle plaintext '<' and '>', which can interfere with HTML
+				line = line.replace(/</g, '&lt;')
+				line = line.replace(/>/g, '&gt;')
+
 				// TODO: add colors via color.css and span tags (especially for othello)
+
+				// append to the code block
 				codeblock.push(line)
 			}
 
@@ -380,6 +385,12 @@ const buildSubcomponents = async (text) => {
 
 	// build components
 	let subcomponent = text
+
+	// handle plaintext '<' and '>', which can interfere with HTML
+	// however, we want to preserve <br> outside of code blocks
+	subcomponent = subcomponent.replace(/</g, '&lt;')
+	subcomponent = subcomponent.replace(/>/g, '&gt;')
+	subcomponent = subcomponent.replace(/&lt;br&gt;/g, '<br>')
 
 	// handle links: [...](...)
 	while (/\[.+?\]\(.+?\)/.exec(subcomponent)) {

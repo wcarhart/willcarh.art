@@ -60,7 +60,7 @@ However, one of the biggest achievements of the generator is its markdown capabi
 There are also a number of fun easter eggs and accessory features throughout the site. For instance, try hovering your mouse over the published date and read time near the top of this blog post. The dark mode toggle in the top right uses the [LocalStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to remember your preference. Analytics are provided by [Plausible](https://plausible.io/), a privacy-conscious alternative to Google Analytics. Images are hosted from a CDN to optimze page loads.
 
 ### So...was it worth it?
-![Relevant XKCD about automation]({{cdn:img/blog/why-i-wrote-my-own-static-site-generator/xkcd1319.png}})<Relevant XKCD: 1319>
+![Relevant XKCD about automation]({{cdn:img/blog/why-i-wrote-my-own-static-site-generator/xkcd1319.png}})<https://xkcd.com/1319>
 Overall, I'd say yes! Did the SSG take more time than an off-the-shelf equivalent? Probably. Did the SSG take more time than its non-static equivalent? Nope. Did I learn a bunch along the way? You betcha.
 Overall, I feel that [willcarh.art's]({{sys:home}}) SSG is as future-proof as possible. It has plently of rich features that turn my code and opinions into a snazzy-lookin' webpage. It was a ton of fun to write and it made me think through parts of the networking stack that I haven't needed to in the past. While it's not a replacement for Hugo or Jekyll, it sure gives them a run for their money without a hit to my software engineering pride.
 

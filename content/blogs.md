@@ -309,3 +309,23 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: how-to-print-file-trees-on-the-command-line
+
+title: Powering Dash Apps with BigQuery
+subtitle: Dream big, query bigger
+blurb: Dash and Plotly are powerful libraries for visualizing data on the web. Let's take a look at how to hook a simple Dash app up to Google BigQuery back-end data sink.
+cover: {{cdn:img/blog/powering-dash-apps-with-bigquery/cover.png}}
+coverAuthor: Brushinkin paintings
+coverCredit: https://stock.adobe.com/contributor/208829706/brushinkin-paintings
+published: 1615571280
+updated:
+resources: Dash
+resources: Plotly
+resources: GCP BigQuery
+resources: SQL
+resources: Python
+resources: pandas
+author: Will Carhart
+authorImg: {{cdn:img/profile.jpg}}
+status: active
+tags:
+id: powering-dash-apps-with-bigquery

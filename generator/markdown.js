@@ -86,9 +86,10 @@ const convert = async (md, page) => {
 
 			// lines that start with '!' are interpreted to be images
 			} else if (line.startsWith('![')) {
-				let imgAlt = line.replace(/^!\[/, '').replace(/\].*$/, '')
-				let imgSrc = line.replace(/^.*\(/, '').replace(/\).*$/, '')
-				let remaining = line.replace(/^!\[.*\]\(.*\)/, '')
+				// we have to be careful here - must be lazy and not greedy - what if <.*> contains ']' or ')'?
+				let imgAlt = line.replace(/^!\[/, '').replace(/\].*?$/, '')
+				let imgSrc = line.replace(/^.*?\(/, '').replace(/\).*?$/, '')
+				let remaining = line.replace(/^!\[.*?\]\(.*?\)/, '')
 				let subtitleText = ''
 				if (remaining[0] === '<' && remaining[remaining.length-1] === '>') {
 					subtitleText = line.replace(/^.*</, '').replace(/>$/, '')

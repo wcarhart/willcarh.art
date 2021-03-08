@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: willcarh.art
+Token: abcea4086ebef491ddcc417996b8849de36a985ee057a05b834f183951595be5

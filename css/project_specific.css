@@ -148,3 +148,7 @@ h5 {
 #project-navigation-back:hover .show-more {
 	display: inline;
 }
+
+.navigation-detail-text {
+	margin-bottom: 0 !important;
+}

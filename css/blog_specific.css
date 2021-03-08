@@ -187,3 +187,7 @@ h5 {
 .content-text {
 	font-size: 1.2rem !important;
 }
+
+.navigation-detail-text {
+	margin-bottom: 0 !important;
+}

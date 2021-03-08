@@ -125,7 +125,7 @@ $(document).ready(async () => {
 })
 ```
 There are two parts to this code. _First_, we initialize the property `darkMode` in the browser using JavaScript's `localStorage` functionality. Once the property is initialized, we can read from it to set the dark mode state. _Second_, we wire up the dark mode toggle button to read from and update the `darkMode` property. Now the user's preference is persistent as long as they don't clear their cookies!
->> Hold up! | **If I use `localStorage`, do I need to show one of those annoying cookie notifications on my website?**<br>Nope! Cookie notifications are generally for tracking users, not simply using `localStorage`. Read more [here](https://law.stackexchange.com/a/30766/8708) (IANAL, YMMV).
+>> Hold up! | **If I use `localStorage`, do I need to show one of those annoying cookie notifications on my website?**===<br>===Nope! Cookie notifications are generally for tracking users, not simply using `localStorage`. Read more [here](https://law.stackexchange.com/a/30766/8708) (IANAL, YMMV).
 
 
 ### Conclusion

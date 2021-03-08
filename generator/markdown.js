@@ -38,17 +38,26 @@ const convert = async (md, page) => {
 	let lines = md.split('\n')
 	let html = ''
 
+	// code block state inforamtion
 	let inCodeBlock = false
 	let codeblock = []
+
+	// list state information
 	let inUnorderedList = false
 	let inOrderedList = false
 	let unorderedListItems = []
 	let orderedListItems = []
 	let orderedListStart = 1
+
+	// table state information
 	let inTable = false
 	let tableHeaders = []
 	let tableConfigs = []
 	let tableRows = []
+
+	// HTML block state information
+	let inHtmlBlock = false
+	let htmlblock = []
 
 	for (let [index, line] of lines.entries()) {
 
@@ -57,10 +66,10 @@ const convert = async (md, page) => {
 		// TODO: add support for syntax highlighting with ```language and class="language-..." (see https://github.com/highlightjs/highlight.js/)
 
 		// we'll need to keep track of the state of the markdown
-		// there are three states - in code block, in table, and normal
+		// there are four valid states - in code block, in HTML block, in table, and normal
 
 		// normal state
-		if (inCodeBlock === false && inTable === false) {
+		if (inCodeBlock === false && inHtmlBlock === false && inTable === false) {
 
 			// lines that start with '#' are interpreted to be the start of the content text and should only occur once
 			if (line.startsWith('# ')) {
@@ -116,6 +125,10 @@ const convert = async (md, page) => {
 			} else if (line.startsWith('~(')) {
 				let videoId = line.replace(/^~\(/, '').replace(/\)$/, '')
 				html += youtubeVideoSnippet.replace('\{\{video-id\}\}', videoId)
+
+			// lines that are '===' are interpreted to be the start or end of HTML blocks
+			} else if (line === '===') {
+				inHtmlBlock = true
 
 			// lines that start with '=' are interpreted to be centered
 			} else if (line.startsWith('=')) {
@@ -229,8 +242,21 @@ const convert = async (md, page) => {
 				codeblock.push(line)
 			}
 
+		// in HTML block state
+		} else if (inHtmlBlock === true) {
+			// if we encounter another '===', close the HTML block
+			if (line === '===') {
+				inHtmlBlock = false
+				html += htmlblock.join('\n')
+				htmlblock = []
+			} else {
+				// append to the HTML block
+				htmlblock.push(line)
+			}
+
+		// error state
 		} else {
-			throw new Error(`Ambiguous markdown state: in table and in code block at the same time`)
+			throw new Error(`Ambiguous markdown state: in table, code block, or HTML block at the same time`)
 		}
 	}
 
@@ -386,11 +412,49 @@ const buildSubcomponents = async (text) => {
 	// build components
 	let subcomponent = text
 
-	// handle plaintext '<' and '>', which can interfere with HTML
-	// however, we want to preserve <br> outside of code blocks
-	subcomponent = subcomponent.replace(/</g, '&lt;')
-	subcomponent = subcomponent.replace(/>/g, '&gt;')
-	subcomponent = subcomponent.replace(/&lt;br&gt;/g, '<br>')
+	// this is a little tricky
+	// we need to handle plaintext '<' and '>', which can interfere with HTML
+	// we want to replace '<' and '>', except in HTML chunks, unless the HTML chunk is in an inline code chunk
+
+	// first, segment subcomponent based on inline code chunks
+	let codeSegments = []
+	let foundCode = false
+	let startIndex = 0
+	for (let match of [...subcomponent.matchAll(/`.+?`/g)]) {
+		foundCode = true
+		codeSegments.push(text.slice(startIndex, match['index']))
+		codeSegments.push(match[0])
+		startIndex = match['index'] + match[0].length
+	}
+	if (startIndex !== text.length) {
+		codeSegments.push(text.slice(startIndex))
+	}
+
+	// second, segment subcomponent based on HTML chunks
+	let htmlSegments = []
+	for (let s of codeSegments) {
+		let foundHtml = false
+		startIndex = 0
+		for (let match of [...s.matchAll(/===.+?===/g)]) {
+			foundHtml = true
+			htmlSegments.push(s.slice(startIndex, match['index']))
+			htmlSegments.push(match[0])
+			startIndex = match['index'] + match[0].length
+		}
+		if (startIndex !== s.length) {
+			htmlSegments.push(s.slice(startIndex))
+		}
+	}
+
+	// then, replace '<' and '>' appropriately
+	for (let [index, chunk] of htmlSegments.entries()) {
+		if (!chunk.startsWith('===') || !chunk.endsWith('===')) {
+			htmlSegments[index] = chunk.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+		} else {
+			htmlSegments[index] = chunk.replace(/^===/, '').replace(/===$/, '')
+		}
+	}
+	subcomponent = htmlSegments.join('')
 
 	// handle links: [...](...)
 	while (/\[.+?\]\(.+?\)/.exec(subcomponent)) {

@@ -248,7 +248,7 @@ id: a-foray-into-homebrew
 
 title: How to Create the Typewriter Effect in JavaScript
 subtitle: Fulfill a SaaS marketer's dream
-blurb: Ever see text on webpages that looks like its being typed automatically? I'm going to show you just how it easy to achieve this, called the typewriter effect, with a little bit of JavaScript and jQuery.
+blurb: Ever see text on webpages that looks like its being typed automatically? I'm going to show you just how easy it is to achieve this, called the typewriter effect, with a little bit of JavaScript and jQuery.
 cover: {{cdn:img/blog/how-to-create-the-typewriter-effect-in-javascript/cover.jpg}}
 coverAuthor: weris7554
 coverCredit: https://stock.adobe.com/contributor/204819955/weris7554

@@ -163,7 +163,7 @@ $(document).ready(async () => {
 })
 ```
 Here's what the result looks like:
-Hi, my name is Will, and I'm a ===<span id="typewriter-text-3"></span>===
+**Hi, my name is Will, and I'm a **===<span id="typewriter-text-3"></span>===
 
 ### Wrap up
 There you have it, the typewriter effect done easy! You can download the complete code from this post from [this JSFiddle](https://jsfiddle.net/wcarhart/cm18efbz/4/) or [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/how-to-create-the-typewriter-effect-in-javascript). If you'd like more examples of the typewriter effect, check out the [home]({{sys:home}}) and [about]({{src:about.html}}) pages. Now you're ready to create marketing homepages across the internet.

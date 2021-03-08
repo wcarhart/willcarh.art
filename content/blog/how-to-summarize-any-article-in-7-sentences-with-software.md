@@ -109,6 +109,7 @@ Let's break down our problems a bit further:
 2. How do we protect against unwanted words in our sentences (e.g. code, URLs, etc.)?
 3. Can we make our summaries more accurate than our current approach?
 4. Can we produce metrics on our summarization?
+
 How would we solve these issues? Let's take them one at a time:
 1. We can use [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to scrape the text content of a webpage if we have the URL. We can get the article text be selectively removing HTML components from the webpage.
 2. We can add in some checks to remove unwanted components, like checking for code symbols (`==`, `+=`, `~`) and long words (URLs).

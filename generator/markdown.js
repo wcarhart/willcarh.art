@@ -13,7 +13,9 @@ const convert = async (md, page) => {
 	let blockCodeSnippet = await readFilePromise('snippets/markdown/block-code.html')
 	let shoutoutSnippet = await readFilePromise('snippets/markdown/shoutout.html')
 	let ulSnippet = await readFilePromise('snippets/markdown/ul.html')
+	let olSnippet = await readFilePromise('snippets/markdown/ol.html')
 	let liSnippet = await readFilePromise('snippets/markdown/li.html')
+	let olliSnippet = await readFilePromise('snippets/markdown/olli.html')
 	let imgSnippet = await readFilePromise('snippets/markdown/img.html')
 	let imgSubtitleSnippet = await readFilePromise('snippets/markdown/img-subtitle.html')
 	let youtubeVideoSnippet = await readFilePromise('snippets/markdown/youtube.html')
@@ -25,7 +27,9 @@ const convert = async (md, page) => {
 	blockCodeSnippet = blockCodeSnippet.toString()
 	shoutoutSnippet = shoutoutSnippet.toString()
 	ulSnippet = ulSnippet.toString()
+	olSnippet = olSnippet.toString()
 	liSnippet = liSnippet.toString()
+	olliSnippet = olliSnippet.toString()
 	imgSnippet = imgSnippet.toString()
 	imgSubtitleSnippet = imgSubtitleSnippet.toString()
 	youtubeVideoSnippet = youtubeVideoSnippet.toString()
@@ -36,8 +40,11 @@ const convert = async (md, page) => {
 
 	let inCodeBlock = false
 	let codeblock = []
-	let inList = false
-	let listItems = []
+	let inUnorderedList = false
+	let inOrderedList = false
+	let unorderedListItems = []
+	let orderedListItems = []
+	let orderedListStart = 1
 	let inTable = false
 	let tableHeaders = []
 	let tableConfigs = []
@@ -45,7 +52,6 @@ const convert = async (md, page) => {
 
 	for (let [index, line] of lines.entries()) {
 
-		// TODO: add support for ol
 		// TODO: add support for nested lists
 		// TODO: add support for block quotes (lines starting with '>')
 		// TODO: add support for syntax highlighting with ```language and class="language-..." (see https://github.com/highlightjs/highlight.js/)
@@ -78,11 +84,20 @@ const convert = async (md, page) => {
 				shoutoutText = await buildSubcomponents(shoutoutText)
 				html += shoutoutSnippet.replace('{{title}}', shoutoutTitle).replace('{{text}}', shoutoutText)
 
-			// lines that start with '*' are interpreted to be lists
+			// lines that start with '*' are interpreted to be unordered lists
 			}  else if (line.startsWith('* ')) {
-				inList = true
+				inUnorderedList = true
 				let text = line.replace(/^\* /, '')
-				listItems.push(text)
+				unorderedListItems.push(text)
+
+			// lines that start with \d. are interpreted to be ordered lists
+			} else if (/^\d+\./.exec(line)) {
+				if (inOrderedList === false) {
+					orderedListStart = Number(line.replace(/\..*$/, ''))
+				}
+				inOrderedList = true
+				let text = line.replace(/^\d+\.\s*/, '')
+				orderedListItems.push(text)
 
 			// lines that start with '!' are interpreted to be images
 			} else if (line.startsWith('![')) {
@@ -136,22 +151,34 @@ const convert = async (md, page) => {
 
 			// empty lines are interpreted to be line breaks
 			} else if (line === '') {
-				if (inList) {
-					let listHtml = await Promise.all(listItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
+				if (inUnorderedList === true) {
+					let listHtml = await Promise.all(unorderedListItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
 					html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
-					listItems = []
-					inList = false
+					unorderedListItems = []
+					inUnorderedList = false
+				} else if (inOrderedList === true) {
+					let listHtml = await Promise.all(orderedListItems.map(async olli => olliSnippet.replace('{{text}}', await buildSubcomponents(olli))))
+					html += olSnippet.replace('{{list-items}}', listHtml.join('')).replace('{{ol-start}}', orderedListStart)
+					orderedListItems = []
+					inOrderedList = false
+					orderedListStart = 1
 				} else {
 					html += '<br>'
 				}
 
 			// all other lines are interpreted to be regular content text
 			} else {
-				if (inList) {
-					let listHtml = await Promise.all(listItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
+				if (inUnorderedList) {
+					let listHtml = await Promise.all(unorderedListItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
 					html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
-					listItems = []
-					inList = false
+					unorderedListItems = []
+					inUnorderedList = false
+				} else if (inOrderedList === true) {
+					let listHtml = await Promise.all(orderedListItems.map(async olli => olliSnippet.replace('{{text}}', await buildSubcomponents(olli))))
+					html += olSnippet.replace('{{list-items}}', listHtml.join('')).replace('{{ol-start}}', orderedListStart)
+					orderedListItems = []
+					inOrderedList = false
+					orderedListStart = 1
 				} else {
 					let subcomponent = await buildSubcomponents(line)
 					html += contentTextSnippet.replace('{{text}}', subcomponent)
@@ -206,8 +233,11 @@ const convert = async (md, page) => {
 	if (inCodeBlock) {
 		throw new Error(`Invalid markdown: unclosed code block in '${page}'`)
 	}
-	if (inList) {
-		throw new Error(`Invalid markdown: unclosed list in '${page}'`)
+	if (inUnorderedList) {
+		throw new Error(`Invalid markdown: unclosed unordered list in '${page}'`)
+	}
+	if (inOrderedList) {
+		throw new Error(`Invalid markdown: unclosed ordered list in '${page}'`)
 	}
 	if (inTable) {
 		throw new Error(`Invalid markdown: unclosed table in '${page}', did you forget to end the table with an empty newline?`)

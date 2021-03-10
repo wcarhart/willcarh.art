@@ -5,8 +5,10 @@ title: Software Engineer, Infrastructure
 date: 1615313940
 date: 1574146800
 displayDate: Since Nov 2019
-detail: Design, implement, and maintain in-house workflow management platform, which exposes and **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts**, all in Node.js
-detail: Designed and implemented **cloud architecture in GCP** for compiling and executing computation-heavy MATLAB scripts, managing MATLAB licenses, and uploading artifacts
+detail: Designed, implemented, and maintain a **front-end data visualization tool** for internal company simulations,  built with **Dash and Plotly**, backed by **Google BigQuery**, and served from **GCP**
+detail: Designed, implemented, and maintain an in-house end-to-end workflow management platform, which exposes and **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts in Elasticsearch**, all in Node.js and Mistral
+detail: Designed a **cloud architecture in GCP** for compiling and executing computation-heavy MATLAB scripts, managing MATLAB licenses, and uploading artifacts
+detail: Designed and implemented an **automated documentation generator** that generates internal tooling documentation based on code functionality, hosted on an internal company webpage via a **Static Site Generator (SSG)**
 detail: Modernized and rearchitected Python-based complex abort verification system for Wisk's flight simulator, moving from on-prem solution to Kubernetes-based solution in GKE, **reducing average job time from 72 hours to 30 minutes**
 detail: Manage production Bamboo build agents, including configuration management, software upgrades, and job scheduling
 detail: Drive detailed **documentation**, verbose **logging**, and consistent **traceability** for every project
@@ -16,11 +18,14 @@ languagesAndLibraries: Bash
 languagesAndLibraries: Python
 languagesAndLibraries: Dash
 languagesAndLibraries: Plotly
+languagesAndLibraries: Mistral
 tools: git
 tools: Bitbucket
 tools: Jira
 tools: Confluence
 tools: Google Drive
+tools: Slack
+tools: LucidChart
 platforms: Docker
 platforms: Linux (Ubuntu)
 platforms: macOS
@@ -28,6 +33,7 @@ infrastructure: GCP (Cloud Storage, Cloud Functions, Compute Engine, App Engine,
 infrastructure: Bamboo
 infrastructure: Puppet
 infrastructure: Kubernetes (GKE)
+infrastructure: Elasticsearch
 url: https://wisk.aero
 blogPost:
 
@@ -48,6 +54,7 @@ tools: git
 tools: GitHub
 tools: Jira
 tools: Confluence
+tools: Mattermost
 tools: Jama
 platforms: Docker
 platforms: Linux (centOS)
@@ -74,6 +81,7 @@ languagesAndLibraries: Elixir
 tools: git
 tools: GitHub
 tools: Trello
+tools: Slack
 platforms: Docker
 platforms: Linux
 url: https://www.starlitsoftware.com

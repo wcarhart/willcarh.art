@@ -43,6 +43,8 @@ body {
 }
 ```
 Now, try adding the class `dark-mode` to the parent-most `<html>` tag. When we add the `dark-mode` class, our site switches to dark mode!
+>> Note | If for whatever reason you aren't able to target the outermost `<html>` tag, you can also target the `<body>` tag, which may make sense for some websites. To do this, place your CSS color variables in `body` and `body.dark-mode` instead of `:root` and `:root.dark-mode`. Don't forget to update the JavaScipt down below, too.
+
 
 ### Adding the toggle
 Next, let's add a button to toggle dark mode on and off. I'm going to use [this icon](https://fontawesome.com/icons/lightbulb?style=solid) from [FontAwesome](https://fontawesome.com/). Let's update our HTML with this new button.
@@ -129,6 +131,6 @@ There are two parts to this code. _First_, we initialize the property `darkMode`
 
 
 ### Conclusion
-With a few simple steps, we have a robust way of implementing dark mode for any website. You can access the full code from this post in [this JSFiddle](https://jsfiddle.net/wcarhart/kzgr1tja/40/) or [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/the-easy-way-to-add-dark-mode-to-your-website). The content of this tutorial is almost verbatim what I use for [willcarh.art]({{sys:home}}). If you'd like to see it in action, check out its [repository](https://github.com/wcarhart/willcarh.art), or simply press `⌘+i` or `Ctrl+i`.
+With a few simple steps, we have a robust way of implementing dark mode for any website. You can access the full code from this post in [this JSFiddle](https://jsfiddle.net/wcarhart/kzgr1tja/40/) or [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/the-easy-way-to-add-dark-mode-to-your-website). The content of this tutorial is almost verbatim what I use for [willcarh.art]({{sys:home}}). If you'd like to see it in action, click the icon in the top right of the webpage, check out its [repository](https://github.com/wcarhart/willcarh.art), or simply press `⌘+i` or `Ctrl+i`.
 
 =🦉

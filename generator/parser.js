@@ -161,7 +161,7 @@ const verifyDate = async (index, entity, property, value, identifier) => {
 		await reject(index, entity, property, value, identifier, '')
 	}
 	let date = new Date(Number(value)*1000)
-	if (!date instanceof Date) {
+	if (!(date instanceof Date)) {
 		await reject(index, entity, property, value, identifier, `has invalid date value '${value}'`)
 	}
 	if (isNaN(date)) {
@@ -184,7 +184,7 @@ const verifyUrl = async (index, entity, property, value, identifier) => {
 	if (value === '') {
 		await reject(index, entity, property, value, identifier, '')
 	}
-	let url;
+	let url = null
 	try {
 		url = new URL(value)
 	} catch (e) {
@@ -209,12 +209,13 @@ const verifyArray = async (type, required, index, entity, property, value, ident
 		await reject(index, entity, property, value, identifier, `array '${property}' is empty`)
 	}
 	for (let v of value) {
+		let verifyName = null
 		switch (type) {
 			case 'string':
 			case 'stringUrlSafe':
 			case 'date':
 			case 'url':
-				let verifyName = `${type.charAt(0).toUpperCase() + type.slice(1)}`
+				verifyName = `${type.charAt(0).toUpperCase() + type.slice(1)}`
 				if (required === true) {
 					verifyName = `verify${verifyName}`
 					await FUNCS[verifyName](index, entity, property, v, identifier)

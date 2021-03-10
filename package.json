@@ -1,7 +1,7 @@
 {
   "name": "generator",
-  "version": "2.0.0",
-  "description": "Will Carhart's personal portfolio website",
+  "version": "2.1.0",
+  "description": "Custom static site generator for willcarh.art",
   "main": "generator/generator.js",
   "repository": "git@github.com:wcarhart/willcarh.art.git",
   "author": "Will Carhart <carhartwill@gmail.com>",
@@ -9,5 +9,8 @@
   "dependencies": {
     "html": "^1.0.0",
     "minify": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.21.0"
   }
 }

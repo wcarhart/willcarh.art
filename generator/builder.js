@@ -9,7 +9,6 @@ const markdown = require('./markdown.js')
 
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
-const copyFilePromise = util.promisify(fs.copyFile)
 
 /*
 Supported static asset tags:
@@ -64,7 +63,7 @@ Supported meta tags:
 // build meta objects for webpages
 const buildMeta = async (data, match, key, page) => {
 	let resolvedData = data
-	let meta = ''
+	let meta = '', projectName = '', blogUrl = '', blogName = '', demoName = ''
 	switch (key) {
 		case 'home':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s personal portfolio website', url: 'https://willcarh.art'})
@@ -73,15 +72,15 @@ const buildMeta = async (data, match, key, page) => {
 			meta = await buildMetaHtml({description: 'Will Carhart\'s projects', url: 'https://willcarh.art/projects'})
 			break
 		case 'proj-spec':
-			let projectName = page.split('/').pop().split('.html')[0]
+			projectName = page.split('/').pop().split('.html')[0]
 			meta = await buildMetaHtml({description: projectName, url: `https://willcarh.art/project/${projectName}`})
 			break
 		case 'blog':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s blog', url: 'https://willcarh.art/blog'})
 			break
 		case 'blog-spec':
-			let blogUrl = page.split('/').pop().split('.html')[0]
-			let blogName = blogUrl.split('-').map((word, index) => {
+			blogUrl = page.split('/').pop().split('.html')[0]
+			blogName = blogUrl.split('-').map((word, index) => {
 				if (index !== 0 && ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','onto','or','so','to','the','with','yet'].includes(word)) {
 					return word
 				}
@@ -96,7 +95,7 @@ const buildMeta = async (data, match, key, page) => {
 			meta = await buildMetaHtml({description: 'Will Carhart\'s demos', url: 'https://willcarh.art/demo'})
 			break
 		case 'demo-spec':
-			let demoName = page.split('/').pop().split('.html')[0]
+			demoName = page.split('/').pop().split('.html')[0]
 			meta = await buildMetaHtml({description: `${demoName} demo`, url: `https://willcarh.art/project/${demoName}`})
 			break
 		default:
@@ -179,23 +178,25 @@ const buildHtml = async (data, match, key, page) => {
 // replace {{code:...}} tags
 const buildCode = async (data, match, key) => {
 	let resolvedData = data
+	let classes = null, files = null, error = null, verifiedData = null
+	let projectData = null, newProjects = null, attributes = null
 	switch (key) {
 		case 'classes':
-			let classes = []
-			let files = await readdirPromise('snippets/js')
+			classes = []
+			files = await readdirPromise('snippets/js')
 			for (let file of files) {
-				let [error, data] = await tryToCatch(minify, `snippets/js/${file}`, {})
+				[error, verifiedData] = await tryToCatch(minify, `snippets/js/${file}`, {})
 				if (error) {
 					throw new Error(error)
 				}
-				classes.push(data)
+				classes.push(verifiedData)
 			}
 			resolvedData = resolvedData.replace(match, classes.join('\n'))
 			break
 		case 'proj':
-			let projectData = await readFilePromise('content/projects.md')
-			let newProjects = []
-			let attributes = []
+			projectData = await readFilePromise('content/projects.md')
+			newProjects = []
+			attributes = []
 			for (let line of projectData.toString().split('\n')) {
 				if (line !== '') {
 					attributes.push(line)
@@ -545,11 +546,11 @@ const buildProjSpec = async (projects, page) => {
 	let statusMetadataHtml = statusMetadataSnippet.replace('{{status}}', project.status)
 	html = html.replace('{{technologies-metadata}}', technologiesMetadataHtml)
 	html = html.replace('{{github-stars-metadata}}', githubStarsMetadataHtml)
-    html = html.replace('{{install-metadata}}', installMetadataHtml)
+	html = html.replace('{{install-metadata}}', installMetadataHtml)
 	html = html.replace('{{publish-date-metadata}}', latestReleaseMetadataHtml)
-    html = html.replace('{{latest-release-metadata}}', publishDateMetadataHtml)
-    html = html.replace('{{status-metadata}}', relatedProjectsMetadataHtml)
-    html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
+	html = html.replace('{{latest-release-metadata}}', publishDateMetadataHtml)
+	html = html.replace('{{status-metadata}}', relatedProjectsMetadataHtml)
+	html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
 
 	// build project content
 	let projectContent = await markdown.convert(projectContentFile.toString(), page)
@@ -896,7 +897,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 
 	// parse experiences into rows
 	for (let experience of experiences) {
-		for (let [index, title] of experience.title.entries()) {
+		for (let [index, ] of experience.title.entries()) {
 			let r = new RowTemplate({})
 			let yearDate = new Date(experience.date[index]*1000)
 			r.year = yearDate.getFullYear()
@@ -970,7 +971,6 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 				return 1
 			}
 		}
-		return 0
 	})
 
 	// build html
@@ -993,7 +993,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		}
 		newRow = newRow.replace('{{resources}}', row.resources.flatMap(r => r === '' ? [] : r).join(' · '))
 
-		linkHtml = ''
+		let linkHtml = ''
 		if (row.githubName !== '') {
 			linkHtml += githubIconSnippet.replace('{{repo}}', row.githubName)
 		}
@@ -1127,11 +1127,13 @@ const buildNewProjectString = async (attributes) => {
 			template[key] = value
 		}
 	}
+	// eslint-disable-next-line quotes
 	return `ALL_PROJECTS.push(new Project(JSON.parse('${JSON.stringify(template).replace("'", "\\'")}')))`
 }
 
 // TODO
 // build string for instatiating a new blog post
+// eslint-disable-next-line no-unused-vars
 const buildNewBlogString = async (attributes) => {
 	return
 }

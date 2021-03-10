@@ -124,7 +124,7 @@ const convert = async (md, page) => {
 			// lines that start with '~' are interpreted to be YouTube vides
 			} else if (line.startsWith('~(')) {
 				let videoId = line.replace(/^~\(/, '').replace(/\)$/, '')
-				html += youtubeVideoSnippet.replace('\{\{video-id\}\}', videoId)
+				html += youtubeVideoSnippet.replace('{{video-id}}', videoId)
 
 			// lines that are '===' are interpreted to be the start or end of HTML blocks
 			} else if (line === '===') {
@@ -256,7 +256,7 @@ const convert = async (md, page) => {
 
 		// error state
 		} else {
-			throw new Error(`Ambiguous markdown state: in table, code block, or HTML block at the same time`)
+			throw new Error('Ambiguous markdown state: in table, code block, or HTML block at the same time')
 		}
 	}
 
@@ -378,7 +378,7 @@ const buildTable = async (headers, configs, rows, page) => {
 	)
 
 	// build body rows
-	for (let [index, row] of rows.entries()) {
+	for (let row of rows) {
 		// append row to body
 		bodyRows.push(trSnippet.replace(
 			'{{row}}',
@@ -418,10 +418,8 @@ const buildSubcomponents = async (text) => {
 
 	// first, segment subcomponent based on inline code chunks
 	let codeSegments = []
-	let foundCode = false
 	let startIndex = 0
 	for (let match of [...subcomponent.matchAll(/`.+?`/g)]) {
-		foundCode = true
 		codeSegments.push(text.slice(startIndex, match['index']))
 		codeSegments.push(match[0])
 		startIndex = match['index'] + match[0].length
@@ -433,10 +431,8 @@ const buildSubcomponents = async (text) => {
 	// second, segment subcomponent based on HTML chunks
 	let htmlSegments = []
 	for (let s of codeSegments) {
-		let foundHtml = false
 		startIndex = 0
 		for (let match of [...s.matchAll(/===.+?===/g)]) {
-			foundHtml = true
 			htmlSegments.push(s.slice(startIndex, match['index']))
 			htmlSegments.push(match[0])
 			startIndex = match['index'] + match[0].length

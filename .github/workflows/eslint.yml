@@ -6,6 +6,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install
-      run: yarn
+      run: yarn install
     - name: eslint
-      run: eslint generator/* --ext .js
+      run: yarn run eslint generator/*

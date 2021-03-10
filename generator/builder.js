@@ -651,7 +651,6 @@ const htmlSafify = async (string) => {
 	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_').replace(/,/g, '').replace(/'/g, '')
 }
 
-// TODO: 'about' for projects shouldn't be an array, and we shouldn't use about[0]
 // build all project rows
 const buildProjAll = async (projects) => {
 	// parse HTML snippets
@@ -717,7 +716,7 @@ const buildProjAll = async (projects) => {
 		featuredContainer = featuredContainer.replace(/\{\{name\}\}/g, await htmlSafify(project.name))
 		featuredContainer = featuredContainer.replace('{{title}}', project.name)
 		featuredContainer = featuredContainer.replace('{{blurb}}', project.blurb)
-		featuredContainer = featuredContainer.replace('{{about}}', project.about[0])
+		featuredContainer = featuredContainer.replace('{{about}}', project.about)
 		featuredContainer = featuredContainer.replace(
 			'{{technologies}}',
 			project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
@@ -1104,7 +1103,7 @@ const buildNewProjectString = async (attributes) => {
 	let template = {
 		name: '',
 		blurb: '',
-		about: [],
+		about: '',
 		languages: [],
 		technologies: [],
 		img: '',
@@ -1122,7 +1121,7 @@ const buildNewProjectString = async (attributes) => {
 		let elements = line.split(': ')
 		let key = elements.shift()
 		let value = elements.join(': ')
-		if (['about', 'languages', 'technologies', 'related', 'tags'].includes(key)) {
+		if (['languages', 'technologies', 'related', 'tags'].includes(key)) {
 			template[key].push(value)
 		} else {
 			template[key] = value

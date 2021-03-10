@@ -1,8 +1,6 @@
 name: lurker
 blurb: Hacker News terminal client
 about: Lurker is a simple terminal client for reading Y Combinator's Hacker News. It uses the public Hacker News API and is written entirely in Bash so it runs smoothly in the majority of terminal environments.
-about: Lurker embraces the hacker in Hacker News by exposing a simple CLI for reading stories, comments, and user information. This makes it easy to read Hacker News while completing other command line activities, especially when combined with tools like tmux.
-about: In addition to browsing Hacker News, lurker can summarize most text articles and snippets via another one of my tools, smoosh.
 languages: Bash
 technologies: Hacker News API
 img: {{cdn:img/logos/lurker.png}}
@@ -85,7 +83,7 @@ tags: library
 
 name: snug
 blurb: Automated cloud repository backup
-about:
+about: 
 languages: Bash
 languages: Node.js
 languages: JavaScript
@@ -101,6 +99,7 @@ demo: false
 latest_version:
 published:
 status: in development
+install:
 documentation:
 related:
 visibility: none
@@ -188,7 +187,7 @@ tags: configuration
 
 name: hustle
 blurb: Rapid & lightweight workflow management
-about:
+about: 
 languages: Node.js
 languages: JavaScript
 technologies:
@@ -237,7 +236,7 @@ tags: web
 
 name: odin
 blurb: Personal financial portfolio manager
-about:
+about: 
 languages: Node.js
 languages: JavaScript
 languages: HTML

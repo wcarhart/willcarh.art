@@ -158,6 +158,7 @@ resources: Bash
 resources: Yarn
 resources: Netlify
 resources: GCP Cloud CDN
+resources: GCP Cloud Storage
 resources: jQuery
 resources: Bootstrap
 author: Will Carhart

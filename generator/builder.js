@@ -124,41 +124,41 @@ const buildHtml = async (data, match, key, page) => {
 	let html = null
 	switch (key) {
 		case 'exp-tabs':
-			experiences = await parser.parseExperiences()
+			experiences = await parser.parse('experience')
 			html = await buildExpTabs(experiences)
 			break
 		case 'proj-super':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildProjSuper(projects.filter(p => p.visibility === 'super'))
 			break
 		case 'proj-all':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildProjAll(projects)
 			break
 		case 'proj-spec':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildProjSpec(projects, page)
 			break
 		case 'blog-latest':
-			blogs = await parser.parseBlogs()
+			blogs = await parser.parse('blog')
 			html = await buildBlogLatest(blogs)
 			break
 		case 'blog-all':
-			blogs = await parser.parseBlogs()
+			blogs = await parser.parse('blog')
 			html = await buildBlogAll(blogs)
 			break
 		case 'blog-spec':
-			blogs = await parser.parseBlogs()
+			blogs = await parser.parse('blog')
 			html = await buildBlogSpec(blogs, page)
 			break
 		case 'vault-rows':
-			experiences = await parser.parseExperiences()
-			projects = await parser.parseProjects()
-			blogs = await parser.parseBlogs()
+			experiences = await parser.parse('experience')
+			projects = await parser.parse('project')
+			blogs = await parser.parse('blog')
 			html = await buildVaultRows(experiences, projects, blogs)
 			break
 		case 'demo-rows':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildDemoRows(projects)
 			break
 		case 'credits':
@@ -899,13 +899,8 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 	for (let experience of experiences) {
 		for (let [index, title] of experience.title.entries()) {
 			let r = new RowTemplate({})
-			if (/[a-zA-Z]/g.test(experience.displayDate)) {
-				let matches = experience.displayDate[index].match(/[0-9]+/g)
-				r.year = matches[0]
-			} else {
-				let matches = experience.displayDate[index].match(/[0-9]+/g)
-				r.year = matches[1]
-			}
+			let yearDate = new Date(experience.date[index]*1000)
+			r.year = yearDate.getFullYear()
 			r.sortDate = experience.date[index]
 			r.title = `${experience.title[index]} @ ${experience.company}`
 			r.type = 'experience'
@@ -1070,7 +1065,7 @@ const buildExpTabs = async (experiences) => {
 		}
 		let content = contentSnippet.replace('{{titles}}', titles)
 		content = content.replace('{{company_lower}}', experience.companyId)
-		content = content.replace('{{date}}', experience.displayDate[0])
+		content = content.replace('{{date}}', experience.displayDate)
 		content = content.replace('{{details}}', details)
 		if (experience.languagesAndLibraries.length !== 0) {
 			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries.join(', '))

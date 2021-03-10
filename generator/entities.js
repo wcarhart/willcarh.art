@@ -4,7 +4,7 @@ class Experience {
 		companyId = '',
 		title=[],
 		date=[],
-		displayDate=[],
+		displayDate='',
 		detail=[],
 		languagesAndLibraries=[],
 		tools=[],

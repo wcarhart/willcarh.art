@@ -1,6 +1,8 @@
 company: Wisk
 companyId: wisk
+title: Sr. Software Engineer, Infrastructure
 title: Software Engineer, Infrastructure
+date: 1615313940
 date: 1574146800
 displayDate: Since Nov 2019
 detail: Design, implement, and maintain in-house workflow management platform, which exposes and **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts**, all in Node.js
@@ -34,7 +36,6 @@ companyId: illumina
 title: Software Engineer, Automation
 title: Software Engineer Intern, Automation
 displayDate: May 2018 - Oct 2019
-displayDate: Summer 2018
 date: 1534140000
 date: 1527055200
 detail: Designed and implemented a new data-structure in Python to optimize and manage terabytes of genomic data in AWS S3, **reducing cloud storage costs by over 50%**, utilizing AWS Lambda, SNS, and CloudWatch

@@ -113,14 +113,15 @@ blurb: Personal portfolio website
 about: Willcarh.art is my personal website and software portfolio. It has evolved over time from a Django application to a static site built by a custom Node.js generator. Willcarh.art is home to all of my projects, blog posts, and software-related ideas.
 languages: Node.js
 languages: JavaScript
+technologies: jQuery
 languages: HTML
 languages: CSS
-languages: Bash
-technologies: Yarn
-technologies: Netlify
-technologies: GCP Cloud CDN
-technologies: jQuery
 technologies: Bootstrap
+languages: Bash
+technologies: Netlify
+technologies: Yarn
+technologies: GCP Cloud CDN
+technologies: GCP Cloud Storage
 img: {{ico:home-about.png}}
 repo: https://github.com/wcarhart/willcarh.art
 link: https://willcarh.art

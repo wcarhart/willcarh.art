@@ -2,7 +2,8 @@
     "env": {
         "browser": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -10,7 +11,8 @@
     },
     "ignorePatterns": [
         "src/*",
-        "js/*"
+        "js/*",
+        "generator/charizard.txt"
     ],
     "rules": {
         "indent": [

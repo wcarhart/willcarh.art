@@ -257,6 +257,7 @@ published: 1608312780
 updated:
 resources: JavaScript
 resources: jQuery
+resources: HTML
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active

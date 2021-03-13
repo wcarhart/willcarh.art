@@ -117,6 +117,7 @@ const convert = async (md, page) => {
 				let subtitleText = ''
 				if (remaining[0] === '<' && remaining[remaining.length-1] === '>') {
 					subtitleText = line.replace(/^.*</, '').replace(/>$/, '')
+					subtitleText = await buildSubcomponents(subtitleText)
 				}
 				let imgSubtitle = imgSubtitleSnippet.replace('{{subtitle}}', subtitleText)
 				html += imgSnippet.replace('{{alt}}', imgAlt).replace('{{src}}', imgSrc).replace('{{img-subtitle}}', imgSubtitle)
@@ -232,9 +233,10 @@ const convert = async (md, page) => {
 				html += blockCodeSnippet.replace('{{code}}', codeblock.join('<br>'))
 				codeblock = []
 			} else {
-				// handle plaintext '<' and '>', which can interfere with HTML
+				// handle plaintext '<', '>', and '$' which can interfere with HTML
 				line = line.replace(/</g, '&lt;')
 				line = line.replace(/>/g, '&gt;')
+				line = line.replace(/\$/g, '&#36;')
 
 				// TODO: add colors via color.css and span tags (especially for othello)
 
@@ -413,8 +415,8 @@ const buildSubcomponents = async (text) => {
 	let subcomponent = text
 
 	// this is a little tricky
-	// we need to handle plaintext '<' and '>', which can interfere with HTML
-	// we want to replace '<' and '>', except in HTML chunks, unless the HTML chunk is in an inline code chunk
+	// we need to handle plaintext '<', '>', and '$', which can interfere with HTML
+	// we want to replace '<', '>', and '$', except in HTML chunks, unless the HTML chunk is in an inline code chunk
 
 	// first, segment subcomponent based on inline code chunks
 	let codeSegments = []
@@ -445,7 +447,7 @@ const buildSubcomponents = async (text) => {
 	// then, replace '<' and '>' appropriately
 	for (let [index, chunk] of htmlSegments.entries()) {
 		if (!chunk.startsWith('===') || !chunk.endsWith('===')) {
-			htmlSegments[index] = chunk.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+			htmlSegments[index] = chunk.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\$/g, '&#36;')
 		} else {
 			htmlSegments[index] = chunk.replace(/^===/, '').replace(/===$/, '')
 		}

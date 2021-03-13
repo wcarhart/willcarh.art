@@ -64,6 +64,7 @@ const convert = async (md, page) => {
 		// TODO: add support for nested lists
 		// TODO: add support for block quotes (lines starting with '>')
 		// TODO: add support for syntax highlighting with ```language and class="language-..." (see https://github.com/highlightjs/highlight.js/)
+		// TODO: should we add the ability to copy code snippets from code blocks? Probably in HTML and not here...
 
 		// we'll need to keep track of the state of the markdown
 		// there are four valid states - in code block, in HTML block, in table, and normal

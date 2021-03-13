@@ -78,7 +78,7 @@ git status
 git add -A
 git commit -m 'Initial commit'
 ```
-We can create a new remote repository on GitHub using the [GitHub CLI `gh`](https://github.com/cli/cli). If you don't use `gh`, you can either make a repository manually or install it with `brew install gh`.
+We can create a new remote repository on GitHub using the [GitHub CLI `gh`](https://github.com/cli/cli). If you don't use `gh`, you can either make a repository manually or install it with `brew install gh`. The following snippet assumes your local username is the same as your GitHub username.
 ```
 # create the remote
 gh repo create --public $(basename "$(pwd)")

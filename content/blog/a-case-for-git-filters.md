@@ -102,5 +102,6 @@ There are a few caveats to be aware of. If we change our password or secret valu
 
 ### Conclusion
 The `smudge` and `clean` filters are powerful. This is one cool example of their usage, but because you can run arbitrary code from within the filter, you can do just about anything. Perhaps you'd like to set up a server to receive pings whenever someone pulls from your repository and then send a push notification to your phone. Although a bit extra, this is definitely possible with Git filters. I'll leave the rest of that implementation to you.
+If you'd like a complete copy of the code developed in this post, check out [this repository](https://github.com/wcarhart/willcarh.art-snippets/blob/master/a-case-for-git-filters/snippet.bash).
 
 =🦉

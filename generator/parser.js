@@ -101,6 +101,7 @@ const validateBlog = async (index, blog) => {
 	for (let p of ['resources', 'tags']) {
 		await verifyArray('string', false, index, 'blog', p, blog[p], blog.title)
 	}
+	await verifyBoolean(index, 'blog', 'hidden', blog.hidden, blog.title)
 
 	// ensure valid blog.status
 	// active: blog post was written under a current version of willcarh.art and included links + code should be valid
@@ -143,6 +144,9 @@ const verifyOptionalStringUrlSafe = async (index, entity, property, value, ident
 
 // verify boolean property of entity
 const verifyBoolean = async (index, entity, property, value, identifier) => {
+	if (value === '') {
+		await reject(index, entity, property, value, identifier, '')
+	}
 	if (!['true', 'false'].includes(value)) {
 		await reject(index, entity, property, value, identifier, `has invalid boolean value '${value}'`)
 	}

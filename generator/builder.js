@@ -269,6 +269,8 @@ const buildBlogAll = async (blogs) => {
 	blogRowSnippet = blogRowSnippet.toString()
 	blogRegularSnippet = blogRegularSnippet.toString()
 
+	sortedBlogs = sortedBlogs.filter(b => b.hidden === 'false')
+
 	// build HTML
 	let html = ''
 	for (let rowIndex = 0; rowIndex < sortedBlogs.length / 2; rowIndex++) {

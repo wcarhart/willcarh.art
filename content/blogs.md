@@ -19,6 +19,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: stale
 tags:
 id: introducing-willcarh.art
+hidden: false
 
 title: The Power of Introspection in Python
 subtitle: getattr explained
@@ -34,6 +35,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: stale
 tags:
 id: the-power-of-introspection-in-python
+hidden: false
 
 title: Automating Emails in Python
 subtitle: Why Gmail sometimes says no
@@ -51,6 +53,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: stale
 tags:
 id: automating-emails-in-python
+hidden: false
 
 title: Building Chatbots for GitHub
 subtitle: I am definitely a human beep boop
@@ -69,6 +72,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: stale
 tags:
 id: building-chatbots-for-github
+hidden: false
 
 title: Reducing AWS S3 Storage Costs with Bubble Trees
 subtitle: No, there are not actually bubbles in the trees
@@ -89,6 +93,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: reducing-aws-s3-storage-costs-with-bubble-trees
+hidden: false
 
 title: Recreating Python's argparse in Bash
 subtitle: Leading the way in Bash CLI applications
@@ -106,6 +111,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: recreating-pythons-argparse-in-bash
+hidden: false
 
 title: Spinning Up a Fleet of DigitalOcean Droplets
 subtitle: How to create your own minions
@@ -125,6 +131,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: spinning-up-a-fleet-of-digitalocean-droplets
+hidden: false
 
 title: How to Summarize Any Article in 7 Sentences, with Software
 subtitle: Ain't got time for no readin'
@@ -141,6 +148,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: how-to-summarize-any-article-in-7-sentences-with-software
+hidden: false
 
 title: Why I Wrote my own Static Site Generator
 subtitle: Embracing sustainability
@@ -166,6 +174,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: why-i-wrote-my-own-static-site-generator
+hidden: false
 
 title: The Easy Way to Add Dark Mode to your Website
 subtitle: Kill the lights, yo
@@ -184,6 +193,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: the-easy-way-to-add-dark-mode-to-your-website
+hidden: false
 
 title: How to Write Better Bash Spinners
 subtitle: Level up your shell scripts
@@ -199,6 +209,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: how-to-write-better-bash-spinners
+hidden: false
 
 title: A Case for Git Filters
 subtitle: Becoming a git sudoer
@@ -214,6 +225,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: a-case-for-git-filters
+hidden: false
 
 title: On Failure
 subtitle: Learning and growing
@@ -229,6 +241,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: on-failure
+hidden: true
 
 title: A Foray into Homebrew
 subtitle: How to manage your own tap
@@ -246,6 +259,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: a-foray-into-homebrew
+hidden: false
 
 title: How to Create the Typewriter Effect in JavaScript
 subtitle: Fulfill a SaaS marketer's dream
@@ -263,6 +277,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: how-to-create-the-typewriter-effect-in-javascript
+hidden: false
 
 title: Why I'm Excited About Deno
 subtitle: And why you should be too
@@ -279,6 +294,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: why-im-excited-about-deno
+hidden: false
 
 title: Why I Deleted My Facebook
 subtitle: Reflecting on my social media usage
@@ -294,6 +310,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: why-i-deleted-my-facebook
+hidden: false
 
 title: How to Print File Trees on the Command Line
 subtitle: Spruce up your file system
@@ -311,6 +328,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: how-to-print-file-trees-on-the-command-line
+hidden: false
 
 title: Powering Dash Apps with BigQuery
 subtitle: Dream big, query bigger
@@ -331,3 +349,4 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: powering-dash-apps-with-bigquery
+hidden: false

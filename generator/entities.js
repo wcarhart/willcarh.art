@@ -85,7 +85,8 @@ class Blog {
 		authorImg='',
 		status='',
 		tags=[],
-		id=''
+		id='',
+		hidden='',
 	}) {
 		this.title = title
 		this.subtitle = subtitle
@@ -101,6 +102,7 @@ class Blog {
 		this.status = status
 		this.tags = tags
 		this.id = id
+		this.hidden = hidden
 	}
 }
 

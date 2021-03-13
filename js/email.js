@@ -7,7 +7,7 @@ $(document).ready(async () => {
 	$('#email-contact').hover(async () => {
 		if (!copyStatus && !animated) {
 			$('#email-contact span').fadeOut( "fast", async () => {
-				$('#email-contact span').html('<span>copy email &nbsp;🖨</span>')
+				$('#email-contact span').html('<span>copy email &nbsp;✉️</span>')
 				$('#email-contact span').fadeIn( "fast", async () => {
 					animated = true
 				})

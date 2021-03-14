@@ -13,10 +13,10 @@ First, Homebrew determines which taps are available on the current machine. If t
 Homebrew is a feature-rich and robust package installer. It has many different features, many of which could have their own articles written about them. I think there are two benefits of Homebrew that I use day-to-day.
 
 **Installing stuff**
-The biggest benefit of Homebrew is using it to actually install software. Homebrew makes installing third-party software a breeze. Even if the software I'd like to install isn't included in the default [Homebrew core](https://github.com/Homebrew/homebrew-core) tap.
+The biggest benefit of Homebrew is using it to actually install software. Homebrew makes installing third-party software a breeze, even if the software I'd like to install isn't included in the default [Homebrew core](https://github.com/Homebrew/homebrew-core) tap.
 
 **Distributing my own software**
-The other benefit of Homebrew, which I think is less utilized by individual developers, is the ability to maintain your own tap. Perhaps you've written a new CLI tool (or even a desktop application) that you'd like to distribute to your users. Homebrew makes it easy to set up your own tap and distribute your software without many extra steps, and built atop existing technologies like Git. Let's take a look at how to do this ourselves.
+The other benefit of Homebrew, which I think is less utilized by individual developers, is the ability to maintain your own tap. Perhaps you've written a new CLI tool (or even a desktop application) that you'd like to distribute to your users. Homebrew makes it easy to set up your own tap and distribute your software without many extra steps, and is built atop existing technologies like Git. Let's take a look at how to do this ourselves.
 
 ### Setting up your own Homebrew tap
 Suppose we've written the tool `hi`, saved in its own repository on GitHub. For now, let's say that repository was [wcarhart/hi](https://github.com/wcarhart/willcarh.art). Here's what the source code for `hi` looks like.

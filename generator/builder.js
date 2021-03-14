@@ -20,6 +20,10 @@ Supported static asset tags:
   {{cdn:...}}      --> file stored in CDN
 */
 
+// TODO: add {{sys:gh}} to resolve to https://github.com/wcarhart
+// TODO: add {{sys:repo}} to resolve to https://github.com/wcarhart/willcarh.art
+// TODO: after the above two updates, replace links throughout project
+
 /*
 Support dynamic asset tags:
   {{sys:header}}    --> generated header for HTML files

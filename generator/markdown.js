@@ -215,7 +215,7 @@ const convert = async (md, page) => {
 					throw new Error(`Invalid table row (line ${index}): did you forget to end the table with an empty newline?`)
 				}
 				// ignore '|' if inline code
-				let tableComponents = line.match(/(?:[^\|`]+|`[^`]*`)+/g)
+				let tableComponents = line.match(/(?:[^|`]+|`[^`]*`)+/g)
 				await validateTableRow(line, index, page)
 				tableComponents = tableComponents.filter(tc => tc !== '')
 				if (tableConfigs.length === 0) {

@@ -22,7 +22,11 @@ Supported static asset tags:
 
 // TODO: add {{sys:gh}} to resolve to https://github.com/wcarhart
 // TODO: add {{sys:repo}} to resolve to https://github.com/wcarhart/willcarh.art
-// TODO: after the above two updates, replace links throughout project
+// TODO: add {{repo:...}} to resolve to https://github.com/wcarhart/...
+// TODO: after the above three updates, replace links throughout project
+
+// TODO: add {{project:...}} and {{blog:...}} as shorthand for {{src:project/....html}} and {{src:blog/....html}}
+// TODO: replace all {{src:...}} with applicable proj/blog ones when the above change is ready
 
 /*
 Support dynamic asset tags:

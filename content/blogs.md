@@ -286,7 +286,7 @@ cover: {{cdn:img/blog/why-im-excited-about-deno/cover.jpg}}
 coverAuthor: grandfailure
 coverCredit: https://stock.adobe.com/contributor/204918064/grandfailure
 published: 1601492640
-updated:
+updated: 1619309640
 resources: Deno
 resources: JavaScript
 author: Will Carhart

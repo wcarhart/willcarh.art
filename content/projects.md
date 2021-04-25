@@ -35,7 +35,7 @@ install: brew install wcarhart/tools/doku
 documentation:
 related:
 visibility: featured
-blogPost:
+blogPost: {{src:blog/why-im-excited-about-deno.html}}
 tags: cli
 
 name: smoosh

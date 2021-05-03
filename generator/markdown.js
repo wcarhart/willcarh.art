@@ -67,10 +67,10 @@ const convert = async (md, page) => {
 		// TODO: should we add the ability to copy code snippets from code blocks? Probably in HTML and not here...
 
 		// we'll need to keep track of the state of the markdown
-		// there are four valid states - in code block, in HTML block, in table, and normal
+		// there are four valid states - in code block, in HTML block, in table, in unordered list, in ordered list, and normal
 
 		// normal state
-		if (inCodeBlock === false && inHtmlBlock === false && inTable === false) {
+		if (inCodeBlock === false && inHtmlBlock === false && inTable === false && inUnorderedList === false && inOrderedList === false) {
 
 			// lines that start with '#' are interpreted to be the start of the content text and should only occur once
 			if (line.startsWith('# ')) {
@@ -183,21 +183,37 @@ const convert = async (md, page) => {
 
 			// all other lines are interpreted to be regular content text
 			} else {
-				if (inUnorderedList) {
-					let listHtml = await Promise.all(unorderedListItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
-					html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
-					unorderedListItems = []
-					inUnorderedList = false
-				} else if (inOrderedList === true) {
-					let listHtml = await Promise.all(orderedListItems.map(async olli => olliSnippet.replace('{{text}}', await buildSubcomponents(olli))))
-					html += olSnippet.replace('{{list-items}}', listHtml.join('')).replace('{{ol-start}}', orderedListStart)
-					orderedListItems = []
-					inOrderedList = false
-					orderedListStart = 1
-				} else {
-					let subcomponent = await buildSubcomponents(line)
-					html += contentTextSnippet.replace('{{text}}', subcomponent)
-				}
+				let subcomponent = await buildSubcomponents(line)
+				html += contentTextSnippet.replace('{{text}}', subcomponent)
+			}
+
+		// in unordered list state
+		} else if (inUnorderedList === true) {
+			if (line === '') {
+				let listHtml = await Promise.all(unorderedListItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
+				html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
+				unorderedListItems = []
+				inUnorderedList = false
+			} else if (line.startsWith('* ')) {
+				let text = line.replace(/^\* /, '')
+				unorderedListItems.push(text)
+			} else {
+				throw new Error(`Invalid markdown: unclosed unordered list in '${page}'`)
+			}
+
+		// in ordered list state
+		} else if (inOrderedList === true) {
+			if (line === '') {
+				let listHtml = await Promise.all(orderedListItems.map(async olli => olliSnippet.replace('{{text}}', await buildSubcomponents(olli))))
+				html += olSnippet.replace('{{list-items}}', listHtml.join('')).replace('{{ol-start}}', orderedListStart)
+				orderedListItems = []
+				inOrderedList = false
+				orderedListStart = 1
+			} else if (/^\d+\./.exec(line)) {
+				let text = line.replace(/^\d+\.\s*/, '')
+				orderedListItems.push(text)
+			} else {
+				throw new Error(`Invalid markdown: unclosed ordered list in '${page}'`)
 			}
 
 		// in table state

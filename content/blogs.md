@@ -337,7 +337,7 @@ cover: {{cdn:img/blog/powering-dash-apps-with-bigquery/cover.png}}
 coverAuthor: Brushinkin paintings
 coverCredit: https://stock.adobe.com/contributor/208829706/brushinkin-paintings
 published: 1615571280
-updated:
+updated: 1620024300
 resources: Dash
 resources: Plotly
 resources: GCP BigQuery

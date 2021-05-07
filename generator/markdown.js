@@ -19,6 +19,7 @@ const convert = async (md, page) => {
 	let imgSnippet = await readFilePromise('snippets/markdown/img.html')
 	let imgSubtitleSnippet = await readFilePromise('snippets/markdown/img-subtitle.html')
 	let youtubeVideoSnippet = await readFilePromise('snippets/markdown/youtube.html')
+	let slideshowSnippet = await readFilePromise('snippets/markdown/slideshow/slideshow.html')
 
 	contentSubtitleSnippet = contentSubtitleSnippet.toString()
 	contentTextSnippet = contentTextSnippet.toString()
@@ -33,6 +34,7 @@ const convert = async (md, page) => {
 	imgSnippet = imgSnippet.toString()
 	imgSubtitleSnippet = imgSubtitleSnippet.toString()
 	youtubeVideoSnippet = youtubeVideoSnippet.toString()
+	slideshowSnippet = slideshowSnippet.toString()
 
 	// convert MD to HTML
 	let lines = md.split('\n')
@@ -59,6 +61,10 @@ const convert = async (md, page) => {
 	let inHtmlBlock = false
 	let htmlblock = []
 
+	// slideshow state information
+	let inSlideshow = false
+	let slideshow = []
+
 	for (let [index, line] of lines.entries()) {
 
 		// TODO: add support for nested lists
@@ -67,10 +73,17 @@ const convert = async (md, page) => {
 		// TODO: should we add the ability to copy code snippets from code blocks? Probably in HTML and not here...
 
 		// we'll need to keep track of the state of the markdown
-		// there are four valid states - in code block, in HTML block, in table, in unordered list, in ordered list, and normal
+		// valid states:
+		//  - in code block
+		//  - in HTML block
+		//  - in table
+		//  - in unordered list
+		//  - in ordered list
+		//  - in slideshow
+		//  - normal
 
 		// normal state
-		if (inCodeBlock === false && inHtmlBlock === false && inTable === false && inUnorderedList === false && inOrderedList === false) {
+		if (inCodeBlock === false && inHtmlBlock === false && inTable === false && inUnorderedList === false && inOrderedList === false && inSlideshow === false) {
 
 			// lines that start with '#' are interpreted to be the start of the content text and should only occur once
 			if (line.startsWith('# ')) {
@@ -159,6 +172,10 @@ const convert = async (md, page) => {
 			// lines that are '```' are interpreted to be the start or end of a code block
 			} else if (line === '```') {
 				inCodeBlock = true
+
+			// lines that are '[[[' are intepreted to be the start of a slideshow
+			} else if (line === '[[[') {
+				inSlideshow = true
 
 			// lines that are '---' or '___' are interpreted to be horizontal rules
 			} else if (line === '---' || line === '___') {
@@ -274,9 +291,21 @@ const convert = async (md, page) => {
 				htmlblock.push(line)
 			}
 
+		// in slideshow
+		} else if (inSlideshow === true) {
+			// if we encounter ']]]', close the slideshow
+			if (line === ']]]') {
+				inSlideshow = false
+				html += slideshowSnippet.replace('{{slides}}', slideshow.map(s => s[0]).join('\n')).replace('{{dots}}', slideshow.map(s => s[1]).join('\n'))
+				slideshow = []
+			} else {
+				// append to the slideshow
+				slideshow.push(await buildSlideshowSlide(line, slideshow.length + 1, page, index))
+			}
+
 		// error state
 		} else {
-			throw new Error('Ambiguous markdown state: in table, code block, or HTML block at the same time')
+			throw new Error('Ambiguous markdown state: in table, code block, unordered list, ordered list, slideshow, or HTML block at the same time')
 		}
 	}
 
@@ -292,6 +321,9 @@ const convert = async (md, page) => {
 	}
 	if (inTable) {
 		throw new Error(`Invalid markdown: unclosed table in '${page}', did you forget to end the table with an empty newline?`)
+	}
+	if (inSlideshow) {
+		throw new Error(`Invalid markdown: unclosed slideshow in '${page}'`)
 	}
 
 	return html
@@ -310,6 +342,35 @@ const validateTableConfigs = async (configs, lineNumber, page) => {
 	if (isConfig === false) {
 		throw new Error(`Invalid table row in '${page}' (line ${lineNumber}): invalid table configuration`)
 	}
+}
+
+// add an slide to a slideshow
+const buildSlideshowSlide = async (line, index, page, lineNumber) => {
+	// parse HTML snippets
+	let slideSnippet = await readFilePromise('snippets/markdown/slideshow/slide.html')
+	let dotSnippet = await readFilePromise('snippets/markdown/slideshow/dot.html')
+	slideSnippet = slideSnippet.toString()
+	dotSnippet = dotSnippet.toString()
+
+	// slideshow lines should be in the form of links
+	// for example, [image caption](www.example.com/myimage)
+	let slide = null, dot = null
+	line = line.trim()
+	if (/\[.*?\]\(.+?\)/.exec(line)) {
+		let match = /\[.*?\]\(.+?\)/.exec(line)[0]
+		let caption = match.replace(/^\[/, '').replace(/\].*$/, '')
+		let href = match.replace(/^.*\(/, '').replace(/\)$/, '')
+		let alt = `Inline slideshow, slide ${index}`
+		if (caption !== '') {
+			alt = caption
+		}
+		slide = slideSnippet.replace('{{slide-caption}}', caption).replace('{{slide-content}}', href).replace('{{slide-alt}}', alt)
+		dot = dotSnippet.replace('{{slide-index}}', index)
+	} else {
+		throw new Error(`Invalid slideshow slide in '${page}' (line ${lineNumber}): invalid slide format, expecting [caption](image_url)`)
+	}
+	
+	return [slide, dot]
 }
 
 // build table HTML

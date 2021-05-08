@@ -121,11 +121,11 @@ coverAuthor: serge-b
 coverCredit: https://stock.adobe.com/contributor/200769316/serge-b
 published: 1581447900
 updated:
-resources: DigitalOcean
+resources: DigitalOcean Droplet
+resources: DigitalOcean API
 resources: doctl
+resources: Node.js
 resources: Bash
-resources: Python
-resources: BeautifulSoup
 author: Will Carhart
 authorImg: {{cdn:img/profile.jpg}}
 status: active

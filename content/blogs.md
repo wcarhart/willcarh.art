@@ -97,7 +97,7 @@ hidden: false
 
 title: Recreating Python's argparse in Bash
 subtitle: Leading the way in Bash CLI applications
-blurb: Many languages ship with powerful command line argument parsing libraries, Bash included. One of the best I've had the pleasure of working with is Python's argparse. Let's dive into how argparse became the inspiration for my Bash argument parsing library, koi.
+blurb: Many languages ship with powerful command line argument parsing libraries, Bash included. One of the best I've had the pleasure of working with is Python's argparse. Let's dive into how argparse became the inspiration for my own Bash argument parsing library, koi.
 cover: {{cdn:img/blog/recreating-pythons-argparse-in-bash/cover.jpg}}
 coverAuthor: Painterstock
 coverCredit: https://stock.adobe.com/contributor/207043170/painterstock

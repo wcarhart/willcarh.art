@@ -551,6 +551,8 @@ const buildSubcomponents = async (text) => {
 	while (/`.+?`/.exec(subcomponent)) {
 		let match = /`.+?`/.exec(subcomponent)[0]
 		let code = match.replace(/`/g, '')
+		// we need to replace other special characters so they don't interfere
+		code = code.replace(/_/g, '&#95;').replace(/\*/g, '&#42;').replace(/~/g, '&#126;')
 		let html = inlineCodeSnippet.replace('{{code}}', code)
 		subcomponent = subcomponent.replace(match, html)
 	}

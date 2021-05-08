@@ -125,6 +125,6 @@ In this example, we say that `--flagA` is dependent on `--flagB`. Thus, we refer
 Further documentation: [Dependent Arguments](https://www.willcarhart.dev/docs/koi/#/dependent_arguments)
 
 ### Using koi
-Koi was born out of necessity for a better argument parser in Bash, and is currently used in a variety of companies, projects, and applications. If you'd like to get started using koi, it's easy to install with [Homebrew](https://brew.sh/) using `brew install wcarhart/tools/koi`. If you'd like to read more about koi, check out its dedicated [documentation subsite](https://www.willcarhart.dev/docs/koi), or you can also check out its [GitHub repository](https://github.com/wcarhart/koi). I hope you enjoy using it as much as I have.
+Koi was born out of necessity for a better argument parser in Bash, and is currently used in a variety of companies, projects, and applications. If you'd like to get started using koi, it's easy to install with [Homebrew](https://brew.sh/) using `brew install wcarhart/tools/koi`. There are other installation options in koi's [GitHub repository](https://github.com/wcarhart/koi). If you'd like to read more about koi, check out its dedicated [documentation subsite](https://www.willcarhart.dev/docs/koi). You can also find the example script from this blog post in [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/recreating-pythons-argparse-in-bash). I hope you enjoy using it as much as I have.
 
 =🦉

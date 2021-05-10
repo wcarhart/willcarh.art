@@ -131,6 +131,6 @@ There are two parts to this code. _First_, we initialize the property `darkMode`
 
 
 ### Conclusion
-With a few simple steps, we have a robust way of implementing dark mode for any website. You can access the full code from this post in [this JSFiddle](https://jsfiddle.net/wcarhart/kzgr1tja/40/) or [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/the-easy-way-to-add-dark-mode-to-your-website). The content of this tutorial is almost verbatim what I use for [willcarh.art]({{sys:home}}). If you'd like to see it in action, click the icon in the top right of the webpage, check out its [repository](https://github.com/wcarhart/willcarh.art), or simply press `⌘+i` or `Ctrl+i`.
+With a few simple steps, we have a robust way of implementing dark mode for any website. You can access the full code from this post in [this JSFiddle](https://jsfiddle.net/wcarhart/kzgr1tja/40/) or [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/the-easy-way-to-add-dark-mode-to-your-website). The content of this tutorial is almost verbatim what I use for [willcarh.art]({{src:index.html}}). If you'd like to see it in action, click the icon in the top right of the webpage, check out its [repository](https://github.com/wcarhart/willcarh.art), or simply press `⌘+i` or `Ctrl+i`.
 
 =🦉

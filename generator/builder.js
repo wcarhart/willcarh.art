@@ -12,12 +12,12 @@ const readFilePromise = util.promisify(fs.readFile)
 
 /*
 Supported static asset tags:
-  {{css:...}}      --> static CSS file
-  {{ico:...}}      --> static icon file
-  {{font:...}}     --> static font file
-  {{js:...}}       --> static built js file
-  {{src:...}}      --> static built source file
-  {{cdn:...}}      --> file stored in CDN
+  {{css:...}}   --> static CSS file
+  {{ico:...}}   --> static icon file
+  {{font:...}}  --> static font file
+  {{js:...}}    --> static built js file
+  {{src:...}}   --> static built source file
+  {{cdn:...}}   --> file stored in CDN
 */
 
 // TODO: add {{sys:gh}} to resolve to https://github.com/wcarhart
@@ -32,7 +32,6 @@ Supported static asset tags:
 Support dynamic asset tags:
   {{sys:header}}    --> generated header for HTML files
   {{sys:headerjs}}  --> generated header for JS files
-  {{sys:home}}      --> path to homepage
   {{sys:charizard}} --> Charizard ascii art
 */
 
@@ -629,12 +628,13 @@ const buildProjSuper = async (projects) => {
 				'{{technologies}}',
 				projects[index].languages.concat(projects[index].technologies).filter(p => p !== '').join(' · ')
 			)
+
 			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
 			if (projects[index].repo !== '') {
-				githubIconHtml = githubIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
+				githubIconHtml = githubIconSnippet.replace('{{repo}}', projects[index].repo)
 			}
 			if (projects[index].documentation !== '') {
-				docsIconHtml = docsIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
+				docsIconHtml = docsIconSnippet.replace('{{docs}}', projects[index].documentation)
 			}
 			if (projects[index].demo === 'true') {
 				demoIconHtml = demoIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
@@ -643,7 +643,7 @@ const buildProjSuper = async (projects) => {
 				linkIconHtml = linkIconSnippet.replace('{{url}}', projects[index].link)
 			}
 			if (projects[index].blogPost !== '') {
-				blogIconHtml = blogIconSnippet.replace('{{blog}}', projects[index].blogPost)
+				linkIconHtml = blogIconSnippet.replace('{{blog}}', projects[index].blogPost)
 			}
 
 			superContainer = superContainer.replace('{{github-icon}}', githubIconHtml)

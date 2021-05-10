@@ -25,6 +25,7 @@ const appendFilePromise = util.promisify(fs.appendFile)
 
 // generate HTML files based on page type
 const generate = async (page, develop) => {
+	// set up file structure
 	try {
 		await fs.promises.access('src')
 	} catch (e) {
@@ -45,10 +46,13 @@ const generate = async (page, develop) => {
 	} catch (e) {
 		await mkdirPromise('src/demo')
 	}
+
+	// process pages
 	switch (page) {
 		case 'home':
 			console.log('🏠  Building home...')
-			await buildPageFromTemplate({template: 'templates/home.html', page: 'index.html', level: 0, develop: develop})
+			// await buildPageFromTemplate({template: 'templates/home.html', page: 'index.html', level: 0, develop: develop})
+			await buildPageFromTemplate({template: 'templates/home.html', page: 'src/index.html', level: 1, develop: develop})
 			break
 		case 'about':
 			console.log('💁‍♂️  Building about...')
@@ -106,7 +110,8 @@ const buildPageFromTemplate = async ({template='', page='', level=0, develop=fal
 	// data = html.prettyPrint(data, {indent_size: 4});
 
 	// update redirects for Netlify
-	await updateRedirects(page)
+	// TODO: fix redirects
+	// await updateRedirects(page)
 
 	// write to source file
 	await writeFilePromise(page, data)
@@ -271,7 +276,7 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			headerData.push(`<!-- This file was generated on ${now} via the forge in willcarh.art v${package.version}-->`)
 			headerData.push('<!-- Learn more: https://github.com/wcarhart/willcarh.art -->')
 			if (develop === true) {
-				headerData.push('<!-- THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION! -->')
+				headerData.push('<!-- THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION -->')
 			}
 			resolvedData = resolvedData.replace(match, headerData.join('\n'))
 			break
@@ -281,14 +286,9 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			headerjsData.push(`// This file was generated on ${now} via the forge in willcarh.art v${package.version}`)
 			headerjsData.push('// Learn more: https://github.com/wcarhart/willcarh.art')
 			if (develop === true) {
-				headerjsData.push('// THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!')
+				headerjsData.push('// THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION')
 			}
 			resolvedData = resolvedData.replace(match, headerjsData.join('\n'))
-			break
-		case 'home':
-			file = 'index.html'
-			assetPath = path.join(...Array(level).fill('..'), file)
-			resolvedData = resolvedData.replace(match, assetPath)
 			break
 		case 'charizard':
 			charizard = await readFilePromise('generator/charizard.txt')

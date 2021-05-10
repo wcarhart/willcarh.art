@@ -76,7 +76,6 @@ const generate = async (page, develop) => {
 			await buildScripts(develop)
 			break
 		case 'style':
-			// TODO
 			console.log('💄  Building styles')
 			await buildStyles(develop)
 			break
@@ -114,10 +113,6 @@ const buildPageFromTemplate = async ({template='', page='', level=0, develop=fal
 	// prettify text
 	// data = html.prettyPrint(data, {indent_size: 4});
 
-	// update redirects for Netlify
-	// TODO: fix redirects
-	// await updateRedirects(page)
-
 	// write to source file
 	await writeFilePromise(page, data)
 }
@@ -128,8 +123,6 @@ const buildMultiplePages = async (kind, develop) => {
 	for (let file of files) {
 		let name = file.split('/').pop().split('.md').shift()
 		await buildPageFromTemplate({template: `templates/${kind}_specific.html`, page: `src/${kind}/${name}.html`, level: 2, develop: develop})
-		// TODO: fix redirects
-		// await updateRedirects(`${kind}/${file.split('/').pop()}`, `${kind}/${name}`)
 	}
 }
 
@@ -182,56 +175,6 @@ const buildStyles = async (develop) => {
 		await copyFilePromise(`font/${fontfile}`, `src/font/${fontfile}`)
 	}
 }
-
-// TODO: fix this, still showing .html ending
-// const updateRedirects = async (page) => {
-// 	if (page.endsWith('.html')) {
-// 		// eslint-disable-next-line no-unused-vars
-// 		let redirect = ''
-// 		switch(page) {
-// 			case 'index.html':
-// 				// await appendFilePromise('_redirects', `/index /\n`)
-// 				// await appendFilePromise('_redirects', `/index.html /\n`)
-// 				break
-// 			case 'src/demo_index.html':
-// 				await appendFilePromise('_redirects', '/src/demo_index /demo\n')
-// 				// await appendFilePromise('_redirects', `/src/demo_index.html /demo\n`)
-// 				break
-// 			case 'src/project_index.html':
-// 				await appendFilePromise('_redirects', '/src/project_index /projects\n')
-// 				// await appendFilePromise('_redirects', `/src/project_index.html /projects\n`)
-// 				await appendFilePromise('_redirects', '/project /projects\n')
-// 				break
-// 			case 'src/blog_index.html':
-// 				await appendFilePromise('_redirects', '/src/blog_index /blog\n')
-// 				// await appendFilePromise('_redirects', `/src/blog_index.html /blog\n`)
-// 				break
-// 			case 'src/vault.html':
-// 				await appendFilePromise('_redirects', '/src/vault /vault\n')
-// 				// await appendFilePromise('_redirects', `/src/vault.html /vault\n`)
-// 				break
-// 			case 'src/etc.html':
-// 				await appendFilePromise('_redirects', '/src/etc /etc\n')
-// 				// await appendFilePromise('_redirects', `/src/etc.html /etc\n`)
-// 				break
-// 			case 'src/about.html':
-// 				await appendFilePromise('_redirects', '/src/about /about\n')
-// 				// await appendFilePromise('_redirects', `/src/about.html /about\n`)
-// 				break
-// 			case String(page.match(/^src\/project\/.*$/)):
-// 				// TODO
-// 				break
-// 			case String(page.match(/^src\/blog\/.*$/)):
-// 				// TODO
-// 				break
-// 			case String(page.match(/^src\/demo\/.*$/)):
-// 				// TODO
-// 				break
-// 			default:
-// 				throw new Error(`Unknown redirect file: '${page}'`)
-// 		}
-// 	}
-// }
 
 // replace static asset tags in template
 const resolveAssets = async (data, level, develop) => {

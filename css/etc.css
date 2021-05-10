@@ -55,6 +55,12 @@ h5 {
 	font-weight: 300;
 }
 
+#made-with-love {
+	font-size: 1rem;
+	color: var(--text);
+	font-family: 'Lato', sans-serif;
+}
+
 .color-palette-label {
 	height: 2rem;
 	line-height: 2rem;

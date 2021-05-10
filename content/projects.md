@@ -1,8 +1,6 @@
 name: lurker
 blurb: Hacker News terminal client
 about: Lurker is a simple terminal client for reading Y Combinator's Hacker News. It uses the public Hacker News API and is written entirely in Bash so it runs smoothly in the majority of terminal environments.
-about: Lurker embraces the hacker in Hacker News by exposing a simple CLI for reading stories, comments, and user information. This makes it easy to read Hacker News while completing other command line activities, especially when combined with tools like tmux.
-about: In addition to browsing Hacker News, lurker can summarize most text articles and snippets via another one of my tools, smoosh.
 languages: Bash
 technologies: Hacker News API
 img: {{cdn:img/logos/lurker.png}}
@@ -37,7 +35,7 @@ install: brew install wcarhart/tools/doku
 documentation:
 related:
 visibility: featured
-blogPost:
+blogPost: {{src:blog/why-im-excited-about-deno.html}}
 tags: cli
 
 name: smoosh
@@ -56,7 +54,7 @@ install: brew install wcarhart/tools/smoosh
 documentation:
 related:
 visibility: super
-blogPost:
+blogPost: {{src:blog/how-to-summarize-any-article-in-7-sentences-with-software.html}}
 tags: cli
 
 name: koi
@@ -80,12 +78,12 @@ related: chiller
 related: thoth
 related: docs
 visibility: super
-blogPost:
+blogPost: {{src:blog/recreating-pythons-argparse-in-bash.html}}
 tags: library
 
 name: snug
 blurb: Automated cloud repository backup
-about:
+about: 
 languages: Bash
 languages: Node.js
 languages: JavaScript
@@ -101,6 +99,7 @@ demo: false
 latest_version:
 published:
 status: in development
+install:
 documentation:
 related:
 visibility: none
@@ -113,14 +112,15 @@ blurb: Personal portfolio website
 about: Willcarh.art is my personal website and software portfolio. It has evolved over time from a Django application to a static site built by a custom Node.js generator. Willcarh.art is home to all of my projects, blog posts, and software-related ideas.
 languages: Node.js
 languages: JavaScript
+technologies: jQuery
 languages: HTML
 languages: CSS
-languages: Bash
-technologies: Yarn
-technologies: Netlify
-technologies: GCP Cloud CDN
-technologies: jQuery
 technologies: Bootstrap
+languages: Bash
+technologies: Netlify
+technologies: Yarn
+technologies: GCP Cloud CDN
+technologies: GCP Cloud Storage
 img: {{ico:home-about.png}}
 repo: https://github.com/wcarhart/willcarh.art
 link: https://willcarh.art
@@ -132,7 +132,7 @@ install:
 documentation:
 related:
 visibility: featured
-blogPost: {{src:blog/automating-emails-in-python.html}}
+blogPost: {{src:blog/why-i-wrote-my-own-static-site-generator.html}}
 tags: cli
 tags: web
 
@@ -187,7 +187,7 @@ tags: configuration
 
 name: hustle
 blurb: Rapid & lightweight workflow management
-about:
+about: 
 languages: Node.js
 languages: JavaScript
 technologies:
@@ -236,7 +236,7 @@ tags: web
 
 name: odin
 blurb: Personal financial portfolio manager
-about:
+about: 
 languages: Node.js
 languages: JavaScript
 languages: HTML
@@ -621,7 +621,7 @@ install:
 documentation:
 related:
 visibility: normal
-blogPost:
+blogPost: {{src:blog/reducing-aws-s3-storage-costs-with-bubble-trees.html}}
 tags: library
 
 name: Rise and Shine

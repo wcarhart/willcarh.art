@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="{{css:darkmode.css}}">
 		<link rel="stylesheet" href="{{css:fancylink.css}}">
 		<link rel="stylesheet" href="{{css:linkicons.css}}">
+		<link rel="stylesheet" href="{{css:credits.css}}">
 		<link rel="stylesheet" href="{{css:vault.css}}">
 
 		<!-- jQuery -->
@@ -31,6 +32,9 @@
 
 		<!-- animate.css -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+		<!-- site analytics -->
+		{{html:analytics}}
 
 		<!-- willcarh.art scripts -->
 		<script src="{{js:darkmode.js}}"></script>
@@ -58,16 +62,16 @@
 				{{html:vault-rows}}
 				<!-- TODO: vertically center items in columns -->
 			</div>
+
+			<div class="spacer"></div>
+			{{html:credits}}
+			<div class="spacer-small"></div>
 		</div>
 
 		<!-- logo -->
-		<a id="logo-container" href="{{sys:home}}">
-			<img id="logo" alt="willcarh.art logo" src="{{ico:android-chrome-512x512.png}}">
-		</a>
+		{{html:logo}}
 
 		<!-- dark mode toggle -->
-		<div id="dark-mode-toggle-container">
-			<button id="dark-mode-toggle"></button>
-		</div>
+		{{html:darkmode}}
 	</body>
 </html>

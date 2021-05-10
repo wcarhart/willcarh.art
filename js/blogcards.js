@@ -1,10 +1,11 @@
 {{sys:headerjs}}
 
+// handle clicks and resizing
 $(document).ready(async () => {
 	$('.blog-border').click(async function() {
 		let blog = this.id.replace(/^blog-card-/, '')
 		blog = blog.replace(/^latest-/, '')
-		window.location.href=`blog/${blog}.html`
+		window.location.href = `blog/${blog}.html`
 	})
 
 	await resizeBlogCards()
@@ -14,6 +15,7 @@ $(document).ready(async () => {
 	})
 })
 
+// resize blog cards based on screen size
 const resizeBlogCards = async () => {
 
 	// wait for page to settle

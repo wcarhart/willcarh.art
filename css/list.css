@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
 
+li {
+	color: var(--subtitle);
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+}
+
+li span {
+	color: var(--subtitle);
+	font-weight: 300;
+}
+
 ul {
 	list-style: none;
 }
@@ -13,8 +24,9 @@ ul li::before {
 	margin-left: -1em;
 }
 
-li {
-	color: var(--subtitle);
-	font-family: 'Lato', sans-serif;
-	font-weight: 300;
+
+ol li {
+	font-weight: bold !important;
+	color: var(--color) !important;
+
 }

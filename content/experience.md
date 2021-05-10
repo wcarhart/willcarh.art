@@ -1,10 +1,14 @@
 company: Wisk
 companyId: wisk
+title: Sr. Software Engineer, Infrastructure
 title: Software Engineer, Infrastructure
+date: 1615313940
 date: 1574146800
 displayDate: Since Nov 2019
-detail: Design, implement, and maintain in-house workflow management platform, which exposes and **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts**, all in Node.js
-detail: Designed and implemented **cloud architecture in GCP** for compiling and executing computation-heavy MATLAB scripts, managing MATLAB licenses, and uploading artifacts
+detail: Designed, implemented, and maintain a **front-end data visualization tool** for internal company simulations,  built with **Dash and Plotly**, backed by **Google BigQuery**, and served from **GCP**
+detail: Designed, implemented, and maintain an in-house end-to-end workflow management platform, which exposes and **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts in Elasticsearch**, all in Node.js, Python, and Mistral
+detail: Designed a **cloud architecture in GCP** for compiling and executing computation-heavy MATLAB scripts, managing MATLAB licenses, and uploading artifacts
+detail: Designed and implemented an **automated documentation generator** that generates internal tooling documentation based on code functionality, hosted on an internal company webpage via a **Static Site Generator (SSG)**
 detail: Modernized and rearchitected Python-based complex abort verification system for Wisk's flight simulator, moving from on-prem solution to Kubernetes-based solution in GKE, **reducing average job time from 72 hours to 30 minutes**
 detail: Manage production Bamboo build agents, including configuration management, software upgrades, and job scheduling
 detail: Drive detailed **documentation**, verbose **logging**, and consistent **traceability** for every project
@@ -12,18 +16,25 @@ languagesAndLibraries: Node.js
 languagesAndLibraries: Express.js
 languagesAndLibraries: Bash
 languagesAndLibraries: Python
+languagesAndLibraries: Flask
+languagesAndLibraries: Dash
+languagesAndLibraries: Plotly
+languagesAndLibraries: Mistral
 tools: git
 tools: Bitbucket
 tools: Jira
 tools: Confluence
 tools: Google Drive
+tools: Slack
+tools: LucidChart
 platforms: Docker
 platforms: Linux (Ubuntu)
 platforms: macOS
-infrastructure: GCP (Cloud Storage, Cloud Functions, Compute)
+infrastructure: GCP (Cloud Storage, Cloud Functions, Compute Engine, App Engine, BigQuery)
 infrastructure: Bamboo
 infrastructure: Puppet
 infrastructure: Kubernetes (GKE)
+infrastructure: Elasticsearch
 url: https://wisk.aero
 blogPost:
 
@@ -32,7 +43,6 @@ companyId: illumina
 title: Software Engineer, Automation
 title: Software Engineer Intern, Automation
 displayDate: May 2018 - Oct 2019
-displayDate: Summer 2018
 date: 1534140000
 date: 1527055200
 detail: Designed and implemented a new data-structure in Python to optimize and manage terabytes of genomic data in AWS S3, **reducing cloud storage costs by over 50%**, utilizing AWS Lambda, SNS, and CloudWatch
@@ -45,10 +55,11 @@ tools: git
 tools: GitHub
 tools: Jira
 tools: Confluence
+tools: Mattermost
 tools: Jama
 platforms: Docker
-tools: Linux (centOS)
-tools: Windows 10
+platforms: Linux (centOS)
+platforms: Windows 10
 infrastructure: AWS (S3, EC2, SNS, Lambda)
 infrastructure: Jenkins
 infrastructure: GNU Make
@@ -64,12 +75,14 @@ detail: Built **responsive webpages** for various clients using HTML5, CSS3, and
 detail: Maintained and updated documentation for production web apps
 detail: Troubleshot Elixir backend, **managed Docker delopyments**
 languagesAndLibraries: React
+languagesAndLibraries: JavaScript
 languagesAndLibraries: HTML5
 languagesAndLibraries: CSS3
 languagesAndLibraries: Elixir
 tools: git
 tools: GitHub
 tools: Trello
+tools: Slack
 platforms: Docker
 platforms: Linux
 url: https://www.starlitsoftware.com

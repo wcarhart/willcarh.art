@@ -11,14 +11,14 @@ if ! yarn check > /dev/null 2>&1 ; then
 fi
 
 # forge a new build
-if [[ "$@" == *"-s"* || "$@" == *"--silent"* ]] ; then
+if [[ "$*" == *"-s"* || "$*" == *"--silent"* ]] ; then
 	node "${source}/generator/generator.js" "$@" > /dev/null
 else
 	node "${source}/generator/generator.js" "$@"
 fi
 
 # open the newly built pages in a browser window
-if [[ "$@" == *"-b"* || "$@" == *"--browser"* ]] ; then
+if [[ "$*" == *"-b"* || "$*" == *"--browser"* ]] ; then
 	if [[ "$(uname -s)" == *"Darwin"* ]] ; then
 		if [[ -f index.html ]] ; then
 			open index.html

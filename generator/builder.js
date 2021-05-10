@@ -9,9 +9,7 @@ const markdown = require('./markdown.js')
 
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
-const copyFilePromise = util.promisify(fs.copyFile)
 
-// TODO: add color
 /*
 Supported static asset tags:
   {{css:...}}      --> static CSS file
@@ -20,15 +18,22 @@ Supported static asset tags:
   {{js:...}}       --> static built js file
   {{src:...}}      --> static built source file
   {{cdn:...}}      --> file stored in CDN
-  {{color:...}}    --> color from the system color palette
 */
+
+// TODO: add {{sys:gh}} to resolve to https://github.com/wcarhart
+// TODO: add {{sys:repo}} to resolve to https://github.com/wcarhart/willcarh.art
+// TODO: add {{repo:...}} to resolve to https://github.com/wcarhart/...
+// TODO: after the above three updates, replace links throughout project
+
+// TODO: add {{project:...}} and {{blog:...}} as shorthand for {{src:project/....html}} and {{src:blog/....html}}
+// TODO: replace all {{src:...}} with applicable proj/blog ones when the above change is ready
 
 /*
 Support dynamic asset tags:
-  {{sys:header}}   --> generated header for HTML files
-  {{sys:headerjs}} --> generated header for JS files
-  {{sys:home}}     --> path to homepage
-  {{sys:pokemon}}  --> Pokemon ascii art
+  {{sys:header}}    --> generated header for HTML files
+  {{sys:headerjs}}  --> generated header for JS files
+  {{sys:home}}      --> path to homepage
+  {{sys:charizard}} --> Charizard ascii art
 */
 
 /*
@@ -42,6 +47,11 @@ Supported HTML tags:
   {{html:blog-spec}}     --> build HTML for specific blog post
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
+  {{html:credits}}       --> build HTML for credits
+  {{html:analytics}}     --> build HTML for site analytics
+  {{html:logo}}          --> build HTML for site logo
+  {{html:darkmode}}      --> build HTML for dark mode toggle
+  {{html:email}}         --> build HTML for email contact button
 
 Supported code tags:
   {{code:proj}}          --> load projects into code
@@ -61,7 +71,7 @@ Supported meta tags:
 // build meta objects for webpages
 const buildMeta = async (data, match, key, page) => {
 	let resolvedData = data
-	let meta = ''
+	let meta = '', projectName = '', blogUrl = '', blogName = '', demoName = ''
 	switch (key) {
 		case 'home':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s personal portfolio website', url: 'https://willcarh.art'})
@@ -70,15 +80,15 @@ const buildMeta = async (data, match, key, page) => {
 			meta = await buildMetaHtml({description: 'Will Carhart\'s projects', url: 'https://willcarh.art/projects'})
 			break
 		case 'proj-spec':
-			let projectName = page.split('/').pop().split('.html')[0]
+			projectName = page.split('/').pop().split('.html')[0]
 			meta = await buildMetaHtml({description: projectName, url: `https://willcarh.art/project/${projectName}`})
 			break
 		case 'blog':
 			meta = await buildMetaHtml({description: 'Will Carhart\'s blog', url: 'https://willcarh.art/blog'})
 			break
 		case 'blog-spec':
-			let blogUrl = page.split('/').pop().split('.html')[0]
-			let blogName = blogUrl.split('-').map((word, index) => {
+			blogUrl = page.split('/').pop().split('.html')[0]
+			blogName = blogUrl.split('-').map((word, index) => {
 				if (index !== 0 && ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','onto','or','so','to','the','with','yet'].includes(word)) {
 					return word
 				}
@@ -93,7 +103,7 @@ const buildMeta = async (data, match, key, page) => {
 			meta = await buildMetaHtml({description: 'Will Carhart\'s demos', url: 'https://willcarh.art/demo'})
 			break
 		case 'demo-spec':
-			let demoName = page.split('/').pop().split('.html')[0]
+			demoName = page.split('/').pop().split('.html')[0]
 			meta = await buildMetaHtml({description: `${demoName} demo`, url: `https://willcarh.art/project/${demoName}`})
 			break
 		default:
@@ -117,46 +127,54 @@ const buildMetaHtml = async ({description='', url=''}) => {
 // replace {{html:...}} tags
 const buildHtml = async (data, match, key, page) => {
 	let resolvedData = data
-	let experiences = null, projects = null, blogs = null
+	let experiences = null, projects = null, blogs = null, common = null
 	let html = null
 	switch (key) {
 		case 'exp-tabs':
-			experiences = await parser.parseExperiences()
+			experiences = await parser.parse('experience')
 			html = await buildExpTabs(experiences)
 			break
 		case 'proj-super':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildProjSuper(projects.filter(p => p.visibility === 'super'))
 			break
 		case 'proj-all':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildProjAll(projects)
 			break
 		case 'proj-spec':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildProjSpec(projects, page)
 			break
 		case 'blog-latest':
-			blogs = await parser.parseBlogs()
+			blogs = await parser.parse('blog')
 			html = await buildBlogLatest(blogs)
 			break
 		case 'blog-all':
-			blogs = await parser.parseBlogs()
+			blogs = await parser.parse('blog')
 			html = await buildBlogAll(blogs)
 			break
 		case 'blog-spec':
-			blogs = await parser.parseBlogs()
+			blogs = await parser.parse('blog')
 			html = await buildBlogSpec(blogs, page)
 			break
 		case 'vault-rows':
-			experiences = await parser.parseExperiences()
-			projects = await parser.parseProjects()
-			blogs = await parser.parseBlogs()
+			experiences = await parser.parse('experience')
+			projects = await parser.parse('project')
+			blogs = await parser.parse('blog')
 			html = await buildVaultRows(experiences, projects, blogs)
 			break
 		case 'demo-rows':
-			projects = await parser.parseProjects()
+			projects = await parser.parse('project')
 			html = await buildDemoRows(projects)
+			break
+		case 'credits':
+		case 'analytics':
+		case 'logo':
+		case 'darkmode':
+		case 'email':
+			common = await readFilePromise(`snippets/common/${key}.html`)
+			html = common.toString()
 			break
 		default:
 			throw new Error(`Unknown {{html}} key '${key}'`)
@@ -168,23 +186,25 @@ const buildHtml = async (data, match, key, page) => {
 // replace {{code:...}} tags
 const buildCode = async (data, match, key) => {
 	let resolvedData = data
+	let classes = null, files = null, error = null, verifiedData = null
+	let projectData = null, newProjects = null, attributes = null
 	switch (key) {
 		case 'classes':
-			let classes = []
-			let files = await readdirPromise('snippets/js')
+			classes = []
+			files = await readdirPromise('snippets/js')
 			for (let file of files) {
-				let [error, data] = await tryToCatch(minify, `snippets/js/${file}`, {})
+				[error, verifiedData] = await tryToCatch(minify, `snippets/js/${file}`, {})
 				if (error) {
 					throw new Error(error)
 				}
-				classes.push(data)
+				classes.push(verifiedData)
 			}
 			resolvedData = resolvedData.replace(match, classes.join('\n'))
 			break
 		case 'proj':
-			let projectData = await readFilePromise('content/projects.md')
-			let newProjects = []
-			let attributes = []
+			projectData = await readFilePromise('content/projects.md')
+			newProjects = []
+			attributes = []
 			for (let line of projectData.toString().split('\n')) {
 				if (line !== '') {
 					attributes.push(line)
@@ -226,6 +246,7 @@ const buildBlogLatest = async (blogs) => {
 	html = html.replace('{{technologies}}', blog.resources.join(' · '))
 	html = html.replace('{{blurb}}', blog.blurb)
 	html = html.replace('{{author}}', blog.author)
+	html = html.replace('{{author-img}}', blog.authorImg)
 	html = html.replace('{{published}}', displayDate)
 
 	// calculate read time
@@ -256,6 +277,8 @@ const buildBlogAll = async (blogs) => {
 	blogRowSnippet = blogRowSnippet.toString()
 	blogRegularSnippet = blogRegularSnippet.toString()
 
+	sortedBlogs = sortedBlogs.filter(b => b.hidden === 'false')
+
 	// build HTML
 	let html = ''
 	for (let rowIndex = 0; rowIndex < sortedBlogs.length / 2; rowIndex++) {
@@ -278,6 +301,7 @@ const buildBlogAll = async (blogs) => {
 			blogHtml = blogHtml.replace('{{index}}', index)
 			blogHtml = blogHtml.replace('{{row-index}}', rowIndex)
 			blogHtml = blogHtml.replace('{{author}}', sortedBlogs[index].author)
+			blogHtml = blogHtml.replace('{{author-img}}', sortedBlogs[index].authorImg)
 
 			// calculate date
 			let date = new Date(sortedBlogs[index].published * 1000)
@@ -312,6 +336,16 @@ const buildBlogSpec = async (blogs, page) => {
 	}
 	blog = blog[0]
 
+	// sort blogs
+	let sortedBlogs = blogs.sort((a, b) => {
+		if (a.published > b.published) {
+			return -1
+		} else if (a.published < b.published) {
+			return 1
+		}
+		return 0
+	})
+
 	// get blog markdown comment
 	let blogContentFile = `content/blog/${blog.id}.md`
 	try {
@@ -323,7 +357,9 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// parse HTML snippets
 	let specSnippet = await readFilePromise('snippets/blog-spec/spec.html')
+	let staleSnippet = await readFilePromise('snippets/blog-spec/stale.html')
 	specSnippet = specSnippet.toString()
+	staleSnippet = staleSnippet.toString()
 
 	// build HTML
 	let html = specSnippet
@@ -331,6 +367,7 @@ const buildBlogSpec = async (blogs, page) => {
 	// build blog information
 	html = html.replace(/\{\{title\}\}/g, blog.title)
 	html = html.replace('{{author}}', blog.author)
+	html = html.replace('{{author-img}}', blog.authorImg)
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
@@ -339,7 +376,7 @@ const buildBlogSpec = async (blogs, page) => {
 		'st': [1,21],
 		'nd': [2,22],
 		'rd': [3,23],
-		'th': [1,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,26,27,28,29,30,31]
+		'th': [4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24,25,26,27,28,29,30,31]
 	}
 	let month = months[date.getMonth()]
 	let day = date.getDate()
@@ -350,14 +387,17 @@ const buildBlogSpec = async (blogs, page) => {
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
-	date = new Date(blog.updated * 1000)
-	month = months[date.getMonth()]
-	day = date.getDate()
-	ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
-	year = date.getFullYear()
-	timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
-	displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
+	displayDate = ''
+	if (blog.updated !== '') {
+		date = new Date(blog.updated * 1000)
+		month = months[date.getMonth()]
+		day = date.getDate()
+		ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
+		year = date.getFullYear()
+		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+		tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
+	}
 	html = html.replace('{{updated-full-datetimestamp}}', displayDate)
 
 	// calculate read time
@@ -372,9 +412,26 @@ const buildBlogSpec = async (blogs, page) => {
 	html = html.replace('{{cover-credit}}', blog.coverCredit)
 	html = html.replace('{{cover-author}}', blog.coverAuthor)
 
+	// add next blog link, if possible
+	let blogIndex = sortedBlogs.indexOf(blog) + 1
+	if (blogIndex === sortedBlogs.length) {
+		html = html.replace('{{blog-next}}', await sortedBlogs[0].id)
+		html = html.replace('{{blog-title}}', sortedBlogs[0].title)
+	} else {
+		html = html.replace('{{blog-next}}', await sortedBlogs[blogIndex].id)
+		html = html.replace('{{blog-title}}', sortedBlogs[blogIndex].title)
+	}
+
 	// build blog content
 	let blogContent = await markdown.convert(blogContentFile.toString(), page)
 	html = html.replace('{{blog-content}}', blogContent)
+
+	// check if is stale
+	if (blog.status === 'stale') {
+		html = html.replace('{{stale}}', staleSnippet)
+	} else {
+		html = html.replace('{{stale}}', '')
+	}
 
 	return html
 }
@@ -417,6 +474,7 @@ const buildProjSpec = async (projects, page) => {
 	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
 	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
 	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
 	specSnippet = specSnippet.toString()
 	technologiesMetadataSnippet = technologiesMetadataSnippet.toString()
 	githubStarsMetadataSnippet = githubStarsMetadataSnippet.toString()
@@ -430,6 +488,7 @@ const buildProjSpec = async (projects, page) => {
 	docsIconSnippet = docsIconSnippet.toString()
 	githubIconSnippet = githubIconSnippet.toString()
 	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
 
 	// build HTML
 	let html = specSnippet
@@ -445,7 +504,7 @@ const buildProjSpec = async (projects, page) => {
 	)
 
 	// build links
-	let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = ''
+	let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml=''
 	if (project.repo !== '') {
 		githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
 	}
@@ -458,10 +517,14 @@ const buildProjSpec = async (projects, page) => {
 	if (project.link !== '') {
 		linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
 	}
+	if (project.blogPost !== '') {
+		blogIconHtml = blogIconSnippet.replace('{{blog}}', project.blogPost)
+	}
 	html = html.replace(/\{\{github-icon\}\}/g, githubIconHtml)
 	html = html.replace(/\{\{docs-icon\}\}/g, docsIconHtml)
 	html = html.replace(/\{\{demo-icon\}\}/g, demoIconHtml)
 	html = html.replace(/\{\{link-icon\}\}/g, linkIconHtml)
+	html = html.replace(/\{\{blog-icon\}\}/g, blogIconHtml)
 
 	// build project metadata
 	let technologiesMetadataHtml = technologiesMetadataSnippet.replace('{{technologies}}', project.languages.concat(project.technologies).filter(p => p !== '').join(' · '))
@@ -493,11 +556,11 @@ const buildProjSpec = async (projects, page) => {
 	let statusMetadataHtml = statusMetadataSnippet.replace('{{status}}', project.status)
 	html = html.replace('{{technologies-metadata}}', technologiesMetadataHtml)
 	html = html.replace('{{github-stars-metadata}}', githubStarsMetadataHtml)
-    html = html.replace('{{install-metadata}}', installMetadataHtml)
+	html = html.replace('{{install-metadata}}', installMetadataHtml)
 	html = html.replace('{{publish-date-metadata}}', latestReleaseMetadataHtml)
-    html = html.replace('{{latest-release-metadata}}', publishDateMetadataHtml)
-    html = html.replace('{{status-metadata}}', relatedProjectsMetadataHtml)
-    html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
+	html = html.replace('{{latest-release-metadata}}', publishDateMetadataHtml)
+	html = html.replace('{{status-metadata}}', relatedProjectsMetadataHtml)
+	html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
 
 	// build project content
 	let projectContent = await markdown.convert(projectContentFile.toString(), page)
@@ -596,10 +659,9 @@ const buildProjSuper = async (projects) => {
 }
 
 const htmlSafify = async (string) => {
-	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_')
+	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_').replace(/,/g, '').replace(/'/g, '')
 }
 
-// TODO: 'about' for projects shouldn't be an array, and we shouldn't use about[0]
 // build all project rows
 const buildProjAll = async (projects) => {
 	// parse HTML snippets
@@ -665,7 +727,7 @@ const buildProjAll = async (projects) => {
 		featuredContainer = featuredContainer.replace(/\{\{name\}\}/g, await htmlSafify(project.name))
 		featuredContainer = featuredContainer.replace('{{title}}', project.name)
 		featuredContainer = featuredContainer.replace('{{blurb}}', project.blurb)
-		featuredContainer = featuredContainer.replace('{{about}}', project.about[0])
+		featuredContainer = featuredContainer.replace('{{about}}', project.about)
 		featuredContainer = featuredContainer.replace(
 			'{{technologies}}',
 			project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
@@ -845,15 +907,10 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 
 	// parse experiences into rows
 	for (let experience of experiences) {
-		for (let [index, title] of experience.title.entries()) {
+		for (let [index, ] of experience.title.entries()) {
 			let r = new RowTemplate({})
-			if (/[a-zA-Z]/g.test(experience.displayDate)) {
-				let matches = experience.displayDate[index].match(/[0-9]+/g)
-				r.year = matches[0]
-			} else {
-				let matches = experience.displayDate[index].match(/[0-9]+/g)
-				r.year = matches[1]
-			}
+			let yearDate = new Date(experience.date[index]*1000)
+			r.year = yearDate.getFullYear()
 			r.sortDate = experience.date[index]
 			r.title = `${experience.title[index]} @ ${experience.company}`
 			r.type = 'experience'
@@ -905,7 +962,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
-		r.blogPost = `{{src:blog/${blog.title.toLowerCase().replace(/ /g, '-')}.html}}`
+		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}.html}}`
 		r.vaultLink = r.blogPost
 
 		rows.push(r)
@@ -924,7 +981,6 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 				return 1
 			}
 		}
-		return 0
 	})
 
 	// build html
@@ -947,7 +1003,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		}
 		newRow = newRow.replace('{{resources}}', row.resources.flatMap(r => r === '' ? [] : r).join(' · '))
 
-		linkHtml = ''
+		let linkHtml = ''
 		if (row.githubName !== '') {
 			linkHtml += githubIconSnippet.replace('{{repo}}', row.githubName)
 		}
@@ -1018,7 +1074,7 @@ const buildExpTabs = async (experiences) => {
 		}
 		let content = contentSnippet.replace('{{titles}}', titles)
 		content = content.replace('{{company_lower}}', experience.companyId)
-		content = content.replace('{{date}}', experience.displayDate[0])
+		content = content.replace('{{date}}', experience.displayDate)
 		content = content.replace('{{details}}', details)
 		if (experience.languagesAndLibraries.length !== 0) {
 			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries.join(', '))
@@ -1057,7 +1113,7 @@ const buildNewProjectString = async (attributes) => {
 	let template = {
 		name: '',
 		blurb: '',
-		about: [],
+		about: '',
 		languages: [],
 		technologies: [],
 		img: '',
@@ -1075,17 +1131,19 @@ const buildNewProjectString = async (attributes) => {
 		let elements = line.split(': ')
 		let key = elements.shift()
 		let value = elements.join(': ')
-		if (['about', 'languages', 'technologies', 'related', 'tags'].includes(key)) {
+		if (['languages', 'technologies', 'related', 'tags'].includes(key)) {
 			template[key].push(value)
 		} else {
 			template[key] = value
 		}
 	}
+	// eslint-disable-next-line quotes
 	return `ALL_PROJECTS.push(new Project(JSON.parse('${JSON.stringify(template).replace("'", "\\'")}')))`
 }
 
 // TODO
 // build string for instatiating a new blog post
+// eslint-disable-next-line no-unused-vars
 const buildNewBlogString = async (attributes) => {
 	return
 }

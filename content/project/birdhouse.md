@@ -1,5 +1,4 @@
 # Stream tweets from hashtags like `#covid19` and `#2020election` straight to your terminal
-
 >> Try it out! | Try out birdhouse yourself on [the demo page]({{src:demo_index.html}}).
 
 ### What it is
@@ -46,7 +45,6 @@ Streaming tweets by @CNN + @CNNPolitics + @cnni + @cnnbrk, for #coronavirus
   https://paper.li/rottersclubx/1309216321?edition_id=03c122d0-6713-11ea-a645-0cc4
   7a0d1609  Thanks to @albertomelloni @breveinutile #coronavirus #covid19
 ```
-
 Get recent tweets from specific users.
 ```
 birdhouse chirps @elonmusk -n 3
@@ -69,7 +67,6 @@ birdhouse chirps @elonmusk -n 3
     @elonmusk | 4 hours ago
     @BHMoors Coming soon
 ```
-
 Get recent tweets for specific hashtags.
 ```
 birdhouse chirps -n 3 --language en '#covid19'
@@ -96,7 +93,6 @@ birdhouse chirps -n 3 --language en '#covid19'
   #HORSES #ponies #uk #coronavirus #MondayMotivaton 
   https://twitter.com/AdoptionsUk/status/1237327150962937859
 ```
-
 View information about Twitter accounts.
 ```
 birdhouse bird @BillGates

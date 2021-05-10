@@ -43,6 +43,9 @@
 	background-color: var(--detail);
 	padding: 1rem;
 	font-family: 'Roboto Mono', monospace;
+	width: 0;
+	max-width: 100%;
+	min-width: 100%;
 }
 
 .shoutout {
@@ -117,6 +120,95 @@ td {
 	font-weight: 300;
 }
 
-/*table {
-	margin: 0 auto;
-}*/
+/* slideshow */
+/* slideshow container */
+.markdown-slideshow-container {
+	box-sizing: border-box;
+	max-width: 98%;
+	position: relative;
+	margin: auto;
+}
+
+/* hide the images by default */
+.markdown-slideshow-slide {
+	box-sizing: border-box;
+	display: none;
+}
+
+/* next & previous buttons */
+.markdown-slideshow-prev, .markdown-slideshow-next {
+	box-sizing: border-box;
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: auto;
+	margin-top: -1.375rem;
+	padding: 1rem;
+	color: black;
+	font-weight: bold;
+	font-size: 1.125rem;
+	transition: 0.6s ease;
+	border-radius: 0 0.188rem 0.188rem 0;
+	user-select: none;
+}
+
+/* position the next button to the right */
+.markdown-slideshow-next {
+	box-sizing: border-box;
+	right: 0;
+	border-radius: 0.188rem 0 0 0.188rem;
+}
+
+/* on hover, add a black background color with a little bit see-through */
+.markdown-slideshow-prev:hover, .markdown-slideshow-next:hover {
+	background-color: rgba(0,0,0,0.8);
+	color: white;
+	text-decoration: none !important;
+}
+
+/* caption text */
+.markdown-slideshow-slide-caption {
+	box-sizing: border-box;
+	color: black;
+	font-size: 0.938rem;
+	padding: 0.5rem 0.75rem;
+	position: absolute;
+	bottom: 0.5rem;
+	width: 100%;
+	text-align: center;
+}
+
+/* the dots indicators (current slide indicator) */
+.markdown-slideshow-dot {
+	box-sizing: border-box;
+	cursor: pointer;
+	height: 0.5rem;
+	width: 0.5rem;
+	margin: 0 0.125rem;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+}
+
+.markdown-slideshow-active-slide, .markdown-slideshow-dot:hover {
+	background-color: #717171;
+}
+
+/* fading animation */
+.fade {
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 1.5s;
+	animation-name: fade;
+	animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+	from {opacity: .4}
+	to {opacity: 1}
+}
+
+@keyframes fade {
+	from {opacity: .4}
+	to {opacity: 1}
+}

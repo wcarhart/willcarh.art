@@ -1,7 +1,7 @@
 ### Emails in Python: An Introduction
 Ever want to set up an email newsletter on your own? Or have you ever wondered how services like [MailChimp](https://mailchimp.com/) send automated emails? Sending emails programmatically is very common practice, and Python comes out of the box with some awesome packages to help us send emails. Let's dive in!
+>> Note | You can download all the demo code from this blog post [here](https://github.com/wcarhart/willcarh.art-snippets/blob/master/automating-emails-in-python/snippet.py).
 
->> Note | You can download all the demo code from this blog post via this [GitHub gist](https://gist.github.com/wcarhart/b4f509c46ad1515a9954d356aaf10df1).
 
 ### What is SMTP?
 The [Simple Mail Transfer Protocol](https://www.geeksforgeeks.org/simple-mail-transfer-protocol-smtp/), or _SMTP_, is one of the most common protocols for sending outgoing emails. SMTP servers are responsible for connecting individual email clients like Gmail and Yahoo to the greater Internet, which in turn allows you to send an email to (almost) anyone in the world! I'm not going to delve into the details of SMTP right now, but a high-level take away is that **SMTP is an interface that allows you to send emails to other recipients' inboxes.**
@@ -163,7 +163,7 @@ And that's it! Now when we send emails, Gmail won't complain anymore! 🎉
 
 ### Parting Notes
 There you have it! You're now a pythonista armed with the power, and responsibility, of Gmail. Note that when you use the Gmail API, you're subject to its Terms of Service, so please don't use it nefariously 😊
-If you'd like to use the code from this blog post, I've uploaded it all to a [GitHub gist](https://gist.github.com/wcarhart/b4f509c46ad1515a9954d356aaf10df1) for your convenience. Many of the code samples were derived from Gmail's API documentation for Python, which you can access [here](https://developers.google.com/gmail/api/quickstart/python).
+If you'd like to use the code from this blog post, I've uploaded it all to a [here](https://github.com/wcarhart/willcarh.art-snippets/blob/master/automating-emails-in-python/snippet.py) for your convenience. Many of the code samples were derived from Gmail's API documentation for Python, which you can access [here](https://developers.google.com/gmail/api/quickstart/python).
 In addition, I used this architecture for my own email utility, the Herald, for [willcarh.art]({{sys:home}}). You can see it in action by going to the [contact]({{sys:home}}) section of the homepage. If you'd like to take a peek at the [source code](https://github.com/wcarhart/willcarh.art-v1/blob/master/herald.py), please be my guest!
 >> Note | In [v1 of willcarh.art](https://github.com/wcarhart/willcarh.art-v1), email sending was backed by a Django application running on a Heroku dyno. The website no longer sends automated emails, but the code from this blog post is still totally valid!
 

@@ -13,10 +13,13 @@ const convert = async (md, page) => {
 	let blockCodeSnippet = await readFilePromise('snippets/markdown/block-code.html')
 	let shoutoutSnippet = await readFilePromise('snippets/markdown/shoutout.html')
 	let ulSnippet = await readFilePromise('snippets/markdown/ul.html')
+	let olSnippet = await readFilePromise('snippets/markdown/ol.html')
 	let liSnippet = await readFilePromise('snippets/markdown/li.html')
+	let olliSnippet = await readFilePromise('snippets/markdown/olli.html')
 	let imgSnippet = await readFilePromise('snippets/markdown/img.html')
 	let imgSubtitleSnippet = await readFilePromise('snippets/markdown/img-subtitle.html')
 	let youtubeVideoSnippet = await readFilePromise('snippets/markdown/youtube.html')
+	let slideshowSnippet = await readFilePromise('snippets/markdown/slideshow/slideshow.html')
 
 	contentSubtitleSnippet = contentSubtitleSnippet.toString()
 	contentTextSnippet = contentTextSnippet.toString()
@@ -25,36 +28,62 @@ const convert = async (md, page) => {
 	blockCodeSnippet = blockCodeSnippet.toString()
 	shoutoutSnippet = shoutoutSnippet.toString()
 	ulSnippet = ulSnippet.toString()
+	olSnippet = olSnippet.toString()
 	liSnippet = liSnippet.toString()
+	olliSnippet = olliSnippet.toString()
 	imgSnippet = imgSnippet.toString()
 	imgSubtitleSnippet = imgSubtitleSnippet.toString()
 	youtubeVideoSnippet = youtubeVideoSnippet.toString()
+	slideshowSnippet = slideshowSnippet.toString()
 
 	// convert MD to HTML
 	let lines = md.split('\n')
 	let html = ''
 
+	// code block state inforamtion
 	let inCodeBlock = false
 	let codeblock = []
-	let inList = false
-	let listItems = []
+
+	// list state information
+	let inUnorderedList = false
+	let inOrderedList = false
+	let unorderedListItems = []
+	let orderedListItems = []
+	let orderedListStart = 1
+
+	// table state information
 	let inTable = false
 	let tableHeaders = []
 	let tableConfigs = []
 	let tableRows = []
 
+	// HTML block state information
+	let inHtmlBlock = false
+	let htmlblock = []
+
+	// slideshow state information
+	let inSlideshow = false
+	let slideshow = []
+
 	for (let [index, line] of lines.entries()) {
 
-		// TODO: add support for ol
 		// TODO: add support for nested lists
 		// TODO: add support for block quotes (lines starting with '>')
 		// TODO: add support for syntax highlighting with ```language and class="language-..." (see https://github.com/highlightjs/highlight.js/)
+		// TODO: should we add the ability to copy code snippets from code blocks? Probably in HTML and not here...
 
 		// we'll need to keep track of the state of the markdown
-		// there are three states - in code block, in table, and normal
+		// valid states:
+		//  - in code block
+		//  - in HTML block
+		//  - in table
+		//  - in unordered list
+		//  - in ordered list
+		//  - in slideshow
+		//  - normal
 
 		// normal state
-		if (inCodeBlock === false && inTable === false) {
+		if (inCodeBlock === false && inHtmlBlock === false && inTable === false && inUnorderedList === false && inOrderedList === false && inSlideshow === false) {
 
 			// lines that start with '#' are interpreted to be the start of the content text and should only occur once
 			if (line.startsWith('# ')) {
@@ -78,20 +107,31 @@ const convert = async (md, page) => {
 				shoutoutText = await buildSubcomponents(shoutoutText)
 				html += shoutoutSnippet.replace('{{title}}', shoutoutTitle).replace('{{text}}', shoutoutText)
 
-			// lines that start with '*' are interpreted to be lists
+			// lines that start with '*' are interpreted to be unordered lists
 			}  else if (line.startsWith('* ')) {
-				inList = true
+				inUnorderedList = true
 				let text = line.replace(/^\* /, '')
-				listItems.push(text)
+				unorderedListItems.push(text)
+
+			// lines that start with \d. are interpreted to be ordered lists
+			} else if (/^\d+\./.exec(line)) {
+				if (inOrderedList === false) {
+					orderedListStart = Number(line.replace(/\..*$/, ''))
+				}
+				inOrderedList = true
+				let text = line.replace(/^\d+\.\s*/, '')
+				orderedListItems.push(text)
 
 			// lines that start with '!' are interpreted to be images
 			} else if (line.startsWith('![')) {
-				let imgAlt = line.replace(/^!\[/, '').replace(/\].*$/, '')
-				let imgSrc = line.replace(/^.*\(/, '').replace(/\).*$/, '')
-				let remaining = line.replace(/^!\[.*\]\(.*\)/, '')
+				// we have to be careful here - must be lazy and not greedy - what if <.*> contains ']' or ')'?
+				let imgAlt = line.replace(/^!\[/, '').replace(/\].*?$/, '')
+				let imgSrc = line.replace(/^.*?\(/, '').replace(/\).*?$/, '')
+				let remaining = line.replace(/^!\[.*?\]\(.*?\)/, '')
 				let subtitleText = ''
 				if (remaining[0] === '<' && remaining[remaining.length-1] === '>') {
 					subtitleText = line.replace(/^.*</, '').replace(/>$/, '')
+					subtitleText = await buildSubcomponents(subtitleText)
 				}
 				let imgSubtitle = imgSubtitleSnippet.replace('{{subtitle}}', subtitleText)
 				html += imgSnippet.replace('{{alt}}', imgAlt).replace('{{src}}', imgSrc).replace('{{img-subtitle}}', imgSubtitle)
@@ -99,7 +139,11 @@ const convert = async (md, page) => {
 			// lines that start with '~' are interpreted to be YouTube vides
 			} else if (line.startsWith('~(')) {
 				let videoId = line.replace(/^~\(/, '').replace(/\)$/, '')
-				html += youtubeVideoSnippet.replace('\{\{video-id\}\}', videoId)
+				html += youtubeVideoSnippet.replace('{{video-id}}', videoId)
+
+			// lines that are '===' are interpreted to be the start or end of HTML blocks
+			} else if (line === '===') {
+				inHtmlBlock = true
 
 			// lines that start with '=' are interpreted to be centered
 			} else if (line.startsWith('=')) {
@@ -129,29 +173,64 @@ const convert = async (md, page) => {
 			} else if (line === '```') {
 				inCodeBlock = true
 
+			// lines that are '[[[' are intepreted to be the start of a slideshow
+			} else if (line === '[[[') {
+				inSlideshow = true
+
 			// lines that are '---' or '___' are interpreted to be horizontal rules
 			} else if (line === '---' || line === '___') {
 				html += '<hr>'
 
 			// empty lines are interpreted to be line breaks
 			} else if (line === '') {
-				if (inList) {
-					html += ulSnippet.replace('{{list-items}}', listItems.map(li => liSnippet.replace('{{text}}', li)).join(''))
-					listItems = []
-					inList = false
+				if (inUnorderedList === true) {
+					let listHtml = await Promise.all(unorderedListItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
+					html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
+					unorderedListItems = []
+					inUnorderedList = false
+				} else if (inOrderedList === true) {
+					let listHtml = await Promise.all(orderedListItems.map(async olli => olliSnippet.replace('{{text}}', await buildSubcomponents(olli))))
+					html += olSnippet.replace('{{list-items}}', listHtml.join('')).replace('{{ol-start}}', orderedListStart)
+					orderedListItems = []
+					inOrderedList = false
+					orderedListStart = 1
+				} else {
+					html += '<br>'
 				}
-				html += '<br>'
 
 			// all other lines are interpreted to be regular content text
 			} else {
-				if (inList) {
-					html += ulSnippet.replace('{{list-items}}', listItems.map(li => liSnippet.replace('{{text}}', li)).join(''))
-					listItems = []
-					inList = false
-				} else {
-					let subcomponent = await buildSubcomponents(line)
-					html += contentTextSnippet.replace('{{text}}', subcomponent)
-				}
+				let subcomponent = await buildSubcomponents(line)
+				html += contentTextSnippet.replace('{{text}}', subcomponent)
+			}
+
+		// in unordered list state
+		} else if (inUnorderedList === true) {
+			if (line === '') {
+				let listHtml = await Promise.all(unorderedListItems.map(async li => liSnippet.replace('{{text}}', await buildSubcomponents(li))))
+				html += ulSnippet.replace('{{list-items}}', listHtml.join(''))
+				unorderedListItems = []
+				inUnorderedList = false
+			} else if (line.startsWith('* ')) {
+				let text = line.replace(/^\* /, '')
+				unorderedListItems.push(text)
+			} else {
+				throw new Error(`Invalid markdown: unclosed unordered list in '${page}'`)
+			}
+
+		// in ordered list state
+		} else if (inOrderedList === true) {
+			if (line === '') {
+				let listHtml = await Promise.all(orderedListItems.map(async olli => olliSnippet.replace('{{text}}', await buildSubcomponents(olli))))
+				html += olSnippet.replace('{{list-items}}', listHtml.join('')).replace('{{ol-start}}', orderedListStart)
+				orderedListItems = []
+				inOrderedList = false
+				orderedListStart = 1
+			} else if (/^\d+\./.exec(line)) {
+				let text = line.replace(/^\d+\.\s*/, '')
+				orderedListItems.push(text)
+			} else {
+				throw new Error(`Invalid markdown: unclosed ordered list in '${page}'`)
 			}
 
 		// in table state
@@ -168,7 +247,8 @@ const convert = async (md, page) => {
 				if (!line.startsWith('|')) {
 					throw new Error(`Invalid table row (line ${index}): did you forget to end the table with an empty newline?`)
 				}
-				let tableComponents = line.split('|')
+				// ignore '|' if inline code
+				let tableComponents = line.match(/(?:[^|`]+|`[^`]*`)+/g)
 				await validateTableRow(line, index, page)
 				tableComponents = tableComponents.filter(tc => tc !== '')
 				if (tableConfigs.length === 0) {
@@ -188,13 +268,44 @@ const convert = async (md, page) => {
 				html += blockCodeSnippet.replace('{{code}}', codeblock.join('<br>'))
 				codeblock = []
 			} else {
-				// append to the code block
+				// handle plaintext '<', '>', and '$' which can interfere with HTML
+				line = line.replace(/</g, '&lt;')
+				line = line.replace(/>/g, '&gt;')
+				line = line.replace(/\$/g, '&#36;')
+
 				// TODO: add colors via color.css and span tags (especially for othello)
+
+				// append to the code block
 				codeblock.push(line)
 			}
 
+		// in HTML block state
+		} else if (inHtmlBlock === true) {
+			// if we encounter another '===', close the HTML block
+			if (line === '===') {
+				inHtmlBlock = false
+				html += htmlblock.join('\n')
+				htmlblock = []
+			} else {
+				// append to the HTML block
+				htmlblock.push(line)
+			}
+
+		// in slideshow
+		} else if (inSlideshow === true) {
+			// if we encounter ']]]', close the slideshow
+			if (line === ']]]') {
+				inSlideshow = false
+				html += slideshowSnippet.replace('{{slides}}', slideshow.map(s => s[0]).join('\n')).replace('{{dots}}', slideshow.map(s => s[1]).join('\n'))
+				slideshow = []
+			} else {
+				// append to the slideshow
+				slideshow.push(await buildSlideshowSlide(line, slideshow.length + 1, page, index))
+			}
+
+		// error state
 		} else {
-			throw new Error(`Ambiguous markdown state: in table and in code block at the same time`)
+			throw new Error('Ambiguous markdown state: in table, code block, unordered list, ordered list, slideshow, or HTML block at the same time')
 		}
 	}
 
@@ -202,11 +313,17 @@ const convert = async (md, page) => {
 	if (inCodeBlock) {
 		throw new Error(`Invalid markdown: unclosed code block in '${page}'`)
 	}
-	if (inList) {
-		throw new Error(`Invalid markdown: unclosed list in '${page}'`)
+	if (inUnorderedList) {
+		throw new Error(`Invalid markdown: unclosed unordered list in '${page}'`)
+	}
+	if (inOrderedList) {
+		throw new Error(`Invalid markdown: unclosed ordered list in '${page}'`)
 	}
 	if (inTable) {
 		throw new Error(`Invalid markdown: unclosed table in '${page}', did you forget to end the table with an empty newline?`)
+	}
+	if (inSlideshow) {
+		throw new Error(`Invalid markdown: unclosed slideshow in '${page}'`)
 	}
 
 	return html
@@ -225,6 +342,35 @@ const validateTableConfigs = async (configs, lineNumber, page) => {
 	if (isConfig === false) {
 		throw new Error(`Invalid table row in '${page}' (line ${lineNumber}): invalid table configuration`)
 	}
+}
+
+// add an slide to a slideshow
+const buildSlideshowSlide = async (line, index, page, lineNumber) => {
+	// parse HTML snippets
+	let slideSnippet = await readFilePromise('snippets/markdown/slideshow/slide.html')
+	let dotSnippet = await readFilePromise('snippets/markdown/slideshow/dot.html')
+	slideSnippet = slideSnippet.toString()
+	dotSnippet = dotSnippet.toString()
+
+	// slideshow lines should be in the form of links
+	// for example, [image caption](www.example.com/myimage)
+	let slide = null, dot = null
+	line = line.trim()
+	if (/\[.*?\]\(.+?\)/.exec(line)) {
+		let match = /\[.*?\]\(.+?\)/.exec(line)[0]
+		let caption = match.replace(/^\[/, '').replace(/\].*$/, '')
+		let href = match.replace(/^.*\(/, '').replace(/\)$/, '')
+		let alt = `Inline slideshow, slide ${index}`
+		if (caption !== '') {
+			alt = caption
+		}
+		slide = slideSnippet.replace('{{slide-caption}}', caption).replace('{{slide-content}}', href).replace('{{slide-alt}}', alt)
+		dot = dotSnippet.replace('{{slide-index}}', index)
+	} else {
+		throw new Error(`Invalid slideshow slide in '${page}' (line ${lineNumber}): invalid slide format, expecting [caption](image_url)`)
+	}
+	
+	return [slide, dot]
 }
 
 // build table HTML
@@ -313,7 +459,7 @@ const buildTable = async (headers, configs, rows, page) => {
 	)
 
 	// build body rows
-	for (let [index, row] of rows.entries()) {
+	for (let row of rows) {
 		// append row to body
 		bodyRows.push(trSnippet.replace(
 			'{{row}}',
@@ -347,6 +493,46 @@ const buildSubcomponents = async (text) => {
 	// build components
 	let subcomponent = text
 
+	// this is a little tricky
+	// we need to handle plaintext '<', '>', and '$', which can interfere with HTML
+	// we want to replace '<', '>', and '$', except in HTML chunks, unless the HTML chunk is in an inline code chunk
+
+	// first, segment subcomponent based on inline code chunks
+	let codeSegments = []
+	let startIndex = 0
+	for (let match of [...subcomponent.matchAll(/`.+?`/g)]) {
+		codeSegments.push(text.slice(startIndex, match['index']))
+		codeSegments.push(match[0])
+		startIndex = match['index'] + match[0].length
+	}
+	if (startIndex !== text.length) {
+		codeSegments.push(text.slice(startIndex))
+	}
+
+	// second, segment subcomponent based on HTML chunks
+	let htmlSegments = []
+	for (let s of codeSegments) {
+		startIndex = 0
+		for (let match of [...s.matchAll(/===.+?===/g)]) {
+			htmlSegments.push(s.slice(startIndex, match['index']))
+			htmlSegments.push(match[0])
+			startIndex = match['index'] + match[0].length
+		}
+		if (startIndex !== s.length) {
+			htmlSegments.push(s.slice(startIndex))
+		}
+	}
+
+	// then, replace '<' and '>' appropriately
+	for (let [index, chunk] of htmlSegments.entries()) {
+		if (!chunk.startsWith('===') || !chunk.endsWith('===')) {
+			htmlSegments[index] = chunk.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\$/g, '&#36;')
+		} else {
+			htmlSegments[index] = chunk.replace(/^===/, '').replace(/===$/, '')
+		}
+	}
+	subcomponent = htmlSegments.join('')
+
 	// handle links: [...](...)
 	while (/\[.+?\]\(.+?\)/.exec(subcomponent)) {
 		let match = /\[.+?\]\(.+?\)/.exec(subcomponent)[0]
@@ -365,6 +551,8 @@ const buildSubcomponents = async (text) => {
 	while (/`.+?`/.exec(subcomponent)) {
 		let match = /`.+?`/.exec(subcomponent)[0]
 		let code = match.replace(/`/g, '')
+		// we need to replace other special characters so they don't interfere
+		code = code.replace(/_/g, '&#95;').replace(/\*/g, '&#42;').replace(/~/g, '&#126;')
 		let html = inlineCodeSnippet.replace('{{code}}', code)
 		subcomponent = subcomponent.replace(match, html)
 	}

@@ -27,7 +27,7 @@ curl -X POST -u $USER https://api.github.com/repos/$USER/$REPONAME/issues/$PRNUM
 }"
 ```
 Bash is kinda hard to read, what would this look like in Python?
->> Heads Up! | From here on out, you'll need to use a personal access token to use the [Github API](https://github.blog/2013-05-16-personal-api-tokens/). Use [this helpful tutorial](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) to generate your own token (all you need is a GitHub account). For our purposes, we'll need to select the `repo:status`, `repo_deployment`, and public_repo scopes found under the repo category.<br><br>**A good rule is to not grant your application more privileges than necessary!** Often a safe way of storing secrets, like API keys, is to [set them as environment variables](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables/58826#58826).
+>> Heads Up! | From here on out, you'll need to use a personal access token to use the [Github API](https://github.blog/2013-05-16-personal-api-tokens/). Use [this helpful tutorial](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) to generate your own token (all you need is a GitHub account). For our purposes, we'll need to select the `repo:status`, `repo_deployment`, and `public_repo` scopes found under the repo category.===<br><br>===**A good rule is to not grant your application more privileges than necessary!** Often a safe way of storing secrets, like API keys, is to [set them as environment variables](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables/58826#58826).
 
 Here's what the above POST request would look like in Python, via the [`requests` library](https://realpython.com/python-requests/):
 ```
@@ -112,14 +112,16 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-There ya go! If you have both `.travis.yml` and the above code saved as `comment.py` in your repository, you'll get automated comments on Pull Requests!
+There ya go! If you have both `.travis.yml` and the above code saved as `comment.py` in your repository, you'll get automated comments on Pull Requests! You can also check out the code [here](https://github.com/wcarhart/willcarh.art-snippets/blob/master/building-chatbots-for-github/snippet.py).
 >> Heads Up! | In order for the above code to work, you'll have to add `GITHUB_TOKEN` as a secure environment variable to your Travis environment. There are a few ways to do this, as outlined in [Travis' documentation](https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings).
+
 
 ### Getting extra creative
 The above code a great starting point! What else could we accomplish with this?
 * We could build more complex Pull Request comments by using [GitHub's markdown language](https://guides.github.com/features/mastering-markdown/) to leave stylized content.
 * We could create a [separate GitHub account](https://help.github.com/en/articles/types-of-github-accounts) for our commenting bot.
 * We could [deploy our application](https://docs.travis-ci.com/user/deployment), if our tests pass.
+
 I did all of the above in my latest personal project, [Soliloquy]({{src:project/soliloquy.html}}) ([www.soliloquy.dev](https://www.soliloquy.dev/)), which uses CI to leave complex Pull Request comments via a GitHub bot account known as the [Friendly Committer](https://github.com/friendly-committer). If you'd like to see how this works, feel free to check out its [code here](https://github.com/wcarhart/Soliloquy/blob/master/scripts/validate_content.py). Here's what this looks like in practice:
 
 ![Screenshot of GitHub bot commenting on a Pull Request]({{cdn:img/blog/building-chatbots-for-github/friendlycommitter.png}})<Friendly Committer commenting on a PR on GitHub>

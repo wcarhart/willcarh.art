@@ -239,27 +239,3 @@ a.home-block {
 	display: table;
 	margin: auto;
 }
-
-#credits div {
-	display: inline-block;
-}
-
-.svg-inline--fa.fa-w-14 {
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
-}
-
-.svg-inline--fa.fa-w-12 {
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
-}
-
-#credits a {
-	color: var(--text);
-	padding: 0;
-	margin: 0;
-}
-
-#credits a:hover {
-	color: var(--color) !important;
-}

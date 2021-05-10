@@ -141,6 +141,44 @@ h5 {
 	color: var(--subtitle) !important;
 }
 
+#stale-content-container {
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+}
+
+#blog-navigation-container {
+	padding: 1rem;
+}
+
+.blog-navigation-chunk {
+	padding: 1rem;
+	border: solid 0.2rem var(--text);
+	border-radius: 1rem;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.blog-navigation-chunk:hover {
+	cursor: pointer;
+}
+
+.show-more {
+	display: none;
+	color: var(--color);
+}
+
+#blog-navigation-back:hover .show-more {
+	display: inline;
+}
+
+#blog-navigation-next:hover .show-more {
+	display: inline;
+}
+
 /* overwrite markdown CSS for blogs */
 .content-subtitle {
 	font-size: 3rem !important;
@@ -148,4 +186,8 @@ h5 {
 
 .content-text {
 	font-size: 1.2rem !important;
+}
+
+.navigation-detail-text {
+	margin-bottom: 0 !important;
 }

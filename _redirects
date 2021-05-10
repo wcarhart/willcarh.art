@@ -5,3 +5,6 @@
 /src/project_index /projects
 /project /projects
 /src/etc /etc
+
+/src/blog_index /blog
+/src/blog_index.html /blog

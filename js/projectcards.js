@@ -5,7 +5,6 @@ $(document).ready(async () => {
 
 	// handle animations for hover
 	$('.project-border').hover(async function() {
-		console.log(this.id)
 		const id = `#title-${this.id.replace('proj-', '')}`
 		$(id).css('background-size', '100% 0.125rem')
 		$(this).css('cursor', 'pointer')

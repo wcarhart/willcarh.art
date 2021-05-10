@@ -108,7 +108,7 @@ const main = async () => {
 		// asset order is essential, due to how linking occurs:
 		//  - scripts must be built first
 		//  - vault must be built before projects
-		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc']
+		const assets = ['scripts', 'style', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc']
 		for (let asset of assets) {
 			await core.generate(asset, args.develop)
 		}

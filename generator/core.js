@@ -20,6 +20,7 @@ const writeFilePromise = util.promisify(fs.writeFile)
 const mkdirPromise = util.promisify(fs.mkdir)
 const truncatePromise = util.promisify(fs.truncate)
 const appendFilePromise = util.promisify(fs.appendFile)
+const copyFilePromise = util.promisify(fs.copyFile)
 
 // TODO: add verbose comments
 
@@ -51,7 +52,6 @@ const generate = async (page, develop) => {
 	switch (page) {
 		case 'home':
 			console.log('🏠  Building home...')
-			// await buildPageFromTemplate({template: 'templates/home.html', page: 'index.html', level: 0, develop: develop})
 			await buildPageFromTemplate({template: 'templates/home.html', page: 'src/index.html', level: 1, develop: develop})
 			break
 		case 'about':
@@ -74,6 +74,11 @@ const generate = async (page, develop) => {
 		case 'scripts':
 			console.log('🖋  Building scripts...')
 			await buildScripts(develop)
+			break
+		case 'style':
+			// TODO
+			console.log('💄  Building styles')
+			await buildStyles(develop)
 			break
 		case 'vault':
 			console.log('🗄  Building vault...')
@@ -141,55 +146,92 @@ const buildScripts = async (develop) => {
 	}
 }
 
-// TODO: fix this, still showing .html ending
-const updateRedirects = async (page) => {
-	if (page.endsWith('.html')) {
-		// eslint-disable-next-line no-unused-vars
-		let redirect = ''
-		switch(page) {
-			case 'index.html':
-				// await appendFilePromise('_redirects', `/index /\n`)
-				// await appendFilePromise('_redirects', `/index.html /\n`)
-				break
-			case 'src/demo_index.html':
-				await appendFilePromise('_redirects', '/src/demo_index /demo\n')
-				// await appendFilePromise('_redirects', `/src/demo_index.html /demo\n`)
-				break
-			case 'src/project_index.html':
-				await appendFilePromise('_redirects', '/src/project_index /projects\n')
-				// await appendFilePromise('_redirects', `/src/project_index.html /projects\n`)
-				await appendFilePromise('_redirects', '/project /projects\n')
-				break
-			case 'src/blog_index.html':
-				await appendFilePromise('_redirects', '/src/blog_index /blog\n')
-				// await appendFilePromise('_redirects', `/src/blog_index.html /blog\n`)
-				break
-			case 'src/vault.html':
-				await appendFilePromise('_redirects', '/src/vault /vault\n')
-				// await appendFilePromise('_redirects', `/src/vault.html /vault\n`)
-				break
-			case 'src/etc.html':
-				await appendFilePromise('_redirects', '/src/etc /etc\n')
-				// await appendFilePromise('_redirects', `/src/etc.html /etc\n`)
-				break
-			case 'src/about.html':
-				await appendFilePromise('_redirects', '/src/about /about\n')
-				// await appendFilePromise('_redirects', `/src/about.html /about\n`)
-				break
-			case String(page.match(/^src\/project\/.*$/)):
-				// TODO
-				break
-			case String(page.match(/^src\/blog\/.*$/)):
-				// TODO
-				break
-			case String(page.match(/^src\/demo\/.*$/)):
-				// TODO
-				break
-			default:
-				throw new Error(`Unknown redirect file: '${page}'`)
-		}
+// build style elements
+const buildStyles = async (develop) => {
+	try {
+		await fs.promises.access('src/css')
+	} catch (e) {
+		await mkdirPromise('src/css')
+	}
+
+	try {
+		await fs.promises.access('src/ico')
+	} catch (e) {
+		await mkdirPromise('src/ico')
+	}
+
+	try {
+		await fs.promises.access('src/font')
+	} catch (e) {
+		await mkdirPromise('src/font')
+	}
+
+	let cssfiles = await findFiles({kind: 'css', prefix: ''})
+	let icofiles = await findFiles({kind: 'ico', prefix: ''})
+	let fontfiles = await findFiles({kind: 'font', prefix: ''})
+
+	for (let cssfile of cssfiles) {
+		await copyFilePromise(`css/${cssfile}`, `src/css/${cssfile}`)
+	}
+
+	for (let icofile of icofiles) {
+		await copyFilePromise(`ico/${icofile}`, `src/ico/${icofile}`)
+	}
+
+	for (let fontfile of fontfiles) {
+		await copyFilePromise(`font/${fontfile}`, `src/font/${fontfile}`)
 	}
 }
+
+// TODO: fix this, still showing .html ending
+// const updateRedirects = async (page) => {
+// 	if (page.endsWith('.html')) {
+// 		// eslint-disable-next-line no-unused-vars
+// 		let redirect = ''
+// 		switch(page) {
+// 			case 'index.html':
+// 				// await appendFilePromise('_redirects', `/index /\n`)
+// 				// await appendFilePromise('_redirects', `/index.html /\n`)
+// 				break
+// 			case 'src/demo_index.html':
+// 				await appendFilePromise('_redirects', '/src/demo_index /demo\n')
+// 				// await appendFilePromise('_redirects', `/src/demo_index.html /demo\n`)
+// 				break
+// 			case 'src/project_index.html':
+// 				await appendFilePromise('_redirects', '/src/project_index /projects\n')
+// 				// await appendFilePromise('_redirects', `/src/project_index.html /projects\n`)
+// 				await appendFilePromise('_redirects', '/project /projects\n')
+// 				break
+// 			case 'src/blog_index.html':
+// 				await appendFilePromise('_redirects', '/src/blog_index /blog\n')
+// 				// await appendFilePromise('_redirects', `/src/blog_index.html /blog\n`)
+// 				break
+// 			case 'src/vault.html':
+// 				await appendFilePromise('_redirects', '/src/vault /vault\n')
+// 				// await appendFilePromise('_redirects', `/src/vault.html /vault\n`)
+// 				break
+// 			case 'src/etc.html':
+// 				await appendFilePromise('_redirects', '/src/etc /etc\n')
+// 				// await appendFilePromise('_redirects', `/src/etc.html /etc\n`)
+// 				break
+// 			case 'src/about.html':
+// 				await appendFilePromise('_redirects', '/src/about /about\n')
+// 				// await appendFilePromise('_redirects', `/src/about.html /about\n`)
+// 				break
+// 			case String(page.match(/^src\/project\/.*$/)):
+// 				// TODO
+// 				break
+// 			case String(page.match(/^src\/blog\/.*$/)):
+// 				// TODO
+// 				break
+// 			case String(page.match(/^src\/demo\/.*$/)):
+// 				// TODO
+// 				break
+// 			default:
+// 				throw new Error(`Unknown redirect file: '${page}'`)
+// 		}
+// 	}
+// }
 
 // replace static asset tags in template
 const resolveAssets = async (data, level, develop) => {
@@ -217,19 +259,15 @@ const resolveAssets = async (data, level, develop) => {
 				} else if (asset === 'sys') {
 					resolvedData = await buildDynamicAsset(resolvedData, match, value, level, develop)
 
-				// css, ico, and font static files are stored outside the src/ directory
-				} else if (['css', 'ico', 'font'].includes(asset)) {
-					let file = `${asset}/${value}`
-					let assetPath = path.join(...Array(level).fill('..'), file)
-					resolvedData = resolvedData.replace(match, assetPath)
-
-				// src + js files, which are generated from templates into the src/ directory
+				// src + js files are generated from templates into the src/ directory
+				// css, ico, + font files are static, copied from source directory to src/ directory
 				} else {
 					let file = value
 
 					// js files are a special folder in src/ because they are also generated from templates
-					if (asset === 'js') {
-						file = path.join('js', file)
+					// if (asset === 'js') {
+					if (['css', 'ico', 'font', 'js'].includes(asset)) {
+						file = path.join(asset, file)
 					}
 
 					// make sure file exists

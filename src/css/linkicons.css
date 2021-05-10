@@ -1,0 +1,10 @@
+.github-icon, .link-icon, .docs-icon, .demo-icon, .blog-icon {
+	color: var(--text);
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	margin: 0;
+}
+
+.github-icon:hover, .link-icon:hover, .docs-icon:hover, .demo-icon:hover, .blog-icon:hover {
+	color: var(--color);
+}

@@ -1,0 +1,48 @@
+#credits {
+	text-align: center;
+	width: 100%;
+	display: table;
+	margin: 0 auto;
+}
+
+#credits div {
+	display: inline-block;
+}
+
+#credits a {
+	color: var(--text);
+	padding: 0;
+	margin: 0;
+}
+
+#footer-github-icon svg,
+#footer-stackoverflow-icon svg,
+#footer-linkedin-icon svg,
+#footer-facebook-icon svg {
+	margin: 0 0.5rem;
+}
+
+#footer-github-icon svg:hover,
+#footer-stackoverflow-icon svg:hover,
+#footer-linkedin-icon svg:hover,
+#footer-facebook-icon svg:hover {
+	color: var(--color) !important;
+}
+
+/* These are the original classes for the FA icons */
+/*
+.svg-inline--fa.fa-w-14 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+.svg-inline--fa.fa-w-12 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+.svg-inline--fa.fa-w-9 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+*/

@@ -2,3 +2,8 @@
 	base = '/'
 	publish = 'src/'
 	command = './forge --verbose'
+
+[[redirects]]
+	from = '/project'
+	to = '/projects'
+	status = 200

@@ -178,7 +178,7 @@ const buildMetaHtml = async ({title='', description='', url='', keywords=[], aut
 	metaSnippet = metaSnippet.replace(/\{\{description\}\}/g, description)
 	metaSnippet = metaSnippet.replace(/\{\{url\}\}/g, url)
 	if (keywords.length === 0) {
-		keywords = description.replace(',', '').replace("'", '').replace(/\./g, '').split(' ')
+		keywords = description.replace(',', '').replace('\'', '').replace(/\./g, '').split(' ')
 	}
 	metaSnippet = metaSnippet.replace(/\{\{keywords\}\}/g, keywords.filter((v, i, a) => a.indexOf(v) === i).join(','))
 	metaSnippet = metaSnippet.replace(/\{\{author\}\}/g, author)

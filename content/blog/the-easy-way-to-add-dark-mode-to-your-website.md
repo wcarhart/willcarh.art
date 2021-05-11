@@ -5,7 +5,7 @@
 2019 began [the year of dark mode](https://www.theverge.com/2019/3/15/18261967/dark-mode-battery-saving-feature-apps-os-platforms-developments) as most software companies jumped on the trend. Now you can find many different apps with dark mode available: Gmail, GitHub, Stack Overflow, even iOS. Being the trendy developers we are, let's come up with an easy way to implement dark mode on our websites with just a little bit of CSS, HTML, and jQuery.
 
 ### Using CSS variables
-First, let's pick a color scheme and keep track of it with standard CSS. If you use [Sass](https://sass-lang.com/) or [Less](http://lesscss.org/) the concept is the same. You can steal mine from my [etc]({{src:etc.html}}) page if you'd like. I usually have 4-5 colors in my scheme, but you can choose as many as you like.
+First, let's pick a color scheme and keep track of it with standard CSS. If you use [Sass](https://sass-lang.com/) or [Less](http://lesscss.org/) the concept is the same. You can steal mine from my [etc]({{src:etc}}) page if you'd like. I usually have 4-5 colors in my scheme, but you can choose as many as you like.
 We'll need to pick colors for _light mode_ and _dark mode_. Create a new file `style.css` for our styling. Set your variables for _light mode_ in `:root` and _dark mode_ in `:root.dark-mode`. This will make it super easy to switch between them.
 ```
 :root {
@@ -131,6 +131,6 @@ There are two parts to this code. _First_, we initialize the property `darkMode`
 
 
 ### Conclusion
-With a few simple steps, we have a robust way of implementing dark mode for any website. You can access the full code from this post in [this JSFiddle](https://jsfiddle.net/wcarhart/kzgr1tja/40/) or [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/the-easy-way-to-add-dark-mode-to-your-website). The content of this tutorial is almost verbatim what I use for [willcarh.art]({{src:index.html}}). If you'd like to see it in action, click the icon in the top right of the webpage, check out its [repository](https://github.com/wcarhart/willcarh.art), or simply press `⌘+i` or `Ctrl+i`.
+With a few simple steps, we have a robust way of implementing dark mode for any website. You can access the full code from this post in [this JSFiddle](https://jsfiddle.net/wcarhart/kzgr1tja/40/) or [this repository](https://github.com/wcarhart/willcarh.art-snippets/tree/master/the-easy-way-to-add-dark-mode-to-your-website). The content of this tutorial is almost verbatim what I use for [willcarh.art]({{src:index}}). If you'd like to see it in action, click the icon in the top right of the webpage, check out its [repository](https://github.com/wcarhart/willcarh.art), or simply press `⌘+i` or `Ctrl+i`.
 
 =🦉

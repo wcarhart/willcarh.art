@@ -20,12 +20,12 @@ const verifyContentFileStructure = async () => {
 // validate if generation was successful
 const validateBuild = async () => {
 	console.log('Validating built pages...')
-	await fs.promises.access('index.html')
+	await fs.promises.access('src/index.html')
 	await fs.promises.access('src/vault.html')
 	await fs.promises.access('src/about.html')
-	await fs.promises.access('src/demo_index.html')
-	await fs.promises.access('src/blog_index.html')
-	await fs.promises.access('src/project_index.html')
+	await fs.promises.access('src/demo.html')
+	await fs.promises.access('src/blog.html')
+	await fs.promises.access('src/projects.html')
 }
 
 // build the output file tree of the files that were generated

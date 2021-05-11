@@ -122,7 +122,7 @@ The above code a great starting point! What else could we accomplish with this?
 * We could create a [separate GitHub account](https://help.github.com/en/articles/types-of-github-accounts) for our commenting bot.
 * We could [deploy our application](https://docs.travis-ci.com/user/deployment), if our tests pass.
 
-I did all of the above in my latest personal project, [Soliloquy]({{src:project/soliloquy.html}}) ([www.soliloquy.dev](https://www.soliloquy.dev/)), which uses CI to leave complex Pull Request comments via a GitHub bot account known as the [Friendly Committer](https://github.com/friendly-committer). If you'd like to see how this works, feel free to check out its [code here](https://github.com/wcarhart/Soliloquy/blob/master/scripts/validate_content.py). Here's what this looks like in practice:
+I did all of the above in my latest personal project, [Soliloquy]({{src:project/soliloquy}}) ([www.soliloquy.dev](https://www.soliloquy.dev/)), which uses CI to leave complex Pull Request comments via a GitHub bot account known as the [Friendly Committer](https://github.com/friendly-committer). If you'd like to see how this works, feel free to check out its [code here](https://github.com/wcarhart/Soliloquy/blob/master/scripts/validate_content.py). Here's what this looks like in practice:
 
 ![Screenshot of GitHub bot commenting on a Pull Request]({{cdn:img/blog/building-chatbots-for-github/friendlycommitter.png}})<Friendly Committer commenting on a PR on GitHub>
 

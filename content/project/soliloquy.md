@@ -6,5 +6,5 @@ That's why I created soliloquy, as a place for hackers and software enthusiasts 
 
 ### Learn more
 Soliloquy is deployed over at [soliloquy.dev](https://www.soliloquy.dev). Head on over there to get a live demo of soliloquy!
-If you'd like to learn more about soliloquy's automated PR chatbot, the [Friendly Committer](https://github.com/friendly-committer), take a look at the [related blog post]({{src:blog/building-chatbots-for-github.html}}), or read some of its [source code](https://github.com/wcarhart/Soliloquy/blob/master/scripts/validate_content.py).
+If you'd like to learn more about soliloquy's automated PR chatbot, the [Friendly Committer](https://github.com/friendly-committer), take a look at the [related blog post]({{src:blog/building-chatbots-for-github}}), or read some of its [source code](https://github.com/wcarhart/Soliloquy/blob/master/scripts/validate_content.py).
 Soliloquy was born out of a passion for creating software without the explicit purpose of it being sold as a product. If you'd like to add one of your projects to Soliloquy, please do! [Here are the instructions for contributing](https://github.com/wcarhart/Soliloquy#instructions-for-contributing).

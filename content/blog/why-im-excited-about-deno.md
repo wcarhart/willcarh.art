@@ -71,7 +71,7 @@ deno run --allow-net server.ts
 Finally, navigate to `localhost:8000`.
 
 ### My own Deno experiment
-I wanted to play around with Deno myself in a non-trivial fashion. I decided to create an automated Sudoku solver, dubbed [doku]({{src:project/doku.html}}), to test out Deno. I had a fun time with Deno and built a cool project, so it was a win-win. You can try out doku yourself via `brew install wcarhart/tools/doku`, or check out its [project page]({{src:project/doku.html}}) or its [repository](https://github.com/wcarhart/doku).
+I wanted to play around with Deno myself in a non-trivial fashion. I decided to create an automated Sudoku solver, dubbed [doku]({{src:project/doku}}), to test out Deno. I had a fun time with Deno and built a cool project, so it was a win-win. You can try out doku yourself via `brew install wcarhart/tools/doku`, or check out its [project page]({{src:project/doku}}) or its [repository](https://github.com/wcarhart/doku).
 
 ### Conclusion
 Node.js has stablized to a very functional and competent toolset, but it has been a bumpy road and has not been without its problems. I think Deno is a cool evolution of the Node.js ecosystem and brings a lot of helpful changes to the table that are rooted in experience. It's not without its own issues, but I hope it is here to stay. I doubt it will ever fully replace Node.js, but I would be happy to move over fully to Deno in the future if it truly became the standard for server-side JS. If you want to learn more about Deno, check out its [website](https://deno.land), its [source code](https://github.com/denoland/deno), or other [awesome Deno projects](https://github.com/denolib/awesome-deno).

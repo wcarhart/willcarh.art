@@ -30,8 +30,10 @@ Supported static asset tags:
 
 /*
 Support dynamic asset tags:
+  {{sys:develop}}   --> 'true' if develop mode is active
   {{sys:header}}    --> generated header for HTML files
   {{sys:headerjs}}  --> generated header for JS files
+  {{sys:home}}      --> path to homepage
   {{sys:charizard}} --> Charizard ascii art
 */
 
@@ -921,7 +923,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			r.linkUrl = experience.url
 			r.blogPost = experience.blogPost
 			// TODO: this should redirect to the actual exp-tab, not just the page scroll location
-			r.vaultLink = '{{src:about.html}}#experience'
+			r.vaultLink = '{{src:about}}#experience'
 
 			rows.push(r)
 		}
@@ -944,7 +946,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.githubName = project.repo
 		r.linkUrl = project.link
 		r.blogPost = project.blogPost
-		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}.html}}`
+		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}}}`
 
 		rows.push(r)
 	}
@@ -962,7 +964,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
-		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}.html}}`
+		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}}}`
 		r.vaultLink = r.blogPost
 
 		rows.push(r)

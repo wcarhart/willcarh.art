@@ -109,7 +109,7 @@ All systems go for UK’s £55M fusion energy experiment (ccfe.ukaea.uk)
 ```
 
 ### Summarize webpages in just a few sentences
-Never leave the comfort of your terminal again with [smoosh]({{src:project/smoosh.html}}).
+Never leave the comfort of your terminal again with [smoosh]({{src:project/smoosh}}).
 ```
 > smoosh 1
 MAST Upgrade first plasma For the first time, after a seven-year build, UKAEA's labelled Mega 

@@ -1,5 +1,5 @@
 # The modern web browsing experience has become encumbered with cookie notices, newsletter signups, and browser notifications. Smoosh allows you to read _just the important bits_ from most webpages by using a smart summarizing algorithm.
->> Try it out! | Try out smoosh yourself on [the demo page]({{src:demo.html}}).
+>> Try it out! | Try out smoosh yourself on [the demo page]({{src:demo}}).
 
 ### What it is
 Smoosh is a simple tool that summarizes (smooshes) text, either locally or from the web. For example, smoosh can take any New York Times, CNN, or Fox News article and smoosh it (reduce its length) by ~70-80% on average. This means that most news articles can be read in just a few sentences!

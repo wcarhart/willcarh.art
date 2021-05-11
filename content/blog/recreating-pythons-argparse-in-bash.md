@@ -4,10 +4,10 @@ Isn't there a better way to do this? Almost every language ships with some form 
 
 ### Created by convenience, honed by necessity
 I often found myself writing Bash scripts to run my code. What would initially start out as a `run.sh` would evolve into a fully featured entrypoint into an application, and I found myself recreating some form of argument parsing in every script. Sometimes it would involve manually checking for a `--help` flag and printing out a predefined help message. Other times it would involve searching for a specific `-a` argument and capturing the next token. After some time I noticed how repetitive this process had become, and how it could be automated in the future.
-This led to me to create [koi]({{src:project/koi.html}}), a fully-featured and automated argument parser for Bash.
+This led to me to create [koi]({{src:project/koi}}), a fully-featured and automated argument parser for Bash.
 
 ### Pleasant argument parsing in Bash with koi
-[Koi]({{src:project/koi.html}}) acts as a single Bash script that parses command line arguments, and was inspired by Python's [argparse](https://docs.python.org/3/library/argparse.html). It automatically sets up subcommand parsing on the command line and requires little effort to incorporate into existing scripts.
+[Koi]({{src:project/koi}}) acts as a single Bash script that parses command line arguments, and was inspired by Python's [argparse](https://docs.python.org/3/library/argparse.html). It automatically sets up subcommand parsing on the command line and requires little effort to incorporate into existing scripts.
 Let's say you'd like to write a simple script to say hello to someone. This is easy to document and set up with koi. Let's create a new file called `say.sh`.
 ```
 #!/bin/bash

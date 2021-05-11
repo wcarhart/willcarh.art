@@ -1,4 +1,4 @@
 [build]
 	base = '/'
 	publish = 'src/'
-	command = './forge -d'
+	command = './forge --verbose'

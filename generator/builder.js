@@ -78,7 +78,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development. He takes pride in designing and implementing impactful software that is feature-rich and easy-to-use.',
 				'url': 'https://willcarh.art/about',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{cdn:img/og-logo.png}}'
 			}
 			break
 		case 'home':
@@ -87,7 +87,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development. He takes pride in designing and implementing impactful software that is feature-rich and easy-to-use.',
 				'url': 'https://willcarh.art',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{cdn:img/og-logo.png}}'
 			}
 			break
 		case 'proj':
@@ -96,7 +96,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the projects I\'ve built.',
 				'url': 'https://willcarh.art/projects',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{cdn:img/og-logo.png}}'
 			}
 			break
 		case 'proj-spec':
@@ -104,7 +104,7 @@ const buildMeta = async (data, match, key, page) => {
 			name = page.split('/').pop().split('.html')[0]
 			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)[0]
 			metaOptions = {
-				'title': `${project.name} | Will Carhart`,
+				'title': `${project.name} | Project | Will Carhart`,
 				'description': project.blurb,
 				'url': `https://willcarh.art/projects/${project.name}`,
 				'author': 'Will Carhart',
@@ -140,7 +140,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Over the years I\'ve written a plethora of software-related paraphernalia. The vault contains my comprehensive history.',
 				'url': 'https://willcarh.art/vault',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{cdn:img/og-logo.png}}'
 			}
 			break
 		case 'demo':
@@ -149,7 +149,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
 				'url': 'https://willcarh.art/demo',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{cdn:img/og-logo.png}}'
 			}
 			break
 		case 'demo-spec':
@@ -157,7 +157,7 @@ const buildMeta = async (data, match, key, page) => {
 			name = page.split('/').pop().split('.html')[0]
 			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)[0]
 			metaOptions = {
-				'title': `${project.name} - Demo | Will Carhart`,
+				'title': `${project.name} | Demo | Will Carhart`,
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
 				'url': `https://willcarh.art/demo/${project.id}`,
 				'author': 'Will Carhart',

@@ -92,7 +92,7 @@ const buildMeta = async (data, match, key, page) => {
 		case 'proj-spec':
 			projects = await parser.parse('project')
 			name = page.split('/').pop().split('.html')[0]
-			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)
+			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)[0]
 			metaOptions = {
 				'title': `${project.name} | Will Carhart`,
 				'description': project.blurb,
@@ -114,7 +114,8 @@ const buildMeta = async (data, match, key, page) => {
 			break
 		case 'blog-spec':
 			blogs = await parser.parse('blog')
-			blog = blogs.reduce((latest, current) => { return current.published > latest.published ? current : latest })
+			name = page.split('/').pop().split('.html')[0]
+			blog = blogs.filter(b => b.id.toLowerCase().replace(/ /g, '_') === name)[0]
 			metaOptions = {
 				'title': `${blog.title} | Will Carhart`,
 				'description': blog.blurb,
@@ -144,7 +145,7 @@ const buildMeta = async (data, match, key, page) => {
 		case 'demo-spec':
 			projects = await parser.parse('project')
 			name = page.split('/').pop().split('.html')[0]
-			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)
+			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)[0]
 			metaOptions = {
 				'title': `${project.name} - Demo | Will Carhart`,
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',

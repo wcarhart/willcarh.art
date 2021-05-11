@@ -2,6 +2,7 @@
 
 // handle hover and click for demo rows
 $(document).ready(async () => {
+	const develop = '{{sys:develop}}'
 	// handle animations for hover
 	$('.demo-border').hover(async function() {
 		const project = this.id.replace('demo-', '')
@@ -22,6 +23,10 @@ $(document).ready(async () => {
 	// handle click to specific demo
 	$('.demo-border').click(async function() {
 		const name = this.id.replace('demo-', '').replace('----', '.')
-		window.location.href=`demo/${name}.html`
+		let fullPath = `demo/${name}`
+		if (develop === 'true') {
+			fullPath += '.html'
+		}
+		window.location.href = fullPath
 	})
 })

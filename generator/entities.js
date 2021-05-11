@@ -47,7 +47,8 @@ class Project {
 		related=[],
 		visibility='',
 		blogPost='',
-		tags=[]
+		tags=[],
+		id=''
 	}) {
 		this.name = name
 		this.blurb = blurb
@@ -67,6 +68,7 @@ class Project {
 		this.visibility = visibility
 		this.blogPost = blogPost
 		this.tags = tags
+		this.id = id
 	}
 }
 

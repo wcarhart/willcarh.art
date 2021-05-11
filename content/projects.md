@@ -17,6 +17,7 @@ related: smoosh
 visibility: super
 blogPost:
 tags: cli
+id: lurker
 
 name: doku
 blurb: Automated Sudoku solver
@@ -37,6 +38,7 @@ related:
 visibility: featured
 blogPost: {{src:blog/why-im-excited-about-deno}}
 tags: cli
+id: doku
 
 name: smoosh
 blurb: A simple algorithm for summarizing text
@@ -56,6 +58,7 @@ related:
 visibility: super
 blogPost: {{src:blog/how-to-summarize-any-article-in-7-sentences-with-software}}
 tags: cli
+id: smoosh
 
 name: koi
 blurb: Bashful argument parsing
@@ -80,6 +83,7 @@ related: docs
 visibility: super
 blogPost: {{src:blog/recreating-pythons-argparse-in-bash}}
 tags: library
+id: koi
 
 name: snug
 blurb: Automated cloud repository backup
@@ -106,6 +110,7 @@ visibility: none
 blogPost:
 tags: cli
 tags: cloud
+id: snug
 
 name: willcarh.art
 blurb: Personal portfolio website
@@ -135,6 +140,7 @@ visibility: featured
 blogPost: {{src:blog/why-i-wrote-my-own-static-site-generator}}
 tags: cli
 tags: web
+id: willcarh.art
 
 name: docs
 blurb: Multiplexed tool documentation
@@ -163,6 +169,7 @@ related: chiller
 visibility: featured
 blogPost:
 tags: web
+id: docs
 
 name: konphig
 blurb: Dotfiles, custom Bash configs, and more
@@ -184,6 +191,7 @@ visibility: featured
 blogPost:
 tags: cli
 tags: configuration
+id: konphig
 
 name: hustle
 blurb: Rapid & lightweight workflow management
@@ -206,6 +214,7 @@ blogPost:
 tags: api
 tags: cli
 tags: cloud
+id: hustle
 
 name: soliloquy
 blurb: Project showcase website
@@ -220,6 +229,7 @@ technologies: jQuery
 technologies: Bootstrap
 technologies: Heroku
 technologies: Travis CI
+technologies: GitHub API
 img: {{cdn:img/logos/soliloquy.png}}
 repo: https://github.com/wcarhart/soliloquy
 link: https://soliloquy.dev
@@ -233,6 +243,7 @@ related:
 visibility: normal
 blogPost: {{src:blog/building-chatbots-for-github}}
 tags: web
+id: soliloquy
 
 name: odin
 blurb: Personal financial portfolio manager
@@ -259,6 +270,7 @@ visibility: none
 blogPost:
 tags: desktop
 tags: cli
+id: odin
 
 name: birdhouse
 blurb: Streaming tweets to the command line
@@ -278,6 +290,7 @@ related: koi
 visibility: featured
 blogPost:
 tags: cli
+id: birdhouse
 
 name: thoth
 blurb: Helpful English diction tools for the command line
@@ -297,6 +310,7 @@ related: koi
 visibility: normal
 blogPost:
 tags: cli
+id: thoth
 
 name: chiller
 blurb: Helpful GitHub repository and Homebrew tools 🍺
@@ -318,6 +332,7 @@ visibility: normal
 blogPost:
 tags: cli
 tags: configuration
+id: chiller
 
 name: wanda
 blurb: Timeline site for Will and Alexx
@@ -340,6 +355,7 @@ related:
 visibility: featured
 blogPost:
 tags: web
+id: wanda
 
 name: aerogram
 blurb: Serverless chat via ssh and scp
@@ -360,6 +376,7 @@ related: koi
 visibility: normal
 blogPost:
 tags: cli
+id: aerogram
 
 name: beaver
 blurb: Logs querier
@@ -379,6 +396,7 @@ related:
 visibility: normal
 blogPost:
 tags: cli
+id: beaver
 
 name: despicable
 blurb: Lightweight multithreading framework for shell tasks
@@ -398,6 +416,7 @@ related:
 visibility: less
 blogPost:
 tags: cli
+id: despicable
 
 name: cheqit
 blurb: Website status checker
@@ -417,6 +436,7 @@ related:
 visibility: normal
 blogPost:
 tags: cli
+id: cheqit
 
 name: locksmith
 blurb: Repository secret manager
@@ -436,6 +456,7 @@ related:
 visibility: normal
 blogPost:
 tags: library
+id: locksmith
 
 name: othello
 blurb: Terminal board game
@@ -455,6 +476,7 @@ related:
 visibility: normal
 blogPost:
 tags: cli
+id: othello
 
 name: Cheers
 blurb: iOS Happy Hour Finder app
@@ -481,6 +503,7 @@ related:
 visibility: less
 blogPost:
 tags: mobile
+id: cheers
 
 name: FitPals
 blurb: Social networking iOS app for fitness
@@ -503,6 +526,7 @@ related:
 visibility: none
 blogPost:
 tags: mobile
+id: fitpals
 
 name: Chordpanion
 blurb: iOS app to build chord progressions and help write music
@@ -524,6 +548,7 @@ related:
 visibility: less
 blogPost:
 tags: mobile
+id: chordpanion
 
 name: NASA APOD
 blurb: Simple iOS app to display the NASA Astronomy Picture of the Day
@@ -545,6 +570,7 @@ related:
 visibility: less
 blogPost:
 tags: mobile
+id: nasa_apod
 
 name: TI Checkers
 blurb: Checkers for the TI-84 calculator
@@ -565,6 +591,7 @@ related:
 visibility: less
 blogPost:
 tags: calculator
+id: ti_checkers
 
 name: TI TicTacToe
 blurb: TicTacToe for the TI-84 calculator
@@ -585,6 +612,7 @@ related:
 visibility: less
 blogPost:
 tags: calculator
+id: ti_tictactoe
 
 name: kartracer
 blurb: Simple OpenGL racing game
@@ -604,6 +632,7 @@ related:
 visibility: normal
 blogPost:
 tags: desktop
+id: kartracer
 
 name: algos
 blurb: Common algorithms and data structures for safe keeping
@@ -623,6 +652,7 @@ related:
 visibility: normal
 blogPost: {{src:blog/reducing-aws-s3-storage-costs-with-bubble-trees}}
 tags: library
+id: algos
 
 name: Rise and Shine
 blurb: Automatic daylight-based coffee maker
@@ -642,3 +672,4 @@ related:
 visibility: none
 blogPost:
 tags: embedded
+id: rise_and_shine

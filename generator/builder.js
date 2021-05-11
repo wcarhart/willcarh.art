@@ -7,25 +7,27 @@ const tryToCatch = require('try-to-catch')
 const parser = require('./parser.js')
 const markdown = require('./markdown.js')
 
+const package = require('../package.json')
+
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
 
 /*
 Supported static asset tags:
-  {{css:...}}   --> static CSS file
-  {{ico:...}}   --> static icon file
-  {{font:...}}  --> static font file
-  {{js:...}}    --> static built js file
-  {{src:...}}   --> static built source file
-  {{cdn:...}}   --> file stored in CDN
+  {{css:...}}            --> static CSS file
+  {{ico:...}}            --> static icon file
+  {{font:...}}           --> static font file
+  {{js:...}}             --> static built js file
+  {{src:...}}            --> static built source file
+  {{cdn:...}}            --> file stored in CDN
 */
 
 /*
 Support dynamic asset tags:
-  {{sys:develop}}   --> 'true' if develop mode is active
-  {{sys:header}}    --> generated header for HTML files
-  {{sys:headerjs}}  --> generated header for JS files
-  {{sys:charizard}} --> Charizard ascii art
+  {{sys:develop}}        --> 'true' if develop mode is active
+  {{sys:header}}         --> generated header for HTML files
+  {{sys:headerjs}}       --> generated header for JS files
+  {{sys:charizard}}      --> Charizard ascii art
 */
 
 /*
@@ -50,6 +52,7 @@ Supported code tags:
   {{code:blog}}          --> load blogs into code
 
 Supported meta tags:
+  {{meta:about}}         --> build HTML meta for about page
   {{meta:home}}          --> build HTML meta for home page
   {{meta:proj}}          --> build HTML meta for project index
   {{meta:proj-spec}}     --> build HTML meta for specific project
@@ -63,55 +66,127 @@ Supported meta tags:
 // build meta objects for webpages
 const buildMeta = async (data, match, key, page) => {
 	let resolvedData = data
-	let meta = '', projectName = '', blogUrl = '', blogName = '', demoName = ''
+	let meta = '', name = ''
+	let projects = '', project = ''
+	let blogs = '', blog = ''
+	let metaOptions = {}
+
 	switch (key) {
+		case 'about':
+			metaOptions = {
+				'title': 'About | Will Carhart',
+				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development.',
+				'url': 'https://willcarh.art/about',
+				'author': 'Will Carhart',
+				'cover': '{{cdn:img/og.png}}'
+			}
+			break
 		case 'home':
-			meta = await buildMetaHtml({description: 'Will Carhart\'s personal portfolio website', url: 'https://willcarh.art'})
+			metaOptions = {
+				'title': 'Home | Will Carhart',
+				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development.',
+				'url': 'https://willcarh.art',
+				'author': 'Will Carhart',
+				'cover': '{{cdn:img/og.png}}'
+			}
 			break
 		case 'proj':
-			meta = await buildMetaHtml({description: 'Will Carhart\'s projects', url: 'https://willcarh.art/projects'})
+			metaOptions = {
+				'title': 'Projects | Will Carhart',
+				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the projects I\'ve built.',
+				'url': 'https://willcarh.art/projects',
+				'author': 'Will Carhart',
+				'cover': '{{cdn:img/og.png}}'
+			}
 			break
 		case 'proj-spec':
-			projectName = page.split('/').pop().split('.html')[0]
-			meta = await buildMetaHtml({description: projectName, url: `https://willcarh.art/project/${projectName}`})
+			projects = await parser.parse('project')
+			name = page.split('/').pop().split('.html')[0]
+			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)[0]
+			metaOptions = {
+				'title': `${project.name} | Project | Will Carhart`,
+				'description': project.blurb,
+				'url': `https://willcarh.art/projects/${project.name}`,
+				'author': 'Will Carhart',
+				'cover': project.img
+			}
 			break
 		case 'blog':
-			meta = await buildMetaHtml({description: 'Will Carhart\'s blog', url: 'https://willcarh.art/blog'})
+			blogs = await parser.parse('blog')
+			blog = blogs.reduce((latest, current) => { return current.published > latest.published ? current : latest })
+			metaOptions = {
+				'title': 'Blog | Will Carhart',
+				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the lessons I\'ve learned along the way.',
+				'url': 'https://willcarh.art/blog',
+				'author': 'Will Carhart',
+				'cover': blog.cover
+			}
 			break
 		case 'blog-spec':
-			blogUrl = page.split('/').pop().split('.html')[0]
-			blogName = blogUrl.split('-').map((word, index) => {
-				if (index !== 0 && ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','onto','or','so','to','the','with','yet'].includes(word)) {
-					return word
-				}
-				return word[0].toUpperCase() + word.slice(1)
-			}).join(' ')
-			meta = await buildMetaHtml({description: blogName, url: `https://willcarh.art/blog/${blogUrl}`})
+			blogs = await parser.parse('blog')
+			name = page.split('/').pop().split('.html')[0]
+			blog = blogs.filter(b => b.id.toLowerCase().replace(/ /g, '_') === name)[0]
+			metaOptions = {
+				'title': `${blog.title} | Will Carhart`,
+				'description': blog.blurb,
+				'url': `https://willcarh.art/blog/${blog.id}`,
+				'author': 'Will Carhart',
+				'cover': blog.cover
+			}
 			break
 		case 'vault':
-			meta = await buildMetaHtml({description: 'Will Carhart\'s vault', url: 'https://willcarh.art/vault'})
+			metaOptions = {
+				'title': 'Vault | Will Carhart',
+				'description': 'Over the years I\'ve written a plethora of software-related paraphernalia. The vault contains my comprehensive history.',
+				'url': 'https://willcarh.art/vault',
+				'author': 'Will Carhart',
+				'cover': '{{cdn:img/og.png}}'
+			}
 			break
 		case 'demo':
-			meta = await buildMetaHtml({description: 'Will Carhart\'s demos', url: 'https://willcarh.art/demo'})
+			metaOptions = {
+				'title': 'Demo | Will Carhart',
+				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
+				'url': 'https://willcarh.art/demo',
+				'author': 'Will Carhart',
+				'cover': '{{cdn:img/og.png}}'
+			}
 			break
 		case 'demo-spec':
-			demoName = page.split('/').pop().split('.html')[0]
-			meta = await buildMetaHtml({description: `${demoName} demo`, url: `https://willcarh.art/project/${demoName}`})
+			projects = await parser.parse('project')
+			name = page.split('/').pop().split('.html')[0]
+			project = projects.filter(p => p.name.toLowerCase().replace(/ /g, '_') === name)[0]
+			metaOptions = {
+				'title': `${project.name} | Demo | Will Carhart`,
+				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
+				'url': `https://willcarh.art/demo/${project.id}`,
+				'author': 'Will Carhart',
+				'cover': project.img
+			}
 			break
 		default:
 			throw new Error(`Unknown meta type '${key}'`)
 	}
+	meta = await buildMetaHtml(metaOptions)
 	resolvedData = resolvedData.replace(match, meta)
 	return resolvedData
 }
 
 // build actual HTML meta tags for meta objects
-const buildMetaHtml = async ({description='', url=''}) => {
+const buildMetaHtml = async ({title='', description='', url='', keywords=[], author='', cover=''}) => {
 	let metaSnippet = await readFilePromise('snippets/meta/meta.html')
 	metaSnippet = metaSnippet.toString()
 
+	metaSnippet = metaSnippet.replace(/\{\{title\}\}/g, title)
 	metaSnippet = metaSnippet.replace(/\{\{description\}\}/g, description)
 	metaSnippet = metaSnippet.replace(/\{\{url\}\}/g, url)
+	if (keywords.length === 0) {
+		keywords = description.replace(',', '').replace('\'', '').replace(/\./g, '').split(' ')
+	}
+	metaSnippet = metaSnippet.replace(/\{\{keywords\}\}/g, keywords.filter((v, i, a) => a.indexOf(v) === i).join(','))
+	metaSnippet = metaSnippet.replace(/\{\{author\}\}/g, author)
+	metaSnippet = metaSnippet.replace(/\{\{version\}\}/g, package.version)
+	metaSnippet = metaSnippet.replace(/\{\{cover\}\}/g, cover)
 
 	return metaSnippet
 }

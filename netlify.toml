@@ -2,5 +2,6 @@
 	publish = 'src/'
 
 [[redirects]]
-	from = '/blog_index.html'
-	to = 'blog_index'
+	from = '/blog.html'
+	to = '/blog'
+	status = 200

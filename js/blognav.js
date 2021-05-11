@@ -3,7 +3,7 @@
 // handle clicks on blog nav items
 $(document).ready(async () => {
 	$('#blog-navigation-back').click(async function() {
-		window.location.href = window.location.href.replace(/blog.*$/, 'blog_index.html')
+		window.location.href = window.location.href.replace(/blog.*$/, '{{src:blog.html}}')
 	})
 
 	$('#blog-navigation-next').click(async function() {

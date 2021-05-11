@@ -60,16 +60,13 @@ const generate = async (page, develop) => {
 			break
 		case 'blog':
 			console.log('📖  Building blog...')
-			await buildPageFromTemplate({template: 'templates/blog_index.html', page: 'src/blog_index.html', level: 1, develop: develop})
+			await buildPageFromTemplate({template: 'templates/blog_index.html', page: 'src/blog.html', level: 1, develop: develop})
 			await buildMultiplePages('blog', develop)
 			break
 		case 'projects':
 			console.log('🏗  Building projects...')
-			await buildPageFromTemplate({template: 'templates/project_index.html', page: 'src/project_index.html', level: 1, develop: develop})
+			await buildPageFromTemplate({template: 'templates/project_index.html', page: 'src/projects.html', level: 1, develop: develop})
 			await buildMultiplePages('project', develop)
-			break
-		case 'apps':
-			console.log('🖥  Building apps...')
 			break
 		case 'scripts':
 			console.log('🖋  Building scripts...')
@@ -85,7 +82,7 @@ const generate = async (page, develop) => {
 			break
 		case 'demo':
 			console.log('🏃‍♂️  Building demos...')
-			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo_index.html', level: 1, develop: develop})
+			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo.html', level: 1, develop: develop})
 			await buildMultiplePages('demo', develop)
 			break
 		case 'etc':
@@ -179,7 +176,7 @@ const buildStyles = async (develop) => {
 // replace static asset tags in template
 const resolveAssets = async (data, level, develop) => {
 	let resolvedData = data
-	const supportedAssets = ['css', 'cdn', 'font', 'ico', 'js', 'src', 'sys']
+	const supportedAssets = ['css', 'cdn', 'font', 'ico', 'js', 'src', 'sys', 'blog', 'project']
 
 	// process each asset
 	for (let asset of supportedAssets) {
@@ -205,21 +202,18 @@ const resolveAssets = async (data, level, develop) => {
 				// src + js files are generated from templates into the src/ directory
 				// css, ico, + font files are static, copied from source directory to src/ directory
 				} else {
-					let file = value
-
-					// js files are a special folder in src/ because they are also generated from templates
-					// if (asset === 'js') {
-					if (['css', 'ico', 'font', 'js'].includes(asset)) {
-						file = path.join(asset, file)
+					// resolve 'blog' and 'project' shortcuts
+					if (['blog', 'project'].includes(asset)) {
+						asset = 'src'
+						console.log(value)
+						asdf
 					}
 
-					// make sure file exists
-					if (develop === false) {
-						try {
-							await fs.promises.access(`src/${file}`)
-						} catch (e) {
-							throw new Error(`No such referenced file: 'src/${file}'`)
-						}
+					let file = value
+
+					// if in assset subdir
+					if (['css', 'ico', 'font', 'js'].includes(asset)) {
+						file = path.join(asset, file)
 					}
 
 					// configure relative path based on nesting level

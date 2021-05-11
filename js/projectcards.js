@@ -2,6 +2,7 @@
 
 // handle hover and click for project cards
 $(document).ready(async () => {
+	const develop = '{{sys:develop}}'
 
 	// handle animations for hover
 	$('.project-border').hover(async function() {
@@ -18,7 +19,11 @@ $(document).ready(async () => {
 	// it's not a bulletproof approach, but it's unlikely a project name will naturally contain the string '----'
 	$('.project-border').click(async function() {
 		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '').replace('----', '.')
-		window.location.href=`project/${name}.html`
+		let fullPath = `project/${name}`
+		if (develop === 'true') {
+			fullPath += '.html'
+		}
+		window.location.href = fullPath
 	})
 
 	// resize the project containers after the page loads

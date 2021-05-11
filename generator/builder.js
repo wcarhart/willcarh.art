@@ -14,20 +14,20 @@ const readFilePromise = util.promisify(fs.readFile)
 
 /*
 Supported static asset tags:
-  {{css:...}}   --> static CSS file
-  {{ico:...}}   --> static icon file
-  {{font:...}}  --> static font file
-  {{js:...}}    --> static built js file
-  {{src:...}}   --> static built source file
-  {{cdn:...}}   --> file stored in CDN
+  {{css:...}}            --> static CSS file
+  {{ico:...}}            --> static icon file
+  {{font:...}}           --> static font file
+  {{js:...}}             --> static built js file
+  {{src:...}}            --> static built source file
+  {{cdn:...}}            --> file stored in CDN
 */
 
 /*
 Support dynamic asset tags:
-  {{sys:develop}}   --> 'true' if develop mode is active
-  {{sys:header}}    --> generated header for HTML files
-  {{sys:headerjs}}  --> generated header for JS files
-  {{sys:charizard}} --> Charizard ascii art
+  {{sys:develop}}        --> 'true' if develop mode is active
+  {{sys:header}}         --> generated header for HTML files
+  {{sys:headerjs}}       --> generated header for JS files
+  {{sys:charizard}}      --> Charizard ascii art
 */
 
 /*
@@ -52,6 +52,7 @@ Supported code tags:
   {{code:blog}}          --> load blogs into code
 
 Supported meta tags:
+  {{meta:about}}         --> build HTML meta for about page
   {{meta:home}}          --> build HTML meta for home page
   {{meta:proj}}          --> build HTML meta for project index
   {{meta:proj-spec}}     --> build HTML meta for specific project
@@ -71,6 +72,15 @@ const buildMeta = async (data, match, key, page) => {
 	let metaOptions = {}
 
 	switch (key) {
+		case 'about':
+			metaOptions = {
+				'title': 'About | Will Carhart',
+				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development. He takes pride in designing and implementing impactful software that is feature-rich and easy-to-use.',
+				'url': 'https://willcarh.art/about',
+				'author': 'Will Carhart',
+				'cover': '{{cdn:img/og.png}}'
+			}
+			break
 		case 'home':
 			metaOptions = {
 				'title': 'Home | Will Carhart',

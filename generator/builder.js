@@ -75,19 +75,19 @@ const buildMeta = async (data, match, key, page) => {
 		case 'about':
 			metaOptions = {
 				'title': 'About | Will Carhart',
-				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development. He takes pride in designing and implementing impactful software that is feature-rich and easy-to-use.',
+				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development.',
 				'url': 'https://willcarh.art/about',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og3.png}}'
+				'cover': '{{cdn:img/og4.png}}'
 			}
 			break
 		case 'home':
 			metaOptions = {
 				'title': 'Home | Will Carhart',
-				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development. He takes pride in designing and implementing impactful software that is feature-rich and easy-to-use.',
+				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development.',
 				'url': 'https://willcarh.art',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og3.png}}'
+				'cover': '{{cdn:img/og4.png}}'
 			}
 			break
 		case 'proj':
@@ -96,7 +96,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the projects I\'ve built.',
 				'url': 'https://willcarh.art/projects',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og3.png}}'
+				'cover': '{{cdn:img/og4.png}}'
 			}
 			break
 		case 'proj-spec':
@@ -140,7 +140,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Over the years I\'ve written a plethora of software-related paraphernalia. The vault contains my comprehensive history.',
 				'url': 'https://willcarh.art/vault',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og3.png}}'
+				'cover': '{{cdn:img/og4.png}}'
 			}
 			break
 		case 'demo':
@@ -149,7 +149,7 @@ const buildMeta = async (data, match, key, page) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
 				'url': 'https://willcarh.art/demo',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og3.png}}'
+				'cover': '{{cdn:img/og4.png}}'
 			}
 			break
 		case 'demo-spec':

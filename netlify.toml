@@ -1,12 +1,5 @@
 [build]
+	base = '/'
 	publish = 'src/'
-
-[[redirects]]
-	from = '/index.html'
-	to = '/'
-	status = 200
-
-[[redirects]]
-	from = '/blog.html'
-	to = '/blog'
-	status = 200
+	command = 'forge -d'
+	

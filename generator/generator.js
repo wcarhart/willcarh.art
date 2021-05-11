@@ -31,7 +31,7 @@ const validateBuild = async () => {
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
 	let tree = '.\n'
-	for (let dir of ['index.html', 'font', 'ico', 'css', 'src']) {
+	for (let dir of ['src']) {
 		tree += await buildTree(dir, '', dir === 'src' ? true : false, '')
 	}
 	console.log(tree)

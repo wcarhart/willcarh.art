@@ -14,7 +14,6 @@ $(document).ready(async () => {
 	})
 
 	await resizeBlogCards()
-	// TODO: verify this actually works
 	$(window).resize(async () => {
 		await resizeBlogCards()
 	})

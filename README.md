@@ -43,6 +43,7 @@ Create a new development build with `./forge --develop --verbose`.
 👓  Building etc...
 ✨  Done in 0.647 seconds
 ```
+If you take a look in `netlify.toml`, you'll see that the production build does not use development mode when running the forge: `./forge --verbose`.
 
 # About the website
 [willcarh.art](https://willcarh.art) was born out of my desire to have my own slice of the internet. It's changed over the years as I've coded more things. I hope you enjoy your visit 😊

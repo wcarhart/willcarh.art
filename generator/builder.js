@@ -20,20 +20,11 @@ Supported static asset tags:
   {{cdn:...}}   --> file stored in CDN
 */
 
-// TODO: add {{sys:gh}} to resolve to https://github.com/wcarhart
-// TODO: add {{sys:repo}} to resolve to https://github.com/wcarhart/willcarh.art
-// TODO: add {{repo:...}} to resolve to https://github.com/wcarhart/...
-// TODO: after the above three updates, replace links throughout project
-
-// TODO: add {{project:...}} and {{blog:...}} as shorthand for {{src:project/....html}} and {{src:blog/....html}}
-// TODO: replace all {{src:...}} with applicable proj/blog ones when the above change is ready
-
 /*
 Support dynamic asset tags:
   {{sys:develop}}   --> 'true' if develop mode is active
   {{sys:header}}    --> generated header for HTML files
   {{sys:headerjs}}  --> generated header for JS files
-  {{sys:home}}      --> path to homepage
   {{sys:charizard}} --> Charizard ascii art
 */
 

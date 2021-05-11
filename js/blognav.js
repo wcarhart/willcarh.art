@@ -5,11 +5,10 @@ $(document).ready(async () => {
 	const develop = '{{sys:develop}}'
 
 	$('#blog-navigation-back').click(async function() {
-		let fullPath = '{{src:blog'
+		let fullPath = 'blog'
 		if (develop === 'true') {
 			fullPath += '.html'
 		}
-		fullPath += '}}'
 		window.location.href = window.location.href.replace(/blog.*$/, fullPath)
 	})
 

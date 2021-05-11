@@ -19,7 +19,6 @@ const readFilePromise = util.promisify(fs.readFile)
 const writeFilePromise = util.promisify(fs.writeFile)
 const mkdirPromise = util.promisify(fs.mkdir)
 const truncatePromise = util.promisify(fs.truncate)
-const appendFilePromise = util.promisify(fs.appendFile)
 const copyFilePromise = util.promisify(fs.copyFile)
 
 // TODO: add verbose comments
@@ -74,7 +73,7 @@ const generate = async (page, develop) => {
 			break
 		case 'style':
 			console.log('💄  Building styles')
-			await buildStyles(develop)
+			await buildStyles()
 			break
 		case 'vault':
 			console.log('🗄  Building vault...')
@@ -137,7 +136,7 @@ const buildScripts = async (develop) => {
 }
 
 // build style elements
-const buildStyles = async (develop) => {
+const buildStyles = async () => {
 	try {
 		await fs.promises.access('src/css')
 	} catch (e) {
@@ -202,14 +201,6 @@ const resolveAssets = async (data, level, develop) => {
 				// src + js files are generated from templates into the src/ directory
 				// css, ico, + font files are static, copied from source directory to src/ directory
 				} else {
-					// TODO
-					// resolve 'blog' and 'project' shortcuts
-					if (['blog', 'project'].includes(asset)) {
-						asset = 'src'
-						console.log(value)
-						asdf
-					}
-
 					let file = value
 
 					// if in assset subdir
@@ -247,7 +238,7 @@ const resolveAssets = async (data, level, develop) => {
 const buildDynamicAsset = async (data, match, asset, level, develop) => {
 	let resolvedData = data
 	const now = Date().toLocaleString()
-	let headerData = null, headerjsData = null, file = null, assetPath = null, charizard = null, message = null
+	let headerData = null, headerjsData = null, charizard = null, message = null
 	switch (asset) {
 		case 'develop':
 			resolvedData = resolvedData.replace(match, develop)

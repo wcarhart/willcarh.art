@@ -2,8 +2,8 @@
 	publish = 'src/'
 
 [[redirects]]
-	from = '/*'
-	to = '/index.html'
+	from = '/index.html'
+	to = '/'
 	status = 200
 
 [[redirects]]

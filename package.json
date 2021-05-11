@@ -1,6 +1,6 @@
 {
   "name": "generator",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Custom static site generator for willcarh.art",
   "main": "generator/generator.js",
   "repository": "git@github.com:wcarhart/willcarh.art.git",

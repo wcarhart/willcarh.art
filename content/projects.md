@@ -229,6 +229,7 @@ technologies: jQuery
 technologies: Bootstrap
 technologies: Heroku
 technologies: Travis CI
+technologies: GitHub API
 img: {{cdn:img/logos/soliloquy.png}}
 repo: https://github.com/wcarhart/soliloquy
 link: https://soliloquy.dev

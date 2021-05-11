@@ -63,7 +63,7 @@ Supported meta tags:
 */
 
 // build meta objects for webpages
-const buildMeta = async (data, match, key, page, develop) => {
+const buildMeta = async (data, match, key, page) => {
 	let resolvedData = data
 	let meta = '', name = ''
 	let projects = '', project = ''
@@ -77,8 +77,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development. He takes pride in designing and implementing impactful software that is feature-rich and easy-to-use.',
 				'url': 'https://willcarh.art',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}',
-				develop
+				'cover': '{{cdn:img/og.png}}'
 			}
 			break
 		case 'proj':
@@ -87,8 +86,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the projects I\'ve built.',
 				'url': 'https://willcarh.art/projects',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}',
-				develop
+				'cover': '{{cdn:img/og.png}}'
 			}
 			break
 		case 'proj-spec':
@@ -100,8 +98,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': project.blurb,
 				'url': `https://willcarh.art/projects/${project.name}`,
 				'author': 'Will Carhart',
-				'cover': project.img,
-				develop
+				'cover': project.img
 			}
 			break
 		case 'blog':
@@ -112,8 +109,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the lessons I\'ve learned along the way.',
 				'url': 'https://willcarh.art/blog',
 				'author': 'Will Carhart',
-				'cover': blog.cover,
-				develop
+				'cover': blog.cover
 			}
 			break
 		case 'blog-spec':
@@ -124,8 +120,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': blog.blurb,
 				'url': `https://willcarh.art/blog/${blog.id}`,
 				'author': 'Will Carhart',
-				'cover': blog.cover,
-				develop
+				'cover': blog.cover
 			}
 			break
 		case 'vault':
@@ -134,8 +129,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': 'Over the years I\'ve written a plethora of software-related paraphernalia. The vault contains my comprehensive history.',
 				'url': 'https://willcarh.art/vault',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}',
-				develop
+				'cover': '{{cdn:img/og.png}}'
 			}
 			break
 		case 'demo':
@@ -144,8 +138,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
 				'url': 'https://willcarh.art/demo',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}',
-				develop
+				'cover': '{{cdn:img/og.png}}'
 			}
 			break
 		case 'demo-spec':
@@ -157,8 +150,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
 				'url': `https://willcarh.art/demo/${project.id}`,
 				'author': 'Will Carhart',
-				'cover': project.img,
-				develop
+				'cover': project.img
 			}
 			break
 		default:
@@ -170,7 +162,7 @@ const buildMeta = async (data, match, key, page, develop) => {
 }
 
 // build actual HTML meta tags for meta objects
-const buildMetaHtml = async ({title='', description='', url='', keywords=[], author='', cover='', develop=false}) => {
+const buildMetaHtml = async ({title='', description='', url='', keywords=[], author='', cover=''}) => {
 	let metaSnippet = await readFilePromise('snippets/meta/meta.html')
 	metaSnippet = metaSnippet.toString()
 
@@ -184,12 +176,6 @@ const buildMetaHtml = async ({title='', description='', url='', keywords=[], aut
 	metaSnippet = metaSnippet.replace(/\{\{author\}\}/g, author)
 	metaSnippet = metaSnippet.replace(/\{\{version\}\}/g, package.version)
 	metaSnippet = metaSnippet.replace(/\{\{cover\}\}/g, cover)
-
-	if (develop) {
-		metaSnippet = metaSnippet.replace('{{base}}', '')
-	} else {
-		metaSnippet = metaSnippet.replace('{{base}}', '<base href="https://willcarh.art/">')
-	}
 
 	return metaSnippet
 }
@@ -1220,7 +1206,7 @@ const buildNewBlogString = async (attributes) => {
 }
 
 // replace content tags in template
-const resolveContent = async (data, page, develop) => {
+const resolveContent = async (data, page) => {
 	let resolvedData = data
 	const supportedTags = ['html', 'code', 'meta']
 
@@ -1246,7 +1232,7 @@ const resolveContent = async (data, page, develop) => {
 						resolvedData = await buildCode(resolvedData, match, value)
 						break
 					case 'meta':
-						resolvedData = await buildMeta(resolvedData, match, value, page, develop)
+						resolvedData = await buildMeta(resolvedData, match, value, page)
 						break
 					default:
 						throw new Error(`Unknown tag '${tag}'`)

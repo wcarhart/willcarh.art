@@ -100,7 +100,7 @@ const buildPageFromTemplate = async ({template='', page='', level=0, develop=fal
 	data = data.toString()
 
 	// we must resolve content first, because some content might resolve to asset tags
-	data = await builder.resolveContent(data, page, develop)
+	data = await builder.resolveContent(data, page)
 
 	// resolve static and dynamic assets
 	data = await resolveAssets(data, level, develop)

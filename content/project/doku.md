@@ -1,5 +1,5 @@
 # Solve any Sudoku board instantly.
->> Try it out! | Try out doku yourself on [the demo page]({{src:demo_index.html}})
+>> Try it out! | Try out doku yourself on [the demo page]({{src:demo}})
 
 ### Solve puzzles instantly
 Doku is an efficient Sudoku board solver, all from the command line.

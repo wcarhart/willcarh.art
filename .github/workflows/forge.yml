@@ -1,0 +1,9 @@
+name: forge
+on: [push, pull_request]
+jobs:
+  forge:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: forge
+      run: ./forge --verbose

@@ -2,10 +2,10 @@
 
 // handle hover and click for project cards
 $(document).ready(async () => {
+	const develop = '{{sys:develop}}'
 
 	// handle animations for hover
 	$('.project-border').hover(async function() {
-		console.log(this.id)
 		const id = `#title-${this.id.replace('proj-', '')}`
 		$(id).css('background-size', '100% 0.125rem')
 		$(this).css('cursor', 'pointer')
@@ -15,16 +15,19 @@ $(document).ready(async () => {
 	})
 
 	// handle click to specific project
-	// if a file name contains ('.'), like 'willcarh.art', we use '-----' to replace it
+	// if a file name contains ('.'), like 'willcarh.art', we use '----' to replace it
 	// it's not a bulletproof approach, but it's unlikely a project name will naturally contain the string '----'
 	$('.project-border').click(async function() {
 		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '').replace('----', '.')
-		window.location.href=`project/${name}.html`
+		let fullPath = `project/${name}`
+		if (develop === 'true') {
+			fullPath += '.html'
+		}
+		window.location.href = fullPath
 	})
 
 	// resize the project containers after the page loads
 	await resizeProjectContainers()
-	// TODO: fix this garbage, doesn't call function when window is resized
 	$(window).resize(async () => { 
 		await resizeProjectContainers()
 	})

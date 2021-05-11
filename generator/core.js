@@ -19,12 +19,13 @@ const readFilePromise = util.promisify(fs.readFile)
 const writeFilePromise = util.promisify(fs.writeFile)
 const mkdirPromise = util.promisify(fs.mkdir)
 const truncatePromise = util.promisify(fs.truncate)
-const appendFilePromise = util.promisify(fs.appendFile)
+const copyFilePromise = util.promisify(fs.copyFile)
 
 // TODO: add verbose comments
 
 // generate HTML files based on page type
 const generate = async (page, develop) => {
+	// set up file structure
 	try {
 		await fs.promises.access('src')
 	} catch (e) {
@@ -45,10 +46,12 @@ const generate = async (page, develop) => {
 	} catch (e) {
 		await mkdirPromise('src/demo')
 	}
+
+	// process pages
 	switch (page) {
 		case 'home':
 			console.log('🏠  Building home...')
-			await buildPageFromTemplate({template: 'templates/home.html', page: 'index.html', level: 0, develop: develop})
+			await buildPageFromTemplate({template: 'templates/home.html', page: 'src/index.html', level: 1, develop: develop})
 			break
 		case 'about':
 			console.log('💁‍♂️  Building about...')
@@ -56,20 +59,21 @@ const generate = async (page, develop) => {
 			break
 		case 'blog':
 			console.log('📖  Building blog...')
-			await buildPageFromTemplate({template: 'templates/blog_index.html', page: 'src/blog_index.html', level: 1, develop: develop})
+			await buildPageFromTemplate({template: 'templates/blog_index.html', page: 'src/blog.html', level: 1, develop: develop})
 			await buildMultiplePages('blog', develop)
 			break
 		case 'projects':
 			console.log('🏗  Building projects...')
-			await buildPageFromTemplate({template: 'templates/project_index.html', page: 'src/project_index.html', level: 1, develop: develop})
+			await buildPageFromTemplate({template: 'templates/project_index.html', page: 'src/projects.html', level: 1, develop: develop})
 			await buildMultiplePages('project', develop)
-			break
-		case 'apps':
-			console.log('🖥  Building apps...')
 			break
 		case 'scripts':
 			console.log('🖋  Building scripts...')
 			await buildScripts(develop)
+			break
+		case 'style':
+			console.log('💄  Building styles')
+			await buildStyles()
 			break
 		case 'vault':
 			console.log('🗄  Building vault...')
@@ -77,7 +81,7 @@ const generate = async (page, develop) => {
 			break
 		case 'demo':
 			console.log('🏃‍♂️  Building demos...')
-			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo_index.html', level: 1, develop: develop})
+			await buildPageFromTemplate({template: 'templates/demo_index.html', page: 'src/demo.html', level: 1, develop: develop})
 			await buildMultiplePages('demo', develop)
 			break
 		case 'etc':
@@ -105,9 +109,6 @@ const buildPageFromTemplate = async ({template='', page='', level=0, develop=fal
 	// prettify text
 	// data = html.prettyPrint(data, {indent_size: 4});
 
-	// update redirects for Netlify
-	await updateRedirects(page)
-
 	// write to source file
 	await writeFilePromise(page, data)
 }
@@ -118,8 +119,6 @@ const buildMultiplePages = async (kind, develop) => {
 	for (let file of files) {
 		let name = file.split('/').pop().split('.md').shift()
 		await buildPageFromTemplate({template: `templates/${kind}_specific.html`, page: `src/${kind}/${name}.html`, level: 2, develop: develop})
-		// TODO: fix redirects
-		// await updateRedirects(`${kind}/${file.split('/').pop()}`, `${kind}/${name}`)
 	}
 }
 
@@ -136,60 +135,47 @@ const buildScripts = async (develop) => {
 	}
 }
 
-// TODO: fix this, still showing .html ending
-const updateRedirects = async (page) => {
-	if (page.endsWith('.html')) {
-		// eslint-disable-next-line no-unused-vars
-		let redirect = ''
-		switch(page) {
-			case 'index.html':
-				// await appendFilePromise('_redirects', `/index /\n`)
-				// await appendFilePromise('_redirects', `/index.html /\n`)
-				break
-			case 'src/demo_index.html':
-				await appendFilePromise('_redirects', '/src/demo_index /demo\n')
-				// await appendFilePromise('_redirects', `/src/demo_index.html /demo\n`)
-				break
-			case 'src/project_index.html':
-				await appendFilePromise('_redirects', '/src/project_index /projects\n')
-				// await appendFilePromise('_redirects', `/src/project_index.html /projects\n`)
-				await appendFilePromise('_redirects', '/project /projects\n')
-				break
-			case 'src/blog_index.html':
-				await appendFilePromise('_redirects', '/src/blog_index /blog\n')
-				// await appendFilePromise('_redirects', `/src/blog_index.html /blog\n`)
-				break
-			case 'src/vault.html':
-				await appendFilePromise('_redirects', '/src/vault /vault\n')
-				// await appendFilePromise('_redirects', `/src/vault.html /vault\n`)
-				break
-			case 'src/etc.html':
-				await appendFilePromise('_redirects', '/src/etc /etc\n')
-				// await appendFilePromise('_redirects', `/src/etc.html /etc\n`)
-				break
-			case 'src/about.html':
-				await appendFilePromise('_redirects', '/src/about /about\n')
-				// await appendFilePromise('_redirects', `/src/about.html /about\n`)
-				break
-			case String(page.match(/^src\/project\/.*$/)):
-				// TODO
-				break
-			case String(page.match(/^src\/blog\/.*$/)):
-				// TODO
-				break
-			case String(page.match(/^src\/demo\/.*$/)):
-				// TODO
-				break
-			default:
-				throw new Error(`Unknown redirect file: '${page}'`)
-		}
+// build style elements
+const buildStyles = async () => {
+	try {
+		await fs.promises.access('src/css')
+	} catch (e) {
+		await mkdirPromise('src/css')
+	}
+
+	try {
+		await fs.promises.access('src/ico')
+	} catch (e) {
+		await mkdirPromise('src/ico')
+	}
+
+	try {
+		await fs.promises.access('src/font')
+	} catch (e) {
+		await mkdirPromise('src/font')
+	}
+
+	let cssfiles = await findFiles({kind: 'css', prefix: ''})
+	let icofiles = await findFiles({kind: 'ico', prefix: ''})
+	let fontfiles = await findFiles({kind: 'font', prefix: ''})
+
+	for (let cssfile of cssfiles) {
+		await copyFilePromise(`css/${cssfile}`, `src/css/${cssfile}`)
+	}
+
+	for (let icofile of icofiles) {
+		await copyFilePromise(`ico/${icofile}`, `src/ico/${icofile}`)
+	}
+
+	for (let fontfile of fontfiles) {
+		await copyFilePromise(`font/${fontfile}`, `src/font/${fontfile}`)
 	}
 }
 
 // replace static asset tags in template
 const resolveAssets = async (data, level, develop) => {
 	let resolvedData = data
-	const supportedAssets = ['css', 'cdn', 'font', 'ico', 'js', 'src', 'sys']
+	const supportedAssets = ['css', 'cdn', 'font', 'ico', 'js', 'src', 'sys', 'blog', 'project']
 
 	// process each asset
 	for (let asset of supportedAssets) {
@@ -212,28 +198,14 @@ const resolveAssets = async (data, level, develop) => {
 				} else if (asset === 'sys') {
 					resolvedData = await buildDynamicAsset(resolvedData, match, value, level, develop)
 
-				// css, ico, and font static files are stored outside the src/ directory
-				} else if (['css', 'ico', 'font'].includes(asset)) {
-					let file = `${asset}/${value}`
-					let assetPath = path.join(...Array(level).fill('..'), file)
-					resolvedData = resolvedData.replace(match, assetPath)
-
-				// src + js files, which are generated from templates into the src/ directory
+				// src + js files are generated from templates into the src/ directory
+				// css, ico, + font files are static, copied from source directory to src/ directory
 				} else {
 					let file = value
 
-					// js files are a special folder in src/ because they are also generated from templates
-					if (asset === 'js') {
-						file = path.join('js', file)
-					}
-
-					// make sure file exists
-					if (develop === false) {
-						try {
-							await fs.promises.access(`src/${file}`)
-						} catch (e) {
-							throw new Error(`No such referenced file: 'src/${file}'`)
-						}
+					// if in assset subdir
+					if (['css', 'ico', 'font', 'js'].includes(asset)) {
+						file = path.join(asset, file)
 					}
 
 					// configure relative path based on nesting level
@@ -251,6 +223,9 @@ const resolveAssets = async (data, level, develop) => {
 						default:
 							throw new Error(`Level above 2 is not currently supported, found level: ${level}`)
 					}
+					if (develop === true && asset === 'src') {
+						assetPath += '.html'
+					}
 					resolvedData = resolvedData.replace(match, assetPath)
 				}
 			}
@@ -263,15 +238,18 @@ const resolveAssets = async (data, level, develop) => {
 const buildDynamicAsset = async (data, match, asset, level, develop) => {
 	let resolvedData = data
 	const now = Date().toLocaleString()
-	let headerData = null, headerjsData = null, file = null, assetPath = null, charizard = null, message = null
+	let headerData = null, headerjsData = null, charizard = null, message = null
 	switch (asset) {
+		case 'develop':
+			resolvedData = resolvedData.replace(match, develop)
+			break
 		case 'header':
 			headerData = []
 			headerData.push('<!-- This is an autogenerated file - DO NOT EDIT DIRECTLY -->')
 			headerData.push(`<!-- This file was generated on ${now} via the forge in willcarh.art v${package.version}-->`)
 			headerData.push('<!-- Learn more: https://github.com/wcarhart/willcarh.art -->')
 			if (develop === true) {
-				headerData.push('<!-- THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION! -->')
+				headerData.push('<!-- THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION -->')
 			}
 			resolvedData = resolvedData.replace(match, headerData.join('\n'))
 			break
@@ -281,14 +259,9 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			headerjsData.push(`// This file was generated on ${now} via the forge in willcarh.art v${package.version}`)
 			headerjsData.push('// Learn more: https://github.com/wcarhart/willcarh.art')
 			if (develop === true) {
-				headerjsData.push('// THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION!')
+				headerjsData.push('// THIS IS A DEVELOPMENT BUILD, PROCEED WITH CAUTION')
 			}
 			resolvedData = resolvedData.replace(match, headerjsData.join('\n'))
-			break
-		case 'home':
-			file = 'index.html'
-			assetPath = path.join(...Array(level).fill('..'), file)
-			resolvedData = resolvedData.replace(match, assetPath)
 			break
 		case 'charizard':
 			charizard = await readFilePromise('generator/charizard.txt')

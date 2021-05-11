@@ -35,7 +35,7 @@ install: brew install wcarhart/tools/doku
 documentation:
 related:
 visibility: featured
-blogPost: {{src:blog/why-im-excited-about-deno.html}}
+blogPost: {{src:blog/why-im-excited-about-deno}}
 tags: cli
 
 name: smoosh
@@ -54,7 +54,7 @@ install: brew install wcarhart/tools/smoosh
 documentation:
 related:
 visibility: super
-blogPost: {{src:blog/how-to-summarize-any-article-in-7-sentences-with-software.html}}
+blogPost: {{src:blog/how-to-summarize-any-article-in-7-sentences-with-software}}
 tags: cli
 
 name: koi
@@ -78,7 +78,7 @@ related: chiller
 related: thoth
 related: docs
 visibility: super
-blogPost: {{src:blog/recreating-pythons-argparse-in-bash.html}}
+blogPost: {{src:blog/recreating-pythons-argparse-in-bash}}
 tags: library
 
 name: snug
@@ -132,7 +132,7 @@ install:
 documentation:
 related:
 visibility: featured
-blogPost: {{src:blog/why-i-wrote-my-own-static-site-generator.html}}
+blogPost: {{src:blog/why-i-wrote-my-own-static-site-generator}}
 tags: cli
 tags: web
 
@@ -231,7 +231,7 @@ install:
 documentation:
 related:
 visibility: normal
-blogPost: {{src:blog/building-chatbots-for-github.html}}
+blogPost: {{src:blog/building-chatbots-for-github}}
 tags: web
 
 name: odin
@@ -621,7 +621,7 @@ install:
 documentation:
 related:
 visibility: normal
-blogPost: {{src:blog/reducing-aws-s3-storage-costs-with-bubble-trees.html}}
+blogPost: {{src:blog/reducing-aws-s3-storage-costs-with-bubble-trees}}
 tags: library
 
 name: Rise and Shine

@@ -2,14 +2,18 @@
 
 // handle clicks and resizing
 $(document).ready(async () => {
+	const develop = '{{sys:develop}}'
 	$('.blog-border').click(async function() {
 		let blog = this.id.replace(/^blog-card-/, '')
 		blog = blog.replace(/^latest-/, '')
-		window.location.href = `blog/${blog}.html`
+		let fullPath = `blog/${blog}`
+		if (develop === 'true') {
+			fullPath += '.html'
+		}
+		window.location.href = fullPath
 	})
 
 	await resizeBlogCards()
-	// TODO: verify this actually works
 	$(window).resize(async () => {
 		await resizeBlogCards()
 	})

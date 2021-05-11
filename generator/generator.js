@@ -20,18 +20,18 @@ const verifyContentFileStructure = async () => {
 // validate if generation was successful
 const validateBuild = async () => {
 	console.log('Validating built pages...')
-	await fs.promises.access('index.html')
+	await fs.promises.access('src/index.html')
 	await fs.promises.access('src/vault.html')
 	await fs.promises.access('src/about.html')
-	await fs.promises.access('src/demo_index.html')
-	await fs.promises.access('src/blog_index.html')
-	await fs.promises.access('src/project_index.html')
+	await fs.promises.access('src/demo.html')
+	await fs.promises.access('src/blog.html')
+	await fs.promises.access('src/projects.html')
 }
 
 // build the output file tree of the files that were generated
 const generateFileTree = async () => {
 	let tree = '.\n'
-	for (let dir of ['index.html', 'font', 'ico', 'css', 'src']) {
+	for (let dir of ['src']) {
 		tree += await buildTree(dir, '', dir === 'src' ? true : false, '')
 	}
 	console.log(tree)
@@ -108,7 +108,7 @@ const main = async () => {
 		// asset order is essential, due to how linking occurs:
 		//  - scripts must be built first
 		//  - vault must be built before projects
-		const assets = ['scripts', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc']
+		const assets = ['scripts', 'style', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc']
 		for (let asset of assets) {
 			await core.generate(asset, args.develop)
 		}

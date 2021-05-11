@@ -12,27 +12,19 @@ const readFilePromise = util.promisify(fs.readFile)
 
 /*
 Supported static asset tags:
-  {{css:...}}      --> static CSS file
-  {{ico:...}}      --> static icon file
-  {{font:...}}     --> static font file
-  {{js:...}}       --> static built js file
-  {{src:...}}      --> static built source file
-  {{cdn:...}}      --> file stored in CDN
+  {{css:...}}   --> static CSS file
+  {{ico:...}}   --> static icon file
+  {{font:...}}  --> static font file
+  {{js:...}}    --> static built js file
+  {{src:...}}   --> static built source file
+  {{cdn:...}}   --> file stored in CDN
 */
-
-// TODO: add {{sys:gh}} to resolve to https://github.com/wcarhart
-// TODO: add {{sys:repo}} to resolve to https://github.com/wcarhart/willcarh.art
-// TODO: add {{repo:...}} to resolve to https://github.com/wcarhart/...
-// TODO: after the above three updates, replace links throughout project
-
-// TODO: add {{project:...}} and {{blog:...}} as shorthand for {{src:project/....html}} and {{src:blog/....html}}
-// TODO: replace all {{src:...}} with applicable proj/blog ones when the above change is ready
 
 /*
 Support dynamic asset tags:
+  {{sys:develop}}   --> 'true' if develop mode is active
   {{sys:header}}    --> generated header for HTML files
   {{sys:headerjs}}  --> generated header for JS files
-  {{sys:home}}      --> path to homepage
   {{sys:charizard}} --> Charizard ascii art
 */
 
@@ -629,12 +621,13 @@ const buildProjSuper = async (projects) => {
 				'{{technologies}}',
 				projects[index].languages.concat(projects[index].technologies).filter(p => p !== '').join(' · ')
 			)
+
 			let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
 			if (projects[index].repo !== '') {
-				githubIconHtml = githubIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
+				githubIconHtml = githubIconSnippet.replace('{{repo}}', projects[index].repo)
 			}
 			if (projects[index].documentation !== '') {
-				docsIconHtml = docsIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
+				docsIconHtml = docsIconSnippet.replace('{{docs}}', projects[index].documentation)
 			}
 			if (projects[index].demo === 'true') {
 				demoIconHtml = demoIconSnippet.replace('{{name}}', projects[index].name.toLowerCase())
@@ -643,7 +636,7 @@ const buildProjSuper = async (projects) => {
 				linkIconHtml = linkIconSnippet.replace('{{url}}', projects[index].link)
 			}
 			if (projects[index].blogPost !== '') {
-				blogIconHtml = blogIconSnippet.replace('{{blog}}', projects[index].blogPost)
+				linkIconHtml = blogIconSnippet.replace('{{blog}}', projects[index].blogPost)
 			}
 
 			superContainer = superContainer.replace('{{github-icon}}', githubIconHtml)
@@ -921,7 +914,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			r.linkUrl = experience.url
 			r.blogPost = experience.blogPost
 			// TODO: this should redirect to the actual exp-tab, not just the page scroll location
-			r.vaultLink = '{{src:about.html}}#experience'
+			r.vaultLink = '{{src:about}}#experience'
 
 			rows.push(r)
 		}
@@ -944,7 +937,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.githubName = project.repo
 		r.linkUrl = project.link
 		r.blogPost = project.blogPost
-		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}.html}}`
+		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}}}`
 
 		rows.push(r)
 	}
@@ -962,7 +955,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
-		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}.html}}`
+		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}}}`
 		r.vaultLink = r.blogPost
 
 		rows.push(r)

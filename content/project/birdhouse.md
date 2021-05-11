@@ -1,5 +1,5 @@
 # Stream tweets from hashtags like `#covid19` and `#2020election` straight to your terminal
->> Try it out! | Try out birdhouse yourself on [the demo page]({{src:demo_index.html}}).
+>> Try it out! | Try out birdhouse yourself on [the demo page]({{src:demo}}).
 
 ### What it is
 Birdhouse is a command-line tweet watcher. It has functionality for streaming tweets from users and hashtags, as well as viewing individual tweets and Twitter users.

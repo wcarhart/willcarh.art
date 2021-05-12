@@ -829,7 +829,7 @@ const buildProjAll = async (projects) => {
 		rowHtml = rowHtml.replace('{{project-container-featured}}', featuredContainer)
 
 		// build additional tile containers to fit in row
-		// TODO: this is not DRY - repeated for featured, tile, and regular - should be function
+		// this could probably be more DRY....but I am lazy
 		for (let i = 0; i < 4; i++) {
 			let tileProject = null
 			if (featuredProjects.length !== 0) {
@@ -992,7 +992,6 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			r.githubName = ''
 			r.linkUrl = experience.url
 			r.blogPost = experience.blogPost
-			// TODO: this should redirect to the actual exp-tab, not just the page scroll location
 			r.vaultLink = `{{src:about}}?exp=${experience.companyId}#experience`
 
 			rows.push(r)

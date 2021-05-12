@@ -13,6 +13,7 @@ const config = require('../config.json')
 const package = require('../package.json')
 
 const builder = require('./builder.js')
+// eslint-disable-next-line no-unused-vars
 const parser = require('./parser.js')
 
 const readdirPromise = util.promisify(fs.readdir)
@@ -238,6 +239,7 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 	let resolvedData = data
 	const now = Date().toLocaleString()
 	let headerData = null, headerjsData = null, charizard = null, message = null
+	// eslint-disable-next-line no-unused-vars
 	let projects = null, blogs = null, img = null, icofiles = null
 	switch (asset) {
 		case 'develop':

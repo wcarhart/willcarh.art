@@ -273,17 +273,22 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			resolvedData = resolvedData.replace(match, message)
 			break
 		case 'preload':
-			projects = await parser.parse('project')
-			blogs = await parser.parse('blog')
 			img = []
-			for (let p of projects) {
-				if (p.visibility !== 'none') {
-					img.push(p.img)
-				}
-			}
-			for (let b of blogs) {
-				img.push(b.cover)
-			}
+
+			// uncomment these lines if project icons should be preloaded
+			// projects = await parser.parse('project')
+			// for (let p of projects) {
+			// 	if (p.visibility !== 'none') {
+			// 		img.push(p.img)
+			// 	}
+			// }
+
+			// uncomment these lines if blog covers should be preloaded
+			// blogs = await parser.parse('blog')
+			// for (let b of blogs) {
+			// 	img.push(b.cover)
+			// }
+
 			icofiles = await readdirPromise('ico')
 			for (let ico of icofiles) {
 				if (ico.endsWith('.png')) {

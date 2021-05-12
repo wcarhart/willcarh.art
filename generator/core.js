@@ -13,6 +13,7 @@ const config = require('../config.json')
 const package = require('../package.json')
 
 const builder = require('./builder.js')
+const parser = require('./parser.js')
 
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
@@ -20,8 +21,6 @@ const writeFilePromise = util.promisify(fs.writeFile)
 const mkdirPromise = util.promisify(fs.mkdir)
 const truncatePromise = util.promisify(fs.truncate)
 const copyFilePromise = util.promisify(fs.copyFile)
-
-// TODO: add verbose comments
 
 // generate HTML files based on page type
 const generate = async (page, develop) => {
@@ -135,7 +134,7 @@ const buildScripts = async (develop) => {
 	}
 }
 
-// build style elements
+// build style elements: css/*, ico/*, font/*
 const buildStyles = async () => {
 	try {
 		await fs.promises.access('src/css')
@@ -239,6 +238,7 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 	let resolvedData = data
 	const now = Date().toLocaleString()
 	let headerData = null, headerjsData = null, charizard = null, message = null
+	let projects = null, blogs = null, img = null, icofiles = null
 	switch (asset) {
 		case 'develop':
 			resolvedData = resolvedData.replace(match, develop)
@@ -271,6 +271,26 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			message += charizard
 			message += '\n-->\n'
 			resolvedData = resolvedData.replace(match, message)
+			break
+		case 'preload':
+			projects = await parser.parse('project')
+			blogs = await parser.parse('blog')
+			img = []
+			for (let p of projects) {
+				if (p.visibility !== 'none') {
+					img.push(p.img)
+				}
+			}
+			for (let b of blogs) {
+				img.push(b.cover)
+			}
+			icofiles = await readdirPromise('ico')
+			for (let ico of icofiles) {
+				if (ico.endsWith('.png')) {
+					img.push(`{{ico:${ico}}}`)
+				}
+			}
+			resolvedData = resolvedData.replace(match, await resolveAssets(`[${img.map(i => `'${i}'`).join(',')}]`, 1, develop))
 			break
 		default:
 			throw new Error(`Unknown system asset: '${asset}'`)

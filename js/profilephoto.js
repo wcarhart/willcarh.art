@@ -3,7 +3,7 @@
 // rotate profile pictures on about page
 $(document).ready(async () => {
 
-	// TODO: add more pictures?
+	// registered photos
 	const photos = [
 		'{{cdn:img/profile.jpg}}',
 		'{{cdn:img/profile4.jpeg}}',

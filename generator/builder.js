@@ -28,6 +28,7 @@ Support dynamic asset tags:
   {{sys:header}}         --> generated header for HTML files
   {{sys:headerjs}}       --> generated header for JS files
   {{sys:charizard}}      --> Charizard ascii art
+  {{sys:preload}}        --> list of all images to preload
 */
 
 /*
@@ -597,8 +598,12 @@ const buildProjSpec = async (projects, page) => {
 	let technologiesMetadataHtml = technologiesMetadataSnippet.replace('{{technologies}}', project.languages.concat(project.technologies).filter(p => p !== '').join(' · '))
 	// TODO: implement github stars
 	let githubStarsMetadataHtml = githubStarsMetadataSnippet.replace('{{github-stars}}', '-')
-	// TODO: if install is empty, should not use color nor monospace font
-	let installMetadataHtml = installMetadataSnippet.replace('{{install}}', project.install === '' ? '-' : project.install)
+	let installMetadataHtml = ''
+	if (project.install === '') {
+		installMetadataHtml = installMetadataSnippet.replace('{{install}}', '-')
+	} else {
+		installMetadataHtml = installMetadataSnippet.replace('{{install}}', `<code class="inline-code">${project.install}</code>`)
+	}
 	let latestReleaseMetadataHtml = latestReleaseMetadataSnippet.replace('{{version}}', project.latest_version === '' ? '-' : project.latest_version)
 	let dateText = '-'
 	if (project.published !== '') {
@@ -726,6 +731,7 @@ const buildProjSuper = async (projects) => {
 	return html
 }
 
+// attempt to remove unsafe characters from HTML IDs, classnames, and sometimes routing
 const htmlSafify = async (string) => {
 	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_').replace(/,/g, '').replace(/'/g, '')
 }
@@ -825,7 +831,7 @@ const buildProjAll = async (projects) => {
 		rowHtml = rowHtml.replace('{{project-container-featured}}', featuredContainer)
 
 		// build additional tile containers to fit in row
-		// TODO: this is not DRY - repeated for featured, tile, and regular - should be function
+		// this could probably be more DRY....but I am lazy
 		for (let i = 0; i < 4; i++) {
 			let tileProject = null
 			if (featuredProjects.length !== 0) {
@@ -988,8 +994,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			r.githubName = ''
 			r.linkUrl = experience.url
 			r.blogPost = experience.blogPost
-			// TODO: this should redirect to the actual exp-tab, not just the page scroll location
-			r.vaultLink = '{{src:about}}#experience'
+			r.vaultLink = `{{src:about}}?exp=${experience.companyId}#experience`
 
 			rows.push(r)
 		}
@@ -1012,7 +1017,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.githubName = project.repo
 		r.linkUrl = project.link
 		r.blogPost = project.blogPost
-		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}}}`
+		r.vaultLink = `{{src:project/${project.id}}}`
 
 		rows.push(r)
 	}
@@ -1030,7 +1035,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
-		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}}}`
+		r.blogPost = `{{src:blog/${blog.id}}}`
 		r.vaultLink = r.blogPost
 
 		rows.push(r)

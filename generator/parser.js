@@ -5,6 +5,7 @@ const entities = require('./entities.js')
 
 const readFilePromise = util.promisify(fs.readFile)
 
+// define validation strategies for each entity
 const SUPPORTED_ENTITIES = {
 	experience: {
 		content: 'content/experience.md',

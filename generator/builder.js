@@ -731,6 +731,7 @@ const buildProjSuper = async (projects) => {
 	return html
 }
 
+// attempt to remove unsafe characters from HTML IDs, classnames, and sometimes routing
 const htmlSafify = async (string) => {
 	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_').replace(/,/g, '').replace(/'/g, '')
 }

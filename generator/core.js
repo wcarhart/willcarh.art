@@ -22,8 +22,6 @@ const mkdirPromise = util.promisify(fs.mkdir)
 const truncatePromise = util.promisify(fs.truncate)
 const copyFilePromise = util.promisify(fs.copyFile)
 
-// TODO: add verbose comments
-
 // generate HTML files based on page type
 const generate = async (page, develop) => {
 	// set up file structure
@@ -136,7 +134,7 @@ const buildScripts = async (develop) => {
 	}
 }
 
-// build style elements
+// build style elements: css/*, ico/*, font/*
 const buildStyles = async () => {
 	try {
 		await fs.promises.access('src/css')

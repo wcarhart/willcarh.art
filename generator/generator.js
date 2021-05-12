@@ -37,6 +37,7 @@ const generateFileTree = async () => {
 	console.log(tree)
 }
 
+// recursive function for pretty printing file trees
 const buildTree = async (dir, indent, isTail, result) => {
 	let stats = await statPromise(dir)
 	let files = []
@@ -91,6 +92,7 @@ const parseArgs = async (args) => {
 	return parsedArgs
 }
 
+// run generator
 const main = async () => {
 	try {
 		const args = await parseArgs(process.argv.slice(2))
@@ -104,9 +106,8 @@ const main = async () => {
 		// clear out source directory
 		await rmdirPromise('src/', { recursive: true })
 
-		// TODO: this shouldn't matter
 		// asset order is essential, due to how linking occurs:
-		//  - scripts must be built first
+		//  - scripts must be built first and styles must be first
 		//  - vault must be built before projects
 		const assets = ['scripts', 'style', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc']
 		for (let asset of assets) {

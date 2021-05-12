@@ -1016,7 +1016,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.githubName = project.repo
 		r.linkUrl = project.link
 		r.blogPost = project.blogPost
-		r.vaultLink = `{{src:project/${await htmlSafify(project.name)}}}`
+		r.vaultLink = `{{src:project/${project.id}}}`
 
 		rows.push(r)
 	}
@@ -1034,7 +1034,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 		r.docsName = ''
 		r.githubName = ''
 		r.linkUrl = ''
-		r.blogPost = `{{src:blog/${await htmlSafify(blog.title.toLowerCase().replace(/ /g, '-'))}}}`
+		r.blogPost = `{{src:blog/${blog.id}}}`
 		r.vaultLink = r.blogPost
 
 		rows.push(r)

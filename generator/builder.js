@@ -28,6 +28,7 @@ Support dynamic asset tags:
   {{sys:header}}         --> generated header for HTML files
   {{sys:headerjs}}       --> generated header for JS files
   {{sys:charizard}}      --> Charizard ascii art
+  {{sys:preload}}        --> list of all images to preload
 */
 
 /*

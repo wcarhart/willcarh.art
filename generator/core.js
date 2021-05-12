@@ -13,6 +13,7 @@ const config = require('../config.json')
 const package = require('../package.json')
 
 const builder = require('./builder.js')
+const parser = require('./parser.js')
 
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
@@ -271,6 +272,26 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			message += charizard
 			message += '\n-->\n'
 			resolvedData = resolvedData.replace(match, message)
+			break
+		case 'preload':
+			let projects = await parser.parse('project')
+			let blogs = await parser.parse('blog')
+			let img = []
+			for (let p of projects) {
+				if (p.visibility !== 'none') {
+					img.push(p.img)
+				}
+			}
+			for (let b of blogs) {
+				img.push(b.cover)
+			}
+			let icofiles = await readdirPromise('ico')
+			for (let ico of icofiles) {
+				if (ico.endsWith('.png')) {
+					img.push(`{{ico:${ico}}}`)
+				}
+			}
+			resolvedData = resolvedData.replace(match, await resolveAssets(`[${img.map(i => `'${i}'`).join(',')}]`, 1, develop))
 			break
 		default:
 			throw new Error(`Unknown system asset: '${asset}'`)

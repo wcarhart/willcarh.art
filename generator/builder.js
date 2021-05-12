@@ -597,8 +597,12 @@ const buildProjSpec = async (projects, page) => {
 	let technologiesMetadataHtml = technologiesMetadataSnippet.replace('{{technologies}}', project.languages.concat(project.technologies).filter(p => p !== '').join(' · '))
 	// TODO: implement github stars
 	let githubStarsMetadataHtml = githubStarsMetadataSnippet.replace('{{github-stars}}', '-')
-	// TODO: if install is empty, should not use color nor monospace font
-	let installMetadataHtml = installMetadataSnippet.replace('{{install}}', project.install === '' ? '-' : project.install)
+	let installMetadataHtml = ''
+	if (project.install === '') {
+		installMetadataHtml = installMetadataSnippet.replace('{{install}}', '-')
+	} else {
+		installMetadataHtml = installMetadataSnippet.replace('{{install}}', `<code class="inline-code">${project.install}</code>`)
+	}
 	let latestReleaseMetadataHtml = latestReleaseMetadataSnippet.replace('{{version}}', project.latest_version === '' ? '-' : project.latest_version)
 	let dateText = '-'
 	if (project.published !== '') {

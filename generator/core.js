@@ -238,6 +238,7 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 	let resolvedData = data
 	const now = Date().toLocaleString()
 	let headerData = null, headerjsData = null, charizard = null, message = null
+	let projects = null, blogs = null, img = null, icofiles = null
 	switch (asset) {
 		case 'develop':
 			resolvedData = resolvedData.replace(match, develop)
@@ -272,9 +273,9 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			resolvedData = resolvedData.replace(match, message)
 			break
 		case 'preload':
-			let projects = await parser.parse('project')
-			let blogs = await parser.parse('blog')
-			let img = []
+			projects = await parser.parse('project')
+			blogs = await parser.parse('blog')
+			img = []
 			for (let p of projects) {
 				if (p.visibility !== 'none') {
 					img.push(p.img)
@@ -283,7 +284,7 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			for (let b of blogs) {
 				img.push(b.cover)
 			}
-			let icofiles = await readdirPromise('ico')
+			icofiles = await readdirPromise('ico')
 			for (let ico of icofiles) {
 				if (ico.endsWith('.png')) {
 					img.push(`{{ico:${ico}}}`)

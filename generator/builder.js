@@ -993,7 +993,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 			r.linkUrl = experience.url
 			r.blogPost = experience.blogPost
 			// TODO: this should redirect to the actual exp-tab, not just the page scroll location
-			r.vaultLink = '{{src:about}}#experience'
+			r.vaultLink = `{{src:about}}?exp=${experience.companyId}#experience`
 
 			rows.push(r)
 		}

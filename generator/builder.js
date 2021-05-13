@@ -459,7 +459,7 @@ const buildBlogSpec = async (blogs, page) => {
 	let ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 	let year = date.getFullYear()
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	let tz = date.toLocaleTimeString('en-us', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
+	let tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
@@ -470,8 +470,8 @@ const buildBlogSpec = async (blogs, page) => {
 		day = date.getDate()
 		ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 		year = date.getFullYear()
-		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-		tz = date.toLocaleTimeString('en-us', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
+		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName: 'short', timeZone: 'America/Los_Angeles' })
+		tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	}
 	html = html.replace('{{updated-full-datetimestamp}}', displayDate)

@@ -88,6 +88,10 @@ const generate = async (page, develop) => {
 			console.log('👓  Building etc...')
 			await buildPageFromTemplate({template: 'templates/etc.html', page: 'src/etc.html', level: 1, develop: develop})
 			break
+		case '404':
+			console.log('🤬  Building 404...')
+			await buildPageFromTemplate({template: 'templates/404.html', page: 'src/404.html', level: 1, develop: develop})
+			break
 		default:
 			throw new Error(`Unknown page '${page}'`)
 	}

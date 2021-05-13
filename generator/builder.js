@@ -443,6 +443,10 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
+	const convertTZ = (date, tzString) => {
+		return new Date((typeof date === 'string' ? new Date(date) : date).toLocaleString('en-US', {timeZone: tzString}))
+	}
+	date = convertTZ(date, 'America/Los_Angeles')
 	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	const dayEndings = {
 		'st': [1,21],

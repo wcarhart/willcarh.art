@@ -72,7 +72,7 @@ const generate = async (page, develop) => {
 			await buildScripts(develop)
 			break
 		case 'style':
-			console.log('💄  Building styles')
+			console.log('💄  Building styles...')
 			await buildStyles()
 			break
 		case 'vault':

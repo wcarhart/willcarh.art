@@ -466,11 +466,12 @@ const buildBlogSpec = async (blogs, page) => {
 	displayDate = ''
 	if (blog.updated !== '') {
 		date = new Date(blog.updated * 1000)
+		date = convertTZ(date, 'America/Los_Angeles')
 		month = months[date.getMonth()]
 		day = date.getDate()
 		ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 		year = date.getFullYear()
-		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName: 'short', timeZone: 'America/Los_Angeles' })
+		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 		tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	}

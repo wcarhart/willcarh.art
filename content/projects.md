@@ -126,7 +126,7 @@ technologies: Netlify
 technologies: Yarn
 technologies: GCP Cloud CDN
 technologies: GCP Cloud Storage
-img: {{ico:home-about.png}}
+img: {{cdn:img/logos/willcarh.art.png}}
 repo: https://github.com/wcarhart/willcarh.art
 link: https://willcarh.art
 demo: false

@@ -26,7 +26,7 @@ Usage:
 forge [-h] [-b] [-d] [-s] [-v]
   -h, --help      Show this menu and exit
   -b, --browser   Open the newly built website in a new browser window
-  -d, --develop   Do not exit on validation errors
+  -d, --develop   Hardlink hrefs to .html files instead of URL paths (required for local builds)
   -s, --silent    Silence build output
   -v, --verbose   Show generated files as a result of forge
 ```

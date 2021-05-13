@@ -443,10 +443,6 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
-	// const convertTZ = (date, tzString) => {
-	// 	return new Date((typeof date === 'string' ? new Date(date) : date).toLocaleString('en-US', {timeZone: tzString}))
-	// }
-	// date = convertTZ(date, 'America/Los_Angeles')
 	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	const dayEndings = {
 		'st': [1,21],
@@ -459,7 +455,7 @@ const buildBlogSpec = async (blogs, page) => {
 	let ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 	let year = date.getFullYear()
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	let tz = date.toLocaleTimeString('en-us', {timeZoneName: 'short', timeZone: 'America/Los_Angeles'}).split(' ')[2]
+	let tz = date.toLocaleTimeString('en-us', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
@@ -471,7 +467,7 @@ const buildBlogSpec = async (blogs, page) => {
 		ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 		year = date.getFullYear()
 		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-		tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+		tz = date.toLocaleTimeString('en-us', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	}
 	html = html.replace('{{updated-full-datetimestamp}}', displayDate)

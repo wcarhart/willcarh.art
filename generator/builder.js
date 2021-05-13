@@ -43,7 +43,10 @@ Supported HTML tags:
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
   {{html:credits}}       --> build HTML for credits
-  {{html:analytics}}     --> build HTML for site analytics
+  {{html:analytics-panelbear}}
+                         --> build HTML for site analytics with Panelbear
+  {{html:analytics-plausible}}
+                         --> build HTML for site analytics with Plausible.io
   {{html:logo}}          --> build HTML for site logo
   {{html:darkmode}}      --> build HTML for dark mode toggle
   {{html:email}}         --> build HTML for email contact button
@@ -237,7 +240,8 @@ const buildHtml = async (data, match, key, page) => {
 			html = await buildDemoRows(projects)
 			break
 		case 'credits':
-		case 'analytics':
+		case 'analytics-panelbear':
+		case 'analytics-plausible':
 		case 'logo':
 		case 'darkmode':
 		case 'email':
@@ -439,6 +443,10 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
+	const convertTZ = (date, tzString) => {
+		return new Date((typeof date === 'string' ? new Date(date) : date).toLocaleString('en-US', {timeZone: tzString}))
+	}
+	date = convertTZ(date, 'America/Los_Angeles')
 	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	const dayEndings = {
 		'st': [1,21],
@@ -451,19 +459,20 @@ const buildBlogSpec = async (blogs, page) => {
 	let ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 	let year = date.getFullYear()
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	let tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+	let tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
 	displayDate = ''
 	if (blog.updated !== '') {
 		date = new Date(blog.updated * 1000)
+		date = convertTZ(date, 'America/Los_Angeles')
 		month = months[date.getMonth()]
 		day = date.getDate()
 		ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 		year = date.getFullYear()
 		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-		tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+		tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	}
 	html = html.replace('{{updated-full-datetimestamp}}', displayDate)

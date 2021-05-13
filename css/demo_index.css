@@ -59,11 +59,14 @@ h5 {
 	transform: translateY(50%);
 }
 
-/*.demo-title {
-	height: 6rem;
-	line-height: 6rem;
-	white-space: nowrap;
-}*/
+.demo-logo {
+	max-width: 6.25rem;
+	max-height: 6.25rem;
+	height: auto;
+	width: auto;
+	margin: auto;
+	display: block;
+}
 
 [id^=title-] {
 	color: var(--text) !important;

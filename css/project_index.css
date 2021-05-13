@@ -55,6 +55,10 @@ div.col-md-6.no-shift {
 	left: 1rem !important;
 }
 
+.no-padding {
+	padding: 0;
+}
+
 .project-super-indicator-text {
 	color: var(--color) !important;
 	margin: 0;
@@ -63,6 +67,15 @@ div.col-md-6.no-shift {
 .project-super-subtitle-text {
 	color: var(--subtitle) !important;
 	font-size: 1.5rem !important;
+}
+
+.project-super-logo {
+	max-width: 6.25rem;
+	max-height: 6.25rem;
+	height: auto;
+	width: auto;
+	margin: auto;
+	display: block;
 }
 
 .project-regular-subtitle-text {
@@ -82,13 +95,21 @@ div.col-md-6.no-shift {
 }
 
 .project-logo {
+	max-width: 6.25rem;
+	max-height: 6.25rem;
+	height: auto;
+	width: auto;
 	display: table;
 	margin: 0 auto;
 	padding-bottom: 1rem;
 }
 
 .project-logo-featured {
-	padding: 2rem;
+	max-width: 6.25rem;
+	max-height: 6.25rem;
+	height: auto;
+	width: auto;
+	margin: 2rem auto;
 }
 
 .technologies-list {

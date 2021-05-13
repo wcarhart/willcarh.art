@@ -94,14 +94,26 @@ h2 {
 
 #home-about-logo {
 	content: var(--home-about);
+	max-width: 5rem;
+	max-height: 5rem;
+	height: auto;
+	width: auto;
 }
 
 #home-projects-logo {
 	content: var(--home-projects);
+	max-width: 5rem;
+	max-height: 5rem;
+	height: auto;
+	width: auto;
 }
 
 #home-blog-logo {
 	content: var(--home-blog);
+	max-width: 5rem;
+	max-height: 5rem;
+	height: auto;
+	width: auto;
 }
 
 #home-about-container::before, #home-about-container::after {

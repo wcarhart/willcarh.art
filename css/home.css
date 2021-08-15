@@ -382,13 +382,13 @@ Device Sizes in px (width x height):
   iPad Pro           1024x1366
 */
 
-@media (max-height: 568px) {
+@media (hover: none) and (max-height: 568px) {
 	#content-main {
 		top: 25%;
 	}
 }
 
-@media (max-width: 414px) {
+@media (hover: none) and (max-width: 414px) {
 	#main-title {
 		font-size: 3rem !important;
 	}
@@ -423,13 +423,13 @@ Device Sizes in px (width x height):
 	}
 }
 
-@media (min-height: 567px) {
+@media (hover: none) and (min-height: 567px) {
 	.home-row-mobile {
 		height: auto;
 	}
 }
 
-@media (min-height: 666px) {
+@media (hover: none) and (min-height: 666px) {
 	#main-subtitle {
 		height: 4rem;
 	}
@@ -439,7 +439,7 @@ Device Sizes in px (width x height):
 	}
 }
 
-@media (min-height: 735px) {
+@media (hover: none) and (min-height: 735px) {
 	#main-subtitle {
 		height: 4rem;
 	}
@@ -449,7 +449,7 @@ Device Sizes in px (width x height):
 	}
 }
 
-@media (min-height: 811px) {
+@media (hover: none) and (min-height: 811px) {
 	#main-subtitle {
 		font-size: 1.25rem !important;
 		height: 5rem;
@@ -484,7 +484,7 @@ Device Sizes in px (width x height):
 	}
 }
 
-@media (max-width: 768px) and (min-height: 1023px) {
+@media (hover: none) and (max-width: 768px) and (min-height: 1023px) {
 	#main-subtitle {
 		font-size: 2rem !important;
 		height: 6rem;
@@ -519,7 +519,7 @@ Device Sizes in px (width x height):
 	}
 }
 
-@media (max-width: 1024px) and (min-height: 1365px) {
+@media (hover: none) and (max-width: 1024px) and (min-height: 1365px) {
 	#main-subtitle {
 		font-size: 2rem !important;
 		height: 8rem;

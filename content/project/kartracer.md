@@ -1,4 +1,4 @@
-# An experiment in building a racing game with zero pre-built assets.
+## An experiment in building a racing game with zero pre-built assets.
 
 ### A simple racing game
 Kartracer was a my final project for my university graphics class. It is incredibly basic, utilizing no prebuilt models and only OpenGL primitives, but still has a small array of features. It has 3 different car models, a full race track, and a number of various camera views.

@@ -1,3 +1,45 @@
+name: marq
+blurb: A powerful, lightweight, and enhanced markdown to HTML converter
+about: By combining the ubiquity of GitHub Flavored Markdown, new custom HTML structures, and server-side Node.js support, marq is a powerful markdown to HTML converter. It powers all of the markdown generation for this entire website; if you want some examples of marq's work, just take a look around.
+languages: JavaScript
+technologies: Node.js
+technologies: markdown
+img: {{cdn:img/logos/marq.png}}
+repo: https://github.com/wcarhart/marq
+link:
+demo: false
+latest_version: 1.2.0
+published: 1628491240
+status: stable
+install: yarn add @wcarhart/marq
+documentation:
+related: willcarh.art
+visibility: super
+blogPost: {{src:blog/building-a-markdown-to-html-converter-from-scratch}}
+tags: cli, web
+id: marq
+
+name: hyperdrive
+blurb: Lightweight photo library sites backed by Google Drive
+about: Hyperdrive takes a Google Drive folder of images and transforms it into a dynamic image showcase website.
+languages: JavaScript
+languages: Node.js
+technologies: Google Drive API
+technologies: Express.js
+img: {{cdn:img/logos/hyperdrive.png}}
+repo: https://github.com/wcarhart/hyperdrive
+link:
+demo: false
+latest_version: 1.0.0
+published: 1628390880
+status: stable
+install: yarn add @wcarhart/hyperdrive
+documentation:
+visibility: super
+blogPost:
+tags: web
+id: hyperdrive
+
 name: lurker
 blurb: Hacker News terminal client
 about: Lurker is a simple terminal client for reading Y Combinator's Hacker News. It uses the public Hacker News API and is written entirely in Bash so it runs smoothly in the majority of terminal environments.
@@ -14,7 +56,7 @@ install: brew install wcarhart/tools/lurker
 documentation: https://willcarhart.dev/docs/lurker
 related: koi
 related: smoosh
-visibility: super
+visibility: featured
 blogPost:
 tags: cli
 id: lurker
@@ -122,6 +164,7 @@ languages: HTML
 languages: CSS
 technologies: Bootstrap
 languages: Bash
+technologies: marq
 technologies: Netlify
 technologies: Yarn
 technologies: GCP Cloud CDN
@@ -135,7 +178,7 @@ published: 1555394400
 status: stale
 install:
 documentation:
-related:
+related: marq
 visibility: featured
 blogPost: {{src:blog/why-i-wrote-my-own-static-site-generator}}
 tags: cli

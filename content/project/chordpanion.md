@@ -1,4 +1,4 @@
-# Chord progressions, at your fingertips.
+## Chord progressions, at your fingertips.
 
 ### An easy way to compose and tranpose
 Did you know that music is more like code than most people realize? Notes and chords can be abstracted into numbers and relationships, just like code.

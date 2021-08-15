@@ -20,6 +20,7 @@ For discrete icons (not FontAwesome):
 | blog | home, about | https://icons8.com/icon/114461/story-book |
 | projects | home, about | https://icons8.com/icon/12205/hammer |
 | about | home | https://icons8.com/icon/23309/person |
+| hyperdrive | project_index, project_spec | https://icons8.com/icon/18369/turbocharger |
 | lurker | project_index, project_spec | https://icons8.com/icon/55216/hacker |
 | smoosh | project_index, project_spec | https://icons8.com/icon/86584/lightning-bolt |
 | koi | project_index, project_spec | https://icons8.com/icon/37099/koi-fish |

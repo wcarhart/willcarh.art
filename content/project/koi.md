@@ -1,4 +1,4 @@
-# Create powerful CLI applications with ease. All in Bash.
+## Create powerful CLI applications with ease. All in Bash.
 
 ### Easily add command line arguments for Bash functions
 Inspired by Python's [argparse](https://docs.python.org/3/library/argparse.html).

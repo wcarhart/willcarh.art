@@ -1,4 +1,4 @@
-# A meaningful website. A technical experiment.
+## A meaningful website. A technical experiment.
 
 >> See it yourself! | Wanda is deployed to [alexxandwill.us](https://alexxandwill.us). Check it out yourself to see wanda in action.
 

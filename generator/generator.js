@@ -11,7 +11,7 @@ const statPromise = util.promisify(fs.stat)
 
 // verify content markdown files are as expected
 const verifyContentFileStructure = async () => {
-	console.log('Verifying build content...')
+	console.log('🧐 Verifying build content...')
 	await fs.promises.access('content/experience.md')
 	await fs.promises.access('content/blogs.md')
 	await fs.promises.access('content/projects.md')
@@ -19,7 +19,7 @@ const verifyContentFileStructure = async () => {
 
 // validate if generation was successful
 const validateBuild = async () => {
-	console.log('Validating built pages...')
+	console.log('🕵️‍♂️ Validating built pages...')
 	await fs.promises.access('src/index.html')
 	await fs.promises.access('src/vault.html')
 	await fs.promises.access('src/about.html')

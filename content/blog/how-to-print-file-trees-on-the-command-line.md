@@ -15,7 +15,7 @@ You may have used or heard of the Linux tool [`tree`](https://linux.die.net/man/
 ```
 By looking at this file list, can you quickly infer the directory structure? Perhaps you can, but I would argue that most do not, at least instinctively. In addition, this is a small example, imagine if we had 50 or 100 files to show. It would be difficult to infer the project structure from just the absolute path names.
 This is where `tree` comes in. We can use `tree` to build a _visual file tree_ of a directory. Let's try it out with our example.
-```
+```bash
 tree .
 ```
 ```
@@ -46,11 +46,11 @@ The key to achieving this is keeping track of how deep our recursion is. If we k
 
 ### Using Python
 First, we'll need a way to perform some file operations. Python has a nice standard library `os` for interacting with the file system, among other things.
-```
+```python
 import os
 ```
 Next, we'll need to translate our pseudocode above into Python. In addition, we'll need to add a few variables to keep track of the line prefixes so we can properly indent our resulting directory strucutre.
-```
+```python
 def build_tree(entity, indent, is_head, is_tail, result):
     # determine if entity is a directory or file
     files = []
@@ -74,7 +74,7 @@ def build_tree(entity, indent, is_head, is_tail, result):
     return result
 ```
 Finally, let's write a simple helper function. Our recursive function will be more usable if it only has one argument, which is the directory to print. The user of our recursive function doesn't need to know about the other arguments. Let's call this new helper function `generate_file_tree`.
-```
+```python
 def generate_file_tree(entity):
     tree = build_tree(entity, '', True, True, '')
     print(tree)
@@ -83,7 +83,7 @@ Now we can use our code with `generate_file_tree('~/myProj')`.
 
 ### Using JavaScript
 The JavaScript version is a translation of the Python version; it uses the same logic. Let's write it asynchronously for now, but you can convert it to synchronous code if you'd like. We'll use `fs` and `path` to perform the file operations. We'll also promisify our file operations so they fit with our asynchronous code.
-```
+```javascript
 const fs = require('fs')
 const path = require('path')
 const util = require('util')
@@ -91,7 +91,7 @@ const readdirPromise = util.promisify(fs.readdir)
 const statPromise = util.promisify(fs.stat)
 ```
 The recursive function `buildTree` uses the pseudocode we developed above. It will keep track of the current indent to create the nested directory stucture, same as with the Python version.
-```
+```javascript
 const buildTree = async (entity, indent, isHead, isTail, result) => {
     // determine if entity is a directory or file
     let stats = await statPromise(entity)
@@ -122,7 +122,7 @@ const buildTree = async (entity, indent, isHead, isTail, result) => {
 }
 ```
 Similar to the Python version, let's create a helper function `generateFileTree` so it appears our function only takes in one argument, which is the directory to print.
-```
+```javascript
 const generateFileTree = async (entity) => {
     let tree = await buildTree(entity, '', true, true, '')
     console.log(tree)

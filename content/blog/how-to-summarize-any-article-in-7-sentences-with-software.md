@@ -15,7 +15,7 @@ The autotldr bot is built off of [SMMRY](https://smmry.com/), and algorithm that
 ### Recreating it ourselves
 Given that we can almost take this pseudocode and put a `.py` extension on it and be done, this seems pretty easy to replicate in Python.
 Let's assume we have a single chunk of text in a string. We'll need a smart way to split up the text into sentences. We know that there are only a few characters that can end sentences, like `.`, `?`, and `!`. We'll just need to be careful of abbreviations (e.g. `Mrs.`, `Dr.`) and extensions (e.g. `.js`, `.pptx`).
-```
+```python
 import re
 
 def get_sentences(text):
@@ -46,7 +46,7 @@ def get_sentences(text):
     return [sentence.strip() for sentence in sentences]
 ```
 Next, we'll need to determine how often each word occurs, or its frequency. We only want to count _meaningful_ words, so not words like _the_, _a_, _an_, etc. Let's assume we have a list of known words to exclude in a list called `EXCLUDE`.
-```
+```python
 def calculate_word_frequency(sentences):
     frequencies = {}
     words = ' '.join(sentences).split()
@@ -64,7 +64,7 @@ def calculate_word_frequency(sentences):
     return frequencies
 ```
 Now that we have the frequency of each word, we'll need to score each sentence based on the words it contains. For instance, if we had the frequencies `{'the': 0, 'cake': 2, 'is': 0, 'a': 0, 'lie': 5}` and the sentence `the cake is a lie`, then the sentence's score would be `7`.
-```
+```python
 def calculate_sentence_scores(sentences, frequencies):
     scores = []
     for sentence in sentences:
@@ -80,7 +80,7 @@ def calculate_sentence_scores(sentences, frequencies):
     return sentence_scores
 ```
 Great! We're almost done. Now that we have a list of sentences and their scores, we'll just need to return _the x highest rated sentences in order_. This is where the trick comes in. We don't need any intense NLP or ML because we're using sentences that already exist in the original text and just omitting sentences we've deemed unimportant.
-```
+```python
 def build_summary(scores, limit):
     # build list of sentence indicies
     sentence_indices = []
@@ -119,12 +119,12 @@ How would we solve these issues? Let's take them one at a time:
 ### Introducing smoosh
 I wanted to see if I could combine our pseudocode from this article with the outline I laid out above into a helpful tool. The result was [smoosh]({{src:project/smoosh}}). Smoosh is a command line tool for summarizing text, just like SMMRY and autotldr. It uses a lot of the code snippets from above with some modifications to make the summaries even more accurate. You can find its source code [here](https://github.com/wcarhart/smoosh).
 If you'd like to take it for a spin, it's easy to install with:
-```
+```bash
 brew install wcarhart/tools/smoosh
 smoosh --help
 ```
 And then simple to run with:
-```
+```bash
 smoosh 'https://www.cnn.com/2020/10/27/investing/amd-xilinx-purchase/index.html'
 ```
 

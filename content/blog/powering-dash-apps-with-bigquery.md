@@ -10,14 +10,14 @@ Plotly is a mature, fully-featured library and can seem complicated to dive into
 First, we'll need to install Plotly (and for Plotly Express, we'll also need [pandas](https://pandas.pydata.org/)). Let's do some housekeeping beforehand to prepare.
 >> Note | I'm not going to cover pandas in depth because it's out of the scope of this article. If you haven't heard of it before, [pandas](https://pandas.pydata.org/) is a super powerful data science-oriented library in Python. To get started, check out [some of the tutorials](https://pandas.pydata.org/docs/getting_started/index.html) on pandas' website.
 
-```
+```bash
 python3 -m virtualenv -p `which python3` venv
 source venv/bin/activate
 python -m pip install pandas
 python -m pip install plotly
 ```
 Next, let's use one of Plotly's dummy data sets to create a figure. For this example, we'll be using Plotly's _GDP per capita vs. life expectancy_ dataset, an interesting relationship to study (but that's beside the point). Let's create a new file called `fig.py`.
-```
+```python
 import plotly.express as px
 df = px.data.gapminder()
 fig = px.scatter(df.query('year==2007'), x='gdpPercap', y='lifeExp', size='pop', color='continent', hover_name='country', log_x=True, size_max=60)
@@ -31,7 +31,7 @@ Now, let's break down what we just built.
 The first line `import plotly.express as px` just imports Plotly Express from where Pip installed it. It's standard to call Plotly Express `px` for brevity.
 Next, we create a [pandas dataframe](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), the standard data structure for pandas, from Plotly Express' test data set, which we instantiate with `px.data.gapminder()`. If you're curious, the data in the Gapminder dataset comes from [gapminder.org](https://www.gapminder.org/).
 Then, we use our dataframe to create a new figure. There are many different kinds of figures we can create with Plotly Express. For this example, we're using `px.scatter`, but other common Plotly figures are `px.bar`, `px.line`, and `px.area`. For the complete list, see the [Plotly Express documentation](https://plotly.com/python-api-reference/plotly.express.html). Plotly Express is nice because it gives us a single entrypoint into Plotly, and thus `px.scatter` can be configured in many different ways, which we control by which parameters we pass into its instantiation. For instance, let's change our third line to the following.
-```
+```python
 fig = px.scatter(df, x="gdpPercap", y="lifeExp", animation_frame="year", animation_group="country",
            size="pop", color="continent", hover_name="country", facet_col="continent",
            log_x=True, size_max=45, range_x=[100,100000], range_y=[25,90])
@@ -48,11 +48,11 @@ First, let's talk about what a Dash app actually looks like. The simplest of Das
 * any number of callbacks using the `@app.callback()` decorator to run when something is triggered in the UI (e.g. a chart element is clicked or hovered)
 
 First, let's install Dash. Make sure you're using the same environment from above, as we'll still need Plotly and pandas installed.
-```
+```bash
 python -m pip install dash
 ```
 Let's start with a basic skeleton for our Dash app. Create a new file called `app.py`.
-```
+```python
 import dash
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -87,7 +87,7 @@ The `Output` is what the callback will return. This can be an HTML element, a Pl
 
 Then, to run our app we use `app.run_server()`. Using the option `debug=True` will enable hot-reloading so the app is automatically refreshed when a code change is detected.
 Now, let's add some Plotly figures and try to make them interactive using Dash. As with Plotly, let's use a real dataset to make this interesting. We'll use the example country data from Plotly's [open source datasets](https://plotly.github.io/datasets/country_indicators.csv). First, let's set up our app so it can use Dash, Plotly, and pandas.
-```
+```python
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -103,7 +103,7 @@ available_indicators = df['Indicator Name'].unique()
 ```
 We've added `external_stylesheets` to give our app some simple CSS styling, and we've read the example country data into a pandas dataframe. Recall that the easiest way for Plotly to generate figures from data is using [pandas dataframes](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html).
 Next, let's beef up our `app.layout` a bit so we have some more components to work with.
-```
+```python
 app.layout = html.Div([
     html.Div([
         html.Div([
@@ -148,7 +148,7 @@ app.layout = html.Div([
 Woah, a lot has changed in `app.layout`! Now, we've added a few more HTML elements, but we've also added some Dash core components: `dcc.Dropdown`, `dcc.RadioItems`, `dcc.Graph`, and `dcc.Slider`. Dash core components are essentially wrappers for Plotly figures or other entities that don't map one-to-one to standard HTML elements (and thus are not found in the `dash_html_components` module). `dcc.Dropdown` is a dropdown menu, `dcc.RadioItems` is a list of radio buttons with labels, `dcc.Graph` is a Plotly figure, and `dcc.Slider` is a slider control. For the complete list, check out the [Dash Core Components documentation](https://dash.plotly.com/dash-core-components).
 These Dash core components will allow us to build Plotly figures interactively. Pay close attention to the `dcc.Graph(id='indicator-graphic')`, as we'll use this element to build our figure. Notice that for now, there's no figure defined in the `dcc.Graph` syntax. This is because we will add it dynamically using a callback. If you run the app now, you won't see any cool visuals, because we haven't set up our callback. Let's do that next.
 In this example, our callback will have lots of inputs and one output (Dash also has `dash.dependencies.State`, but we won't be using that here). This is because we have dropdown menus, radio buttons, and slider controls that all impact the figure. Dash is smart enough to know how to combine all of these inputs and produce the desired figure. Let's take a look at our callback.
-```
+```python
 @app.callback(
     Output('indicator-graphic', 'figure'),
     Input('xaxis-column', 'value'),
@@ -175,7 +175,7 @@ def update_graph(xaxis_column_name, yaxis_column_name, xaxis_type, yaxis_type, y
 ```
 Again, a lot has changed in this callback from our original, simple example. Notice how there are five `Input`s in our callback decorator, for each of the `dcc.Dropdown`, `dcc.RadioItems`, and `dcc.Slider` that were defined in `app.layout`. That's why we see five parameters in the function definition. Recall that the actual names of these parameters are user-supplied, meaning `xaxis_column_name`, `yaxis_column_name`, `xaxis_type`, `yaxis_type`, and `year_value` can be whatever you want, but they will map to the order defined in the callback decorator (e.g. the first `Input` with ID `xaxis-column` will map to the first parameter named `xaxis_column_name`). The purpose of the callback will be to return one `Output`, an updated Plotly figure, denoted by the syntax `'figure'` in the `Output` definition in the callback decorator. If our callback had multiple `Output`s, we would return them as a tuple. Within the callback, we grab the appropriate data, build the appropriate figure, and return it. We know what figure to build, and what columns to query from our pandas dataframe, by the values passed into our inputs, which are wired up to the actual HTML input elements on the webpage.
 Finally, to run our updated app, we use `app.run_server()` again. If you're running multiple Dash apps concurrently, you'll have to use the parameter `port=xxxx` to not collide on the default Dash port (`8050`).
-```
+```pytyon
 if __name__ == '__main__':
     app.run_server(debug=True)
 ```
@@ -197,14 +197,14 @@ Next, follow the prompts to create a new service account. When giving the new se
 >> Watch out! | Your newly generated JSON key file will download immediately. Since this file allows unmitigated access to (some of) your cloud resources, make sure to store it somewhere securely and _do not_ check it into version control. If you're unsure of where to put the file, a good starting spot is `/etc/keys/`.
 
 Next, let's install the BigQuery extension for pandas so we can execute queries programmatically. I'm assuming your environment is still set up from above (if not, make sure to reactivate your virtual environment). Back in your local terminal, use Pip to install it.
-```
+```bash
 python -m pip install pandas-gbq
 ```
 Phew, done with the boring stuff - let's get back to the code. Now we're finally ready to code up our application to interact with the Hacker News BigQuery dataset.
 
 ### Our final product
 First, let's set up our Dash app to use everything we've covered so far. We'll also need to use the Google Cloud SDK for Python to authenticate as our newly created service account in BigQuery. Here's what the app setup looks like. For brevity, I've omitted `dash.dependencies.Input` and `dash.dependencies.Output` because we won't be using any callbacks in this section. Callbacks are core to Dash's application structure, and I hope to cover them more in the future. For now, if you'd like to learn more about callbacks in Dash, check out [the documentation](https://dash.plotly.com/basic-callbacks).
-```
+```python
 import dash
 import dash_table as dt
 import dash_core_components as dcc
@@ -218,12 +218,12 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 ```
 Next, let's set up our app to execute BigQuery queries. We'll use the `google.oauth2.service_account` module and the newly created JSON key file you downloaded from GCP.
-```
+```python
 from google.oauth2 import service_account
 credentials = service_account.Credentials.from_service_account_file('/path/to/your/keyfile.json')
 ```
 Now, let's create some actual queries. I'm going to use two queries from [Felipe Hoffa](https://github.com/fhoffa)'s [Analyzing Hacker News](https://github.com/fhoffa/notebooks/blob/master/analyzing%20hacker%20news.ipynb) Jupyter notebook to get started. Note that [BigQuery prefers Standard SQL over Legacy SQL](https://cloud.google.com/bigquery/docs/reference/legacy-sql), so we'll have to make a couple minor changes. Let's put our queries in a dictionary so they're easier to reference.
-```
+```python
 queries = {
     'top_types': 'SELECT type, COUNT(*) count FROM hacker_news_copy.full_201510 GROUP BY 1 ORDER BY 2 LIMIT 100',
     'counts': '''
@@ -244,14 +244,14 @@ queries = {
 }
 ```
 Now, let's loop through these queries and create pandas dataframes for generating Plotly figures. Make sure to replace `<PROJECTNAME>` with your project's name in GCP.
-```
+```python
 dfs = {}
 for query_name in queries:
     df = gbq.read_gbq(queries[query_name], project_id='<PROJECTNAME>', credentials=credentials)
     dfs[query_name] = df
 ```
 Finally, let's make some visuals! The first query `top_types` is just a simple report on the quantities in our data. We can put that in a simple, non-interactive table with Dash using `dash_table`. This should have already been installed when we installed Dash.
-```
+```python
 import dash_table as dt
 table_label = html.Label("Hacker News BigQuery Public Dataset")
 table = dt.DataTable(
@@ -268,7 +268,7 @@ table = dt.DataTable(
 ```
 ![Screenshot of a table resulting from our top_types query]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-3.png}})<Our table from the `top_types` query.>
 Next, let's make some interactive graphs for our second query, `counts`. We'll make an animated histogram and a standard line chart. For the histogram, we'll need to restructure our data somewhat so Plotly can interpret it. Let's make a copy of our dataframe at `dfs['counts']` so we don't modify it for future figures.
-```
+```python
 df = dfs['counts'].copy(deep=True)
 df.set_index('month', inplace=True)
 df = df.unstack().reset_index()
@@ -287,7 +287,7 @@ histogram = dcc.Graph(id='counts-histogram', figure=fig)
 First, we set the index to the `month` column, as that's what our animation will track. Next, we pivot our data around our index (`month`), previous column names, and the original values using [`pandas.DataFrame.unstack()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.unstack.html), and then rename the new columns appropriately. Finally, we build a figure using our newly restructured data.
 ![Recording of animated histogram]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-4.gif}})<Our animated histogram from the `counts` query.>
 For the line chart, we'll need to add 4 separate traces, one for each of the dataframe's columns: `comments`, `stories`, `comment_authors`, and `story_authors`. To get more granular control of Plotly, we'll use the actual `Figure` class from [`plotly.graph_objects`](https://plotly.com/python/graph-objects/).
-```
+```python
 import plotly.graph_objects as go
 fig = go.Figure()
 for category in ['stories', 'comments', 'comment_authors', 'story_authors']:
@@ -301,7 +301,7 @@ line = dcc.Graph(id='counts-line', figure=fig)
 ```
 ![Screenshot of line graph from our counts query]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-5.png}})<Our line chart from the `counts` query.>
 Finally, to display all of our generated visuals with Dash, let's add our figures to our layout and serve the application.
-```
+```python
 app.layout = html.Div([
     table_label,
     table,

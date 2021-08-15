@@ -1,4 +1,5 @@
-# Perform powerful queries against logs.
+## Perform powerful queries against logs.
+
 ### Overview
 Beaver is a command line utility that parses log files. When modern applications run, they generate a plethora of logging content, and it is often cumbersome to find the small tidbit of information that's actually useful.
 Beaver uses an English-like syntax, where the user can essentially specify _show me the logs from yesterday to today_. Beaver is smart enough to understand what the user is looking for and automatically searches for `.log` files in the project directory, and then prints all logs whose timestamps are between yesterday and today.

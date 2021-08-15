@@ -1,4 +1,4 @@
-# A platform for showcasing your software hobby projects.
+## A platform for showcasing your software hobby projects.
 
 ### A place for sharing
 I think there's an unfortunate stereotype that often surrounds software development. Many characterize coding as a purely technical discipline, reserved for the nerdy and erudite. However, I think coding can be expressive, fun, and creative. You can create anything you can imagine, from complex web applications to beautiful front-end designs.

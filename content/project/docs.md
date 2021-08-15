@@ -1,4 +1,4 @@
-# A clean interface for all of my tools' documentation.
+## A clean interface for all of my tools' documentation.
 >> Check it out! | Docs is deployed at [willcarhart.dev](https://willcarhart.dev). Check it out yourself to explore how the site works.
 
 ### Documentation is paramount

@@ -7,11 +7,11 @@ DigitalOcean has a variety of services, from VMs to managed web apps to S3-like 
 
 ### Being a power user with the DigitalOcean API
 Let's take a look at how we can spin up droplets using the [DigitalOcean API](https://developers.digitalocean.com/documentation/v2/). First, make sure you [create an API token](https://cloud.digitalocean.com/account/api/tokens). We'll `POST` to the [`/v2/droplets` endpoint](https://developers.digitalocean.com/documentation/v2/#create-a-new-droplet) to create our new droplet. Let's write some [Node.js](https://nodejs.org) code to automate our droplet creation. First, let's install some standard libraries we'll need for making network requests.
-```
+```bash
 yarn add node-fetch
 ```
 Next, let's write a quick set of functions to create our SSH fingerprint.
-```
+```javascript
 const crypto = require('crypto')
 
 // compute MD5 fingerprint from SSH public key
@@ -34,7 +34,7 @@ const colons = (s) => {
 }
 ```
 Finally, let's write a simple function to create a droplet using our API token.
-```
+```javascript
 const fs = require('fs')
 const fetch = require('node-fetch')
 
@@ -83,7 +83,7 @@ Created droplet: my-test-droplet
 ```
 Next, we'll want to SSH into our droplet. When a new droplet is created, it's starts in the `NEW` state. This means that the droplet is spinning up and is configuring itself. Once the droplet moves to the `ACTIVE` state, it will be assigned an IPv4 address and then we can SSH in using the SSH key-pair on our machine. In the first few lines of the `createDroplet()` function we specify our SSH public key as `~/.ssh/id_rsa.pub`.
 To wait for our new droplet to become active, let's write some code to ping the `/v2/droplets` endpoint with a `GET` request to check the droplet status.
-```
+```javascript
 // wait for the droplet to become active
 const waitForDroplet = async (id) => {
     let done = false
@@ -127,7 +127,7 @@ const inspectDroplet = async (id) => {
 }
 ```
 Cool! Now, let's add the following lines to the end of `createDroplet()` so we print our droplet's metadata after it's been created.
-```
+```javascript
 droplet = await waitForDroplet(data.droplet.id)
 console.log(`Status: ${droplet.status}`)
 console.log(`ID: ${droplet.id}`)
@@ -138,19 +138,19 @@ Now when when our code prints out the new droplet's IP address, we can SSH in!
 ### Being a power user with the DigitalOcean CLI
 The [DigitalOcean API](https://developers.digitalocean.com/documentation/v2/) is powerful when you're creating programs to provision and tear down infrastructure, but what if we wanted to create a droplet quickly from the command line? DigitalOcean also has a CLI tool, [called `doctl`](https://github.com/digitalocean/doctl) (short for _DO control_), for interacting with DigitalOcean products. Let's see what it takes to create a droplet using `doctl` and Bash.
 To get started, let's install `doctl` via [Homebrew](https://brew.sh). If you don't use Homebrew, there are other installation options available in its [GitHub repository](https://github.com/digitalocean/doctl).
-```
+```bash
 brew install doctl
 ```
 In order for `doctl` to be authenticated against our DigitalOcean account, we need to use our [authentication token](https://cloud.digitalocean.com/account/api/tokens) from before with `doctl auth`.
-```
+```bash
 doctl auth init
 ```
 Now for the code. First, we create our SSH fingerprint, same as before.
-```
+```bash
 fingerprint="$(ssh-keygen -E md5 -lf ~/.ssh/id_rsa.pub | awk '{print $2}' | cut -c 5-)"
 ```
 Then, we use `doctl compute droplet create` to create a new droplet.
-```
+```bash
 doctl compute droplet create 'my-test-droplet' \
     --size s-1vcpu-1gb --image ubuntu-18-04-x64 \
     --region sfo2 \
@@ -159,7 +159,7 @@ doctl compute droplet create 'my-test-droplet' \
     --ssh-keys "$fingerprint"
 ```
 Finally, let's again wait for the droplet to become active. Let's write this in a way so if we need to create multiple droplets later we wait for them _all_ to become active.
-```
+```bash
 complete=0
 while [[ complete -eq 0 ]] ; do
     complete=1
@@ -177,7 +177,7 @@ Great! As you can see, both `doctl` and and the DigitalOcean API allow us to rap
 ### Spinning up a fleet of DigitalOcean droplets
 What if we wanted to spin up 10 droplets and kick off a job on each of them? Let's see how we could accomplish this with `doctl`.
 First, let's write a Bash function to create `x` number of droplets (with default of 10).
-```
+```bash
 function create {
     fingerprint="$(ssh-keygen -E md5 -lf ~/.ssh/id_rsa.pub | awk '{print $2}' | cut -c 5-)"
     for index in $(seq 1 ${1:-10}) ; do
@@ -194,7 +194,7 @@ function create {
 }
 ```
 Next, we'll use our same code from above as our `wait` function.
-```
+```bash
 function wait {
     complete=0
     while [[ complete -eq 0 ]] ; do
@@ -210,7 +210,7 @@ function wait {
 }
 ```
 Finally, let's write one last function to kick off our job on each droplet.
-```
+```bash
 function run {
     for index in $(seq 1 ${1:-10}) ; do
         echo -n "Starting droplet-$index"

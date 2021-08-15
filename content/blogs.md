@@ -157,7 +157,7 @@ cover: {{cdn:img/blog/why-i-wrote-my-own-static-site-generator/cover.jpg}}
 coverAuthor: jenteva
 coverCredit: https://stock.adobe.com/contributor/206678109/jenteva
 published: 1606870440
-updated:
+updated: 1628491240
 resources: Node.js
 resources: JavaScript
 resources: HTML
@@ -349,4 +349,61 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: powering-dash-apps-with-bigquery
+hidden: false
+
+title: Using PM2 to Deploy Robust Node.js Apps
+subtitle: For when Heroku gets too expensive
+blurb: When it comes to deploying modern web apps, there's a plethora of options these days. Heroku, App Engine, Elastic Beanstalk, and many others come to mind. However, how can we deploy our Node.js apps to bare-metal servers? Let's take a dive into PM2, an advanced, production process manager for Node.js.
+cover: {{cdn:img/blog/using-pm2-to-deploy-robust-nodejs-apps/cover.jpg}}
+coverAuthor: Claude Monet
+coverCredit: https://en.wikipedia.org/wiki/Claude_Monet
+published: 1628024400
+updated:
+resources: Node.js
+resources: PM2
+resources: Express.js
+resources: DigitalOcean
+resources: Linux
+author: Will Carhart
+authorImg: {{cdn:img/profile.jpg}}
+status: active
+tags:
+id: using-pm2-to-deploy-robust-nodejs-apps
+hidden: false
+
+title: How to use GCP Cloud Storage as a CDN
+subtitle: Now with even more GCP product acronyms
+blurb: GCP Cloud Storage is a great place to keep larger assets, like images, for your website. However, it comes with some limitations when traffic runs high. Let's take a look at how we can use Cloud Storage behind a CDN for fast, responsive websites.
+cover: {{cdn:img/blog/how-to-use-gcp-cloud-storage-as-a-cdn/cover.jpg}}
+coverAuthor: kozh
+coverCredit: https://stock.adobe.com/contributor/202026830/kozh
+published: 1621656840
+updated:
+resources: GCP Cloud Storage
+resources: GCP Cloud CDN
+resources: GCP Compute Engine
+resources: GCP Cloud Load Balancer
+author: Will Carhart
+authorImg: {{cdn:img/profile.jpg}}
+status: active
+tags:
+id: how-to-use-gcp-cloud-storage-as-a-cdn
+hidden: false
+
+title: Building a Markdown to HTML Converter from Scratch
+subtitle: Introducing marq
+blurb: The website you're viewing right now is built via a custom static site generator, courtesy of yours truly. As my markdown needs grew, I developed my own markdown generator, which I've now spun out into its own separate project, marq. Let's take a deep dive into marq and it's capabilities.
+cover: {{cdn:img/blog/building-a-markdown-to-html-converter-from-scratch/cover.jpg}}
+coverAuthor: Painterstock
+coverCredit: https://stock.adobe.com/contributor/207043170/painterstock
+published: 1628882100
+updated:
+resources: Node.js
+resources: JavaScript
+resources: markdown
+author: Will Carhart
+authorImg: {{cdn:img/profile.jpg}}
+status: active
+tags:
+id: building-a-markdown-to-html-converter-from-scratch
 hidden: false

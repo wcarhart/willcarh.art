@@ -1,4 +1,4 @@
-# Solve any Sudoku board instantly.
+## Solve any Sudoku board instantly.
 >> Try it out! | Try out doku yourself on [the demo page]({{src:demo}})
 
 ### Solve puzzles instantly

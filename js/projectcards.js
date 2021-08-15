@@ -38,6 +38,19 @@ const resizeProjectContainers = async () => {
 	// wait for page to settle
 	await new Promise(r => setTimeout(r, 500));
 
+	// re-size columns in super rows one at a time
+	let superRows = $('.project-row-super')
+	for (let row of superRows) {
+		let left = row.children[0].children[0].children[0].children[1]
+		let right = row.children[1].children[0].children[0].children[1]
+
+		if (left.clientHeight !== right.clientHeight) {
+			let targetHeight = Math.max(left.clientHeight, right.clientHeight)
+			left.style.height = `${targetHeight}px`
+			right.style.height = `${targetHeight}px`
+		}
+	}
+
 	// re-size columns in featured rows one at a time
 	let index = -1
 	do {

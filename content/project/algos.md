@@ -1,4 +1,4 @@
-# Common algorithms. Standard data structures. And then some.
+## Common algorithms. Standard data structures. And then some.
 
 ### Background
 When I performed my last job search, I started by simply reimplementing all of the common algorithms and data structures I knew, in Python. The collection of code ended up being valuable outside of a job search, so I put it in a repository. Algos is constantly a work in progress and is always improving.
@@ -9,12 +9,12 @@ Algos contains inplementations for tree data structures (BST, AVL, Trie, Bubble 
 ### A new data structure: Bubble Tree
 In addition to standard tree data structures, I created a new data structure called _Bubble Tree_. Bubble Tree is a tree structure that bubbles up common values and prunes congruent subtrees. It is used for storing key value pairs, where keys are Linux paths and values are any data structure that is comparable.
 Build a Bubble Tree:
-```
+```python
 >>> from trees import BubbleTreeNode
 >>> bt = BubbleTreeNode('root')
 ```
 Insert nodes into the tree via absolute Linux paths:
-```
+```python
 >>> bt.insert('/root/dir0/dir00/file000.txt', value=10)
 >>> bt.insert('/root/dir0/file00.txt', value=10)
 >>> bt.insert('/root/dir1/file10.txt', value=5)

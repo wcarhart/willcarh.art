@@ -1,4 +1,4 @@
-# Stream tweets from hashtags like `#covid19` and `#2020election` straight to your terminal
+## Stream tweets from hashtags like `#covid19` and `#2020election` straight to your terminal
 >> Try it out! | Try out birdhouse yourself on [the demo page]({{src:demo}}).
 
 ### What it is

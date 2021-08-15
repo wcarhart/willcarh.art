@@ -1,4 +1,4 @@
-# Remote messenging. Without a server.
+## Remote messenging. Without a server.
 
 ### Overview
 Aerogram is a messenging app built for the terminal. It has similar functionality to other messaging services, but without as much setup. Unlike Slack, Mattermost, or other messaging platforms, aerogram does not require a server or 3rd party service to run. As long as you can SSH into a host, you can send it a message with aerogram.

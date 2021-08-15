@@ -1,4 +1,4 @@
-# A simple multithreading framework.
+## A simple multithreading framework.
 
 ### What it is
 Despicable is a lightweight CLI for multithreading shell commands. Consider the case where you have to scp many large files across a network. Despicable provides an easy-to-use CLI to run the commands in parallel. The framework can either run commands from a file, or can take commands typed out on the command line.

@@ -1,4 +1,4 @@
-# Learn about space on a daily basis.
+## Learn about space on a daily basis.
 
 ### A fun API
 NASA APoD stands for [NASA's Astronomy Picture of the Day](https://apod.nasa.gov/apod/astropix.html). I wrote a simple iOS app to pull down the APoD using NASA's public API and then display it within the app. The app can display any APoD between June 16th, 1995, when the program started, and now. This application was a toy project and has not been published on the App Store.

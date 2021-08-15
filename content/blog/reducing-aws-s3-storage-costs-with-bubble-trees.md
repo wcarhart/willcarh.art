@@ -46,7 +46,7 @@ That sounds complicated in writing, but it's easier to visualize. Check out this
 
 ### Planting our bubble tree
 Let's get to implementing our bubble tree in Python. First, let's define a new class for a node in the bubble tree.
-```
+```python
 class BubbleTreeNode:
     '''Tree that 'bubbles up' common values from subtrees'''
     def __init__(self, path, value=None):
@@ -64,7 +64,7 @@ Next, we'll need to implement three different functions for our bubble tree. All
 >> Wait just a second! | Wondering how we can print a complex bubble tree in a nice way? Check out my blog post for [building pretty trees on the command line]({{src:blog/how-to-print-file-trees-on-the-command-line}}), which lifts code directly out of the [bubble tree source](https://github.com/wcarhart/algos/blob/master/trees.py) in my [algos]({{src:project/algos}}) project.
 
 Let's start with `insert()`, which is the most complicated. Inserting into a bubble tree is almost identical to inserting into a trie.
-```
+```python
 def insert(self, path, value=None):
     '''Provide a full path to be inserted'''
     items = path.strip('/').split('/')
@@ -93,7 +93,7 @@ def __insert_at_path(self, treenode, path, tree_path, value):
             raise ValueError('Invalid insert path in tree')
 ```
 Next, let's implement `bubble()`, so our leaf nodes can _bubble up_ to their parent.
-```
+```python
 def bubble(self):
     '''Bubble up values in the tree and prune congruent subtrees'''
     self.__bubble(self)
@@ -108,7 +108,7 @@ def __bubble(self, treenode):
         treenode.children = []
 ```
 Finally, let's implement `flatten()`. This will allow us to convert the bubble tree to a dictionary of key-value pairs for easier parsing.
-```
+```python
 def flatten(self):
     '''Flatten the tree into key-value pairs'''
     return self.__flatten(self, '', {})
@@ -122,11 +122,11 @@ def __flatten(self, treenode, prefix, result):
     return result
 ```
 Great! Now we can create a bubble tree with the `BubbleTreeNode` class.
-```
+```python
 >>> bt = BubbleTreeNode('root')
 ```
 Insert some data.
-```
+```python
 >>> bt.insert('/root/dir0/dir00/file000.txt', value=10)
 >>> bt.insert('/root/dir0/file00.txt', value=10)
 >>> bt.insert('/root/dir1/file10.txt', value=5)
@@ -136,7 +136,7 @@ Insert some data.
 >>> bt.insert('/root/dir3/file30.txt', value=10)
 ```
 Bubble up common values to prune the bubble tree.
-```
+```python
 >>> print(bt)
 └── root
     ├── dir0
@@ -165,7 +165,7 @@ Bubble up common values to prune the bubble tree.
         └── file30.txt (10)
 ```
 And finally, flatten the bubble tree.
-```
+```python
 >>> bt.flatten()
 {
   '/root/dir0': 10,

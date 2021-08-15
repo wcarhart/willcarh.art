@@ -84,7 +84,7 @@ This effect is called the _typewriter effect_, and is a cool way of calling atte
 ### Start with some interesting text
 First, we'll need to decide what to type. We'll need some static text, like `Hi, my name is Will, and I'm a` and then we'll need some dynamic text to complete the sentence, like `software engineer`.
 Let's make a basic HTML skeleton in a file called `index.html`.
-```
+```html
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -98,7 +98,7 @@ We'll use the `#typewriter-text` element for our dynamic text.
 
 ### Target the dynamic text element
 Next, we'll need to target our `#typewriter-text` element and change it dynamically. I'm going to use a little bit of [jQuery](https://jquery.com/) for brevity and simplicity, and because I'm already using it for the webpage on which the typewriter effect will appear, but you can replicate this with vanilla JavaScript fairly easily as well. Let's make a new file `typewriter.js`. First, we'll write some code to interact with our `#typewriter-text` element and tell it to type and untype dynamically. We'll use a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) to wait for `3s` between typing and untyping, so the user can actually read our dynamic text.
-```
+```javascript
 $(document).ready(async () => {
     let typewriterText = 'software engineer.'
     do {
@@ -109,7 +109,7 @@ $(document).ready(async () => {
 })
 ```
 Next, we'll need to write the `typeText()` and `untypeText()` functions. For `typeText()`, we'll want to sequentially add letters to our `#typewriter-text` element until it becomes the desired dynamic text. Let's again use a Promise to slow down the typing speed. I'm using a delay of `75ms` between each typed character, but you can change the typing speed as desired by increasing or decreasing the delay.
-```
+```javascript
 const typeText = async (id, text) => {
     let typedText = ''
     let delay = 75
@@ -121,7 +121,7 @@ const typeText = async (id, text) => {
 }
 ```
 Now let's use the same logic for `untypeText()`.
-```
+```javascript
 const untypeText = async (id, text) => {
     let typedText = text
     let delay = 75
@@ -145,7 +145,7 @@ boba drinker
 corgi snuggler
 ```
 Now, let's update our jQuery to rotate through our list of dynamic texts. We'll make our queue of texts circular, so it never runs out of content to type dynamically.
-```
+```javascript
 $(document).ready(async () => {
     let typewriterText = [
         'guac lover.',

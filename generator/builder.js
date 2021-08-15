@@ -5,7 +5,7 @@ const minify = require('minify')
 const tryToCatch = require('try-to-catch')
 
 const parser = require('./parser.js')
-const markdown = require('./markdown.js')
+const { Marq } = require('@wcarhart/marq')
 
 const package = require('../package.json')
 
@@ -50,6 +50,7 @@ Supported HTML tags:
   {{html:logo}}          --> build HTML for site logo
   {{html:darkmode}}      --> build HTML for dark mode toggle
   {{html:email}}         --> build HTML for email contact button
+  {{html:email-moble}}   --> build HTML for email contact button on mobile
 
 Supported code tags:
   {{code:proj}}          --> load projects into code
@@ -245,6 +246,7 @@ const buildHtml = async (data, match, key, page) => {
 		case 'logo':
 		case 'darkmode':
 		case 'email':
+		case 'email-mobile':
 			common = await readFilePromise(`snippets/common/${key}.html`)
 			html = common.toString()
 			break
@@ -500,7 +502,12 @@ const buildBlogSpec = async (blogs, page) => {
 	}
 
 	// build blog content
-	let blogContent = await markdown.convert(blogContentFile.toString(), page)
+	let marq = new Marq({
+		cssPrefix: '',
+		placerholder: 'ico/blank.png',
+		slideshowScript: '{{js:slideshow.js}}'
+	})
+	let blogContent = await marq.convert(blogContentFile.toString(), {page: page})
 	html = html.replace('{{blog-content}}', blogContent)
 
 	// check if is stale
@@ -644,7 +651,12 @@ const buildProjSpec = async (projects, page) => {
 	html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
 
 	// build project content
-	let projectContent = await markdown.convert(projectContentFile.toString(), page)
+	let marq = new Marq({
+		cssPrefix: '',
+		placerholder: 'ico/blank.png',
+		slideshowScript: '{{js:slideshow.js}}'
+	})
+	let projectContent = await marq.convert(projectContentFile.toString(), {page: page})
 	html = html.replace('{{project-content}}', projectContent)
 
 	return html

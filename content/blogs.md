@@ -388,7 +388,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: how-to-use-gcp-cloud-storage-as-a-cdn
-hidden: false
+hidden: true
 
 title: Building a Markdown to HTML Converter from Scratch
 subtitle: Introducing marq
@@ -406,4 +406,4 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: building-a-markdown-to-html-converter-from-scratch
-hidden: false
+hidden: true

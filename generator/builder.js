@@ -301,6 +301,7 @@ const buildCode = async (data, match, key) => {
 // build HTML for latest blog post on blog index
 const buildBlogLatest = async (blogs) => {
 	// determine latest blog
+	blogs = blogs.filter(b => b.hidden === 'false')
 	let blog = blogs.reduce((latest, current) => { return current.published > latest.published ? current : latest })
 	let date = new Date(blog.published * 1000)
 	let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
@@ -419,6 +420,8 @@ const buildBlogSpec = async (blogs, page) => {
 		}
 		return 0
 	})
+
+	sortedBlogs = sortedBlogs.filter(b => b.hidden === 'false')
 
 	// get blog markdown comment
 	let blogContentFile = `content/blog/${blog.id}.md`

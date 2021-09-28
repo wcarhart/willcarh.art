@@ -20,7 +20,7 @@ The other benefit of Homebrew, which I think is less utilized by individual deve
 
 ### Setting up your own Homebrew tap
 Suppose we've written the tool `hi`, saved in its own repository on GitHub. For now, let's say that repository was [wcarhart/hi](https://github.com/wcarhart/willcarh.art). Here's what the source code for `hi` looks like.
-```
+```bash
 #!/bin/bash
 for name in "$@" ; do
     echo "Hi, $name"
@@ -29,7 +29,7 @@ done
 We want to make our CLI tool `hi` installable with Homebrew. To start, we'll need to make sure we go into the repository for `hi` and tag a commit as the `v1.0` release. Then, we'll need to set up our own tap, which is simply a remote Git repository that will describe how to install `hi`. As a result we will have two repositories for `hi`, one for source code and one as a Homebrew tap.
 To set up the tap for `hi`, let's first make a new repository on GitHub. The name of this repository is important, as it will be the name of the tap we reference in our `brew install` command. The name of our repository on GitHub must be prefixed with `homebrew-` to tell Homebrew that the repository is a tap. Once we create a new repository `homebrew-<tap>`, we can install software from our tap with `brew install <GitHub username>/<tap>/<formula>`. Let's call our new repository `homebrew-tools` so we can later install `hi` with `brew install wcarhart/tools/hi`.
 Next, we'll make a new file in our repository `Formula/hi.rb`. Again, the naming here is important. The `Formula/` directory tells Homebrew that all files in this directory are Homebrew formulae. The filename `hi.rb` lets Homebrew know that this formula is for a tool named `hi`. Note that there can be many formulae in a single tap, specified by each `.rb` file in the `Formula/` directory. Here's what `Formula/hi.rb` should look like.
-```
+```ruby
 require "formula"
 
 class Hi < Formula

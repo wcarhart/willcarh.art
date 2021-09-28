@@ -7,7 +7,7 @@
 ### Using CSS variables
 First, let's pick a color scheme and keep track of it with standard CSS. If you use [Sass](https://sass-lang.com/) or [Less](http://lesscss.org/) the concept is the same. You can steal mine from my [etc]({{src:etc}}) page if you'd like. I usually have 4-5 colors in my scheme, but you can choose as many as you like.
 We'll need to pick colors for _light mode_ and _dark mode_. Create a new file `style.css` for our styling. Set your variables for _light mode_ in `:root` and _dark mode_ in `:root.dark-mode`. This will make it super easy to switch between them.
-```
+```css
 :root {
     --background: #ecf0f1;
     --detail: #bdc3c7;
@@ -22,7 +22,7 @@ We'll need to pick colors for _light mode_ and _dark mode_. Create a new file `s
 }
 ```
 Next, let's add an HTML skeleton in a new file called `index.html` to display our color scheme.
-```
+```html
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -33,7 +33,7 @@ Next, let's add an HTML skeleton in a new file called `index.html` to display ou
 </html>
 ```
 And, let's style our HTML according to our color scheme.
-```
+```css
 body {
     color: var(--text);
     background-color: var(--background);
@@ -48,7 +48,7 @@ Now, try adding the class `dark-mode` to the parent-most `<html>` tag. When we a
 
 ### Adding the toggle
 Next, let's add a button to toggle dark mode on and off. I'm going to use [this icon](https://fontawesome.com/icons/lightbulb?style=solid) from [FontAwesome](https://fontawesome.com/). Let's update our HTML with this new button.
-```
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -62,7 +62,7 @@ Next, let's add a button to toggle dark mode on and off. I'm going to use [this 
 </html>
 ```
 Let's style our button as well.
-```
+```css
 #dark-mode-toggle {
     position: fixed;
     top: 1.5rem;
@@ -76,7 +76,7 @@ Note that we'll have to include an external script for FontAwesome to access the
 
 ### Wiring it together
 Who said [jQuery](https://jquery.com/) was going out of style? Let's use a little bit of jQuery to wire up our dark mode toggle button in a new file `darkmode.js`.
-```
+```javascript
 $(document).ready(async () => {
     $('#dark-mode-toggle').click(async () => {
         $('html').toggleClass('dark-mode')
@@ -84,7 +84,7 @@ $(document).ready(async () => {
 })
 ```
 Don't forget to include the jQuery and `darkmode.js` scripts in your `<head>` tag.
-```
+```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="darkmode.js"></script>
 ```
@@ -94,7 +94,7 @@ This code is really easy to understand. Whenever the user clicks on our `#dark-m
 ### Making it persistent
 This is a great start. However, what happens if the user navigates to a new page on our website? They'd have to toggle dark mode every time they navigate to a new route, which isn't great UX, especially if their eyes were used to dark mode being active.
 Let's use the [`localStorage` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to persist the user's dark mode preference. This means that once the user toggles dark mode, it will persist between page navigations, reloads, and even leaving the site. Let's revamp our jQuery.
-```
+```javascript
 // initialize dark mode
 (async () => {
     let update = false

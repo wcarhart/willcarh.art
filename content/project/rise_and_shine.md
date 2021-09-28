@@ -1,4 +1,4 @@
-# A more efficient way to wake up.
+## A more efficient way to wake up.
 
 ### A fun embedded project
 Rise and Shine was my final project for one my university embedded courses. We used a [Microchip PIC18F4321](https://www.microchip.com/wwwproducts/en/en024610) and [Kanda board](https://www.kanda.com/products/Kanda/MICRO-X-BOARD.html) to create an automated coffee maker.

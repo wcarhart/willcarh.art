@@ -6,24 +6,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
-:root {
-	--background: #ecf0f1;
-	--detail: #bdc3c7;
-	--subtitle: #6A6C6E;
-	--color: #e67e22;
-	--text: #252323;
-	--toggle: url(../ico/dark-mode-toggle-light.png);
-}
-
-:root.dark-mode {
-	--background: #292929;
-	--detail: #34495e;
-	--subtitle: #8895A1;
-	--color: #6642ac;
-	--text: #ecf0f1;
-	--toggle: url(../ico/dark-mode-toggle-dark.png);
-}
-
 .animate__animated.animate__fadeInUp, .animate__animated.animate__fadeIn {
 	--animate-delay: 0.3s
 }
@@ -41,9 +23,9 @@
 	font-size: 5rem !important;
 }
 
-h2 {
+/*h2 {
 	font-size: 3rem !important;
-}
+}*/
 
 h5 {
 	color: var(--subtitle) !important;
@@ -125,6 +107,7 @@ h5 {
 }
 
 #blog-subtitle {
+	font-size: 1.75rem !important;
 	text-align: center;
 	padding-bottom: 0.5rem;
 	color: var(--color) !important;
@@ -180,11 +163,11 @@ h5 {
 }
 
 /* overwrite markdown CSS for blogs */
-.content-subtitle {
+.h3 {
 	font-size: 3rem !important;
 }
 
-.content-text {
+.p {
 	font-size: 1.2rem !important;
 }
 

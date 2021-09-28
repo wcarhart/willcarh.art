@@ -60,7 +60,7 @@ const aboutTaglines = [
 const homeTaglines = [
 	'a software engineer.',
 	'a tinkerer.',
-	'a solver of problems.',
+	'a problem solver.',
 	'a command line hero.',
 	'a full-stack developer.',
 	'a Hacker News lurker.',

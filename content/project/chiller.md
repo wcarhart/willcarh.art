@@ -1,4 +1,4 @@
-# Automating the release process.
+## Automating the release process.
 
 ### Releasing via GitHub, deploying via Homebrew
 To easily deploy many of my software tools, I use [Homebrew](https://brew.sh). Homebrew provides a clean interface for installing 3rd party software, and it's available on both macOS and Linux. However, Homebrew depends on a _tap_ (a repository) to define _formulae_ (build and installation instructions), which specify release versions of installable software. When releasing software, it can be time consuming to manually tag the release commit, release it on [GitHub](https://github.com), and update the formula in the tap. Chiller is an automation tool to accelerate this release process.

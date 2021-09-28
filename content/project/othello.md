@@ -1,4 +1,4 @@
-# Play Othello on the command line.
+## Play Othello on the command line.
 
 ### Simple concept, complex theory
 Othello is a simple game. Players take turns placing disks on a 8x8 grid with their assigned color, either black or white. If any of a player's disks are _sandwiched_ between their opponent's disks, they are flipped colors. Although the premise is simple, the game's theory is quite complex, because often the winner of the game is only decided in the last few moves.

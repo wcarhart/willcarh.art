@@ -6,18 +6,18 @@ There were a few nice-to-have features to show off my web-development chops (dar
 ### Growing pains
 As the site grew in content it quickly became difficult to maintain. One week a seemingly simple schema update would break the database layer, the next I would struggle to style simple DOM elements due to conflicting CSS files. Most of this was due to my error, not the services I was using. However, I also was not trying to maintain the website as a full-time product; I was hoping to keep it as a touch-and-go resource that I could keep updated as necessary. I knew that the currently approach was not sustainable, and so I eventually broke down my observations into four chief complaints about the `v1` implementation.
 
-**Difficult to maintain**
+#### Difficult to maintain
 The simple task of publishing a new blog post involved copy and pasting HTML from previous blog posts. There was no abstraction between content and code, it was _one in the same_. This probably explains why I wrote plenty of blog posts but only published a few.
 
-**Difficult to expand**
+#### Difficult to expand
 In the original version of [willcarh.art]({{src:index}}), I had a section on my homepage for career experience. I had space for exactly 3 positions, because when I first wrote the site I had only had 3 positions. Upon moving jobs, it became apparent that adding space for a 4th position would require a major refactor of the entire homepage. It was the opposite of modularity - everything was loaded into one `index.html` file.
 
-**Difficult to deploy**
+#### Difficult to deploy
 The website, a web app, was deployed via [Heroku](https://heroku.com). I architected a simple website of a blog, project porfolio, and homepage into a full-stack Django application because, well, it's all I knew how to do at the time. When I wanted to add another metadata field to a project or blog post, such as an _Updated Date_ in addition to the _Published Date_, I'd have to migrate the entire database. This became cumbersome for a website with less than 10 pages of text.
 In addition, Heroku came with its own quirks. I had a hard time setting up the site's naked domain: `www.willcarh.art` worked consistently but `willcarh.art` did not. I thought this was due to my own DNS naiveté, but apparently [I'm not the first one](https://stackoverflow.com/questions/41449727/add-godaddy-naked-domain-to-heroku-app) to have this problem. In addition, Heroku advertises a _free_ tier, but the free dynos go to sleep after 30 minutes, meaning if your website is not frequently accessed it can take _more than 20 seconds_ for it to load. There have been [work arounds](https://stackoverflow.com/questions/41449727/add-godaddy-naked-domain-to-heroku-app), but none of them are [free](https://blog.heroku.com/heroku-free-dynos).
 As a result, the overly complicated web app masquerading around as a static site was costing me $7/month and was not the one-click deploy solution I wanted.
 
-**Difficult to fix**
+#### Difficult to fix
 With `v1` I took on tech debt willingly in order to get the site published initially. However, the _quick fixes_ I had implemented to get things up and running came back to bite me. In addition, there was little documentation or notes to keep me informed on why I made the decisions I did. This complaint is not something unique to [willcarh.art]({{src:index}}), but rather a practice on which I needed to improve going forward.
 
 ### Immediate legacy code
@@ -38,23 +38,25 @@ But, I'm a software engineer, dammit. I'd say the motivation for writing my own 
 ### A bespoke solution
 After ~150 commits, [willcarh.art]({{src:index}}) `v2` is just about complete. The site is generated from content in markdown files and utilizes a custom templating system to reuse components wherever possible. Let's take a look at those complaints from earlier.
 
-**Fixing maintainability with markdown**
+#### Fixing maintainability with markdown
 One of the biggest issues with `v1` was the lack of abstraction between content and code. In `v2`, all of the content for the site is sourced from markdown files in [`content/`](https://github.com/wcarhart/willcarh.art/tree/master/content). This means that the markdown files are human-readable on GitHub and easy to keep updated. Adding a new position is as simple as adding another entry to [`content/experience.md`](https://github.com/wcarhart/willcarh.art/tree/master/content/experience.md).
+>> Heyo! | The markdown generation for [willcarh.art]({{src:project/willcarh.art}}) became so powerful that I spun it out into its own separate project, [marq]({{src:project/marq}}).
 
-**Fixing expansion with a static site**
+
+#### Fixing expansion with a static site
 The static site is much simpler than its predecessor. There's no database and little code outside the generator. In addition, the generator builds a resulting [`src/`](https://github.com/wcarhart/willcarh.art/tree/master/src/) folder of static HTML files, so it's easy to track down issues when they arise.
 
-**Fixing deployment with Netlify**
+#### Fixing deployment with Netlify
 Another gripe with `v1` was the complicated deployment practice for Heroku. With `v2`, I moved to [Netlify](https://www.netlify.com/), which is to the [JAMStack](https://jamstack.org/) as Docker is to containerization. The entire site deployment is a Git-based workflow. When the repository is updated, the site is redeployed. Netlify has other nice features too, like [Netlify Functions](https://www.netlify.com/products/functions/) (think: AWS Lambda) and Branch Deploys (for work-in-progress). Although Netlify is not the only company to offer these services for static sites, they were one of the first. And, best of all, _it's free_. It was a sweet sensation tearing down my $7/month hobby dyno from Heroku.
 
-**Fixing fixing with better documentation**
+#### Fixing fixing with better documentation
 The last complaint about `v1` was the overflowing tech debt. `v2`'s generator is fully featured and (hopefully) as future-proof as it can be. In addition, there are verbose comments throughout the codebase with an increased emphasis on documentation. Class names are more descriptive, and generation errors are explanatory.
 
 ### A powerful result
 This is the part where I boast about the code I've written. [willcarh.art's]({{src:index}}) generator uses a custom [Handlebars](https://handlebarsjs.com/)-esque templating language for linking static files, generating computed values, and building HTML. It reads from template HTML files, which reference content via the templating language, to build the all of the site's static files.
 Here's an example. Take a look at the experience tabs on the [About]({{src:about.html#experience}}) page. The generator reads from the template [`templates/about.html`](https://github.com/wcarhart/willcarh.art/blob/master/templates/about.html), which specifies `{{html:exp-tabs}}`. This prompts the generator to read in the content from [`content/experience.md`](https://github.com/wcarhart/willcarh.art/blob/master/content/experience.md) and populate the experience tabs. As a result, content updates do not require code updates and are still tracked in version control. This method is used for all of the [project cards]({{src:projects}}), [blog posts]({{src:blog}}), and [vault rows]({{src:vault}}) throughout the site. Even these inline links are built using the templating system, so if the source files ever change I don't need to update every blog post that references them.
 The templating also supports dynamically generated content and statically linked files. Content is loaded into JavaScript files that get shipped with the site. Static files are referenced using the templating language so there are no broken links.
-However, one of the biggest achievements of the generator is its markdown capabilities. I wrote the markdown to HTML converter from scratch, and it supports all the features of GitHub-flavored markdown, as well as some other additions (inline YouTube videos, comments, and more). The markdown converter has become so powerful that I will likely make it a separate project in the future. You can check out the markdown converter's code [here](https://github.com/wcarhart/willcarh.art/blob/master/generator/markdown.js).
+However, one of the biggest achievements of the generator is its markdown capabilities. I wrote the markdown to HTML converter from scratch, and it supports all the features of GitHub-flavored markdown, as well as some other additions (inline YouTube videos, comments, and more). The markdown converter has become so powerful that I will likely make it a separate project in the future. You can check out the markdown converter's code [here](https://github.com/wcarhart/marq).
 There are also a number of fun easter eggs and accessory features throughout the site. For instance, try hovering your mouse over the published date and read time near the top of this blog post. The dark mode toggle in the top right uses the [LocalStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to remember your preference. Analytics are provided by [Plausible](https://plausible.io/), a privacy-conscious alternative to Google Analytics. Images are hosted from a CDN to optimze page loads.
 
 ### So...was it worth it?

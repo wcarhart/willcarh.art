@@ -1,4 +1,4 @@
-# Dotfiles, on steroids.
+## Dotfiles, on steroids.
 >> Read the docs | Konphig has a plethora of shell-related features. To explore them all, check out its [documentation site](https://willcarhart.dev/docs/konphig).
 
 ### A powerful CLI

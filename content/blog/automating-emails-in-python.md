@@ -9,7 +9,7 @@ The [Simple Mail Transfer Protocol](https://www.geeksforgeeks.org/simple-mail-tr
 ### Using the `smtplib` package in Python
 Python has a powerful vanilla package for sending emails: `smtplib`. This package abstracts away a lot of the heavily lifting from the user and exposes a simple API. Let's look at some quick examples.
 Let's suppose I'd like to send an email, via Python, from my super cool email address _pythonista@gmail.com_, where my very secure password is simply _password_. Gmail actually won't like this method, but let's disregard that for now.
-```
+```python
 import smtplib, ssl
 from email.mime.text import MIMEText
 
@@ -35,7 +35,7 @@ This is just a simple example - Python can do a _lot_ more when it comes to emai
 
 ### Let's talk security
 Before we go any further, let's take a look at a specific snippet from the code above:
-```
+```python
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     ...
@@ -52,12 +52,12 @@ What's troublesome is not the annoying email itself, but Gmail's behavior: _it l
 
 ### Our saving grace: the official Gmail API
 In order to allow secure applications to send automated emails, Gmail exposes an API that helps ensure that automated email access is intended. And, it's got some _"decent"_ [documentation](https://developers.google.com/gmail/api/quickstart/python) for how to get started. Let's take a look at the quickstart Python guide in Gmail's API docs. I've modified it a little bit to simplify it for us. First, let's install the necessary dependencies with `pip`.
-```
+```bash
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 ```
 Next, go ahead and click the **Enable the Gmail API** button from the documentation to acquire your Gmail API keys. Save this file as `credentials.json`.
 Then, let's write a simple script to set up our credentials.
-```
+```python
 import os
 import pickle
 from googleapiclient.discovery import build
@@ -91,14 +91,14 @@ When we run this script, it'll open a browser window and walk you through your A
 >> Watch out! | Although `token.pickle` is a serialized Python object, it is not encrypted! Anyone who has access to this file can open it and extract the contents with Python, so you should _not_ check it into version control!
 
 Pay close attention to this line:
-```
+```python
 SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 ```
 This is how Gmail defines the permissions of your application. We have selected the **gmail.send** permission, but the Gmail API specifies quite a few more. You can read about all of the available authorization scopes [here](https://developers.google.com/gmail/api/auth/scopes). A good rule to follow is to only give your application the bare minimum permissions that still allow it to function properly. If you look at the list of authorization scopes available for the Gmail API, you'll see that there are other options that also allow for sending emails, such as **gmail.compose** and **gmail.modify**. However, we can minimize the potential security risk of our application by restricting its permissions to only **gmail.send**.
 
 ### Using the Gmail API to send emails
 Great! Now we can write some code to actually send emails! First, let's revise our code from above to be a little bit more succinct.
-```
+```python
 import os
 import pickle
 
@@ -111,7 +111,7 @@ def get_gmail_api_instance():
     return service
 ```
 Cool! Now, let's write a quick function to draft an email that the Gmail API will send for us. The Gmail API doesn't work with regular strings, unlike `smtplib` from earlier. We'll have to use `base64` encodings.
-```
+```python
 import base64
 from email.mime.text import MIMEText
 
@@ -126,7 +126,7 @@ def create_message(sender, to, subject, message_text):
     return body
 ```
 Nice! Next, we'll write another function for actually sending emails that we've drafted using our code above.
-```
+```python
 def send_email(service, user_id, message):
     try:
         message = (service.users().messages().send(userId=user_id, body=message).execute())
@@ -136,7 +136,7 @@ def send_email(service, user_id, message):
         print(e)
 ```
 Almost there! Finally, we'll write a little bit of code to string everything together!
-```
+```python
 import sys
 
 # draft our message

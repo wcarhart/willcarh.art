@@ -1,4 +1,4 @@
-# A website. A showcase. A story.
+## A website. A showcase. A story.
 
 ### My take on a portfolio website
 Willcarh.art is my personal website. It serves as a software showcase, personal blog, and expression of me.
@@ -13,5 +13,5 @@ Willcarh.art's generator is responsible for all of the webpages available on the
 
 ### Learn more
 To see how the generator works, check out [generate.js](https://github.com/wcarhart/willcarh.art/blob/master/generator/generator.js) and [core.js](https://github.com/wcarhart/willcarh.art/blob/master/generator/core.js).
-To see willcarh.art's custom markdown to HTML converter, check out [markdown.js](https://github.com/wcarhart/willcarh.art/blob/master/generator/markdown.js). The markdown converter creates HTML for all the project and blog pages, this page included.
+To see willcarh.art's custom markdown to HTML converter, check out [marq]({{src:project/marq}}). Marq creates HTML for all the project and blog pages, this page included. It started as a part of the generator but grew big enough to become its own project.
 To see how willcarh.art reuses its components without a front-end framework, check out the [templates/](https://github.com/wcarhart/willcarh.art/tree/master/templates) and [snippets/](https://github.com/wcarhart/willcarh.art/tree/master/snippets) folders.

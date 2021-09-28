@@ -1,4 +1,4 @@
-# Optimize your night out.
+## Optimize your night out.
 
 ### About the project
 Cheers started as a concept while I attended the [University of San Diego](https://www.sandiego.edu). The goal was to develop an iOS app that would show nearby bars and restaurants with ongoing happy hours. Our team observed that often in San Diego there are many fun bars to explore, but sometimes it's hard to know where to look. That's where Cheers comes in!

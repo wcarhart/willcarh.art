@@ -5,7 +5,7 @@ const minify = require('minify')
 const tryToCatch = require('try-to-catch')
 
 const parser = require('./parser.js')
-const markdown = require('./markdown.js')
+const { Marq } = require('@wcarhart/marq')
 
 const package = require('../package.json')
 
@@ -43,10 +43,14 @@ Supported HTML tags:
   {{html:vault-rows}}    --> build HTML for rows in the vault
   {{html:demo-rows}}     --> build HTML for rows on demo index
   {{html:credits}}       --> build HTML for credits
-  {{html:analytics}}     --> build HTML for site analytics
+  {{html:analytics-panelbear}}
+                         --> build HTML for site analytics with Panelbear
+  {{html:analytics-plausible}}
+                         --> build HTML for site analytics with Plausible.io
   {{html:logo}}          --> build HTML for site logo
   {{html:darkmode}}      --> build HTML for dark mode toggle
   {{html:email}}         --> build HTML for email contact button
+  {{html:email-moble}}   --> build HTML for email contact button on mobile
 
 Supported code tags:
   {{code:proj}}          --> load projects into code
@@ -237,10 +241,12 @@ const buildHtml = async (data, match, key, page) => {
 			html = await buildDemoRows(projects)
 			break
 		case 'credits':
-		case 'analytics':
+		case 'analytics-panelbear':
+		case 'analytics-plausible':
 		case 'logo':
 		case 'darkmode':
 		case 'email':
+		case 'email-mobile':
 			common = await readFilePromise(`snippets/common/${key}.html`)
 			html = common.toString()
 			break
@@ -439,6 +445,10 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
+	const convertTZ = (date, tzString) => {
+		return new Date((typeof date === 'string' ? new Date(date) : date).toLocaleString('en-US', {timeZone: tzString}))
+	}
+	date = convertTZ(date, 'America/Los_Angeles')
 	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	const dayEndings = {
 		'st': [1,21],
@@ -451,19 +461,20 @@ const buildBlogSpec = async (blogs, page) => {
 	let ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 	let year = date.getFullYear()
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	let tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+	let tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	html = html.replace('{{full-datetimestamp}}', displayDate)
 
 	displayDate = ''
 	if (blog.updated !== '') {
 		date = new Date(blog.updated * 1000)
+		date = convertTZ(date, 'America/Los_Angeles')
 		month = months[date.getMonth()]
 		day = date.getDate()
 		ending = Object.keys(dayEndings).reduce((solution, ending) => { return dayEndings[ending].includes(day) ? ending : solution }, null)
 		year = date.getFullYear()
 		timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-		tz = date.toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+		tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	}
 	html = html.replace('{{updated-full-datetimestamp}}', displayDate)
@@ -491,7 +502,12 @@ const buildBlogSpec = async (blogs, page) => {
 	}
 
 	// build blog content
-	let blogContent = await markdown.convert(blogContentFile.toString(), page)
+	let marq = new Marq({
+		cssPrefix: '',
+		placerholder: 'ico/blank.png',
+		slideshowScript: '{{js:slideshow.js}}'
+	})
+	let blogContent = await marq.convert(blogContentFile.toString(), {page: page})
 	html = html.replace('{{blog-content}}', blogContent)
 
 	// check if is stale
@@ -635,7 +651,12 @@ const buildProjSpec = async (projects, page) => {
 	html = html.replace('{{related-projects-metadata}}', statusMetadataHtml)
 
 	// build project content
-	let projectContent = await markdown.convert(projectContentFile.toString(), page)
+	let marq = new Marq({
+		cssPrefix: '',
+		placerholder: 'ico/blank.png',
+		slideshowScript: '{{js:slideshow.js}}'
+	})
+	let projectContent = await marq.convert(projectContentFile.toString(), {page: page})
 	html = html.replace('{{project-content}}', projectContent)
 
 	return html

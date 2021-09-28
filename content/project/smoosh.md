@@ -1,4 +1,4 @@
-# The modern web browsing experience has become encumbered with cookie notices, newsletter signups, and browser notifications. Smoosh allows you to read _just the important bits_ from most webpages by using a smart summarizing algorithm.
+## The modern web browsing experience has become encumbered with cookie notices, newsletter signups, and browser notifications. Smoosh allows you to read _just the important bits_ from most webpages by using a smart summarizing algorithm.
 >> Try it out! | Try out smoosh yourself on [the demo page]({{src:demo}}).
 
 ### What it is

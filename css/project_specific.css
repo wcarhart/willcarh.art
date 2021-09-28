@@ -40,12 +40,26 @@
 	font-size: 5rem !important;
 }
 
-h2 {
-	font-size: 3rem !important;
-}
-
 h5 {
 	color: var(--subtitle) !important;
+}
+
+.h4 {
+	font-size: 1.5rem !important;
+}
+
+.h3 {
+	font-size: 2rem !important;
+}
+
+.h2 {
+	color: var(--subtitle);
+	font-weight: 300 !important;
+	font-size: 3rem !important;
+	line-height: 1.5 !important;
+	text-align: center;
+	font-family: 'EksellDisplayMedium' !important;
+	margin-bottom: 1rem !important;
 }
 
 #content-body {
@@ -59,6 +73,10 @@ h5 {
 }
 
 #project-logo {
+	max-width: 6.25rem;
+	max-height: 6.25rem;
+	height: auto;
+	width: auto;
 	margin: 0 auto;
 	text-align: center;
 	display: block;

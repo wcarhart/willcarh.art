@@ -9,7 +9,7 @@
 	font-weight: 400;
 }
 
-.content-text {
+.p {
 	color: var(--subtitle);
 	font-size: 1.1rem;
 	font-family: 'Lato', sans-serif;
@@ -22,12 +22,6 @@
 
 .content-subtitle {
 	font-size: 1.5rem;
-}
-
-#start-content-text {
-	font-size: 1.8rem;
-	text-align: center;
-	font-family: 'EksellDisplayMedium' !important;
 }
 
 .inline-code {
@@ -46,6 +40,7 @@
 	width: 0;
 	max-width: 100%;
 	min-width: 100%;
+	position: relative;
 }
 
 .shoutout {
@@ -90,6 +85,32 @@
 	color: var(--subtitle);
 }
 
+.codeblock-copy-icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-image: var(--copy);
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: 50%;
+	height: 2rem;
+	width: 2rem;
+	border: none;
+	outline: none;
+	margin: 0.5rem;
+	z-index: 100;
+}
+
+.codeblock-copy-icon:hover {
+	cursor: pointer;
+}
+
+.codeblock-copy-icon:click {
+	background-image: var(--toggle);
+}
+
+/* tables */
 .table-align-left {
 	text-align: left
 }
@@ -103,11 +124,16 @@
 }
 
 .youtube-embedded {
-	display: block;
-	margin: 0 auto;
-	max-width: 100%;
-	height: 30rem;
-	max-height: 30rem;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+}
+.youtube-embedded iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 th {
@@ -118,6 +144,18 @@ td {
 	padding: 0 0.5rem;
 	font-family: 'Lato', sans-serif;
 	font-weight: 300;
+}
+
+/* blockquote */
+.blockquote {
+	font-family: 'Lato', sans-serif;
+	font-style: italic;
+	color: var(--text);
+	font-size: 1.5rem;
+	margin-left: 2rem;
+	padding-left: 0.5rem;
+	border-left: 0.1rem solid;
+	border-left-color: var(--text);
 }
 
 /* slideshow */
@@ -211,4 +249,30 @@ td {
 @keyframes fade {
 	from {opacity: .4}
 	to {opacity: 1}
+}
+
+/* Highlight.js styling override */
+.hljs {
+	background: inherit !important;
+	color: var(--text) !important;
+}
+
+pre code.hljs {
+	padding: 0 !important;
+}
+
+.hljs-section, .hljs-title, .hljs-deletion, .hljs-number, .hljs-quote, .hljs-selector-class, .hljs-selector-id, .hljs-string, .hljs-template-tag, .hljs-type {
+    color: var(--code-highlight-0) !important;
+}
+
+.hljs-addition, .hljs-built_in, .hljs-bullet, .hljs-code {
+	color: var(--code-highlight-1) !important;	
+}
+
+.hljs-literal {
+	color: var(--code-highlight-2) !important;
+}
+
+.hljs-attr, .hljs-tag, .hljs-name, .hljs-punctuation {
+	color: var(--code-highlight-3) !important;
 }

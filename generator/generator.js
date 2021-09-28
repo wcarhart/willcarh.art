@@ -11,7 +11,7 @@ const statPromise = util.promisify(fs.stat)
 
 // verify content markdown files are as expected
 const verifyContentFileStructure = async () => {
-	console.log('Verifying build content...')
+	console.log('🧐  Verifying build content...')
 	await fs.promises.access('content/experience.md')
 	await fs.promises.access('content/blogs.md')
 	await fs.promises.access('content/projects.md')
@@ -19,7 +19,7 @@ const verifyContentFileStructure = async () => {
 
 // validate if generation was successful
 const validateBuild = async () => {
-	console.log('Validating built pages...')
+	console.log('🕵️‍♂️  Validating built pages...')
 	await fs.promises.access('src/index.html')
 	await fs.promises.access('src/vault.html')
 	await fs.promises.access('src/about.html')
@@ -67,7 +67,7 @@ const usage = async () => {
 	console.log('forge [-h] [-b] [-d] [-s] [-v]')
 	console.log('  -h, --help      Show this menu and exit')
 	console.log('  -b, --browser   Open the newly built website in a new browser window')
-	console.log('  -d, --develop   Do not exit on validation errors')
+	console.log('  -d, --develop   Hardlink hrefs to .html files instead of URL paths (required for local builds)')
 	console.log('  -s, --silent    Silence build output')
 	console.log('  -v, --verbose   Show generated files as a result of forge')
 }
@@ -109,7 +109,7 @@ const main = async () => {
 		// asset order is essential, due to how linking occurs:
 		//  - scripts must be built first and styles must be first
 		//  - vault must be built before projects
-		const assets = ['scripts', 'style', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc']
+		const assets = ['scripts', 'style', 'home', 'vault', 'demo', 'about', 'blog', 'projects', 'etc', '404']
 		for (let asset of assets) {
 			await core.generate(asset, args.develop)
 		}

@@ -1,4 +1,4 @@
-# Monitor website status from your terminal.
+## Monitor website status from your terminal.
 
 ### Inspiration
 Cheqit (pronounced _check it_) is a simple command line utility for checking the status of a website or IP address. It was inspired by [downdetector](https://downdetector.com/), which is a website of the same functionality as cheqit. I got the idea when one day I went to use downdetector and it itself was down.

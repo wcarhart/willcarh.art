@@ -8,7 +8,7 @@ Let's dive in!
 
 ### Utilizing the GitHub API
 Let's start with the [GitHub API](https://developer.github.com/v3/). The GitHub API allows us to automate essentially any functionality of GitHub via HTTP requests. For example, you can make a new remote repository like so (in Bash):
-```
+```bash
 curl -X POST -u $USER https://api.github.com/user/repos -d "{ \
     \"name\": \"$REPONAME\", \
     \"private\": false, \
@@ -21,7 +21,7 @@ Pretty cool, right? Here is a [Bash function](https://github.com/wcarhart/konphi
 Now, let's consider how we want to use the GitHub API. Rather than dive into the documentation, let's first consider what we want to do _as a human_. When a new contributor opens a Pull Request, we'd like to eventually leave a comment on that Pull Request about its content. So, we need to automate, via the GitHub API, the ability to leave comments on Pull Requests.
 Let's take a look at the [GitHub API](https://developer.github.com/v3/) Documentation, as this will tell us how to utilize the API for our needs. Intuitively, you might look for the solution in the [Pull Request](https://developer.github.com/v3/pulls/) section of the documentation. This is a little bit misleading, because while we are leaving a comment on a Pull Request in reality, the GitHub API classifies Pull Request comments [as the same as Issue comments](https://stackoverflow.com/questions/16744069/create-comment-on-pull-request/16744314#16744314).
 Knowing this, let's take a look at the [Issue section](https://developer.github.com/v3/issues/) of the documentation. We can see that we can comment on an open Issue or Pull Request via its index number, like so (in Bash):
-```
+```bash
 curl -X POST -u $USER https://api.github.com/repos/$USER/$REPONAME/issues/$PRNUMBER/comments -d "{ \
     \"body\": \"Hello, this is a new comment!\" \
 }"
@@ -30,7 +30,7 @@ Bash is kinda hard to read, what would this look like in Python?
 >> Heads Up! | From here on out, you'll need to use a personal access token to use the [Github API](https://github.blog/2013-05-16-personal-api-tokens/). Use [this helpful tutorial](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) to generate your own token (all you need is a GitHub account). For our purposes, we'll need to select the `repo:status`, `repo_deployment`, and `public_repo` scopes found under the repo category.===<br><br>===**A good rule is to not grant your application more privileges than necessary!** Often a safe way of storing secrets, like API keys, is to [set them as environment variables](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables/58826#58826).
 
 Here's what the above POST request would look like in Python, via the [`requests` library](https://realpython.com/python-requests/):
-```
+```python
 import os
 import requests
 
@@ -51,7 +51,7 @@ Now that we can leave automated Pull Request comments, let's move onto the next 
 >> Heads Up! | I'm not going to go into depth on setting up Travis CI, so please refer to this [helpful tutorial](https://docs.travis-ci.com/user/tutorial/#to-get-started-with-travis-ci) if you haven't done that before.
 
 Suppose, for now, we have a Python script for leaving automated comments on Pull Requests in a script called `comment.py`. Let's use the following `.travis.yml` file so our script gets run every time a Pull Request is opened.
-```
+```yaml
 language: python
 python:
   - 3.7
@@ -65,14 +65,14 @@ Breaking this down, the important part is the `script` section, which uses a Bas
 ### Using Python to glue everything together
 We're almost there! _How do we tie it all together?_ 
 Now, you'll have to decide how _your_ tests will actually work, and what you're testing for. For example, you could test for the existence of a specific file, like so:
-```
+```python
 import os
 def test_file_existence():
     return os.path.isfile('myfile.txt')
 ```
 You could also use a testing framework, like the builtin [unittest](https://docs.python.org/3/library/unittest.html) Python module. There are endless possibilities!
 For now, I'll leave the content of the tests up to you, and make a generic script instead. Let's write some Python code that will run some tests and leave a GitHub comment based on the tests' results. The script below will rely on some [Travis CI environment variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables), so that the script can be automated when a Pull Request is opened.
-```
+```python
 import os
 import requests
 

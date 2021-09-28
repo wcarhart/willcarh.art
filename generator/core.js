@@ -13,6 +13,7 @@ const config = require('../config.json')
 const package = require('../package.json')
 
 const builder = require('./builder.js')
+// eslint-disable-next-line no-unused-vars
 const parser = require('./parser.js')
 
 const readdirPromise = util.promisify(fs.readdir)
@@ -71,7 +72,7 @@ const generate = async (page, develop) => {
 			await buildScripts(develop)
 			break
 		case 'style':
-			console.log('💄  Building styles')
+			console.log('💄  Building styles...')
 			await buildStyles()
 			break
 		case 'vault':
@@ -86,6 +87,10 @@ const generate = async (page, develop) => {
 		case 'etc':
 			console.log('👓  Building etc...')
 			await buildPageFromTemplate({template: 'templates/etc.html', page: 'src/etc.html', level: 1, develop: develop})
+			break
+		case '404':
+			console.log('🤬  Building 404...')
+			await buildPageFromTemplate({template: 'templates/404.html', page: 'src/404.html', level: 1, develop: develop})
 			break
 		default:
 			throw new Error(`Unknown page '${page}'`)
@@ -238,6 +243,7 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 	let resolvedData = data
 	const now = Date().toLocaleString()
 	let headerData = null, headerjsData = null, charizard = null, message = null
+	// eslint-disable-next-line no-unused-vars
 	let projects = null, blogs = null, img = null, icofiles = null
 	switch (asset) {
 		case 'develop':
@@ -273,17 +279,22 @@ const buildDynamicAsset = async (data, match, asset, level, develop) => {
 			resolvedData = resolvedData.replace(match, message)
 			break
 		case 'preload':
-			projects = await parser.parse('project')
-			blogs = await parser.parse('blog')
 			img = []
-			for (let p of projects) {
-				if (p.visibility !== 'none') {
-					img.push(p.img)
-				}
-			}
-			for (let b of blogs) {
-				img.push(b.cover)
-			}
+
+			// uncomment these lines if project icons should be preloaded
+			// projects = await parser.parse('project')
+			// for (let p of projects) {
+			// 	if (p.visibility !== 'none') {
+			// 		img.push(p.img)
+			// 	}
+			// }
+
+			// uncomment these lines if blog covers should be preloaded
+			// blogs = await parser.parse('blog')
+			// for (let b of blogs) {
+			// 	img.push(b.cover)
+			// }
+
 			icofiles = await readdirPromise('ico')
 			for (let ico of icofiles) {
 				if (ico.endsWith('.png')) {

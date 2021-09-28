@@ -5,8 +5,9 @@ title: Software Engineer, Infrastructure
 date: 1615313940
 date: 1574146800
 displayDate: Since Nov 2019
+detail: Designed, implemented, and maintain a web app that builds and manages individual **Jupyter servers via Docker containers** (like a pseudo-Kubernetes), built via **Express.js and Node.js** and with data backed in **GCP Cloud Storage** and **GCP BigQuery**
 detail: Designed, implemented, and maintain a **front-end data visualization tool** for internal company simulations,  built with **Dash and Plotly**, backed by **Google BigQuery**, and served from **GCP**
-detail: Designed, implemented, and maintain an in-house end-to-end workflow management platform, which exposes and **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts in Elasticsearch**, all in Node.js, Python, and Mistral
+detail: Designed, implemented, and maintain an in-house end-to-end workflow management platform, which exposes an **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts in Elasticsearch**, all in Node.js, Python, and Mistral
 detail: Designed a **cloud architecture in GCP** for compiling and executing computation-heavy MATLAB scripts, managing MATLAB licenses, and uploading artifacts
 detail: Designed and implemented an **automated documentation generator** that generates internal tooling documentation based on code functionality, hosted on an internal company webpage via a **Static Site Generator (SSG)**
 detail: Modernized and rearchitected Python-based complex abort verification system for Wisk's flight simulator, moving from on-prem solution to Kubernetes-based solution in GKE, **reducing average job time from 72 hours to 30 minutes**

@@ -4,13 +4,13 @@ I'm starting to realize that every time I want to do something in Git that someo
 ### Git filters
 Git filters are not a mainstream feature of Git - there's not even a dedicated page for them in the documentation. They're a subfeature of Git Attributes, or the path-specific Git Settings, specified in `.gitattributes`. You can use a `.gitattributes` file in your repository to change the settings for a specific repository and not Git as a whole on your machine. If you've used a `.gitattributes` file in the past, perhaps you've used it to specify merge strategies, which is a commonly used feature. You can explore all of the available Git customizations and functionality in [the documentation](https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes).
 For today, we're going to talk about Git filters - or _keyword expansion_ as it's referenced in the docs. When you commit a file to Git, the file contents are **immutable**, meaning we cannot change the file contents without changing the commit's hash (the commit's unique identifier). If you change the contents of the file, you get a new hash, and need to create a new commit. You can try this yourself on the command line with `git hash-object`.
-```
+```bash
 echo 'Hello, Git!' | git hash-object --stdin
 ```
 >> Read more | If you're interested in learning more about Git's hashing algorithm `SHA-1`, [have a listen from Linus Torvalds himself](https://www.youtube.com/watch?v=4XpnKHJAok8&t=3376s). Git plans on transitioning to `SHA-256` in the future after security vulnerabilities have been [discovered in `SHA-1`](https://shattered.io/).
 
 These hashes are what uniquely identify each commit, and so they can't be changed once blobs are committed. This can cause problems if we're not careful. Suppose I've written a super cool web application called **MyCoolApp**, which reads from a database. Suppose in my code somewhere I have the following lines.
-```
+```javascript
 const DBNAME = 'MyCoolApp_DB'
 const DBPASS = 'pA$$w0rD'
 ```
@@ -25,36 +25,36 @@ These filters can be configured to do just about anything, which makes them supe
 ### A simple use case
 We're going to use `smudge` and `clean` to hide our secret values (i.e. our `DBPASS`) from Git, so when someone views our repository on GitHub they can't access our production database.
 First, let's make a dummy repository for demonstration purposes.
-```
+```bash
 mkdir ~/MyCoolApp
 cd !$
 git init
 ```
 Next, let's add our secret text to a dummy file. In an actual application, you'd have much more code than just two variables.
-```
+```bash
 echo -e 'const DBNAME = "MyCoolApp_DB"\nconst DBPASS = "pA$$w0rD"' > app.js
 ```
 We can print the contents of `app.js` to confirm that we see our correct, plaintext credentials.
-```
+```bash
 cat app.js
 ```
-```
+```javascript
 const DBNAME = 'MyCoolApp_DB'
 const DBPASS = 'pA$$w0rD'
 ```
 Should we commit `app.js` right now, `pA$$w0rD` will forever be written to the repository's history, which is not good. Let's configure our `smudge` and `clean` filters to avoid this undesired result.
 There are two places you can define your Git filters, either in `.git/config` or `~/.gitconfig`. Putting your filters in `.git/config` means the filter is defined for this repository only, but they may be visible in your remote. Putting your filters in `~/.gitconfig` means the filter is defined for all Git repositories on this machine. Let's use latter, because we want to be sure we don't expose our sensitive credentials. To do, we'll need to make sure we use the `--global` flag when we configure our filters.
 Let's create a new filter called `resolveSecret`. We'll use `sed` for the actual string manipulation.
-```
+```bash
 git config --global filter.resolveSecret.smudge "sed 's/SMUDGED_DATABASE_PASSWORD/pA$$w0rD/g'"
 git config --global filter.resolveSecret.clean "sed 's/pA$$w0rD/SMUDGED_DATABASE_PASSWORD/g'"
 ```
 Next, let's wire up our filter to be used in MyCoolApp's local repository.
-```
+```bash
 echo 'app.js filter=resolveSecret' > .gitattributes
 ```
 We can confirm that our filter `resolveSecret` is properly defined in `~/.gitconfig`.
-```
+```bash
 cat ~/.gitconfig
 ```
 ```
@@ -64,7 +64,7 @@ cat ~/.gitconfig
     smudge = sed 's/SMUDGED_DATABASE_PASSWORD/pA$$w0rD/g'
 ```
 And, we can confirm that `resolveSecret` will be run on staging and checking out of `app.js`.
-```
+```bash
 cat .gitattributes
 ```
 ```
@@ -73,13 +73,13 @@ app.js filter=resolveSecret
 >> Watch Out! | If we don't use the `--global` flag when defining our filter, then Git will put it in the `.git/config` for the current repository. Although you can't see this in GitHub's UI, the secret value is still included in the repository, so a nefarious individual could expose it!
 
 Next, we can commit our files normally.
-```
+```bash
 git status
 git add -A
 git commit -m 'Initial commit'
 ```
 We can create a new remote repository on GitHub using the [GitHub CLI `gh`](https://github.com/cli/cli). If you don't use `gh`, you can either make a repository manually or install it with `brew install gh`. The following snippet assumes your local username is the same as your GitHub username.
-```
+```bash
 # create the remote
 gh repo create --public $(basename "$(pwd)")
 

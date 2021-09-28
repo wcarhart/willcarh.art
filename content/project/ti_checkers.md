@@ -1,4 +1,4 @@
-# My foray into programming.
+## My foray into programming.
 
 ### Some context
 I wrote my first piece of code my sophomore year in high school, on a [Texas Instruments 84 calculator](https://en.wikipedia.org/wiki/TI-84_Plus_series). The TI83 and TI84 family of calculators were [incredibly powerful](https://www.reddit.com/r/explainlikeimfive/comments/20awwi/eli5eli5_is_it_true_that_there_is_more_processing/) and served as my introduction to programming.

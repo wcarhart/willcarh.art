@@ -1,4 +1,4 @@
-# A dictionary for the command line. And then some.
+## A dictionary for the command line. And then some.
 
 ### Helpful language tools
 Thoth is a collection of language tools for the command line. It has standard dictionary and thesaurus functionality, but also has the ability to use words in sentences and determine their type.

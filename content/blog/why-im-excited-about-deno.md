@@ -57,7 +57,7 @@ If you want to take Deno for a spin, it's easy to install.
 ### Demo
 Here's a really quick demo that showcases Deno's dependency resolution, sandboxing permissions, and standard library.
 First, create a file called `server.ts`.
-```
+```javascript
 import { serve } from "https://deno.land/std@0.59.0/http/server.ts";
 const s = serve({ port: 8000 });
 for await (const req of s) {
@@ -65,7 +65,7 @@ for await (const req of s) {
 }
 ```
 Then, start the server.
-```
+```bash
 deno run --allow-net server.ts
 ```
 Finally, navigate to `localhost:8000`.

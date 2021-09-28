@@ -1,20 +1,32 @@
 :root {
 	--background: #ecf0f1;
 	--detail: #bdc3c7;
+	--subtitle: #6A6C6E;
 	--color: #e67e22;
 	--text: #252323;
 	--toggle: url(../ico/dark-mode-toggle-light.png);
+	--copy: url(../ico/copy-light.png);
+	--code-highlight-0: #880000;
+	--code-highlight-1: #817f3c;
+	--code-highlight-2: #397300;
+	--code-highlight-3: #444444;
 }
 
 :root.dark-mode {
 	/*--background: #252323;*/
 	--background: #292929;
 	--detail: #34495e;
+	--subtitle: #8895A1;
 	/*--color: #442c73;*/
 	--color: #6642ac;
 	/*--color: #662113;*/
 	--text: #ecf0f1;
 	--toggle: url(../ico/dark-mode-toggle-dark.png);
+	--copy: url(../ico/copy-dark.png);
+	--code-highlight-0: #ff4343;
+	--code-highlight-1: #f2ee3c;
+	--code-highlight-2: #78a960;
+	--code-highlight-3: #a1a1a1;
 }
 
 @font-face {

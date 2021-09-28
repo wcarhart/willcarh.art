@@ -34,7 +34,8 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 		<!-- site analytics -->
-		{{html:analytics}}
+		{{html:analytics-plausible}}
+		{{html:analytics-panelbear}}
 
 		<!-- willcarh.art scripts -->
 		<script src="{{js:darkmode.js}}"></script>
@@ -49,14 +50,14 @@
 
 		<!-- text content -->
 		<div id="content-main">
-			<h1>hi there</h1>
-			<h2 class="subtitle-text">My name is Will, and I'm <span id="tagline"></span></h2>
-			<div class="spacer"></div>
-			<div class="row">
+			<h1 id="main-title">hi there</h1>
+			<h2 id="main-subtitle" class="subtitle-text">My name is Will, and I'm <span id="tagline"></span></h2>
+			<div class="spacer standard"></div>
+			<div class="row standard">
 				<a class="col-md-4" href="{{src:about}}">
 					<div class="col-md-12" align="center">
 						<div id="home-about-container" class="home-block-container">
-							<img id="home-about-logo" class="home-block-item" alt="about logo" src="{{ico:home-about.png}}">
+							<img id="home-about-logo" class="home-block-item" alt="about logo" src="{{ico:home-about-light.png}}">
 						</div>
 					</div>
 				</a>
@@ -75,14 +76,50 @@
 					</div>
 				</a>
 			</div>
-			<div class="spacer"></div>
-			<div class="row">
+			<div class="spacer standard"></div>
+			<div class="row standard">
 				<div class="col-md-12" align="center">
 					<div id="more-information">
 						<h2 id="tidbit-title"></h2>
 						<p id="tidbit-text" class="subtitle-text"></p>
 					</div>
 				</div>
+			</div>
+			<div class="mobile-spacer mobile"></div>
+			<div class="mobile">
+				<a class="row home-row-mobile" href="{{src:about}}">
+					<div class="col-3 no-padding" align="center">
+						<div id="home-about-container-mobile" class="home-block-container-mobile">
+							<img id="home-about-logo-mobile" class="home-block-item-mobile" alt="about logo" src="{{ico:home-about-light.png}}">
+						</div>
+					</div>
+					<div class="col-9">
+						<h2 class="tidbit-title-mobile">About</h2>
+						<p class="tidbit-text-mobile">Learn more about me.</p>
+					</div>
+				</a>
+				<a class="row home-row-mobile" href="{{src:projects}}">
+					<div class="col-3 no-padding" align="center">
+						<div id="home-projects-container-mobile" class="home-block-container-mobile">
+							<img id="home-projects-logo-mobile" class="home-block-item-mobile" alt="project logo" src="{{ico:home-projects-light.png}}">
+						</div>
+					</div>
+					<div class="col-9">
+						<h2 class="tidbit-title-mobile">Projects</h2>
+						<p class="tidbit-text-mobile">See what I've been working on.</p>
+					</div>
+				</a>
+				<a class="row home-row-mobile" href="{{src:blog}}">
+					<div class="col-3 no-padding" align="center">
+						<div id="home-blog-container-mobile" class="home-block-container-mobile">
+							<img id="home-blog-logo-mobile" class="home-block-item-mobile" alt="blog logo" src="{{ico:home-blog-light.png}}">
+						</div>
+					</div>
+					<div class="col-9">
+						<h2 class="tidbit-title-mobile">Blog</h2>
+						<p class="tidbit-text-mobile">Read my blog.</p>
+					</div>
+				</a>
 			</div>
 		</div>
 
@@ -91,6 +128,9 @@
 
 		<!-- email contact -->
 		{{html:email}}
+
+		<!-- mobile email contact -->
+		{{html:email-mobile}}
 
 		<!-- dark mode toggle -->
 		{{html:darkmode}}

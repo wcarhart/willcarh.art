@@ -284,6 +284,12 @@ Device Sizes in px (width x height):
 	
 }
 
+@media (hover: none) and (max-width: 540px) {
+	#blog-navigation-back {
+		margin-bottom: 2rem;
+	}
+}
+
 @media (hover: none) and (max-width: 768px) and (min-height: 1023px) {
 	#content-main {
 		width: 95%;

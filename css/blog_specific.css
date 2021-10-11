@@ -284,7 +284,7 @@ Device Sizes in px (width x height):
 	
 }
 
-@media (hover: none) and (max-width: 540px) {
+@media (hover: none) and (max-width: 750px) {
 	#blog-navigation-back {
 		margin-bottom: 2rem;
 	}

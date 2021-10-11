@@ -28,6 +28,14 @@ hr {
 	background-color: var(--subtitle);
 }
 
+.standard {
+	display: block;
+}
+
+.mobile {
+	display: none;
+}
+
 .section-title {
 	font-size: 2rem !important;
 	padding-bottom: 0.5rem;
@@ -309,7 +317,7 @@ Device Sizes in px (width x height):
 	}
 
 	#content-main {
-		width: 100%;
+		width: 95%;
 	}
 
 	.blog-row {
@@ -334,6 +342,10 @@ Device Sizes in px (width x height):
 }
 
 @media (hover: none) and (max-width: 768px) and (min-height: 1023px) {
+	.no-padding-mobile {
+		padding: 0 !important;
+	}
+
 	h1 {
 		margin-left: 3rem;
 	}

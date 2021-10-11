@@ -355,8 +355,10 @@ const buildBlogAll = async (blogs) => {
 	// parse HTML snippets
 	let blogRowSnippet = await readFilePromise('snippets/blog/blog-row.html')
 	let blogRegularSnippet = await readFilePromise('snippets/blog/blog-regular.html')
+	let blogMobileSnippet = await readFilePromise('snippets/blog/blog-mobile.html')
 	blogRowSnippet = blogRowSnippet.toString()
 	blogRegularSnippet = blogRegularSnippet.toString()
+	blogMobileSnippet = blogMobileSnippet.toString()
 
 	sortedBlogs = sortedBlogs.filter(b => b.hidden === 'false')
 
@@ -368,6 +370,7 @@ const buildBlogAll = async (blogs) => {
 			let index = rowIndex*2 + columnIndex
 			if (index >= sortedBlogs.length) {
 				rowHtml = rowHtml.replace('{{blog-regular}}', '<div class="col-md-6 row"></div>')
+				rowHtml = rowHtml.replace('{{blog-mobile}}', '')
 				continue
 			}
 
@@ -384,10 +387,24 @@ const buildBlogAll = async (blogs) => {
 			blogHtml = blogHtml.replace('{{author}}', sortedBlogs[index].author)
 			blogHtml = blogHtml.replace('{{author-img}}', sortedBlogs[index].authorImg)
 
+			// build mobile blog
+			let mobileBlogHtml = blogMobileSnippet
+			mobileBlogHtml = mobileBlogHtml.replace(/\{\{name\}\}/g, sortedBlogs[index].id)
+			mobileBlogHtml = mobileBlogHtml.replace('{{cover}}', sortedBlogs[index].cover)
+			mobileBlogHtml = mobileBlogHtml.replace('{{subtitle}}', sortedBlogs[index].subtitle)
+			mobileBlogHtml = mobileBlogHtml.replace('{{title}}', sortedBlogs[index].title)
+			mobileBlogHtml = mobileBlogHtml.replace('{{technologies}}', sortedBlogs[index].resources.join(' · '))
+			mobileBlogHtml = mobileBlogHtml.replace('{{blurb}}', sortedBlogs[index].blurb)
+			mobileBlogHtml = mobileBlogHtml.replace('{{index}}', index)
+			mobileBlogHtml = mobileBlogHtml.replace('{{row-index}}', rowIndex)
+			mobileBlogHtml = mobileBlogHtml.replace('{{author}}', sortedBlogs[index].author)
+			mobileBlogHtml = mobileBlogHtml.replace('{{author-img}}', sortedBlogs[index].authorImg)
+
 			// calculate date
 			let date = new Date(sortedBlogs[index].published * 1000)
 			let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 			blogHtml = blogHtml.replace('{{published}}', displayDate)
+			mobileBlogHtml = mobileBlogHtml.replace('{{published}}', displayDate)
 			
 			// calculate read time
 			let blogMarkdownContent = await readFilePromise(`content/blog/${sortedBlogs[index].id}.md`)
@@ -395,8 +412,10 @@ const buildBlogAll = async (blogs) => {
 			let wordCount = blogMarkdownContent.split(' ').length
 			let readTime = Math.ceil(wordCount / 200)
 			blogHtml = blogHtml.replace('{{readtime}}', `${readTime} min read`)
+			mobileBlogHtml = mobileBlogHtml.replace('{{readtime}}', `${readTime} min read`)
 
 			rowHtml = rowHtml.replace('{{blog-regular}}', blogHtml)
+			rowHtml = rowHtml.replace('{{blog-mobile}}', mobileBlogHtml)
 		}
 		html += rowHtml
 	}

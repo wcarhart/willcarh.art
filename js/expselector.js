@@ -41,24 +41,20 @@ function selectExperienceMobile() {
 		$(d).removeClass('mobile-exp-details-active')
 	}
 	$(`#mobile-exp-details-${exp}`).addClass('mobile-exp-details-active')
-}
 
-// set up edge fading on mobile exp tabs
-$(document).ready(async () => {
-	$('#exp-tabs-mobile').on('scroll', function() {
-		let scrollPercentage = 100 * this.scrollLeft / (this.scrollWidth-this.clientWidth);
-		if (scrollPercentage === 0.0) {
-			$('#edge-container').removeClass()
-			$('#edge-container').addClass('right-edge')
-		} else if (scrollPercentage === 100.0) {
-			$('#edge-container').removeClass()
-			$('#edge-container').addClass('left-edge')
-		} else {
-			$('#edge-container').removeClass()
-			$('#edge-container').addClass('both-edge')
+	// move scroll
+	let scrollStop = 0
+	for (let c of $('#exp-tabs-mobile').children()) {
+		if (c.id === `mobile-exp-tab-${exp}`) {
+			break
 		}
-	})
-})
+		scrollStop += $(c).outerWidth()
+	}
+
+	$('#exp-tabs-mobile, body').animate({
+		scrollLeft: scrollStop
+	}, 500)
+}
 
 function selectExperience({override=''}) {
 	// get our selected experience

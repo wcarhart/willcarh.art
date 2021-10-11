@@ -356,32 +356,6 @@ a.about-block {
 	height: 2rem;
 }
 
-.right-edge:after,
-.both-edge:after {
-	content: "";
-	position: absolute;
-	z-index: 1;
-	pointer-events: none;
-	background-image: linear-gradient(to right, 
-                    rgba(0,0,0, 0) 90%,
-                    rgba(0,0,0, 0.5) 100%);
-	width: 100%;
-	height: 2rem;
-}
-
-.left-edge:before,
-.both-edge:before {
-	content: "";
-	position: absolute;
-	z-index: 1;
-	pointer-events: none;
-	background-image: linear-gradient(to left, 
-                    rgba(0,0,0, 0) 90%,
-                    rgba(0,0,0, 0.5) 100%);
-	width: 100%;
-	height: 2rem;
-}
-
 #exp-tabs-mobile {
 	width: 100%;
 	max-width: 100%;

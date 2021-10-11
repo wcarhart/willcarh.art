@@ -254,7 +254,7 @@ hr {
 /* ===== media queries for responsive resizing ===== */
 
 /* if touchscreen, default to mobile styling */
-@media screen and (hover: none) and (pointer: coarse) {
+/*@media screen and (hover: none) and (pointer: coarse) {
 	.standard {
 		display: none !important;
 	}
@@ -262,10 +262,10 @@ hr {
 	.mobile {
 		display: block !important;
 	}
-}
+}*/
 
 /* target most phones and tablet screen sizes */
-@media screen and (max-width: 769px) {
+/*@media screen and (max-width: 769px) {
 	.standard {
 		display: none !important;
 	}
@@ -273,7 +273,7 @@ hr {
 	.mobile {
 		display: block !important;
 	}
-}
+}*/
 
 /* 
 Device Sizes in px (width x height):
@@ -296,6 +296,14 @@ Device Sizes in px (width x height):
 }
 
 @media (hover: none) and (max-width: 414px) {
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+
 	h1 {
 		margin-left: 1rem;
 	}
@@ -326,10 +334,23 @@ Device Sizes in px (width x height):
 }
 
 @media (hover: none) and (max-width: 768px) and (min-height: 1023px) {
+	h1 {
+		margin-left: 3rem;
+	}
+
+	#content-main {
+		width: 95%;
+	}
 	
 }
 
 @media (hover: none) and (max-width: 1024px) and (min-height: 1365px) {
+	h1 {
+		margin-left: 3rem;
+	}
 
+	#content-main {
+		width: 95%;
+	}
 }
 

@@ -32,28 +32,35 @@ const untypeText = async (id, text, delay) => {
 
 // taglines for 'about' page
 const aboutTaglines = [
-	'cool',
 	'exciting',
 	'impactful',
-	'well tested',
+	'well-tested',
 	'maintainable',
+	'scalable',
 	'dynamic',
 	'robust',
+	'cool',
+	'extensible',
 	'simple, clean',
-	'well documented',
+	'well-documented',
+	'inclusive',
 	'powerful',
 	'quirky',
 	'modern',
-	'user friendly',
+	'adaptable',
+	'portable',
+	'debuggable',
+	'user-friendly',
 	'reliable',
 	'fun',
 	'performant',
 	'mission critical',
 	'secure',
-	'customer oriented',
+	'customer-oriented',
 	'revolutionary',
 	'modular',
-	'dependable'
+	'dependable',
+	'reusable'
 ]
 
 // taglines for 'home' page
@@ -79,10 +86,11 @@ const homeTaglines = [
 	'a wearer of fuzzy socks.',
 	'a cat lover and dog snuggler.',
 	'a sidecar enthusiast.',
+	'a sneakerhead.',
 	'a sucker for a good sunrise.',
 	'a passionate feminist.',
 	'an adventurous cook and eater.',
-	'a budding woodworker and DIY\'er.'
+	'a budding DIY\'er.'
 ]
 
 // update taglines

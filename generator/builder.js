@@ -34,6 +34,8 @@ Support dynamic asset tags:
 /*
 Supported HTML tags:
   {{html:exp-tabs}}      --> build HTML for experience tabs on about page
+  {{html:exp-tabs-mobile}}
+                         --> build HTML for experience tabs (on mobile) on about page
   {{html:proj-featured}} --> build HTML for featured projects on project page
   {{html:proj-all}}      --> build HTML for all projects based on visibility
   {{html:proj-spec}}     --> build HTML for specific project page
@@ -205,6 +207,10 @@ const buildHtml = async (data, match, key, page) => {
 		case 'exp-tabs':
 			experiences = await parser.parse('experience')
 			html = await buildExpTabs(experiences)
+			break
+		case 'exp-tabs-mobile':
+			experiences = await parser.parse('experience')
+			html = await buildExpTabsMobile(experiences)
 			break
 		case 'proj-super':
 			projects = await parser.parse('project')
@@ -1123,6 +1129,91 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 	}
 
 	return html
+}
+
+// build experience tabs (mobile) HTML
+const buildExpTabsMobile = async (experiences) => {
+	let tabsSnippet = await readFilePromise('snippets/experience/mobile/tabs.html')
+	let tabSnippet = await readFilePromise('snippets/experience/mobile/tab.html')
+	let detailsSnippet = await readFilePromise('snippets/experience/mobile/details.html')
+	let detailSnippet = await readFilePromise('snippets/experience/mobile/detail.html')
+	let descriptorSnippet = await readFilePromise('snippets/experience/mobile/descriptor.html')
+	let titleSnippet = await readFilePromise('snippets/experience/mobile/title.html')
+	let highlightSnippet = await readFilePromise('snippets/experience/highlight.html')
+	let tidbitSnippet = await readFilePromise('snippets/experience/mobile/tidbit.html')
+	tabsSnippet = tabsSnippet.toString()
+	tabSnippet = tabSnippet.toString()
+	detailsSnippet = detailsSnippet.toString()
+	detailSnippet = detailSnippet.toString()
+	descriptorSnippet = descriptorSnippet.toString()
+	titleSnippet = titleSnippet.toString()
+	highlightSnippet = highlightSnippet.toString()
+	tidbitSnippet = tidbitSnippet.toString()
+
+	let tabs = ''
+	let deets = ''
+
+	for (let [index, experience] of experiences.entries()) {
+		// add tab
+		let tab = tabSnippet.replace('{{company}}', experience.company)
+		tab = tab.replace(/\{\{id\}\}/g, experience.companyId)
+		tab = tab.replace('{{is_active}}', index === 0 ? 'mobile-exp-tab-active' : '')
+		tabs += tab
+
+		// add details
+		let detail = detailSnippet.replace('{{is_active}}', index === 0 ? 'mobile-exp-details-active' : '')
+		detail = detail.replace(/\{\{id\}\}/g, experience.companyId)
+
+		let titles = ''
+		for (let t of experience.title) {
+			titles += titleSnippet.replace('{{title}}', t)
+		}
+		detail = detail.replace('{{titles}}', titles)
+
+		let descriptors = ''
+		for (let d of experience.detail) {
+			let descriptor = descriptorSnippet.replace('{{descriptor}}', d)
+			let matches = d.match(/\*\*.+?\*\*/g)
+			if (matches !== null) {
+				for (let match of matches) {
+					let text = match.replace(/^\*\*/, '').replace(/\*\*$/, '')
+					descriptor = descriptor.replace(match, highlightSnippet.replace('{{hightlight}}', text))
+				}
+			}
+			descriptors += descriptor
+		}
+		detail = detail.replace('{{descriptors}}', descriptors)
+		detail = detail.replace('{{date}}', experience.displayDate)
+
+		if (experience.languagesAndLibraries.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries.join(', '))
+			detail = detail.replace('{{languages_and_libraries}}', tidbit)
+		} else {
+			detail = detail.replace('{{languages_and_libraries}}', '')
+		}
+		if (experience.tools.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Tools').replace('{{tidbit}}', experience.tools.join(', '))
+			detail = detail.replace('{{tools}}', tidbit)
+		} else {
+			detail = detail.replace('{{tools}}', '')
+		}
+		if (experience.platforms.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Platforms').replace('{{tidbit}}', experience.platforms.join(', '))
+			detail = detail.replace('{{platforms}}', tidbit)
+		} else {
+			detail = detail.replace('{{platforms}}', '')
+		}
+		if (experience.infrastructure.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Infrastructure').replace('{{tidbit}}', experience.infrastructure.join(', '))
+			detail = detail.replace('{{infrastructure}}', tidbit)
+		} else {
+			detail = detail.replace('{{infrastructure}}', '')
+		}
+		detail = detail.replace('{{url}}', experience.url)
+		deets += detail
+	}
+
+	return `${tabsSnippet.replace('{{tabs}}', tabs)}\n${detailsSnippet.replace('{{details}}', deets)}`
 }
 
 // build experience tabs HTML

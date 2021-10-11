@@ -1,7 +1,7 @@
 company: Wisk
 companyId: wisk
-title: Sr. Software Engineer, Infrastructure
-title: Software Engineer, Infrastructure
+title: Sr. Full-stack Software Engineer, Tools & Infrastructure
+title: Full-stack Software Engineer, Tools & Infrastructure
 date: 1615313940
 date: 1574146800
 displayDate: Since Nov 2019

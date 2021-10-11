@@ -19,6 +19,47 @@ $(document).ready(async () => {
 	$('.exp-selector').click(selectExperience)
 })
 
+// handle new click on experience (mobile)
+$(document).ready(async () => {
+	$('.mobile-exp-tab').click(selectExperienceMobile)
+})
+
+function selectExperienceMobile() {
+	// get our selected experience
+	let exp = this.id.split('-').pop()
+
+	// toggle tab
+	const tabs = $('.mobile-exp-tab')
+	for (let t of tabs) {
+		$(t).removeClass('mobile-exp-tab-active')
+	}
+	$(`#mobile-exp-tab-${exp}`).addClass('mobile-exp-tab-active')
+
+	// toggle details
+	const details = $('.mobile-exp-details')
+	for (let d of details) {
+		$(d).removeClass('mobile-exp-details-active')
+	}
+	$(`#mobile-exp-details-${exp}`).addClass('mobile-exp-details-active')
+}
+
+// set up edge fading on mobile exp tabs
+$(document).ready(async () => {
+	$('#exp-tabs-mobile').on('scroll', function() {
+		let scrollPercentage = 100 * this.scrollLeft / (this.scrollWidth-this.clientWidth);
+		if (scrollPercentage === 0.0) {
+			$('#edge-container').removeClass()
+			$('#edge-container').addClass('right-edge')
+		} else if (scrollPercentage === 100.0) {
+			$('#edge-container').removeClass()
+			$('#edge-container').addClass('left-edge')
+		} else {
+			$('#edge-container').removeClass()
+			$('#edge-container').addClass('both-edge')
+		}
+	})
+})
+
 function selectExperience({override=''}) {
 	// get our selected experience
 	let exp = ''

@@ -765,6 +765,6 @@ Device Sizes in px (width x height):
 	}
 
 	.exp-descriptor-mobile {
-	font-size: 1.2rem !important;
-}
+		font-size: 1.2rem !important;
+	}
 }

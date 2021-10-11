@@ -532,7 +532,7 @@ const buildBlogSpec = async (blogs, page) => {
 	// build blog content
 	let marq = new Marq({
 		cssPrefix: '',
-		placeholder: 'ico/blank.png',
+		placeholder: '{{cdn:img/blank.png}}',
 		slideshowScript: '{{js:slideshow.js}}'
 	})
 	let blogContent = await marq.convert(blogContentFile.toString(), {page: page})
@@ -681,7 +681,7 @@ const buildProjSpec = async (projects, page) => {
 	// build project content
 	let marq = new Marq({
 		cssPrefix: '',
-		placeholder: 'ico/blank.png',
+		placeholder: '{{cdn:img/blank.png}}',
 		slideshowScript: '{{js:slideshow.js}}'
 	})
 	let projectContent = await marq.convert(projectContentFile.toString(), {page: page})

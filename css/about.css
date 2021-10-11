@@ -688,6 +688,10 @@ Device Sizes in px (width x height):
 	.tidbit-text-mobile {
 		font-size: 1.5rem !important;
 	}
+
+	#stuff-ive-built-mobile {
+		padding-bottom: 2rem;
+	}
 }
 
 @media (hover: none) and (max-width: 1024px) and (min-height: 1365px) {
@@ -766,5 +770,9 @@ Device Sizes in px (width x height):
 
 	.exp-descriptor-mobile {
 		font-size: 1.2rem !important;
+	}
+
+	#stuff-ive-built-mobile {
+		padding-bottom: 3rem;
 	}
 }

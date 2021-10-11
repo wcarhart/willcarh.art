@@ -468,8 +468,8 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// build blog information
 	html = html.replace(/\{\{title\}\}/g, blog.title)
-	html = html.replace('{{author}}', blog.author)
-	html = html.replace('{{author-img}}', blog.authorImg)
+	html = html.replace(/\{\{author\}\}/g, blog.author)
+	html = html.replace(/\{\{author-img\}\}/g, blog.authorImg)
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
@@ -491,7 +491,7 @@ const buildBlogSpec = async (blogs, page) => {
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 	let tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
-	html = html.replace('{{full-datetimestamp}}', displayDate)
+	html = html.replace(/\{\{full-datetimestamp\}\}/g, displayDate)
 
 	displayDate = ''
 	if (blog.updated !== '') {
@@ -505,7 +505,7 @@ const buildBlogSpec = async (blogs, page) => {
 		tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	}
-	html = html.replace('{{updated-full-datetimestamp}}', displayDate)
+	html = html.replace(/\{\{updated-full-datetimestamp\}\}/g, displayDate)
 
 	// calculate read time
 	let blogMarkdownContent = await readFilePromise(`content/blog/${blog.id}.md`)
@@ -523,10 +523,10 @@ const buildBlogSpec = async (blogs, page) => {
 	let blogIndex = sortedBlogs.indexOf(blog) + 1
 	if (blogIndex === sortedBlogs.length) {
 		html = html.replace('{{blog-next}}', await sortedBlogs[0].id)
-		html = html.replace('{{blog-title}}', sortedBlogs[0].title)
+		html = html.replace(/\{\{blog-title\}\}/g, sortedBlogs[0].title)
 	} else {
 		html = html.replace('{{blog-next}}', await sortedBlogs[blogIndex].id)
-		html = html.replace('{{blog-title}}', sortedBlogs[blogIndex].title)
+		html = html.replace(/\{\{blog-title\}\}/g, sortedBlogs[blogIndex].title)
 	}
 
 	// build blog content

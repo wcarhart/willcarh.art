@@ -261,28 +261,6 @@ hr {
 
 /* ===== media queries for responsive resizing ===== */
 
-/* if touchscreen, default to mobile styling */
-/*@media screen and (hover: none) and (pointer: coarse) {
-	.standard {
-		display: none !important;
-	}
-
-	.mobile {
-		display: block !important;
-	}
-}*/
-
-/* target most phones and tablet screen sizes */
-/*@media screen and (max-width: 769px) {
-	.standard {
-		display: none !important;
-	}
-
-	.mobile {
-		display: block !important;
-	}
-}*/
-
 /* 
 Device Sizes in px (width x height):
   Galaxy Fold        280x653

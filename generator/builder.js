@@ -847,7 +847,7 @@ const buildProjAllMobile = async (projects) => {
 	let html = ''
 
 	// build mobile projects
-	for (let [index, project] of sortedProjects.entries()) {
+	for (let project of sortedProjects) {
 		// select container based on project visibility
 		let mobileContainer = project.visibility === 'super' ? projectRowMobileFeatured : projectRowMobileRegular
 

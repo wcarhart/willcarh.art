@@ -24,6 +24,14 @@
 	--toggle: url(../ico/dark-mode-toggle-dark.png);
 }
 
+.standard {
+	display: block;
+}
+
+.mobile {
+	display: none;
+}
+
 #content-main {
 	position: relative;
 	z-index: 20;
@@ -144,3 +152,95 @@ div.col-md-6.no-shift {
 .featured-project-logo {
 	padding: 2rem;
 }
+
+/* ===== media queries for responsive resizing ===== */
+
+/* 
+Device Sizes in px (width x height):
+  Galaxy Fold        280x653
+  iPhone 5/SE        320x568
+  Moto G4            360x640
+  Galaxy S5          360x640
+  iPhone 6/7/8       375x667
+  iPhone X           375x812
+  Pixel 2            411x731
+  Pixel 2 XL         411x823
+  iPhone 6/7/8 Plus  414x736
+  Surface Duo        540x720
+  iPad/iPad Mini     768x1024
+  iPad Pro           1024x1366
+*/
+
+@media (hover: none) and (max-height: 568px) {
+	
+}
+
+@media (hover: none) and (max-width: 414px) {
+	#content-main {
+		width: 95%;
+	}
+
+	#content-main h1 {
+		font-size: 3.5rem !important;
+	}
+
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+}
+
+@media (hover: none) and (min-height: 567px) {
+	
+}
+
+@media (hover: none) and (min-height: 666px) {
+	
+}
+
+@media (hover: none) and (min-height: 735px) {
+	
+}
+
+@media (hover: none) and (min-height: 811px) {
+	
+}
+
+@media (hover: none) and (max-width: 750px) {
+	#content-main {
+		width: 95%;
+	}
+
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+}
+
+@media (hover: none) and (max-width: 768px) and (min-height: 1023px) {
+	#content-main {
+		width: 95%;
+	}
+
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+	
+}
+
+@media (hover: none) and (max-width: 1024px) and (min-height: 1365px) {
+	#content-main {
+		width: 95%;
+	}
+}
+

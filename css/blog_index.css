@@ -28,6 +28,14 @@ hr {
 	background-color: var(--subtitle);
 }
 
+.standard {
+	display: block;
+}
+
+.mobile {
+	display: none;
+}
+
 .section-title {
 	font-size: 2rem !important;
 	padding-bottom: 0.5rem;
@@ -250,3 +258,107 @@ hr {
 .color {
 	color: var(--color);
 }
+
+/* ===== media queries for responsive resizing ===== */
+
+/* 
+Device Sizes in px (width x height):
+  Galaxy Fold        280x653
+  iPhone 5/SE        320x568
+  Moto G4            360x640
+  Galaxy S5          360x640
+  iPhone 6/7/8       375x667
+  iPhone X           375x812
+  Pixel 2            411x731
+  Pixel 2 XL         411x823
+  iPhone 6/7/8 Plus  414x736
+  Surface Duo        540x720
+  iPad/iPad Mini     768x1024
+  iPad Pro           1024x1366
+*/
+
+@media (hover: none) and (max-height: 568px) {
+	
+}
+
+@media (hover: none) and (max-width: 414px) {
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+
+	h1 {
+		margin-left: 1rem;
+	}
+
+	#content-main {
+		width: 95%;
+	}
+
+	.blog-row {
+		margin-bottom: 2rem;
+	}
+}
+
+@media (hover: none) and (min-height: 567px) {
+	
+}
+
+@media (hover: none) and (min-height: 666px) {
+	
+}
+
+@media (hover: none) and (min-height: 735px) {
+	
+}
+
+@media (hover: none) and (min-height: 811px) {
+	
+}
+
+@media (hover: none) and (max-width: 750px) {
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+
+	#content-main {
+		width: 95%;
+	}
+
+	.blog-row {
+		margin-bottom: 2rem;
+	}
+}
+
+@media (hover: none) and (max-width: 768px) and (min-height: 1023px) {
+	.no-padding-mobile {
+		padding: 0 !important;
+	}
+
+	h1 {
+		margin-left: 3rem;
+	}
+
+	#content-main {
+		width: 95%;
+	}
+	
+}
+
+@media (hover: none) and (max-width: 1024px) and (min-height: 1365px) {
+	h1 {
+		margin-left: 3rem;
+	}
+
+	#content-main {
+		width: 95%;
+	}
+}
+

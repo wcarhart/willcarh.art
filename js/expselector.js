@@ -8,6 +8,7 @@ $(document).ready(async () => {
 	let urlParams = new URLSearchParams(window.location.search)
 	if (urlParams.has('exp')) {
 		selectExperience({'override': urlParams.get('exp')})
+		selectExperienceMobile({'override': urlParams.get('exp')})
 	}
 
 	// dynamically update div height after selecting experience
@@ -18,6 +19,48 @@ $(document).ready(async () => {
 $(document).ready(async () => {
 	$('.exp-selector').click(selectExperience)
 })
+
+// handle new click on experience (mobile)
+$(document).ready(async () => {
+	$('.mobile-exp-tab').click(selectExperienceMobile)
+})
+
+function selectExperienceMobile({override=''}) {
+	// get our selected experience
+	let exp = ''
+	if (override === '') {
+		exp = this.id.split('-').pop()
+	} else {
+		exp = override
+	}
+
+	// toggle tab
+	const tabs = $('.mobile-exp-tab')
+	for (let t of tabs) {
+		$(t).removeClass('mobile-exp-tab-active')
+	}
+	$(`#mobile-exp-tab-${exp}`).addClass('mobile-exp-tab-active')
+
+	// toggle details
+	const details = $('.mobile-exp-details')
+	for (let d of details) {
+		$(d).removeClass('mobile-exp-details-active')
+	}
+	$(`#mobile-exp-details-${exp}`).addClass('mobile-exp-details-active')
+
+	// move scroll
+	let scrollStop = 0
+	for (let c of $('#exp-tabs-mobile').children()) {
+		if (c.id === `mobile-exp-tab-${exp}`) {
+			break
+		}
+		scrollStop += $(c).outerWidth()
+	}
+
+	$('#exp-tabs-mobile, body').animate({
+		scrollLeft: scrollStop
+	}, 500)
+}
 
 function selectExperience({override=''}) {
 	// get our selected experience

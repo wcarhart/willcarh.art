@@ -18,7 +18,7 @@ $(document).ready(async () => {
 	// if a file name contains ('.'), like 'willcarh.art', we use '----' to replace it
 	// it's not a bulletproof approach, but it's unlikely a project name will naturally contain the string '----'
 	$('.project-border').click(async function() {
-		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '').replace('----', '.')
+		const name = this.id.replace('proj-', '').replace('super-', '').replace('featured-', '').replace('mobile-', '').replace('----', '.')
 		let fullPath = `project/${name}`
 		if (develop === 'true') {
 			fullPath += '.html'

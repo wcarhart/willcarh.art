@@ -13,6 +13,12 @@ $(document).ready(async () => {
 		window.location.href = fullPath
 	})
 
+	// don't resize cards on mobile
+	if ($(window).width() < 480) {
+		return
+	}
+
+	// resize cards
 	await resizeBlogCards()
 	$(window).resize(async () => {
 		await resizeBlogCards()

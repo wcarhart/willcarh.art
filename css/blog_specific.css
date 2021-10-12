@@ -10,6 +10,14 @@
 	--animate-delay: 0.3s
 }
 
+.standard {
+	display: block;
+}
+
+.mobile {
+	display: none;
+}
+
 #content-main {
 	position: relative;
 	z-index: 20;
@@ -22,10 +30,6 @@
 #content-main h1 {
 	font-size: 5rem !important;
 }
-
-/*h2 {
-	font-size: 3rem !important;
-}*/
 
 h5 {
 	color: var(--subtitle) !important;
@@ -67,6 +71,23 @@ h5 {
 }
 
 #blog-author-img-container img {
+	margin: auto;
+	display: block;
+	width: 2rem;
+	max-width: 2rem;
+	height: 2rem;
+	max-height: 2rem;
+	border-radius: 2rem;
+}
+
+#blog-author-img-container-mobile {
+	padding-left: 1rem;
+	padding-right: 0.5rem;
+	display: flex;
+	align-items: center;
+}
+
+#blog-author-img-container-mobile img {
 	margin: auto;
 	display: block;
 	width: 2rem;
@@ -173,4 +194,118 @@ h5 {
 
 .navigation-detail-text {
 	margin-bottom: 0 !important;
+}
+
+/* ===== media queries for responsive resizing ===== */
+.blog-credits-container-mobile {
+	width: 100%;
+	max-width: 100%;
+}
+
+/* 
+Device Sizes in px (width x height):
+  Galaxy Fold        280x653
+  iPhone 5/SE        320x568
+  Moto G4            360x640
+  Galaxy S5          360x640
+  iPhone 6/7/8       375x667
+  iPhone X           375x812
+  Pixel 2            411x731
+  Pixel 2 XL         411x823
+  iPhone 6/7/8 Plus  414x736
+  Surface Duo        540x720
+  iPad/iPad Mini     768x1024
+  iPad Pro           1024x1366
+*/
+
+@media (hover: none) and (max-height: 568px) {
+	
+}
+
+@media (hover: none) and (max-width: 414px) {
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+
+	#content-main {
+		width: 95%;
+	}
+
+	#content-body {
+		width: 100%;
+	}
+
+	#content-main h1 {
+		font-size: 3rem !important;
+	}
+
+	#blog-subtitle {
+		font-size: 1.2rem !important;
+	}
+
+	.h3 {
+		font-size: 1.7rem !important;
+	}
+
+	#blog-navigation-back-mobile {
+		margin-bottom: 2rem;
+	}
+
+	#blog-author-mobile {
+		font-size: 1.1rem !important;
+		margin-bottom: 0;
+	}
+
+	#blog-author-img-container-mobile {
+		padding-left: 0;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+@media (hover: none) and (min-height: 567px) {
+	
+}
+
+@media (hover: none) and (min-height: 666px) {
+	
+}
+
+@media (hover: none) and (min-height: 735px) {
+	
+}
+
+@media (hover: none) and (min-height: 811px) {
+	
+}
+
+@media (hover: none) and (max-width: 750px) {
+	#blog-navigation-back {
+		margin-bottom: 2rem;
+	}
+}
+
+@media (hover: none) and (max-width: 768px) and (min-height: 1023px) {
+	#content-main {
+		width: 95%;
+	}	
+
+	#content-body {
+		width: 100%;
+	}
+}
+
+@media (hover: none) and (max-width: 1024px) and (min-height: 1365px) {
+	#content-main {
+		width: 95%;
+	}
+
+	#content-body {
+		width: 100%;
+	}
 }

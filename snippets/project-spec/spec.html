@@ -11,13 +11,20 @@
 	<p id="technologies-list">{{technologies}}</p>
 </div>
 <div id="icons-container" class="animate__animated animated_faster animate__fadeInUp animate__delay-4s">
-	<div class="row justify-content-center">
+	<div class="standard row justify-content-center">
         {{github-icon}}
         {{docs-icon}}
         {{blog-icon}}
         {{demo-icon}}
         {{link-icon}}
 	</div>
+    <div class="mobile justify-content-center">
+        {{github-icon}}
+        {{docs-icon}}
+        {{blog-icon}}
+        {{demo-icon}}
+        {{link-icon}}
+    </div>
 </div>
 <div class="spacer"></div>
 <div id="project-about-container" class="animate__animated animated_faster animate__fadeIn animate__delay-5s">
@@ -28,7 +35,7 @@
 	<h3>Metadata</h3>
 	<p class="project-metadata-label">LINKS</p>
 	<div class="project-metadata-value">
-		<div id="project-metadata-icons" class="row shift-icons">
+		<div id="project-metadata-icons" class="standard row shift-icons">
             {{github-icon}}
             {{docs-icon}}
             {{blog-icon}}

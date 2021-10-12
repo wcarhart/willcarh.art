@@ -6,7 +6,7 @@
 	<h2 id="blog-subtitle">{{subtitle}}</h2>
 </div>
 <div id="blog-credits" class="animate__animated animated_faster animate__fadeInUp animate__delay-2s">
-	<div class="row justify-content-center">
+	<div class="row justify-content-center standard">
 		<div id="blog-author-img-container">
 			<img id="blog-author-img" alt="author profile image" src="{{author-img}}">
 		</div>
@@ -15,6 +15,24 @@
 			<p class="blog-metadata epochtime-hover">Published on {{full-datetimestamp}}</p>
 			<p class="blog-metadata epochtime-hover">{{updated-full-datetimestamp}}</p>
 			<p class="blog-metadata readtime-hover"><span class="color">{{readtime}}</span></p>
+		</div>
+	</div>
+	<div class="mobile">
+		<div class="row blog-credits-container-mobile">
+			<div class="col-2"></div>
+			<div class="col-2">
+				<div id="blog-author-img-container-mobile">
+					<img id="blog-author-img-mobile" alt="author profile image" src="{{author-img}}">
+				</div>	
+			</div>
+			<div class="col-8">
+				<div id="blog-credits-details-mobile">
+					<h5 id="blog-author-mobile">{{author}}</h5>
+					<p class="blog-metadata epochtime-hover">Published on {{full-datetimestamp}}</p>
+					<p class="blog-metadata epochtime-hover">{{updated-full-datetimestamp}}</p>
+					<p class="blog-metadata readtime-hover"><span class="color">{{readtime}}</span></p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -29,7 +47,7 @@
 	<p id="cover-credit">Artwork by <a class="fancy-link" href="{{cover-credit}}" target="_blank">{{cover-author}}</a></p>
 </div>
 <div id="blog-navigation-container" class="animate__animated animated_faster animate__fadeIn animate__delay-4s">
-	<div class="row">
+	<div class="row standard">
 		<div class="col-md-1"></div>
 		<div id="blog-navigation-back" class="col-md-4 blog-navigation-chunk">
 			<h3><span class="show-more">⟵</span> Back</h3>
@@ -41,6 +59,16 @@
 			<p class="navigation-detail-text p">{{blog-title}}</p>
 		</div>
 		<div class="col-md-1"></div>
+	</div>
+	<div class="mobile">
+		<div id="blog-navigation-back-mobile" class="blog-navigation-chunk">
+			<h3><span class="show-more">⟵</span> Back</h3>
+			<p class="navigation-detail-text p">Go back to the blog</p>
+		</div>
+		<div id="blog-navigation-next-mobile" class="blog-navigation-chunk">
+			<h3>Read More <span class="show-more">⟶</span></h3>
+			<p class="navigation-detail-text p">{{blog-title}}</p>
+		</div>
 	</div>
 </div>
 <div class="spacer-small"></div>

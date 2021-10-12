@@ -78,35 +78,6 @@ h2 {
 	outline: 0;
 }
 
-#email-contact-mobile-container {
-	display: none;
-	position: fixed;
-	right: 4rem;
-	top: 1.5rem;
-	background-color: var(--color);
-	border: none;
-	border-radius: 1rem;
-	font-size: 0.9rem;
-	text-align: center;
-	margin: auto;
-	height: 2rem;
-	width: 2rem;
-}
-
-#email-contact-mobile-container:focus {
-	outline: 0;
-}
-
-#email-contact-mobile {
-	width: 1rem;
-	height: 1rem;
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
 #tagline {
 	color: var(--color);
 }

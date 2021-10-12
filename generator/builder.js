@@ -34,13 +34,19 @@ Support dynamic asset tags:
 /*
 Supported HTML tags:
   {{html:exp-tabs}}      --> build HTML for experience tabs on about page
+  {{html:exp-tabs-mobile}}
+                         --> build HTML for experience tabs (on mobile) on about page
   {{html:proj-featured}} --> build HTML for featured projects on project page
   {{html:proj-all}}      --> build HTML for all projects based on visibility
+  {{html:proj-all-mobile}}
+                         --> build HTML for all projects (on mobile) based on visibility
   {{html:proj-spec}}     --> build HTML for specific project page
   {{html:blog-latest}}   --> build HTML for latest blog post on blog page
   {{html:blog-all}}      --> build HTML for all blog posts
   {{html:blog-spec}}     --> build HTML for specific blog post
   {{html:vault-rows}}    --> build HTML for rows in the vault
+  {{html:vault-rows-mobile}}
+                         --> build HTML for rows in the vault (on mobile)
   {{html:demo-rows}}     --> build HTML for rows on demo index
   {{html:credits}}       --> build HTML for credits
   {{html:analytics-panelbear}}
@@ -206,6 +212,10 @@ const buildHtml = async (data, match, key, page) => {
 			experiences = await parser.parse('experience')
 			html = await buildExpTabs(experiences)
 			break
+		case 'exp-tabs-mobile':
+			experiences = await parser.parse('experience')
+			html = await buildExpTabsMobile(experiences)
+			break
 		case 'proj-super':
 			projects = await parser.parse('project')
 			html = await buildProjSuper(projects.filter(p => p.visibility === 'super'))
@@ -213,6 +223,10 @@ const buildHtml = async (data, match, key, page) => {
 		case 'proj-all':
 			projects = await parser.parse('project')
 			html = await buildProjAll(projects)
+			break
+		case 'proj-all-mobile':
+			projects = await parser.parse('project')
+			html = await buildProjAllMobile(projects)
 			break
 		case 'proj-spec':
 			projects = await parser.parse('project')
@@ -235,6 +249,12 @@ const buildHtml = async (data, match, key, page) => {
 			projects = await parser.parse('project')
 			blogs = await parser.parse('blog')
 			html = await buildVaultRows(experiences, projects, blogs)
+			break
+		case 'vault-rows-mobile':
+			experiences = await parser.parse('experience')
+			projects = await parser.parse('project')
+			blogs = await parser.parse('blog')
+			html = await buildVaultRowsMobile(experiences, projects, blogs)
 			break
 		case 'demo-rows':
 			projects = await parser.parse('project')
@@ -349,8 +369,10 @@ const buildBlogAll = async (blogs) => {
 	// parse HTML snippets
 	let blogRowSnippet = await readFilePromise('snippets/blog/blog-row.html')
 	let blogRegularSnippet = await readFilePromise('snippets/blog/blog-regular.html')
+	let blogMobileSnippet = await readFilePromise('snippets/blog/blog-mobile.html')
 	blogRowSnippet = blogRowSnippet.toString()
 	blogRegularSnippet = blogRegularSnippet.toString()
+	blogMobileSnippet = blogMobileSnippet.toString()
 
 	sortedBlogs = sortedBlogs.filter(b => b.hidden === 'false')
 
@@ -362,6 +384,7 @@ const buildBlogAll = async (blogs) => {
 			let index = rowIndex*2 + columnIndex
 			if (index >= sortedBlogs.length) {
 				rowHtml = rowHtml.replace('{{blog-regular}}', '<div class="col-md-6 row"></div>')
+				rowHtml = rowHtml.replace('{{blog-mobile}}', '')
 				continue
 			}
 
@@ -378,10 +401,24 @@ const buildBlogAll = async (blogs) => {
 			blogHtml = blogHtml.replace('{{author}}', sortedBlogs[index].author)
 			blogHtml = blogHtml.replace('{{author-img}}', sortedBlogs[index].authorImg)
 
+			// build mobile blog
+			let mobileBlogHtml = blogMobileSnippet
+			mobileBlogHtml = mobileBlogHtml.replace(/\{\{name\}\}/g, sortedBlogs[index].id)
+			mobileBlogHtml = mobileBlogHtml.replace('{{cover}}', sortedBlogs[index].cover)
+			mobileBlogHtml = mobileBlogHtml.replace('{{subtitle}}', sortedBlogs[index].subtitle)
+			mobileBlogHtml = mobileBlogHtml.replace('{{title}}', sortedBlogs[index].title)
+			mobileBlogHtml = mobileBlogHtml.replace('{{technologies}}', sortedBlogs[index].resources.join(' · '))
+			mobileBlogHtml = mobileBlogHtml.replace('{{blurb}}', sortedBlogs[index].blurb)
+			mobileBlogHtml = mobileBlogHtml.replace('{{index}}', index)
+			mobileBlogHtml = mobileBlogHtml.replace('{{row-index}}', rowIndex)
+			mobileBlogHtml = mobileBlogHtml.replace('{{author}}', sortedBlogs[index].author)
+			mobileBlogHtml = mobileBlogHtml.replace('{{author-img}}', sortedBlogs[index].authorImg)
+
 			// calculate date
 			let date = new Date(sortedBlogs[index].published * 1000)
 			let displayDate = `${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 			blogHtml = blogHtml.replace('{{published}}', displayDate)
+			mobileBlogHtml = mobileBlogHtml.replace('{{published}}', displayDate)
 			
 			// calculate read time
 			let blogMarkdownContent = await readFilePromise(`content/blog/${sortedBlogs[index].id}.md`)
@@ -389,8 +426,10 @@ const buildBlogAll = async (blogs) => {
 			let wordCount = blogMarkdownContent.split(' ').length
 			let readTime = Math.ceil(wordCount / 200)
 			blogHtml = blogHtml.replace('{{readtime}}', `${readTime} min read`)
+			mobileBlogHtml = mobileBlogHtml.replace('{{readtime}}', `${readTime} min read`)
 
 			rowHtml = rowHtml.replace('{{blog-regular}}', blogHtml)
+			rowHtml = rowHtml.replace('{{blog-mobile}}', mobileBlogHtml)
 		}
 		html += rowHtml
 	}
@@ -443,8 +482,8 @@ const buildBlogSpec = async (blogs, page) => {
 
 	// build blog information
 	html = html.replace(/\{\{title\}\}/g, blog.title)
-	html = html.replace('{{author}}', blog.author)
-	html = html.replace('{{author-img}}', blog.authorImg)
+	html = html.replace(/\{\{author\}\}/g, blog.author)
+	html = html.replace(/\{\{author-img\}\}/g, blog.authorImg)
 
 	// date calculation
 	let date = new Date(blog.published * 1000)
@@ -466,7 +505,7 @@ const buildBlogSpec = async (blogs, page) => {
 	let timestamp = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 	let tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 	let displayDate = `${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
-	html = html.replace('{{full-datetimestamp}}', displayDate)
+	html = html.replace(/\{\{full-datetimestamp\}\}/g, displayDate)
 
 	displayDate = ''
 	if (blog.updated !== '') {
@@ -480,7 +519,7 @@ const buildBlogSpec = async (blogs, page) => {
 		tz = date.toLocaleTimeString('en-US', { timeZoneName: 'short', timeZone: 'America/Los_Angeles' }).split(' ')[2]
 		displayDate = `Updated on ${month} ${day}${ending}, ${year} at ${timestamp} ${tz}`
 	}
-	html = html.replace('{{updated-full-datetimestamp}}', displayDate)
+	html = html.replace(/\{\{updated-full-datetimestamp\}\}/g, displayDate)
 
 	// calculate read time
 	let blogMarkdownContent = await readFilePromise(`content/blog/${blog.id}.md`)
@@ -498,16 +537,16 @@ const buildBlogSpec = async (blogs, page) => {
 	let blogIndex = sortedBlogs.indexOf(blog) + 1
 	if (blogIndex === sortedBlogs.length) {
 		html = html.replace('{{blog-next}}', await sortedBlogs[0].id)
-		html = html.replace('{{blog-title}}', sortedBlogs[0].title)
+		html = html.replace(/\{\{blog-title\}\}/g, sortedBlogs[0].title)
 	} else {
 		html = html.replace('{{blog-next}}', await sortedBlogs[blogIndex].id)
-		html = html.replace('{{blog-title}}', sortedBlogs[blogIndex].title)
+		html = html.replace(/\{\{blog-title\}\}/g, sortedBlogs[blogIndex].title)
 	}
 
 	// build blog content
 	let marq = new Marq({
 		cssPrefix: '',
-		placerholder: 'ico/blank.png',
+		placeholder: '{{cdn:img/blank.png}}',
 		slideshowScript: '{{js:slideshow.js}}'
 	})
 	let blogContent = await marq.convert(blogContentFile.toString(), {page: page})
@@ -656,7 +695,7 @@ const buildProjSpec = async (projects, page) => {
 	// build project content
 	let marq = new Marq({
 		cssPrefix: '',
-		placerholder: 'ico/blank.png',
+		placeholder: '{{cdn:img/blank.png}}',
 		slideshowScript: '{{js:slideshow.js}}'
 	})
 	let projectContent = await marq.convert(projectContentFile.toString(), {page: page})
@@ -758,6 +797,96 @@ const buildProjSuper = async (projects) => {
 // attempt to remove unsafe characters from HTML IDs, classnames, and sometimes routing
 const htmlSafify = async (string) => {
 	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_').replace(/,/g, '').replace(/'/g, '')
+}
+
+// build all project rows (for mobile)
+const buildProjAllMobile = async (projects) => {
+	let projectRowMobileFeatured = await readFilePromise('snippets/projects/project-row-mobile-featured.html')
+	let projectRowMobileRegular = await readFilePromise('snippets/projects/project-row-mobile-regular.html')
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
+	projectRowMobileFeatured = projectRowMobileFeatured.toString()
+	projectRowMobileRegular = projectRowMobileRegular.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
+
+	// sort projects
+	let superProjects = []
+	let featuredProjects = []
+	let normalProjects = []
+	let lessProjects = []
+	for (let p of projects) {
+		switch (p.visibility) {
+			case 'super':
+				superProjects.push(p)
+				break
+			case 'featured':
+				featuredProjects.push(p)
+				break
+			case 'normal':
+				normalProjects.push(p)
+				break
+			case 'less':
+				lessProjects.push(p)
+				break
+			case 'none':
+				break
+			default:
+				throw new Error(`Unknown project visibility: '${p.visibility}'`)
+		}
+	}
+	let sortedProjects = superProjects.concat(featuredProjects).concat(normalProjects).concat(lessProjects)
+
+	// build HTML
+	let html = ''
+
+	// build mobile projects
+	for (let project of sortedProjects) {
+		// select container based on project visibility
+		let mobileContainer = project.visibility === 'super' ? projectRowMobileFeatured : projectRowMobileRegular
+
+		// build container
+		mobileContainer = mobileContainer.replace(/\{\{name\}\}/g, await htmlSafify(project.name))
+		mobileContainer = mobileContainer.replace('{{title}}', project.name)
+		mobileContainer = mobileContainer.replace('{{blurb}}', project.blurb)
+		mobileContainer = mobileContainer.replace('{{about}}', project.about)
+		mobileContainer = mobileContainer.replace('{{logo}}', project.img)
+		mobileContainer = mobileContainer.replace(
+			'{{technologies}}',
+			project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
+		)
+		let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
+		if (project.repo !== '') {
+			githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
+		}
+		if (project.documentation !== '') {
+			docsIconHtml = docsIconSnippet.replace('{{docs}}', project.documentation)
+		}
+		if (project.demo === 'true') {
+			demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
+		}
+		if (project.link !== '') {
+			linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
+		}
+		if (project.blogPost !== '') {
+			linkIconHtml = blogIconSnippet.replace('{{blog}}', project.blogPost)
+		}
+
+		mobileContainer = mobileContainer.replace('{{github-icon}}', githubIconHtml)
+		mobileContainer = mobileContainer.replace('{{docs-icon}}', docsIconHtml)
+		mobileContainer = mobileContainer.replace('{{demo-icon}}', demoIconHtml)
+		mobileContainer = mobileContainer.replace('{{link-icon}}', linkIconHtml)
+		mobileContainer = mobileContainer.replace('{{blog-icon}}', blogIconHtml)
+		html += mobileContainer
+	}
+
+	return html
 }
 
 // build all project rows
@@ -969,6 +1098,148 @@ const buildProjAll = async (projects) => {
 	return html
 }
 
+// build vault rows (for mobile) HTML
+const buildVaultRowsMobile = async (experiences, projects, blogs) => {
+	// parse HTML snippets
+	let vaultRowMobileSnippet = await readFilePromise('snippets/vault/vault-row-mobile.html')
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
+	vaultRowMobileSnippet = vaultRowMobileSnippet.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
+
+	// template for how we will fill in the rows
+	class RowTemplate {
+		constructor({year='', sortDate='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl='', blogPost='', vaultLink=''}) {
+			this.year = year
+			this.sortDate = sortDate
+			this.title = title
+			this.type = type
+			this.resources = resources
+			this.demoName = demoName
+			this.docsName = docsName
+			this.githubName = githubName
+			this.linkUrl = linkUrl
+			this.blogPost = blogPost
+			this.vaultLink = vaultLink
+		}
+	}
+	let rows = []
+
+	// parse experiences into rows
+	for (let experience of experiences) {
+		for (let [index, ] of experience.title.entries()) {
+			let r = new RowTemplate({})
+			let yearDate = new Date(experience.date[index]*1000)
+			r.year = yearDate.getFullYear()
+			r.sortDate = experience.date[index]
+			r.title = `${experience.title[index]} @ ${experience.company}`
+			r.type = 'experience'
+			r.resources = experience.languagesAndLibraries.concat(experience.platforms.concat(experience.infrastructure))
+			r.demoName = ''
+			r.docsName = ''
+			r.githubName = ''
+			r.linkUrl = experience.url
+			r.blogPost = experience.blogPost
+			r.vaultLink = `{{src:about}}?exp=${experience.companyId}#experience`
+
+			rows.push(r)
+		}
+	}
+
+	// parse projects into rows
+	for (let project of projects) {
+		if (project.status === 'in development') {
+			continue
+		}
+		let r = new RowTemplate({})
+		let date = new Date(project.published * 1000)
+		r.year = date.getFullYear()
+		r.sortDate = project.published
+		r.title = project.name
+		r.type = 'project'
+		r.resources = project.languages.concat(project.technologies)
+		r.demoName = project.demo === 'true' ? project.name.toLowerCase() : ''
+		r.docsName = project.documentation
+		r.githubName = project.repo
+		r.linkUrl = project.link
+		r.blogPost = project.blogPost
+		r.vaultLink = `{{src:project/${project.id}}}`
+
+		rows.push(r)
+	}
+
+	// parse blog posts into rows
+	for (let blog of blogs) {
+		let r = new RowTemplate({})
+		let date = new Date(blog.published * 1000)
+		r.year = date.getFullYear()
+		r.sortDate = blog.published
+		r.title = blog.title
+		r.type = 'blog'
+		r.resources = blog.resources
+		r.demoName = ''
+		r.docsName = ''
+		r.githubName = ''
+		r.linkUrl = ''
+		r.blogPost = `{{src:blog/${blog.id}}}`
+		r.vaultLink = r.blogPost
+
+		rows.push(r)
+	}
+
+	// sort rows based on year, prioritizing projects
+	rows.sort((a, b) => {
+		if (a.sortDate > b.sortDate) {
+			return -1
+		} else if (a.sortDate < b.sortDate) {
+			return 1
+		} else {
+			if (a.type === 'experience') {
+				return -1
+			} else {
+				return 1
+			}
+		}
+	})
+
+	// build html
+	let html = ''
+	for (let row of rows) {
+		let newRow = vaultRowMobileSnippet.replace('{{year}}', row.year)
+		newRow = newRow.replace('{{title}}', row.title)
+
+		let linkHtml = ''
+		if (row.githubName !== '') {
+			linkHtml += githubIconSnippet.replace('{{repo}}', row.githubName)
+		}
+		if (row.docsName !== '') {
+			linkHtml += docsIconSnippet.replace('{{docs}}', row.docsName)
+		}
+		if (row.blogPost !== '') {
+			linkHtml += blogIconSnippet.replace('{{blog}}', row.blogPost)
+		}
+		if (row.demoName !== '') {
+			linkHtml += demoIconSnippet.replace('{{name}}', row.demoName)
+		}
+		if (row.linkUrl !== '') {
+			linkHtml += linkIconSnippet.replace('{{url}}', row.linkUrl)
+		}
+		newRow = newRow.replace('{{links}}', linkHtml)
+		newRow = newRow.replace('{{vault-link}}', row.type === 'experience' ? `${row.vaultLink}m` : row.vaultLink)
+
+		html += newRow
+	}
+
+	return html
+}
+
 // build vault rows HTML
 const buildVaultRows = async (experiences, projects, blogs) => {
 	// parse HTML snippets
@@ -1123,6 +1394,91 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 	}
 
 	return html
+}
+
+// build experience tabs (mobile) HTML
+const buildExpTabsMobile = async (experiences) => {
+	let tabsSnippet = await readFilePromise('snippets/experience/mobile/tabs.html')
+	let tabSnippet = await readFilePromise('snippets/experience/mobile/tab.html')
+	let detailsSnippet = await readFilePromise('snippets/experience/mobile/details.html')
+	let detailSnippet = await readFilePromise('snippets/experience/mobile/detail.html')
+	let descriptorSnippet = await readFilePromise('snippets/experience/mobile/descriptor.html')
+	let titleSnippet = await readFilePromise('snippets/experience/mobile/title.html')
+	let highlightSnippet = await readFilePromise('snippets/experience/highlight.html')
+	let tidbitSnippet = await readFilePromise('snippets/experience/mobile/tidbit.html')
+	tabsSnippet = tabsSnippet.toString()
+	tabSnippet = tabSnippet.toString()
+	detailsSnippet = detailsSnippet.toString()
+	detailSnippet = detailSnippet.toString()
+	descriptorSnippet = descriptorSnippet.toString()
+	titleSnippet = titleSnippet.toString()
+	highlightSnippet = highlightSnippet.toString()
+	tidbitSnippet = tidbitSnippet.toString()
+
+	let tabs = ''
+	let deets = ''
+
+	for (let [index, experience] of experiences.entries()) {
+		// add tab
+		let tab = tabSnippet.replace('{{company}}', experience.company)
+		tab = tab.replace(/\{\{id\}\}/g, experience.companyId)
+		tab = tab.replace('{{is_active}}', index === 0 ? 'mobile-exp-tab-active' : '')
+		tabs += tab
+
+		// add details
+		let detail = detailSnippet.replace('{{is_active}}', index === 0 ? 'mobile-exp-details-active' : '')
+		detail = detail.replace(/\{\{id\}\}/g, experience.companyId)
+
+		let titles = ''
+		for (let t of experience.title) {
+			titles += titleSnippet.replace('{{title}}', t)
+		}
+		detail = detail.replace('{{titles}}', titles)
+
+		let descriptors = ''
+		for (let d of experience.detail) {
+			let descriptor = descriptorSnippet.replace('{{descriptor}}', d)
+			let matches = d.match(/\*\*.+?\*\*/g)
+			if (matches !== null) {
+				for (let match of matches) {
+					let text = match.replace(/^\*\*/, '').replace(/\*\*$/, '')
+					descriptor = descriptor.replace(match, highlightSnippet.replace('{{hightlight}}', text))
+				}
+			}
+			descriptors += descriptor
+		}
+		detail = detail.replace('{{descriptors}}', descriptors)
+		detail = detail.replace('{{date}}', experience.displayDate)
+
+		if (experience.languagesAndLibraries.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Languages and libraries').replace('{{tidbit}}', experience.languagesAndLibraries.join(', '))
+			detail = detail.replace('{{languages_and_libraries}}', tidbit)
+		} else {
+			detail = detail.replace('{{languages_and_libraries}}', '')
+		}
+		if (experience.tools.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Tools').replace('{{tidbit}}', experience.tools.join(', '))
+			detail = detail.replace('{{tools}}', tidbit)
+		} else {
+			detail = detail.replace('{{tools}}', '')
+		}
+		if (experience.platforms.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Platforms').replace('{{tidbit}}', experience.platforms.join(', '))
+			detail = detail.replace('{{platforms}}', tidbit)
+		} else {
+			detail = detail.replace('{{platforms}}', '')
+		}
+		if (experience.infrastructure.length !== 0) {
+			let tidbit = tidbitSnippet.replace('{{handle}}', 'Infrastructure').replace('{{tidbit}}', experience.infrastructure.join(', '))
+			detail = detail.replace('{{infrastructure}}', tidbit)
+		} else {
+			detail = detail.replace('{{infrastructure}}', '')
+		}
+		detail = detail.replace('{{url}}', experience.url)
+		deets += detail
+	}
+
+	return `${tabsSnippet.replace('{{tabs}}', tabs)}\n${detailsSnippet.replace('{{details}}', deets)}`
 }
 
 // build experience tabs HTML

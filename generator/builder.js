@@ -38,6 +38,8 @@ Supported HTML tags:
                          --> build HTML for experience tabs (on mobile) on about page
   {{html:proj-featured}} --> build HTML for featured projects on project page
   {{html:proj-all}}      --> build HTML for all projects based on visibility
+  {{html:proj-all-mobile}}
+                         --> build HTML for all projects (on mobile) based on visibility
   {{html:proj-spec}}     --> build HTML for specific project page
   {{html:blog-latest}}   --> build HTML for latest blog post on blog page
   {{html:blog-all}}      --> build HTML for all blog posts
@@ -219,6 +221,10 @@ const buildHtml = async (data, match, key, page) => {
 		case 'proj-all':
 			projects = await parser.parse('project')
 			html = await buildProjAll(projects)
+			break
+		case 'proj-all-mobile':
+			projects = await parser.parse('project')
+			html = await buildProjAllMobile(projects)
 			break
 		case 'proj-spec':
 			projects = await parser.parse('project')
@@ -783,6 +789,96 @@ const buildProjSuper = async (projects) => {
 // attempt to remove unsafe characters from HTML IDs, classnames, and sometimes routing
 const htmlSafify = async (string) => {
 	return string.toLowerCase().replace(/\./g, '----').replace(/#/g, '').replace(/ /g, '_').replace(/,/g, '').replace(/'/g, '')
+}
+
+// build all project rows (for mobile)
+const buildProjAllMobile = async (projects) => {
+	let projectRowMobileFeatured = await readFilePromise('snippets/projects/project-row-mobile-featured.html')
+	let projectRowMobileRegular = await readFilePromise('snippets/projects/project-row-mobile-regular.html')
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
+	projectRowMobileFeatured = projectRowMobileFeatured.toString()
+	projectRowMobileRegular = projectRowMobileRegular.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
+
+	// sort projects
+	let superProjects = []
+	let featuredProjects = []
+	let normalProjects = []
+	let lessProjects = []
+	for (let p of projects) {
+		switch (p.visibility) {
+			case 'super':
+				superProjects.push(p)
+				break
+			case 'featured':
+				featuredProjects.push(p)
+				break
+			case 'normal':
+				normalProjects.push(p)
+				break
+			case 'less':
+				lessProjects.push(p)
+				break
+			case 'none':
+				break
+			default:
+				throw new Error(`Unknown project visibility: '${p.visibility}'`)
+		}
+	}
+	let sortedProjects = superProjects.concat(featuredProjects).concat(normalProjects).concat(lessProjects)
+
+	// build HTML
+	let html = ''
+
+	// build mobile projects
+	for (let [index, project] of sortedProjects.entries()) {
+		// select container based on project visibility
+		let mobileContainer = project.visibility === 'super' ? projectRowMobileFeatured : projectRowMobileRegular
+
+		// build container
+		mobileContainer = mobileContainer.replace(/\{\{name\}\}/g, await htmlSafify(project.name))
+		mobileContainer = mobileContainer.replace('{{title}}', project.name)
+		mobileContainer = mobileContainer.replace('{{blurb}}', project.blurb)
+		mobileContainer = mobileContainer.replace('{{about}}', project.about)
+		mobileContainer = mobileContainer.replace('{{logo}}', project.img)
+		mobileContainer = mobileContainer.replace(
+			'{{technologies}}',
+			project.languages.concat(project.technologies).filter(p => p !== '').join(' · ')
+		)
+		let githubIconHtml = '', docsIconHtml = '', demoIconHtml = '', linkIconHtml = '', blogIconHtml = ''
+		if (project.repo !== '') {
+			githubIconHtml = githubIconSnippet.replace('{{repo}}', project.repo)
+		}
+		if (project.documentation !== '') {
+			docsIconHtml = docsIconSnippet.replace('{{docs}}', project.documentation)
+		}
+		if (project.demo === 'true') {
+			demoIconHtml = demoIconSnippet.replace('{{name}}', project.name.toLowerCase())
+		}
+		if (project.link !== '') {
+			linkIconHtml = linkIconSnippet.replace('{{url}}', project.link)
+		}
+		if (project.blogPost !== '') {
+			linkIconHtml = blogIconSnippet.replace('{{blog}}', project.blogPost)
+		}
+
+		mobileContainer = mobileContainer.replace('{{github-icon}}', githubIconHtml)
+		mobileContainer = mobileContainer.replace('{{docs-icon}}', docsIconHtml)
+		mobileContainer = mobileContainer.replace('{{demo-icon}}', demoIconHtml)
+		mobileContainer = mobileContainer.replace('{{link-icon}}', linkIconHtml)
+		mobileContainer = mobileContainer.replace('{{blog-icon}}', blogIconHtml)
+		html += mobileContainer
+	}
+
+	return html
 }
 
 // build all project rows

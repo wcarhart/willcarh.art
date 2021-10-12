@@ -49,18 +49,23 @@
 		<div id="content-main">
 			<h1>Projects</h1>
 			<div id="content-body">
-				<div class="spacer"></div>
-				<div class="section" id="section-0">
+				<div class="spacer standard"></div>
+				<div class="section standard" id="section-0">
 					{{html:proj-super}}
 				</div>
 
-				<div class="spacer"></div>
+				<div class="spacer standard"></div>
 
 				<div class="section" id="section-1">
-					<h2>All Projects</h2>
+					<h2 class="standard">All Projects</h2>
 					<h5>View archived projects in <a class="fancy-link" href="{{src:vault}}">the vault</a>, or check out some <a class="fancy-link" href="{{src:demo}}">live demos</a>.</h5>
 					<div class="spacer-small"></div>
-					{{html:proj-all}}
+					<div class="standard">
+						{{html:proj-all}}
+					</div>
+					<div class="mobile">
+						{{html:proj-all-mobile}}
+					</div>
 				<div class="spacer"></div>
 			</div>
 

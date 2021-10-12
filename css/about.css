@@ -598,6 +598,10 @@ Device Sizes in px (width x height):
 	.tidbit-text-mobile {
 		font-size: 1rem !important;
 	}
+
+	.exp-tidbit-handle-mobile {
+		margin-bottom: 0;
+	}
 }
 
 @media (hover: none) and (min-height: 567px) {

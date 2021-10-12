@@ -45,6 +45,8 @@ Supported HTML tags:
   {{html:blog-all}}      --> build HTML for all blog posts
   {{html:blog-spec}}     --> build HTML for specific blog post
   {{html:vault-rows}}    --> build HTML for rows in the vault
+  {{html:vault-rows-mobile}}
+                         --> build HTML for rows in the vault (on mobile)
   {{html:demo-rows}}     --> build HTML for rows on demo index
   {{html:credits}}       --> build HTML for credits
   {{html:analytics-panelbear}}
@@ -247,6 +249,12 @@ const buildHtml = async (data, match, key, page) => {
 			projects = await parser.parse('project')
 			blogs = await parser.parse('blog')
 			html = await buildVaultRows(experiences, projects, blogs)
+			break
+		case 'vault-rows-mobile':
+			experiences = await parser.parse('experience')
+			projects = await parser.parse('project')
+			blogs = await parser.parse('blog')
+			html = await buildVaultRowsMobile(experiences, projects, blogs)
 			break
 		case 'demo-rows':
 			projects = await parser.parse('project')
@@ -1085,6 +1093,148 @@ const buildProjAll = async (projects) => {
 		normalIndex += 1
 		rowHtml = rowHtml.replace(/\{\{project-container-regular\}\}/g, '')
 		html += rowHtml
+	}
+
+	return html
+}
+
+// build vault rows (for mobile) HTML
+const buildVaultRowsMobile = async (experiences, projects, blogs) => {
+	// parse HTML snippets
+	let vaultRowMobileSnippet = await readFilePromise('snippets/vault/vault-row-mobile.html')
+	let demoIconSnippet = await readFilePromise('snippets/linkicons/demo-icon.html')
+	let docsIconSnippet = await readFilePromise('snippets/linkicons/docs-icon.html')
+	let githubIconSnippet = await readFilePromise('snippets/linkicons/github-icon.html')
+	let linkIconSnippet = await readFilePromise('snippets/linkicons/link-icon.html')
+	let blogIconSnippet = await readFilePromise('snippets/linkicons/blog-icon.html')
+	vaultRowMobileSnippet = vaultRowMobileSnippet.toString()
+	demoIconSnippet = demoIconSnippet.toString()
+	docsIconSnippet = docsIconSnippet.toString()
+	githubIconSnippet = githubIconSnippet.toString()
+	linkIconSnippet = linkIconSnippet.toString()
+	blogIconSnippet = blogIconSnippet.toString()
+
+	// template for how we will fill in the rows
+	class RowTemplate {
+		constructor({year='', sortDate='', title='', type='', resources=[], demoName='', docsName='', githubName='', linkUrl='', blogPost='', vaultLink=''}) {
+			this.year = year
+			this.sortDate = sortDate
+			this.title = title
+			this.type = type
+			this.resources = resources
+			this.demoName = demoName
+			this.docsName = docsName
+			this.githubName = githubName
+			this.linkUrl = linkUrl
+			this.blogPost = blogPost
+			this.vaultLink = vaultLink
+		}
+	}
+	let rows = []
+
+	// parse experiences into rows
+	for (let experience of experiences) {
+		for (let [index, ] of experience.title.entries()) {
+			let r = new RowTemplate({})
+			let yearDate = new Date(experience.date[index]*1000)
+			r.year = yearDate.getFullYear()
+			r.sortDate = experience.date[index]
+			r.title = `${experience.title[index]} @ ${experience.company}`
+			r.type = 'experience'
+			r.resources = experience.languagesAndLibraries.concat(experience.platforms.concat(experience.infrastructure))
+			r.demoName = ''
+			r.docsName = ''
+			r.githubName = ''
+			r.linkUrl = experience.url
+			r.blogPost = experience.blogPost
+			r.vaultLink = `{{src:about}}?exp=${experience.companyId}#experience`
+
+			rows.push(r)
+		}
+	}
+
+	// parse projects into rows
+	for (let project of projects) {
+		if (project.status === 'in development') {
+			continue
+		}
+		let r = new RowTemplate({})
+		let date = new Date(project.published * 1000)
+		r.year = date.getFullYear()
+		r.sortDate = project.published
+		r.title = project.name
+		r.type = 'project'
+		r.resources = project.languages.concat(project.technologies)
+		r.demoName = project.demo === 'true' ? project.name.toLowerCase() : ''
+		r.docsName = project.documentation
+		r.githubName = project.repo
+		r.linkUrl = project.link
+		r.blogPost = project.blogPost
+		r.vaultLink = `{{src:project/${project.id}}}`
+
+		rows.push(r)
+	}
+
+	// parse blog posts into rows
+	for (let blog of blogs) {
+		let r = new RowTemplate({})
+		let date = new Date(blog.published * 1000)
+		r.year = date.getFullYear()
+		r.sortDate = blog.published
+		r.title = blog.title
+		r.type = 'blog'
+		r.resources = blog.resources
+		r.demoName = ''
+		r.docsName = ''
+		r.githubName = ''
+		r.linkUrl = ''
+		r.blogPost = `{{src:blog/${blog.id}}}`
+		r.vaultLink = r.blogPost
+
+		rows.push(r)
+	}
+
+	// sort rows based on year, prioritizing projects
+	rows.sort((a, b) => {
+		if (a.sortDate > b.sortDate) {
+			return -1
+		} else if (a.sortDate < b.sortDate) {
+			return 1
+		} else {
+			if (a.type === 'experience') {
+				return -1
+			} else {
+				return 1
+			}
+		}
+	})
+
+	// build html
+	let html = ''
+	for (let row of rows) {
+		let newRow = vaultRowMobileSnippet.replace('{{year}}', row.year)
+		newRow = newRow.replace('{{title}}', row.title)
+
+		let linkHtml = ''
+		if (row.githubName !== '') {
+			linkHtml += githubIconSnippet.replace('{{repo}}', row.githubName)
+		}
+		if (row.docsName !== '') {
+			linkHtml += docsIconSnippet.replace('{{docs}}', row.docsName)
+		}
+		if (row.blogPost !== '') {
+			linkHtml += blogIconSnippet.replace('{{blog}}', row.blogPost)
+		}
+		if (row.demoName !== '') {
+			linkHtml += demoIconSnippet.replace('{{name}}', row.demoName)
+		}
+		if (row.linkUrl !== '') {
+			linkHtml += linkIconSnippet.replace('{{url}}', row.linkUrl)
+		}
+		newRow = newRow.replace('{{links}}', linkHtml)
+		newRow = newRow.replace('{{vault-link}}', row.type === 'experience' ? `${row.vaultLink}m` : row.vaultLink)
+
+		html += newRow
 	}
 
 	return html

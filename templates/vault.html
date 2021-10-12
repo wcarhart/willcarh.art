@@ -54,14 +54,28 @@
 			<div class="spacer-small"></div>
 
 			<div id="vault-rows">
-				<div class="row vault-row">
-					<div id="vault-header-year" class="col-md-1 vault-header">Year</div>
-					<div id="vault-header-title" class="col-md-4 vault-header">Title</div>
-					<div id="vault-header-type" class="col-md-1 vault-header"></div>
-					<div id="vault-header-resources" class="col-md-4 vault-header">Resources</div>
-					<div id="vault-header-links" class="col-md-2 vault-header">Links</div>
+				<div class="standard">
+					<div class="row vault-row">
+						<div id="vault-header-year" class="col-md-1 vault-header">Year</div>
+						<div id="vault-header-title" class="col-md-4 vault-header">Title</div>
+						<div id="vault-header-type" class="col-md-1 vault-header"></div>
+						<div id="vault-header-resources" class="col-md-4 vault-header">Resources</div>
+						<div id="vault-header-links" class="col-md-2 vault-header">Links</div>
+					</div>
 				</div>
-				{{html:vault-rows}}
+				<div class="mobile">
+					<div class="row vault-row">
+						<div id="vault-header-year-mobile" class="col-2 vault-header">Year</div>
+						<div id="vault-header-title-mobile" class="col-7 vault-header">Title</div>
+						<div id="vault-header-links-mobile" class="col-3 vault-header">Links</div>
+					</div>
+				</div>
+				<div class="standard">
+					{{html:vault-rows}}
+				</div>
+				<div class="mobile">
+					{{html:vault-rows-mobile}}
+				</div>
 				<!-- TODO: vertically center items in columns -->
 			</div>
 

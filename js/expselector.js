@@ -8,6 +8,7 @@ $(document).ready(async () => {
 	let urlParams = new URLSearchParams(window.location.search)
 	if (urlParams.has('exp')) {
 		selectExperience({'override': urlParams.get('exp')})
+		selectExperienceMobile({'override': urlParams.get('exp')})
 	}
 
 	// dynamically update div height after selecting experience
@@ -24,9 +25,14 @@ $(document).ready(async () => {
 	$('.mobile-exp-tab').click(selectExperienceMobile)
 })
 
-function selectExperienceMobile() {
+function selectExperienceMobile({override=''}) {
 	// get our selected experience
-	let exp = this.id.split('-').pop()
+	let exp = ''
+	if (override === '') {
+		exp = this.id.split('-').pop()
+	} else {
+		exp = override
+	}
 
 	// toggle tab
 	const tabs = $('.mobile-exp-tab')

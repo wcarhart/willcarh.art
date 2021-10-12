@@ -23,6 +23,14 @@
 	--toggle: url(../ico/dark-mode-toggle-dark.png);
 }
 
+.standard {
+	display: block;
+}
+
+.mobile {
+	display: none;
+}
+
 #content-main {
 	position: relative;
 	z-index: 20;
@@ -74,25 +82,30 @@ h5 {
 	border-radius: 1rem;
 }
 
-#color-palette-color-background {
+#color-palette-color-background,
+#color-palette-color-background-mobile {
 	color: var(--background);
 	background-color: var(--text);
 }
 
-#color-palette-color-detail {
+#color-palette-color-detail,
+#color-palette-color-detail-mobile {
 	color: var(--detail);
 	background-color: var(--text);
 }
 
-#color-palette-color-subtitle {
+#color-palette-color-subtitle,
+#color-palette-color-subtitle-mobile {
 	color: var(--subtitle);
 }
 
-#color-palette-color-color {
+#color-palette-color-color,
+#color-palette-color-color-mobile {
 	color: var(--color);
 }
 
-#color-palette-color-text {
+#color-palette-color-text,
+#color-palette-color-text-mobile {
 	color: var(--text);
 }
 
@@ -152,6 +165,11 @@ h5 {
 }
 
 /* ===== media queries for responsive resizing ===== */
+@media screen and (hover: none) and (pointer: coarse) {
+	.icon-icon {
+		color: var(--color);
+	}
+}
 
 /* 
 Device Sizes in px (width x height):
@@ -176,6 +194,60 @@ Device Sizes in px (width x height):
 @media (hover: none) and (max-width: 414px) {
 	#content-main {
 		width: 95%;
+	}
+
+	.icon-row {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.color-palette-row {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.standard {
+		display: none !important;
+	}
+
+	.mobile {
+		display: block !important;
+	}
+
+	.color-palette-color-container {
+		width: 2rem;
+		margin-right: 1rem;
+	}
+
+	.icon-label {
+		white-space: normal;
+		overflow-x: auto;
+		padding-bottom: 0;
+	}
+
+	.icon-description {
+		height: auto;
+		transform: translateY(-0.5rem);
+	}
+
+	.icon-row {
+		padding-bottom: 0
+	}
+
+	.icon-icon:hover {
+		color: var(--color);
+	}
+
+	#license-text {
+		font-size: 1rem !important;
+	}
+
+	#license-container {
+		padding-bottom: 0;
+	}
+
+	#made-with-love {
+		font-size: 0.7rem !important;
 	}
 }
 

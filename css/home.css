@@ -59,6 +59,10 @@ h2 {
 	color: var(--subtitle);
 }
 
+#main-subtitle {
+	height: 3.5rem;
+}
+
 #email-contact {
 	position: fixed;
 	right: 5rem;
@@ -522,5 +526,15 @@ Device Sizes in px (width x height):
 
 	.tidbit-text-mobile {
 		font-size: 1.5rem !important;
+	}
+}
+
+@media (hover: hover) and (max-height: 805px) {
+	#content-main {
+		top: 10%;
+	}
+
+	#above-tidbit {
+		height: 4rem;
 	}
 }

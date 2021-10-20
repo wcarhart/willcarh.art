@@ -310,7 +310,7 @@ authorImg: {{cdn:img/profile.jpg}}
 status: active
 tags:
 id: why-i-deleted-my-facebook
-hidden: false
+hidden: true
 
 title: How to Print File Trees on the Command Line
 subtitle: Spruce up your file system

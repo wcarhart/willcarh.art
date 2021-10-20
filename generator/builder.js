@@ -1177,6 +1177,7 @@ const buildVaultRowsMobile = async (experiences, projects, blogs) => {
 
 	// parse blog posts into rows
 	for (let blog of blogs) {
+		if (blog.hidden === 'true') continue
 		let r = new RowTemplate({})
 		let date = new Date(blog.published * 1000)
 		r.year = date.getFullYear()
@@ -1319,6 +1320,7 @@ const buildVaultRows = async (experiences, projects, blogs) => {
 
 	// parse blog posts into rows
 	for (let blog of blogs) {
+		if (blog.hidden === 'true') continue
 		let r = new RowTemplate({})
 		let date = new Date(blog.published * 1000)
 		r.year = date.getFullYear()

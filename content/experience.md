@@ -1,10 +1,26 @@
+company: Stripe
+companyId: stripe
+title: Backend Engineer, API Platform
+date: 1639414800
+displayDate: Since Dec 2021
+detail: More details coming soon!
+languagesAndLibraries: Ruby
+languagesAndLibraries: Java
+tools: git
+tools: GitHub
+tools: Google Drive
+tools: Slack
+platforms: macOS
+url: https://stripe.com
+blogPost:
+
 company: Wisk
 companyId: wisk
 title: Sr. Full-stack Software Engineer, Tools & Infrastructure
 title: Full-stack Software Engineer, Tools & Infrastructure
 date: 1615313940
 date: 1574146800
-displayDate: Since Nov 2019
+displayDate: Nov 2019 - Nov 2021
 detail: Designed, implemented, and maintain a web app that builds and manages individual **Jupyter servers via Docker containers** (like a pseudo-Kubernetes), built via **Express.js and Node.js** and with data backed in **GCP Cloud Storage** and **GCP BigQuery**
 detail: Designed, implemented, and maintain a **front-end data visualization tool** for internal company simulations,  built with **Dash and Plotly**, backed by **Google BigQuery**, and served from **GCP**
 detail: Designed, implemented, and maintain an in-house end-to-end workflow management platform, which exposes an **easy-to-use API**, **scalable, scheduleable cloud compute** resources in GCP, and **indexed artifacts in Elasticsearch**, all in Node.js, Python, and Mistral

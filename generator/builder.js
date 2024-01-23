@@ -49,10 +49,6 @@ Supported HTML tags:
                          --> build HTML for rows in the vault (on mobile)
   {{html:demo-rows}}     --> build HTML for rows on demo index
   {{html:credits}}       --> build HTML for credits
-  {{html:analytics-panelbear}}
-                         --> build HTML for site analytics with Panelbear
-  {{html:analytics-plausible}}
-                         --> build HTML for site analytics with Plausible.io
   {{html:logo}}          --> build HTML for site logo
   {{html:darkmode}}      --> build HTML for dark mode toggle
   {{html:email}}         --> build HTML for email contact button
@@ -261,8 +257,6 @@ const buildHtml = async (data, match, key, page) => {
 			html = await buildDemoRows(projects)
 			break
 		case 'credits':
-		case 'analytics-panelbear':
-		case 'analytics-plausible':
 		case 'logo':
 		case 'darkmode':
 		case 'email':

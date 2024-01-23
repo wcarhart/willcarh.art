@@ -6,7 +6,7 @@ const util = require('util')
 const core = require('./core.js')
 
 const readdirPromise = util.promisify(fs.readdir)
-const rmdirPromise = util.promisify(fs.rmdir)
+const rmPromise = util.promisify(fs.rm)
 const statPromise = util.promisify(fs.stat)
 
 // verify content markdown files are as expected
@@ -104,7 +104,7 @@ const main = async () => {
 		await core.refreshRedirects()
 
 		// clear out source directory
-		await rmdirPromise('src/', { recursive: true })
+		await rmPromise('src/', { recursive: true, force: true })
 
 		// asset order is essential, due to how linking occurs:
 		//  - scripts must be built first and styles must be first

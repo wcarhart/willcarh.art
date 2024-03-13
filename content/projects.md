@@ -395,7 +395,7 @@ status: stable
 install:
 documentation:
 related:
-visibility: featured
+visibility: none
 blogPost:
 tags: web
 id: wanda

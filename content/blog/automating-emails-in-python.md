@@ -47,7 +47,7 @@ Remember earlier when I said that Gmail won't let us send emails through an _@gm
 
 In order for us to send emails with the above code snippet, we'd have to go into a [hidden Gmail setting](https://support.google.com/accounts/answer/6010255?hl=en) and turn off protections which prevent sending emails from insecure applications. This will allow us to send emails freely with the code we've already written, but Gmail often complains! The email utility I wrote for [willcarh.art]({{src:index}}), the [Herald](https://github.com/wcarhart/willcarh.art-v1/blob/master/herald.py), used this implementation for the site's initial architecture. However, whenever someone would send an email through the site, I'd get a **critical security alert** from Google, claiming that _"Someone just used your password to try to sign in to your account. Google blocked them, but you should check what happened!"_
 **Yes, Google, that was me.**
-![Picture of Google critical security alert]({{cdn:img/blog/automating-emails-in-python/criticalalert.png}})<What the Google Security Alert looks like>
+![Picture of Google critical security alert]({{asset:img/blog/automating-emails-in-python/criticalalert.png}})<What the Google Security Alert looks like>
 What's troublesome is not the annoying email itself, but Gmail's behavior: _it locked out my application until I manually confirmed its access._ This can't be a valid implementation, because then nobody can send emails from [willcarh.art]({{src:index}}) while Gmail has it blocked! How do we get around this?
 
 ### Our saving grace: the official Gmail API

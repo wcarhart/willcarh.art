@@ -124,7 +124,7 @@ The above code a great starting point! What else could we accomplish with this?
 
 I did all of the above in my latest personal project, [Soliloquy]({{src:project/soliloquy}}) ([www.soliloquy.dev](https://www.soliloquy.dev/)), which uses CI to leave complex Pull Request comments via a GitHub bot account known as the [Friendly Committer](https://github.com/friendly-committer). If you'd like to see how this works, feel free to check out its [code here](https://github.com/wcarhart/Soliloquy/blob/master/scripts/validate_content.py). Here's what this looks like in practice:
 
-![Screenshot of GitHub bot commenting on a Pull Request]({{cdn:img/blog/building-chatbots-for-github/friendlycommitter.png}})<Friendly Committer commenting on a PR on GitHub>
+![Screenshot of GitHub bot commenting on a Pull Request]({{asset:img/blog/building-chatbots-for-github/friendlycommitter.png}})<Friendly Committer commenting on a PR on GitHub>
 
 ### Closing Notes
 And there you have it! This blog post barely scratches the surface of what automation is possible via Travis CI and the GitHub API. What's even more exciting is the [introduction of CI/CD in GitHub Actions](https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/), which was announced in August 2019. Who knows, maybe this tutorial will be deprecated within the near future due to GitHub Actions!

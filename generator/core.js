@@ -9,7 +9,6 @@ const minify = require('minify')
 // eslint-disable-next-line no-unused-vars
 const tryToCatch = require('try-to-catch')
 
-const config = require('../config.json')
 const package = require('../package.json')
 
 const builder = require('./builder.js')
@@ -139,8 +138,22 @@ const buildScripts = async (develop) => {
 	}
 }
 
-// build style elements: css/*, ico/*, font/*
+// Copy static assets, including nested image and video directories
+const copyDirectory = async (source, destination) => {
+	await fs.promises.mkdir(destination, { recursive: true })
+	for (const entry of await fs.promises.readdir(source, { withFileTypes: true })) {
+		const from = path.join(source, entry.name)
+		const to = path.join(destination, entry.name)
+		if (entry.isDirectory()) {
+			await copyDirectory(from, to)
+		} else {
+			await copyFilePromise(from, to)
+		}
+	}
+}
+
 const buildStyles = async () => {
+	await copyDirectory('img', 'src/img')
 	try {
 		await fs.promises.access('src/css')
 	} catch (e) {
@@ -179,7 +192,7 @@ const buildStyles = async () => {
 // replace static asset tags in template
 const resolveAssets = async (data, level, develop) => {
 	let resolvedData = data
-	const supportedAssets = ['css', 'cdn', 'font', 'ico', 'js', 'src', 'sys', 'blog', 'project']
+	const supportedAssets = ['css', 'asset', 'font', 'ico', 'js', 'src', 'sys', 'blog', 'project']
 
 	// process each asset
 	for (let asset of supportedAssets) {
@@ -194,9 +207,9 @@ const resolveAssets = async (data, level, develop) => {
 				// get asset value
 				let value = match.replace('{{', '').replace('}}', '').replace(`${asset}:`, '')
 
-				// CDN files have a different prefix
-				if (asset === 'cdn') {
-					resolvedData = resolvedData.replace(match, `${config.cdn}${value}`)
+				// Local media uses root-relative URLs on every page and in scripts
+				if (asset === 'asset') {
+					resolvedData = resolvedData.replace(match, `/${value}`)
 
 				// sys is used for dynamically generated assets (not static files)
 				} else if (asset === 'sys') {

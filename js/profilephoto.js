@@ -5,13 +5,13 @@ $(document).ready(async () => {
 
 	// registered photos
 	const photos = [
-		'{{cdn:img/profile.jpg}}',
-		'{{cdn:img/profile4.jpeg}}',
-		'{{cdn:img/profile2.jpeg}}',
-		'{{cdn:img/profile6.jpg}}'
+		'{{asset:img/profile.jpg}}',
+		'{{asset:img/profile4.jpeg}}',
+		'{{asset:img/profile2.jpeg}}',
+		'{{asset:img/profile6.jpg}}'
 	]
 
-	// preload images from CDN
+	// preload local images
 	for (const photo of photos) {
 		let img = new Image()
 		img.src = photo

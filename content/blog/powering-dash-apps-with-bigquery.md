@@ -1,6 +1,6 @@
-![Mugato Zoolander Meme: top: reactive web apps, bottom: so hot right now]({{cdn:img/blog/powering-dash-apps-with-bigquery/reactive-web-app-meme.jpeg}})
+![Mugato Zoolander Meme: top: reactive web apps, bottom: so hot right now]({{asset:img/blog/powering-dash-apps-with-bigquery/reactive-web-app-meme.jpeg}})
 ### A primer on Plotly and Dash
-It's an average day as a software engineer during COVID-19. You said last night you'd be up by 8am but it's 8:30am and you're still in bed. You make sure to check Slack on your phone so your co-workers think you're online despite the fact that the covers are pulled up to your nose. At 8:57am, you groggily roll out of bed for your 9am Zoom standup and put on the same sweatshirt from yesterday you left wadded on the floor. While someone drones on about semicolon rules in the repo's `.eslintrc` you hop on Reddit and browse [r/DataIsBeautiful](https://www.reddit.com/r/dataisbeautiful/). You're now awake gazing wide-eye at the beautiful visuals other software engineers and data scientists are creating. Someone made an interactive voting map for the US down to the city. Someone else made a [COVID-19 tracker](https://www.reddit.com/r/dataisbeautiful/comments/kcy21p/oc_covid_19_dashboard_in_python_by_plotly_dash/), with a cool [demo video]({{cdn:img/blog/powering-dash-apps-with-bigquery/r-slash-data-is-beautiful-covid19-tracker.mp4}}). How do they make all this stuff so quickly?
+It's an average day as a software engineer during COVID-19. You said last night you'd be up by 8am but it's 8:30am and you're still in bed. You make sure to check Slack on your phone so your co-workers think you're online despite the fact that the covers are pulled up to your nose. At 8:57am, you groggily roll out of bed for your 9am Zoom standup and put on the same sweatshirt from yesterday you left wadded on the floor. While someone drones on about semicolon rules in the repo's `.eslintrc` you hop on Reddit and browse [r/DataIsBeautiful](https://www.reddit.com/r/dataisbeautiful/). You're now awake gazing wide-eye at the beautiful visuals other software engineers and data scientists are creating. Someone made an interactive voting map for the US down to the city. Someone else made a [COVID-19 tracker](https://www.reddit.com/r/dataisbeautiful/comments/kcy21p/oc_covid_19_dashboard_in_python_by_plotly_dash/), with a cool [demo video]({{asset:img/blog/powering-dash-apps-with-bigquery/r-slash-data-is-beautiful-covid19-tracker.mp4}}). How do they make all this stuff so quickly?
 The answer is [Plotly](https://plotly.com/python/) and [Dash](https://plotly.com/dash/). Built atop [D3.js](https://d3js.org/) and [stack.gl](http://stack.gl/), Plotly is a high-level, declarative charting library. Combined with Dash, a productive framework for building web analytic applications with highly custom user interfaces in pure Python atop of [Flask](https://flask.palletsprojects.com/), [Plotly.js](https://plotly.com/javascript/), and [React.js](https://reactjs.org/), it's possible to rapidly develop complex, reactive web apps with ease.
 Let's take a look at how we can build a powerful app from scratch using Plotly and Dash and data from [GCP BigQuery](https://cloud.google.com/bigquery).
 
@@ -24,9 +24,9 @@ fig = px.scatter(df.query('year==2007'), x='gdpPercap', y='lifeExp', size='pop',
 fig.show()
 ```
 Now, we can run our app with `python fig.py`, which should open a new tab in the browser to display the generated figure.
-![Screenshot of generated Plotly figure of GDP per capita vs life expectancy]({{cdn:img/blog/powering-dash-apps-with-bigquery/plotly-demo-0.png}})<GDP Per Capita vs. Life Expectancy>
+![Screenshot of generated Plotly figure of GDP per capita vs life expectancy]({{asset:img/blog/powering-dash-apps-with-bigquery/plotly-demo-0.png}})<GDP Per Capita vs. Life Expectancy>
 Pretty cool, right? Before we go any further, note that any Plotly figure comes out-of-the-box with some neat controls. Use the toolbar in the top right of the figure to zoom, box select, lasso select, download the figure as a PNG, and more. Here's what that toolbar will look like.
-![Screenshot of Plotly toolbar]({{cdn:img/blog/powering-dash-apps-with-bigquery/plotly-demo-2.png}})<Use the Plotly toolbar to interact with generated figures.>
+![Screenshot of Plotly toolbar]({{asset:img/blog/powering-dash-apps-with-bigquery/plotly-demo-2.png}})<Use the Plotly toolbar to interact with generated figures.>
 Now, let's break down what we just built.
 The first line `import plotly.express as px` just imports Plotly Express from where Pip installed it. It's standard to call Plotly Express `px` for brevity.
 Next, we create a [pandas dataframe](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), the standard data structure for pandas, from Plotly Express' test data set, which we instantiate with `px.data.gapminder()`. If you're curious, the data in the Gapminder dataset comes from [gapminder.org](https://www.gapminder.org/).
@@ -37,7 +37,7 @@ fig = px.scatter(df, x="gdpPercap", y="lifeExp", animation_frame="year", animati
            log_x=True, size_max=45, range_x=[100,100000], range_y=[25,90])
 ```
 Run our code again and we'll see that the figure has changed dramatically, even though we're still using `px.scatter`.
-![Screenshot of updated Plotly graph of GDP per capita vs life expectancy]({{cdn:img/blog/powering-dash-apps-with-bigquery/plotly-demo-1.png}})<GDP Per Capita vs. Life Expectancy, grouped by continent, animated by year>
+![Screenshot of updated Plotly graph of GDP per capita vs life expectancy]({{asset:img/blog/powering-dash-apps-with-bigquery/plotly-demo-1.png}})<GDP Per Capita vs. Life Expectancy, grouped by continent, animated by year>
 Finally, our last line `fig.show()` creates a [Flask](https://flask.palletsprojects.com/) server to serve the figure, and then tears it down as soon as the figure is rendered in the browser. As we can see, we can build powerful figures easily with just Plotly alone, but what if we want them to update dynamically? Next, let's take a look at Dash and see if we can turn our static figure into a reactive web application.
 
 ### Creating responsive web apps with Dash
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     app.run_server(debug=True)
 ```
 In your browser, navigate to `localhost:8050`. When you click the button, the title message will toggle. We made this all in Python, with no HTML, CSS, or JavaScript!
-![Screenshot of basic Dash app]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-0.gif}})<Our simple Dash app so far.>
+![Screenshot of basic Dash app]({{asset:img/blog/powering-dash-apps-with-bigquery/dash-demo-0.gif}})<Our simple Dash app so far.>
 Let's break down our app so far.
 The first few lines are setting up Dash. We import Dash and its components, and then instantiate our app with `dash.Dash()`.
 Next, we define the HTML layout for our app with `app.layout`. We do this with Dash's HTML classes in `dash_html_components`. In our example, our app has one `div` containing an `h1` and a `button`, which we declare using `html.Div()`, `html.H1()`, and `html.Button()`.
@@ -180,7 +180,7 @@ if __name__ == '__main__':
     app.run_server(debug=True)
 ```
 Run the app and see the beautiful, interactive visualization!
-![Screen recording of more complex Dash app]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-1.gif}})<Our more complex Dash app.>
+![Screen recording of more complex Dash app]({{asset:img/blog/powering-dash-apps-with-bigquery/dash-demo-1.gif}})<Our more complex Dash app.>
 
 ### Loading data from BigQuery
 Now that we can make some pretty powerful web applications with Dash and Plotly, let's look our datasets. So far, we've been using some of the datasets provided by Plotly. In the real world, however, this data will likely come from an external source, like an SQL table or a CSV file. Let's try our hand at importing data from [Google BigQuery](https://cloud.google.com/bigquery).
@@ -192,7 +192,7 @@ First, let's get access to our dataset. Navigate to the [Hacker News BigQuery da
 >> Note | Since I named my dataset copy `hacker_news_copy`, I reference that name in the remainder of this article. If you picked a different name, you'll have to change it in the following code snippets.
 
 After you have the dataset copied to your GCP console, we'll need to create a service account in GCP to access the data programmatically. First, navigate to the [Credentials Wizard](https://console.cloud.google.com/apis/credentials/wizard) to instigate the credential and service account creation process. Select the _BigQuery API_, _Application data_, and _No, I'm not using them_ options (see screenshot below). If these options have changed since this article was published, follow whatever options lead you to create a service account.
-![Screenshot of credential and service account creation in GCP]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-2.png}})<Options for setting up service account in GCP from the Credentials Wizard.>
+![Screenshot of credential and service account creation in GCP]({{asset:img/blog/powering-dash-apps-with-bigquery/dash-demo-2.png}})<Options for setting up service account in GCP from the Credentials Wizard.>
 Next, follow the prompts to create a new service account. When giving the new service account roles, make sure to add _BigQuery Admin_ as a minimum (you can add as many others as you like). In addition, you can add yourself to the _Service account users role_ and _Service account admin role_ if you'd ever like to impersonate this service account in the future. Once your service account is created, navigate to the [list of service accounts](https://console.cloud.google.com/iam-admin/serviceaccounts), select the newly created service account, navigate to the _Keys_ tab, and use the `ADD KEY` button to create a new JSON key.
 >> Watch out! | Your newly generated JSON key file will download immediately. Since this file allows unmitigated access to (some of) your cloud resources, make sure to store it somewhere securely and _do not_ check it into version control. If you're unsure of where to put the file, a good starting spot is `/etc/keys/`.
 
@@ -266,7 +266,7 @@ table = dt.DataTable(
     fill_width=False
 )
 ```
-![Screenshot of a table resulting from our top_types query]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-3.png}})<Our table from the `top_types` query.>
+![Screenshot of a table resulting from our top_types query]({{asset:img/blog/powering-dash-apps-with-bigquery/dash-demo-3.png}})<Our table from the `top_types` query.>
 Next, let's make some interactive graphs for our second query, `counts`. We'll make an animated histogram and a standard line chart. For the histogram, we'll need to restructure our data somewhat so Plotly can interpret it. Let's make a copy of our dataframe at `dfs['counts']` so we don't modify it for future figures.
 ```python
 df = dfs['counts'].copy(deep=True)
@@ -285,7 +285,7 @@ fig = px.bar(
 histogram = dcc.Graph(id='counts-histogram', figure=fig)
 ```
 First, we set the index to the `month` column, as that's what our animation will track. Next, we pivot our data around our index (`month`), previous column names, and the original values using [`pandas.DataFrame.unstack()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.unstack.html), and then rename the new columns appropriately. Finally, we build a figure using our newly restructured data.
-![Recording of animated histogram]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-4.gif}})<Our animated histogram from the `counts` query.>
+![Recording of animated histogram]({{asset:img/blog/powering-dash-apps-with-bigquery/dash-demo-4.gif}})<Our animated histogram from the `counts` query.>
 For the line chart, we'll need to add 4 separate traces, one for each of the dataframe's columns: `comments`, `stories`, `comment_authors`, and `story_authors`. To get more granular control of Plotly, we'll use the actual `Figure` class from [`plotly.graph_objects`](https://plotly.com/python/graph-objects/).
 ```python
 import plotly.graph_objects as go
@@ -299,7 +299,7 @@ for category in ['stories', 'comments', 'comment_authors', 'story_authors']:
 fig.update_layout(title='Hacker News interactions over time')
 line = dcc.Graph(id='counts-line', figure=fig)
 ```
-![Screenshot of line graph from our counts query]({{cdn:img/blog/powering-dash-apps-with-bigquery/dash-demo-5.png}})<Our line chart from the `counts` query.>
+![Screenshot of line graph from our counts query]({{asset:img/blog/powering-dash-apps-with-bigquery/dash-demo-5.png}})<Our line chart from the `counts` query.>
 Finally, to display all of our generated visuals with Dash, let's add our figures to our layout and serve the application.
 ```python
 app.layout = html.Div([

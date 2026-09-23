@@ -8,6 +8,7 @@ const parser = require('./parser.js')
 const { Marq } = require('@wcarhart/marq')
 
 const package = require('../package.json')
+const config = require('../config.json')
 
 const readdirPromise = util.promisify(fs.readdir)
 const readFilePromise = util.promisify(fs.readFile)
@@ -19,7 +20,7 @@ Supported static asset tags:
   {{font:...}}           --> static font file
   {{js:...}}             --> static built js file
   {{src:...}}            --> static built source file
-  {{cdn:...}}            --> file stored in CDN
+  {{asset:...}}          --> local static asset (root-relative URL)
 */
 
 /*
@@ -83,27 +84,27 @@ const buildMeta = async (data, match, key, page) => {
 			metaOptions = {
 				'title': 'About | Will Carhart',
 				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development.',
-				'url': 'https://willcarh.art/about',
+				'url': '/about',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{asset:img/og.png}}'
 			}
 			break
 		case 'home':
 			metaOptions = {
 				'title': 'Home | Will Carhart',
 				'description': 'Will Carhart is a software engineer based in the San Francisco Bay Area specializing in back-end architectures, cloud infrastructures, and API development.',
-				'url': 'https://willcarh.art',
+				'url': '/',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{asset:img/og.png}}'
 			}
 			break
 		case 'proj':
 			metaOptions = {
 				'title': 'Projects | Will Carhart',
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the projects I\'ve built.',
-				'url': 'https://willcarh.art/projects',
+				'url': '/projects',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{asset:img/og.png}}'
 			}
 			break
 		case 'proj-spec':
@@ -113,7 +114,7 @@ const buildMeta = async (data, match, key, page) => {
 			metaOptions = {
 				'title': `${project.name} | Project | Will Carhart`,
 				'description': project.blurb,
-				'url': `https://willcarh.art/projects/${project.name}`,
+				'url': `/project/${name}`,
 				'author': 'Will Carhart',
 				'cover': project.img
 			}
@@ -124,7 +125,7 @@ const buildMeta = async (data, match, key, page) => {
 			metaOptions = {
 				'title': 'Blog | Will Carhart',
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Here are some of the lessons I\'ve learned along the way.',
-				'url': 'https://willcarh.art/blog',
+				'url': '/blog',
 				'author': 'Will Carhart',
 				'cover': blog.cover
 			}
@@ -136,7 +137,7 @@ const buildMeta = async (data, match, key, page) => {
 			metaOptions = {
 				'title': `${blog.title} | Will Carhart`,
 				'description': blog.blurb,
-				'url': `https://willcarh.art/blog/${blog.id}`,
+				'url': `/blog/${blog.id}`,
 				'author': 'Will Carhart',
 				'cover': blog.cover
 			}
@@ -145,18 +146,18 @@ const buildMeta = async (data, match, key, page) => {
 			metaOptions = {
 				'title': 'Vault | Will Carhart',
 				'description': 'Over the years I\'ve written a plethora of software-related paraphernalia. The vault contains my comprehensive history.',
-				'url': 'https://willcarh.art/vault',
+				'url': '/vault',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{asset:img/og.png}}'
 			}
 			break
 		case 'demo':
 			metaOptions = {
 				'title': 'Demo | Will Carhart',
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
-				'url': 'https://willcarh.art/demo',
+				'url': '/demo',
 				'author': 'Will Carhart',
-				'cover': '{{cdn:img/og.png}}'
+				'cover': '{{asset:img/og.png}}'
 			}
 			break
 		case 'demo-spec':
@@ -166,7 +167,7 @@ const buildMeta = async (data, match, key, page) => {
 			metaOptions = {
 				'title': `${project.name} | Demo | Will Carhart`,
 				'description': 'Building quality software is what I do. For me, coding is as much a hobby as it is a career. Demos are a great way to try out some of my projects.',
-				'url': `https://willcarh.art/demo/${project.id}`,
+				'url': `/demo/${name}`,
 				'author': 'Will Carhart',
 				'cover': project.img
 			}
@@ -174,6 +175,8 @@ const buildMeta = async (data, match, key, page) => {
 		default:
 			throw new Error(`Unknown meta type '${key}'`)
 	}
+	metaOptions.url = new URL(metaOptions.url || '/', config.siteUrl).href
+	metaOptions.cover = metaOptions.cover.replace(/\{\{asset:([^{}]+)\}\}/g, (_, asset) => new URL(`/${asset}`, config.siteUrl).href)
 	meta = await buildMetaHtml(metaOptions)
 	resolvedData = resolvedData.replace(match, meta)
 	return resolvedData
@@ -540,7 +543,7 @@ const buildBlogSpec = async (blogs, page) => {
 	// build blog content
 	let marq = new Marq({
 		cssPrefix: '',
-		placeholder: '{{cdn:img/blank.png}}',
+		placeholder: '{{asset:img/blank.png}}',
 		slideshowScript: '{{js:slideshow.js}}'
 	})
 	let blogContent = await marq.convert(blogContentFile.toString(), {page: page})
@@ -689,7 +692,7 @@ const buildProjSpec = async (projects, page) => {
 	// build project content
 	let marq = new Marq({
 		cssPrefix: '',
-		placeholder: '{{cdn:img/blank.png}}',
+		placeholder: '{{asset:img/blank.png}}',
 		slideshowScript: '{{js:slideshow.js}}'
 	})
 	let projectContent = await marq.convert(projectContentFile.toString(), {page: page})

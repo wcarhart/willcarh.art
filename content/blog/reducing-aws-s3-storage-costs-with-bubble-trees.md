@@ -33,16 +33,16 @@ Let's come up with a data structure to store our data. We need:
 3. A way to minimize the amount of key-value pairs the structure holds.
 
 First, let's consider a [trie](https://en.wikipedia.org/wiki/Trie).
-![Trie data structure]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/trie.png}})
+![Trie data structure]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/trie.png}})
 This is a great start. What’s good about a standard trie for our use case? One, it stores key-value pairs, and two, it's hierarchical (great fit for our S3 bucket prefixes). Conversely, what’s not as great about a standard trie for our use case? Well, it's not as _minimal_. If two children, or leaves, of a node contain the same value, they are both stored.
 For example, consider the key-value pairs `{'/dir/file1.txt': 5, '/dir/file2.txt': 10}`. This would result in the following trie.
-![Trie data structure with asymmetrical data]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/asymmetrical-trie.png}})
+![Trie data structure with asymmetrical data]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/asymmetrical-trie.png}})
 However, consider a trie with asymmetrical data, such as with the key-value pairs `{'/dir/file1.txt': 5, '/dir/file2.txt': 5}`. This would result in a trie with three nodes, even though both the leaf nodes have the same value.
-![Trie data structure with symmetrical data]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/symmetrical-trie.png}})
+![Trie data structure with symmetrical data]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/symmetrical-trie.png}})
 In our case, a simpler representation the data would be `{'/dir': 5}`, because we know that all of the contents of `dir` have the value `5`.
 Let's create a new kind of tree data structure, which we'll call the **bubble tree**. A bubble tree will be very similar to a trie, but with the following condition: we say that the value of a node _bubbles up_ to its parent if the value of the node is equivalent to the values of all of its siblings.
 That sounds complicated in writing, but it's easier to visualize. Check out this simple animation of values bubbling up in a bubble tree.
-![Bubble tree bubbling example animation]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/bubbletree-bubbling-example.gif}})
+![Bubble tree bubbling example animation]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/bubbletree-bubbling-example.gif}})
 
 ### Planting our bubble tree
 Let's get to implementing our bubble tree in Python. First, let's define a new class for a node in the bubble tree.
@@ -187,16 +187,16 @@ Rather than actually implement this infrastructure, I'm just going to model it o
 ? decided to do slideshow for AWS infrastructure rather than animation so it's more interactive
 ? this is my first slideshow from the markdown generator...isn't this crazy??
 [[[
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-0.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-1.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-2.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-3.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-4.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-3.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-5.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-6.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-7.png}})
-	[]({{cdn:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-8.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-0.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-1.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-2.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-3.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-4.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-3.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-5.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-6.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-7.png}})
+	[]({{asset:img/blog/reducing-aws-s3-storage-costs-with-bubble-trees/aws-diagram-8.png}})
 ]]]
 
 ### A look at the cost

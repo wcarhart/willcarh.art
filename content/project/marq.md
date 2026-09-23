@@ -23,13 +23,13 @@ Marq can embedded YouTube videos using the syntax `~(youtube_video_id)`. This ma
 Perhaps marq's most powerful feature (and furthest deviation from GFM) is its slideshows. Marq can put a photo carousel right into the page, without any extra code. Here's what the below slideshow looks like in markdown (the images are from my blog cover photos).
 ```
 [[[
-    []({{cdn:img/blog/why-i-wrote-my-own-static-site-generator/cover.jpg}})
-    []({{cdn:img/blog/using-pm2-to-deploy-robust-nodejs-apps/cover.jpg}})
-    []({{cdn:img/blog/the-easy-way-to-add-dark-mode-to-your-website/cover.jpg}})
+    []({{asset:img/blog/why-i-wrote-my-own-static-site-generator/cover.jpg}})
+    []({{asset:img/blog/using-pm2-to-deploy-robust-nodejs-apps/cover.jpg}})
+    []({{asset:img/blog/the-easy-way-to-add-dark-mode-to-your-website/cover.jpg}})
 ]]]
 ```
 [[[
-	[]({{cdn:img/blog/why-i-wrote-my-own-static-site-generator/cover.jpg}})
-	[]({{cdn:img/blog/using-pm2-to-deploy-robust-nodejs-apps/cover.jpg}})
-	[]({{cdn:img/blog/the-easy-way-to-add-dark-mode-to-your-website/cover.jpg}})
+	[]({{asset:img/blog/why-i-wrote-my-own-static-site-generator/cover.jpg}})
+	[]({{asset:img/blog/using-pm2-to-deploy-robust-nodejs-apps/cover.jpg}})
+	[]({{asset:img/blog/the-easy-way-to-add-dark-mode-to-your-website/cover.jpg}})
 ]]]

@@ -4,7 +4,7 @@ about: By combining the ubiquity of GitHub Flavored Markdown, new custom HTML st
 languages: JavaScript
 technologies: Node.js
 technologies: markdown
-img: {{cdn:img/logos/marq.png}}
+img: {{asset:img/logos/marq.png}}
 repo: https://github.com/wcarhart/marq
 link:
 demo: false
@@ -26,7 +26,7 @@ languages: JavaScript
 languages: Node.js
 technologies: Google Drive API
 technologies: Express.js
-img: {{cdn:img/logos/hyperdrive.png}}
+img: {{asset:img/logos/hyperdrive.png}}
 repo: https://github.com/wcarhart/hyperdrive
 link:
 demo: false
@@ -45,7 +45,7 @@ blurb: Hacker News terminal client
 about: Lurker is a simple terminal client for reading Y Combinator's Hacker News. It uses the public Hacker News API and is written entirely in Bash so it runs smoothly in the majority of terminal environments.
 languages: Bash
 technologies: Hacker News API
-img: {{cdn:img/logos/lurker.png}}
+img: {{asset:img/logos/lurker.png}}
 repo: https://github.com/wcarhart/lurker
 link:
 demo: false
@@ -67,7 +67,7 @@ about: Doku is an automated Sudoku board solver. It uses dynamic programming to 
 languages: Deno
 languages: JavaScript
 technologies:
-img: {{cdn:img/logos/doku.png}}
+img: {{asset:img/logos/doku.png}}
 repo: https://github.com/wcarhart/doku
 link:
 demo: true
@@ -87,7 +87,7 @@ blurb: A simple algorithm for summarizing text
 about: Inspired by SMMRY, smoosh is a simple tool for summarizing text snippets. It can effectively reduce new articles, blog posts, or any body of text into just a few sentences. Armed with some simple web scraping, smoosh is a powerful tool for riffling through text on the web.  
 languages: Python
 technologies: BeautifulSoup
-img: {{cdn:img/logos/smoosh.png}}
+img: {{asset:img/logos/smoosh.png}}
 repo: https://github.com/wcarhart/smoosh
 link:
 demo: true
@@ -107,7 +107,7 @@ blurb: Bashful argument parsing
 about: Koi is an argument parsing library for Bash. Initially inspired by Python's argparse, koi is a powerful and fully-featured Bash library for creating comprehensive CLI shell applications. It is used by a number of various applications, both open source and enterprise.
 languages: Bash
 technologies:
-img: {{cdn:img/logos/koi.png}}
+img: {{asset:img/logos/koi.png}}
 repo: https://github.com/wcarhart/koi
 link:
 demo: false
@@ -138,7 +138,7 @@ technologies: GCP Cloud Source Repositories
 technologies: GCP Cloud Functions
 technologies: GCP Cloud Scheduler
 technologies: GCP Secrets Manager
-img: {{cdn:img/logos/snug.png}}
+img: {{asset:img/blank.png}}
 repo: https://github.com/wcarhart/snug
 link:
 demo: false
@@ -169,7 +169,7 @@ technologies: Netlify
 technologies: Yarn
 technologies: GCP Cloud CDN
 technologies: GCP Cloud Storage
-img: {{cdn:img/logos/willcarh.art.png}}
+img: {{asset:img/logos/willcarh.art.png}}
 repo: https://github.com/wcarhart/willcarh.art
 link: https://willcarh.art
 demo: false
@@ -195,7 +195,7 @@ languages: Bash
 technologies: Netlify
 technologies: Docsify
 technologies: jQuery
-img: {{cdn:img/logos/docs.png}}
+img: {{asset:img/logos/docs.png}}
 repo: https://github.com/wcarhart/docs
 link: https://willcarhart.dev
 demo: false
@@ -220,7 +220,7 @@ about: Konphig is my take on the classic dotfiles repository. Initially just a c
 languages: Bash
 languages: Vim Script
 technologies:
-img: {{cdn:img/logos/konphig.png}}
+img: {{asset:img/logos/konphig.png}}
 repo: https://github.com/wcarhart/konphig
 link:
 demo: false
@@ -242,7 +242,7 @@ about:
 languages: Node.js
 languages: JavaScript
 technologies:
-img: {{cdn:img/logos/hustle.png}}
+img: {{asset:img/blank.png}}
 repo: https://github.com/wcarhart/hustle
 link:
 demo: false
@@ -273,7 +273,7 @@ technologies: Bootstrap
 technologies: Heroku
 technologies: Travis CI
 technologies: GitHub API
-img: {{cdn:img/logos/soliloquy.png}}
+img: {{asset:img/logos/soliloquy.png}}
 repo: https://github.com/wcarhart/soliloquy
 link: https://soliloquy.dev
 demo: false
@@ -299,7 +299,7 @@ languages: Bash
 languages: SQL
 technologies: Electron
 technologies: SQLite
-img: {{cdn:img/logos/odin.png}}
+img: {{asset:img/blank.png}}
 repo: https://github.com/wcarhart/odin
 link:
 demo: false
@@ -320,7 +320,7 @@ blurb: Streaming tweets to the command line
 about: Birdhouse is a CLI for interacting with tweets. It can stream tweets bash on author and hashtag and exposes and easy-to-use interface for interacting with Twitter from the command line.
 languages: Bash
 technologies: Twitter API
-img: {{cdn:img/logos/birdhouse.png}}
+img: {{asset:img/logos/birdhouse.png}}
 repo: https://github.com/wcarhart/birdhouse
 link:
 demo: true
@@ -340,7 +340,7 @@ blurb: Helpful English diction tools for the command line
 about: Thoth is a set of command line tools for defining and understanding works in the English language. It contains functionality for defining words, finding synonyms, and using words in sentences.
 languages: Bash
 technologies:
-img: {{cdn:img/logos/thoth.png}}
+img: {{asset:img/logos/thoth.png}}
 repo: https://github.com/wcarhart/thoth
 link:
 demo: false
@@ -361,7 +361,7 @@ about: Chiller is a command line tool for managing GitHub releases and Homebrew 
 languages: Bash
 technologies: GitHub API
 technologies: Homebrew
-img: {{cdn:img/logos/chiller.png}}
+img: {{asset:img/logos/chiller.png}}
 repo: https://github.com/wcarhart/chiller
 link:
 demo: false
@@ -385,7 +385,7 @@ languages: HTML
 languages: CSS
 languages: JavaScript
 technologies: Netlify
-img: {{cdn:img/logos/wanda.png}}
+img: {{asset:img/logos/wanda.png}}
 repo: https://github.com/wcarhart/wanda
 link: https://alexxandwill.us
 demo: false
@@ -406,7 +406,7 @@ about: Aerogram is a CLI chat application based on ssh. It allows you to chat wi
 languages: Bash
 technologies: ssh
 technologies: scp
-img: {{cdn:img/logos/aerogram.png}}
+img: {{asset:img/logos/aerogram.png}}
 repo: https://github.com/wcarhart/aerogram
 link:
 demo: false
@@ -426,7 +426,7 @@ blurb: Logs querier
 about: Beaver is a simple tool for parsing logs. It can query logs in a file tree based on content and timestamps.
 languages: Python
 technologies:
-img: {{cdn:img/logos/beaver.png}}
+img: {{asset:img/logos/beaver.png}}
 repo: https://github.com/wcarhart/beaver
 link:
 demo: false
@@ -446,7 +446,7 @@ blurb: Lightweight multithreading framework for shell tasks
 about: Despicable is a lightweight multithreading framework. Originally written for managing complex compression algorithms, it has been generalized to run shell commands.
 languages: Python
 technologies:
-img: {{cdn:img/logos/despicable.png}}
+img: {{asset:img/logos/despicable.png}}
 repo: https://github.com/wcarhart/despicable
 link:
 demo: false
@@ -466,7 +466,7 @@ blurb: Website status checker
 about: Cheqit is a simple CLI tool for monitoring the status of websites. It was inspired by Downdetector.
 languages: Python
 technologies:
-img: {{cdn:img/logos/cheqit.png}}
+img: {{asset:img/logos/cheqit.png}}
 repo: https://github.com/wcarhart/cheqit
 link:
 demo: false
@@ -486,7 +486,7 @@ blurb: Repository secret manager
 about: Locksmith, a Python library, is your liaison between repository secrets and the great beyond. By utilizing GPG, locksmith allows you to store secrets in your repository and interact with them locally without having to publish them with your source code.
 languages: Python
 technologies:
-img: {{cdn:img/logos/locksmith.png}}
+img: {{asset:img/logos/locksmith.png}}
 repo: https://github.com/wcarhart/locksmith
 link:
 demo: false
@@ -506,7 +506,7 @@ blurb: Terminal board game
 about: Othello is a command line implementation of the popular board game by the same name (also known as Reversi). It has functionality for local multiplayer as well as single player against AIs of varying difficulty.
 languages: Python
 technologies:
-img: {{cdn:img/logos/othello.png}}
+img: {{asset:img/logos/othello.png}}
 repo: https://github.com/wcarhart/othello
 link:
 demo: false
@@ -533,7 +533,7 @@ technologies: Uber API
 technologies: Firebase
 technologies: CocoaPods
 technologies: Balsamiq
-img: {{cdn:img/logos/cheers.png}}
+img: {{asset:img/logos/cheers.png}}
 repo: https://github.com/wcarhart/cheers
 link:
 demo: false
@@ -556,7 +556,7 @@ languages: Objective-C
 technologies: iOS
 technologies: Firebase
 technologies: CocoaPods
-img: {{cdn:img/logos/fitpals.png}}
+img: {{asset:img/blank.png}}
 repo: https://github.com/wcarhart/fitpals
 link:
 demo: false
@@ -578,7 +578,7 @@ languages: Swift
 languages: Objective-C
 technologies: iOS
 technologies: CocoaPods
-img: {{cdn:img/logos/chordpanion.png}}
+img: {{asset:img/logos/chordpanion.png}}
 repo: https://github.com/wcarhart/chordpanion
 link:
 demo: false
@@ -600,7 +600,7 @@ languages: Swift
 languages: Objective-C
 technologies: iOS
 technologies: NASA APOD API
-img: {{cdn:img/logos/nasa_apod.png}}
+img: {{asset:img/logos/nasa_apod.png}}
 repo: https://github.com/wcarhart/nasa_apod
 link:
 demo: false
@@ -621,7 +621,7 @@ about: TI Checkers is a simple implementation of the game checkers for the TI-83
 languages: Z80 Assembly
 languages: TI-BASIC
 technologies:
-img: {{cdn:img/logos/ti_checkers.png}}
+img: {{asset:img/logos/ti_checkers.png}}
 repo: https://github.com/wcarhart/ti84-checkers
 link:
 demo: false
@@ -642,7 +642,7 @@ about: TI TicTacToe is a simple implementation of the game tic-tac-toe for the T
 languages: Z80 Assembly
 languages: TI-BASIC
 technologies:
-img: {{cdn:img/logos/ti_tictactoe.png}}
+img: {{asset:img/logos/ti_tictactoe.png}}
 repo: https://github.com/wcarhart/ti84-tictactoe
 link:
 demo: false
@@ -662,7 +662,7 @@ blurb: Simple OpenGL racing game
 about: Kartracer was a my final project for my university graphics class. It is incredibly basic, utilizing no prebuilt models and only OpenGL primitives, but still has a small array of features. It has 3 different car models, a full race track, and a number of various camera views.
 languages: C
 technologies: OpenGL
-img: {{cdn:img/logos/kartracer.png}}
+img: {{asset:img/logos/kartracer.png}}
 repo: https://github.com/wcarhart/kartracer
 link:
 demo: false
@@ -682,7 +682,7 @@ blurb: Common algorithms and data structures for safe keeping
 about: Algos is my repository of common data structures and algorithms for safe keeping, so I don't have to reimplement them over time. It has implementations for common sorting algorithms, data structures, and design patterns.
 languages: Python
 technologies:
-img: {{cdn:img/logos/algos.png}}
+img: {{asset:img/logos/algos.png}}
 repo: https://github.com/wcarhart/algos
 link:
 demo: false
@@ -702,7 +702,7 @@ blurb: Automatic daylight-based coffee maker
 about: Rise and Shine was my final project for one my university embedded classes. At a high level, it was an alarm clock with a daylight sensor. When the sensor determined that it is daytime, it would automatically turn on the coffee maker to brew a new cup of coffee.
 languages: C
 technologies: Microchip PIC18F4321
-img: {{cdn:img/logos/rise_and_shine.png}}
+img: {{asset:img/logos/rise_and_shine.png}}
 repo: https://github.com/wcarhart/rise-and-shine
 link:
 demo: false

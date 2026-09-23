@@ -7,7 +7,7 @@ Chorpanion is not currently published to the App Store, but I hope to finish and
 
 ### General premise
 Chordpanion is currently a work-in-progress iOS app. It uses no external models for its graphics; they are all built programmatically in Swift. It has pages for chord progressions, transposing, and configuration management.
-![Chordpanion demo]({{cdn:img/project/Chordpanion/chordpaniondemo.png}})<Chordpanion's menu for picking a key, with dynamically built keyboard graphics in Swift>
+![Chordpanion demo]({{asset:img/project/Chordpanion/chordpaniondemo.png}})<Chordpanion's menu for picking a key, with dynamically built keyboard graphics in Swift>
 Music can be broken into scales and chords, which can then be further divided into notes. There are only 12 unique notes that can be played (although they can be replicated in other octaves). If we assign a number 0 through 11 to each of these notes, we can process them with programming. Chordpanion uses commonly known chord progressions and trasposition techniques to build progressions for a given key.
 
 ### A simple example

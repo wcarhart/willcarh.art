@@ -13,7 +13,7 @@
 [willcarh.art](https://willcarh.art) is a statically generated site. It uses a custom Node.js generator to replace template HTML with content sourced from markdown files. If you'd like to understand my motivation for writing my own static site generator, please check out [the blog post](https://willcarh.art/blog/why-i-wrote-my-own-static-site-generator). In addition, please see the markdown to HTML converter, [marq](https://github.com/wcarhart/marq).
 
 ## 🚨 Heads up
-This repository is now deprecated in favor of the next major version of willcarh.art. This version of the wite is deployed to [old.willcarh.art](https://old.willcarh.art) as an archive.
+This repository is now deprecated in favor of the next major version of willcarh.art. This version of the site is deployed to [old.willcarh.art](https://old.willcarh.art) as an archive.
 
 ### Using the generator
 Before starting, you'll need Node.js and Yarn. You can install them via [Homebrew](https://brew.sh/) with `brew install node` and `brew install yarn`.
